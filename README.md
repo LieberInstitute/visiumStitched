@@ -11,20 +11,6 @@ issues](https://img.shields.io/github/issues/LieberInstitute/spatialNAcUtils)](h
 pulls](https://img.shields.io/github/issues-pr/LieberInstitute/spatialNAcUtils)](https://github.com/LieberInstitute/spatialNAcUtils/pulls)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Bioc release
-status](http://www.bioconductor.org/shields/build/release/bioc/spatialNAcUtils.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/spatialNAcUtils)
-[![Bioc devel
-status](http://www.bioconductor.org/shields/build/devel/bioc/spatialNAcUtils.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/spatialNAcUtils)
-[![Bioc downloads
-rank](https://bioconductor.org/shields/downloads/release/spatialNAcUtils.svg)](http://bioconductor.org/packages/stats/bioc/spatialNAcUtils/)
-[![Bioc
-support](https://bioconductor.org/shields/posts/spatialNAcUtils.svg)](https://support.bioconductor.org/tag/spatialNAcUtils)
-[![Bioc
-history](https://bioconductor.org/shields/years-in-bioc/spatialNAcUtils.svg)](https://bioconductor.org/packages/release/bioc/html/spatialNAcUtils.html#since)
-[![Bioc last
-commit](https://bioconductor.org/shields/lastcommit/devel/bioc/spatialNAcUtils.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/spatialNAcUtils/)
-[![Bioc
-dependencies](https://bioconductor.org/shields/dependencies/release/spatialNAcUtils.svg)](https://bioconductor.org/packages/release/bioc/html/spatialNAcUtils.html#since)
 [![R-CMD-check-bioc](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/R-CMD-check-bioc.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/LieberInstitute/spatialNAcUtils/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/LieberInstitute/spatialNAcUtils?branch=devel)
