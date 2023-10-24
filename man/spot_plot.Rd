@@ -8,6 +8,7 @@ capture areas.}
 spot_plot(
   spe,
   sample_id,
+  image_id,
   title,
   var_name,
   include_legend,
@@ -24,6 +25,9 @@ passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 \item{sample_id}{character(1) passed to \code{sampleid} in
 \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
 donor, possibly consisting of several capture areas to plot at once}
+
+\item{image_id}{character(1) giving the name of the image (e.g. "lowres") to
+plot. Currently not displayed, but used to determine an appropriate spot size}
 
 \item{title}{character(1) giving the title of the plot}
 

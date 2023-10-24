@@ -18,6 +18,8 @@
 #' @param sample_id character(1) passed to \code{sampleid} in
 #' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
 #' donor, possibly consisting of several capture areas to plot at once
+#' @param image_id character(1) giving the name of the image (e.g. "lowres") to
+#' plot. Currently not displayed, but used to determine an appropriate spot size
 #' @param title character(1) giving the title of the plot
 #' @param var_name character(1) passed to \code{geneid} for \code{spatialLIBD::vis_gene}
 #' or \code{clustervar} for \code{spatialLIBD::vis_clus}
@@ -37,11 +39,10 @@
 #' @author Nicholas J. Eagles
 #' @import viridisLite spatialLIBD ggplot2
 spot_plot <- function(
-        spe, sample_id, title, var_name, include_legend, is_discrete,
+        spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
         colors = NULL, assayname = "logcounts", minCount = 0.5
     ) {
     IDEAL_POINT_SIZE <- 200
-    IMAGE_ID <- "lowres"
 
     # (Note that 'sample_id', 'var_name', 'assayname', 'minCount', and 'colors'
     # are not checked for validity here, since spatialLIBD functions handle
@@ -86,7 +87,7 @@ spot_plot <- function(
     #   in aspect ratio. Also, lowres images always have a larger image
     #   dimension of 1200, no matter how many spots fit in either dimension.
     small_image_data = imgData(spe_small)[
-        imgData(spe_small)$image_id == IMAGE_ID,
+        imgData(spe_small)$image_id == image_id,
     ]
     spot_size = IDEAL_POINT_SIZE * INTER_SPOT_DIST_PX *
        small_image_data$scaleFactor / max(dim(small_image_data$data[[1]]))
