@@ -11,66 +11,34 @@ issues](https://img.shields.io/github/issues/LieberInstitute/spatialNAcUtils)](h
 pulls](https://img.shields.io/github/issues-pr/LieberInstitute/spatialNAcUtils)](https://github.com/LieberInstitute/spatialNAcUtils/pulls)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![R-CMD-check-bioc](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/R-CMD-check-bioc.yaml)
+[![R-CMD-check-bioc](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/LieberInstitute/spatialNAcUtils/actions/workflows/check-bioc.yml)
 [![Codecov test
 coverage](https://codecov.io/gh/LieberInstitute/spatialNAcUtils/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/LieberInstitute/spatialNAcUtils?branch=devel)
 <!-- badges: end -->
 
-The goal of `spatialNAcUtils` is to …
+`spatialNAcUtils` is intended to provide re-usable functions helpful for
+various analyses in the [spatialNAc
+project](https://github.com/LieberInstitute/spatial_NAc). Code is
+maintained here in an R package for ease of use, and to ensure dependent
+`spatialNAc` code can easily refer to the latest functions here.
+
+For details, check the [documentation
+site](http://research.libd.org/spatialNAcUtils/).
 
 ## Installation instructions
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install `spatialNAcUtils` from
-[Bioconductor](http://bioconductor.org/) using the following code:
+[GitHub](https://github.com/LieberInstitute/spatialNAcUtils) using the
+following code:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
-BiocManager::install("spatialNAcUtils")
-```
-
-And the development version from
-[GitHub](https://github.com/LieberInstitute/spatialNAcUtils) with:
-
-``` r
 BiocManager::install("LieberInstitute/spatialNAcUtils")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library("spatialNAcUtils")
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub!
 
 ## Citation
 
