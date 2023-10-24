@@ -43,12 +43,33 @@ spot_plot <- function(
     IDEAL_POINT_SIZE <- 200
     IMAGE_ID <- "lowres"
 
+    # (Note that 'sample_id', 'var_name', 'assayname', 'minCount', and 'colors'
+    # are not checked for validity here, since spatialLIBD functions handle
+    # their validity)
+
+    #   Check validity of spatial coordinates
+    if (!all(c("pxl_col_in_fullres", "pxl_row_in_fullres") == sort(spatialCoords(spe)))) {
+        stop("Abnormal spatial coordinates: should have 'pxl_row_in_fullres' and 'pxl_col_in_fullres' columns.")
+    }
+
+    #   State assumptions about columns expected to be in the colData
+    expected_cols = c("array_row", "array_col", "sample_id", "exclude_overlapping")
+    if (!all(expected_cols %in% colnames(colData(spe)))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following colData columns: "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+
     #   Subset to specific sample ID, and ensure overlapping spots are dropped
-    spe_small = spe[
-        ,
-        (spe$sample_id == sample_id) &
-        (is.na(spe$exclude_overlapping) | !spe$exclude_overlapping)
-    ]
+    subset_cols = (spe$sample_id == sample_id) &
+        (is.na(spe$exclude_overlapping) |!spe$exclude_overlapping)
+    if (length(which(subset_cols)) == 0) {
+        stop("No non-excluded spots belong to this sample. Perhaps check spe$exclude_overlapping for issues.")
+    }
+    spe_small = spe[, subset_cols]
     
     #   Determine some pixel values for the horizontal bounds of the spots
     MIN_COL = min(spatialCoords(spe_small)[, 'pxl_row_in_fullres'])
