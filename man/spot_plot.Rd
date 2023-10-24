@@ -70,7 +70,7 @@ ratios exactly consistently when writing to PDF (untested for other formats)
 #   Grab an example SpatialExperiment and suppose all of its spots should be
 #   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely
 #   overlapping spots be TRUE)
-spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
+spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
 spe$exclude_overlapping <- FALSE
 
 #   Plot age spatially for the first sample
