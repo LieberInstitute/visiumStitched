@@ -98,15 +98,15 @@ print(citation('spatialNAcUtils'), bibtex = TRUE)
 #> 'spatialNAcUtils' from package DESCRIPTION file
 #> To cite package 'spatialNAcUtils' in publications use:
 #> 
-#>   Last F (????). _spatialNAcUtils: What the Package Does (One Line,
-#>   Title Case)_. R package version 0.0.0.9000.
+#>   Eagles N (????). _spatialNAcUtils: Functions Useful for the
+#>   spatial_NAc Project_. R package version 0.99.0.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {spatialNAcUtils: What the Package Does (One Line, Title Case)},
-#>     author = {First Last},
-#>     note = {R package version 0.0.0.9000},
+#>     title = {spatialNAcUtils: Functions Useful for the spatial_NAc Project},
+#>     author = {Nicholas J. Eagles},
+#>     note = {R package version 0.99.0},
 #>   }
 ```
 

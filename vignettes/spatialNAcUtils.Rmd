@@ -1,10 +1,10 @@
 ---
 title: "Introduction to spatialNAcUtils"
 author: 
-  - name: Your name
+  - name: Nicholas J. Eagles
     affiliation:
-    - Your institution
-    email: your.email@somewhere.com
+    - Lieber Institute for Brain Development
+    email: nickeagles77@gmail.com
 output: 
   BiocStyle::html_document:
     self_contained: yes
