@@ -37,7 +37,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import viridisLite spatialLIBD ggplot2
+#' @import viridisLite spatialLIBD ggplot2 SpatialExperiment
 #' 
 #' @examples 
 #' 

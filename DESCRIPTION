@@ -23,4 +23,5 @@ VignetteBuilder: knitr
 Imports:
     viridisLite,
     spatialLIBD,
-    ggplot2
+    ggplot2,
+    SpatialExperiment

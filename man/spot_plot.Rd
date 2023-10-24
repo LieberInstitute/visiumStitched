@@ -8,7 +8,7 @@ capture areas.}
 spot_plot(
   spe,
   sample_id,
-  image_id,
+  image_id = "lowres",
   title,
   var_name,
   include_legend,
@@ -64,6 +64,23 @@ resolution image dimensions, when title is NULL, include_legend is FALSE,
 and the plot is saved to a square output (e.g. PDF with 7in width and
 height). However, ggplot does not seem to scale plots of different aspect
 ratios exactly consistently when writing to PDF (untested for other formats)
+}
+\examples{
+
+#   Grab an example SpatialExperiment and suppose all of its spots should be
+#   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely
+#   overlapping spots be TRUE)
+spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
+spe$exclude_overlapping <- FALSE
+
+#   Plot age spatially for the first sample
+p <- spot_plot(
+   spe, sample_id = unique(spe$sample_id)[1],
+   title = sample_id, var_name = "age",
+   include_legend = TRUE, is_discrete = FALSE, minCount = 0,
+   assayname = "logcounts"
+)
+print(p)
 }
 \author{
 Nicholas J. Eagles
