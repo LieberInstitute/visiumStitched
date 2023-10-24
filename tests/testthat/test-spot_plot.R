@@ -1,3 +1,5 @@
+library(SpatialExperiment)
+
 test_that(
     "spot_plot",
     {
