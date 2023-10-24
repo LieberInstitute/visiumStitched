@@ -1,31 +1,41 @@
-#   Wrapper around spatialLIBD::vis_clus and spatialLIBD::vis_gene, suitable
-#   for merged samples (each sample in the SpatialExperiment 'spe' is a donor
-#   consisting of multiple capture areas, with colData column
-#   'exclude_overlapping' indicating overlapping spots to drop (to prevent
-#   overplotting).
-#
-#   Spot sizes are *almost* consistent among donors, regardless of full-
-#   resolution image dimensions, when title is NULL, include_legend is FALSE,
-#   and the plot is saved to a square output (e.g. PDF with 7in width and
-#   height). However, ggplot does not seem to scale plots of different aspect
-#   ratios exactly consistently when writing to PDF (untested for other formats)
-#
-#   Return a spot plot of sample 'sampleid', assumed to be a donor. 'coldatavar'
-#   (character(1)) must be a valid colname in colData(spe).
-#
-#   spe:            passed to 'spe' in either 'vis_gene' or 'vis_clus'
-#   sample_id:      passed to 'sampleid'
-#   title:          title for the plot, expected to be one line (avoid use of
-#                   "\n")
-#   var_name:       passed to 'geneid' for 'vis_gene' and 'clustervar' for
-#                   'vis_clus'
-#   include_legend: (logical) if FALSE, remove the legend
-#   is_discrete:    (logical) if TRUE, use 'vis_clus'; otherwise, use 'vis_gene'
-#   colors:         passed to 'colors' for 'vis_gene' if not [is_discrete]
-#   assayname:      passed to 'assayname' for 'vis_gene' if not [is_discrete]
-#   minCount:       passed to 'minCount' for 'vis_gene' if not [is_discrete]
-#
-#   Returns a ggplot object
+#' Spatial plots of discrete or continuous features for stitched-together
+#' capture areas.
+#'
+#' This function is essentially a wrapper around spatialLIBD::vis_clus and
+#' spatialLIBD::vis_gene, suitable for merged samples (each sample in the
+#' SpatialExperiment 'spe' is a donor consisting of multiple capture areas, with
+#' colData column 'exclude_overlapping' indicating overlapping spots to drop (to
+#' prevent overplotting).
+#'
+#' Spot sizes are *almost* consistent among donors, regardless of full-
+#' resolution image dimensions, when title is NULL, include_legend is FALSE,
+#' and the plot is saved to a square output (e.g. PDF with 7in width and
+#' height). However, ggplot does not seem to scale plots of different aspect
+#' ratios exactly consistently when writing to PDF (untested for other formats)
+#' 
+#' @param spe A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
+#' passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
+#' @param sample_id character(1) passed to \code{sampleid} in
+#' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
+#' donor, possibly consisting of several capture areas to plot at once
+#' @param title character(1) giving the title of the plot
+#' @param var_name character(1) passed to \code{geneid} for \code{spatialLIBD::vis_gene}
+#' or \code{clustervar} for \code{spatialLIBD::vis_clus}
+#' @param include_legend logical(1): if FALSE, remove the plot legend
+#' @param is_discrete logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
+#' otherwise, use \code{spatialLIBD::vis_gene}
+#' @param colors character() of colors passed to \code{cont_colors} in
+#' \code{spatialLIBD::vis_gene} if not \code{is_discrete}
+#' @param assayname character(1) passed to \code{spatialLIBD::vis_gene} if
+#' not \code{is_discrete}
+#' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene} if
+#' not \code{is_discrete}
+#'
+#' @return A \code{ggplot} object containing a "spot plot" of the specified sample
+#'
+#' @export
+#' @author Nicholas J. Eagles
+#' @import viridisLite spatialLIBD ggplot2
 spot_plot <- function(
         spe, sample_id, title, var_name, include_legend, is_discrete,
         colors = NULL, assayname = "logcounts", minCount = 0.5
