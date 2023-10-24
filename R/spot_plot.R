@@ -40,7 +40,16 @@
 #' @import viridisLite spatialLIBD ggplot2
 spot_plot <- function(spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
     colors = NULL, assayname = "logcounts", minCount = 0.5) {
+    #   This value was determined empirically, and results in good spot sizes.
+    #   Note that it's sample-independent, and the final spot size to pass to
+    #   'vis_gene' or 'vis_clus' uses this value along with the image
+    #   dimensions, scale factors, and spatial coordinates for this particular
+    #   sample
     IDEAL_POINT_SIZE <- 200
+
+    ############################################################################
+    #   Check validity of arguments
+    ############################################################################
 
     # (Note that 'sample_id', 'var_name', 'assayname', 'minCount', and 'colors'
     # are not checked for validity here, since spatialLIBD functions handle
@@ -70,6 +79,10 @@ spot_plot <- function(spe, sample_id, image_id, title, var_name, include_legend,
     }
     spe_small <- spe[, subset_cols]
 
+    ############################################################################
+    #   Compute an appropriate spot size for this sample
+    ############################################################################
+
     #   Determine some pixel values for the horizontal bounds of the spots
     MIN_COL <- min(spatialCoords(spe_small)[, "pxl_row_in_fullres"])
     MAX_COL <- max(spatialCoords(spe_small)[, "pxl_row_in_fullres"])
@@ -89,6 +102,11 @@ spot_plot <- function(spe, sample_id, image_id, title, var_name, include_legend,
     ]
     spot_size <- IDEAL_POINT_SIZE * INTER_SPOT_DIST_PX *
         small_image_data$scaleFactor / max(dim(small_image_data$data[[1]]))
+
+
+    ############################################################################
+    #   Produce the plot
+    ############################################################################
 
     #   If the quantity to plot is discrete, use 'vis_clus'. Otherwise use
     #   'vis_gene'.
