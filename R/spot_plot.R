@@ -79,15 +79,15 @@ spot_plot <- function(
     }
 
     #   State assumptions about columns expected to be in the colData
-    expected_cols <- c("array_row", "array_col", "sample_id", "exclude_overlapping")
-    if (!all(expected_cols %in% colnames(colData(spe)))) {
-        stop(
-            sprintf(
-                'Missing at least one of the following colData columns: "%s"',
-                paste(expected_cols, collapse = '", "')
-            )
-        )
-    }
+    # expected_cols <- c("array_row", "array_col", "sample_id", "exclude_overlapping")
+    # if (!all(expected_cols %in% colnames(colData(spe)))) {
+    #     stop(
+    #         sprintf(
+    #             'Missing at least one of the following colData columns: "%s"',
+    #             paste(expected_cols, collapse = '", "')
+    #         )
+    #     )
+    # }
 
     #   Subset to specific sample ID, and ensure overlapping spots are dropped
     subset_cols <- (spe$sample_id == sample_id) &
