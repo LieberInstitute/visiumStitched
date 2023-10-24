@@ -80,7 +80,7 @@ Below is the citation output from using `citation('spatialNAcUtils')` in R. Plea
 run this yourself to check for any updates on how to cite __spatialNAcUtils__.
 
 ```{r 'citation', eval = requireNamespace('spatialNAcUtils')}
-print(citation('spatialNAcUtils'), bibtex = TRUE)
+print(citation("spatialNAcUtils"), bibtex = TRUE)
 ```
 
 Please note that the `spatialNAcUtils` was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.

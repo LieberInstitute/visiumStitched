@@ -93,7 +93,7 @@ R. Please run this yourself to check for any updates on how to cite
 **spatialNAcUtils**.
 
 ``` r
-print(citation('spatialNAcUtils'), bibtex = TRUE)
+print(citation("spatialNAcUtils"), bibtex = TRUE)
 #> Warning in citation("spatialNAcUtils"): could not determine year for
 #> 'spatialNAcUtils' from package DESCRIPTION file
 #> To cite package 'spatialNAcUtils' in publications use:

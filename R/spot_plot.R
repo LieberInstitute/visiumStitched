@@ -12,7 +12,7 @@
 #' and the plot is saved to a square output (e.g. PDF with 7in width and
 #' height). However, ggplot does not seem to scale plots of different aspect
 #' ratios exactly consistently when writing to PDF (untested for other formats)
-#' 
+#'
 #' @param spe A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
 #' passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
 #' @param sample_id character(1) passed to \code{sampleid} in
@@ -38,10 +38,8 @@
 #' @export
 #' @author Nicholas J. Eagles
 #' @import viridisLite spatialLIBD ggplot2
-spot_plot <- function(
-        spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
-        colors = NULL, assayname = "logcounts", minCount = 0.5
-    ) {
+spot_plot <- function(spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
+    colors = NULL, assayname = "logcounts", minCount = 0.5) {
     IDEAL_POINT_SIZE <- 200
 
     # (Note that 'sample_id', 'var_name', 'assayname', 'minCount', and 'colors'
@@ -54,7 +52,7 @@ spot_plot <- function(
     }
 
     #   State assumptions about columns expected to be in the colData
-    expected_cols = c("array_row", "array_col", "sample_id", "exclude_overlapping")
+    expected_cols <- c("array_row", "array_col", "sample_id", "exclude_overlapping")
     if (!all(expected_cols %in% colnames(colData(spe)))) {
         stop(
             sprintf(
@@ -65,32 +63,32 @@ spot_plot <- function(
     }
 
     #   Subset to specific sample ID, and ensure overlapping spots are dropped
-    subset_cols = (spe$sample_id == sample_id) &
-        (is.na(spe$exclude_overlapping) |!spe$exclude_overlapping)
+    subset_cols <- (spe$sample_id == sample_id) &
+        (is.na(spe$exclude_overlapping) | !spe$exclude_overlapping)
     if (length(which(subset_cols)) == 0) {
         stop("No non-excluded spots belong to this sample. Perhaps check spe$exclude_overlapping for issues.")
     }
-    spe_small = spe[, subset_cols]
-    
+    spe_small <- spe[, subset_cols]
+
     #   Determine some pixel values for the horizontal bounds of the spots
-    MIN_COL = min(spatialCoords(spe_small)[, 'pxl_row_in_fullres'])
-    MAX_COL = max(spatialCoords(spe_small)[, 'pxl_row_in_fullres'])
+    MIN_COL <- min(spatialCoords(spe_small)[, "pxl_row_in_fullres"])
+    MAX_COL <- max(spatialCoords(spe_small)[, "pxl_row_in_fullres"])
 
     #   The distance between spots (in pixels) is double the average distance
-    #   between array columns 
-    INTER_SPOT_DIST_PX = 2 * (MAX_COL - MIN_COL) /
+    #   between array columns
+    INTER_SPOT_DIST_PX <- 2 * (MAX_COL - MIN_COL) /
         (max(spe_small$array_col) - min(spe_small$array_col))
-    
+
     #   Find the appropriate spot size for this donor. This can vary because
     #   ggplot downscales a plot the fit desired output dimensions (in this
     #   case presumably a square region on a PDF), and stitched images can vary
     #   in aspect ratio. Also, lowres images always have a larger image
     #   dimension of 1200, no matter how many spots fit in either dimension.
-    small_image_data = imgData(spe_small)[
+    small_image_data <- imgData(spe_small)[
         imgData(spe_small)$image_id == image_id,
     ]
-    spot_size = IDEAL_POINT_SIZE * INTER_SPOT_DIST_PX *
-       small_image_data$scaleFactor / max(dim(small_image_data$data[[1]]))
+    spot_size <- IDEAL_POINT_SIZE * INTER_SPOT_DIST_PX *
+        small_image_data$scaleFactor / max(dim(small_image_data$data[[1]]))
 
     #   If the quantity to plot is discrete, use 'vis_clus'. Otherwise use
     #   'vis_gene'.
