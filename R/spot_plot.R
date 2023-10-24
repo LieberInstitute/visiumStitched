@@ -38,8 +38,9 @@
 #' @export
 #' @author Nicholas J. Eagles
 #' @import viridisLite spatialLIBD ggplot2
-spot_plot <- function(spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
-    colors = NULL, assayname = "logcounts", minCount = 0.5) {
+spot_plot <- function(
+        spe, sample_id, image_id, title, var_name, include_legend, is_discrete,
+        colors = NULL, assayname = "logcounts", minCount = 0.5) {
     #   This value was determined empirically, and results in good spot sizes.
     #   Note that it's sample-independent, and the final spot size to pass to
     #   'vis_gene' or 'vis_clus' uses this value along with the image
