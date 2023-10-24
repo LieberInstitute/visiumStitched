@@ -28,7 +28,7 @@ test_that(
         )
 
         #   Here we essentially just check that the function runs without errors
-        spe$exclude_overlapping <- TRUE
+        spe$exclude_overlapping <- FALSE
         expect_equal(
             class(
                 spot_plot(
