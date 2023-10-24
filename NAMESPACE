@@ -2,6 +2,7 @@
 
 export(spot_plot)
 import(SpatialExperiment)
+import(SummarizedExperiment)
 import(ggplot2)
 import(spatialLIBD)
 import(viridisLite)

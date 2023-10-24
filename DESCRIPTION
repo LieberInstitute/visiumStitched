@@ -24,4 +24,5 @@ Imports:
     viridisLite,
     spatialLIBD,
     ggplot2,
-    SpatialExperiment
+    SpatialExperiment,
+    SummarizedExperiment
