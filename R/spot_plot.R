@@ -80,7 +80,7 @@ spot_plot <- function(
 
     #   State assumptions about columns expected to be in the colData
     expected_cols <- c("array_row", "array_col", "sample_id", "exclude_overlapping")
-    if (!all(expected_cols %in% colnames(colnames(colData(spe))))) {
+    if (!all(expected_cols %in% colnames(colData(spe)))) {
         stop(
             sprintf(
                 'Missing at least one of the following colData columns: "%s"',
