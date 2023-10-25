@@ -48,8 +48,9 @@
 #' spe$exclude_overlapping <- FALSE
 #'
 #' #   Plot age spatially for the first sample
+#' sample_id = unique(spe$sample_id)[1]
 #' p <- spot_plot(
-#'    spe, sample_id = unique(spe$sample_id)[1],
+#'    spe, sample_id = sample_id,
 #'    title = sample_id, var_name = "age",
 #'    include_legend = TRUE, is_discrete = FALSE, minCount = 0,
 #'    assayname = "logcounts"
