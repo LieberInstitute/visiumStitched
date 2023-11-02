@@ -47,6 +47,17 @@
 spot_plot_z_score = function(
         spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...
     ) {
+    #   Check validity of arguments
+    if (!all(genes %in% rownames(spe))) {
+        stop("The SpatialExperiment does not contain the selected genes in its rownames")
+    }
+    if (!('sample_id' %in% colnames(colData(spe))) || !(sample_id %in% spe$sample_id)) {
+        stop(paste("'spe$sample_id' must exist and contain the ID", sample_id))
+    }
+    if (!(assayname %in% names(assays(spe)))) {
+        stop(sprintf("'%s' is not an assay in 'spe'"))
+    }
+    
     spe = spe[genes, spe$sample_id == sample_id]
 
     #   For each spot, average expression Z-scores across all selected genes
