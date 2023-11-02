@@ -49,7 +49,7 @@ spot_plot_z_score = function(
     ) {
     #   Check validity of arguments
     .multi_gene_validity_check(
-        spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...
+        spe, genes, sample_id, assayname, minCount, ...
     )
 
     spe = spe[genes, spe$sample_id == sample_id]
@@ -72,7 +72,7 @@ spot_plot_z_score = function(
 #   Check the validity of arguments passed to plotting functions defined in
 #   this script
 .multi_gene_validity_check = function(
-        spe, genes, sample_id, assayname = "counts", minCount = 0.1, ...
+        spe, genes, sample_id, assayname, minCount, ...
     ) {
     #   'genes'
     if (!all(genes %in% rownames(spe))) {
