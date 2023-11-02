@@ -46,7 +46,7 @@
 #' )
 spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...) {
     #   Check validity of arguments
-    spe = .multi_gene_validity_check(
+    spe <- .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
 
@@ -102,7 +102,7 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #' )
 spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minCount = 0.1, ...) {
     #   Check validity of arguments
-    spe = .multi_gene_validity_check(
+    spe <- .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
 
@@ -160,12 +160,12 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #' )
 spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...) {
     #   Check validity of arguments
-    spe = .multi_gene_validity_check(
+    spe <- .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
 
-    pc_exp = prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
-    spe$pc_select_genes <- pc_exp$x[,'PC1']
+    pc_exp <- prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
+    spe$pc_select_genes <- pc_exp$x[, "PC1"]
 
     #   Given that:
     #       - 'genes' is assumed to represent markers of the subregion (and
@@ -176,8 +176,8 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
     #   plots to have positive values where expression is greater. If most
     #   genes have negative coefficients to the first PC, we reverse the
     #   sign of the coefficients to make visual intrepretation consistent
-    if (mean(pc_exp$rotation[,1] > 0) < 0.5) {
-        spe$pc_select_genes = -1 * spe$pc_select_genes
+    if (mean(pc_exp$rotation[, 1] > 0) < 0.5) {
+        spe$pc_select_genes <- -1 * spe$pc_select_genes
     }
 
     #   Plot spatial distribution of this proportion
@@ -192,7 +192,7 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
 
 #' Check the validity of arguments passed to \code{multi_gene.R} plotting
 #' functions
-#' 
+#'
 #' Also subset \code{spe} to the selected sample and genes, dropping genes with
 #' constant expression across spots
 #'
@@ -228,9 +228,9 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
     #   Each multi-gene plotting function expects at least 2 genes with
     #   non-constant expression across spots. Warn if some are dropped, but halt
     #   if less than 2 remain after dropping
-    spe = spe[genes, spe$sample_id == sample_id]
+    spe <- spe[genes, spe$sample_id == sample_id]
 
-    good_indices = which(rowSds(assays(spe)[[assayname]]) != 0)
+    good_indices <- which(rowSds(assays(spe)[[assayname]]) != 0)
     if (length(good_indices) < 2) {
         stop("After dropping genes with no expression variation, less than 2 genes were left")
     }
