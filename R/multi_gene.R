@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment rlang
+#' @import SpatialExperiment SummarizedExperiment
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #' 
 #' @examples 
@@ -76,24 +76,14 @@ spot_plot_z_score = function(
 #' computed of how many \code{genes} have nonzero expression, and this quantity
 #' is plotted across the entire capture area.
 #'
-#' @param spe A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
-#' passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
-#' @param genes character() of gene names to plot in combination, expected to be
-#' in \code{rownames(spe)}
-#' @param sample_id character(1) passed to \code{sampleid} in
-#' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
-#' donor, possibly consisting of several capture areas to plot at once
-#' @param assayname character(1) passed to \code{spatialLIBD::vis_gene}
-#' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene}
-#' @param ... Parameters accepted by \code{spot_plot}, excluding
-#' \code{is_discrete} or \code{var_name}, which are handled internally
+#' @inheritParams spot_plot_z_score
 #' 
 #' @return A \code{ggplot} object containing a "spot plot" of the specified
 #' sample and genes
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment rlang
+#' @import SpatialExperiment SummarizedExperiment
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #' 
 #' @examples 
@@ -136,8 +126,12 @@ spot_plot_sparsity = function(
     return(p)
 }
 
-#   Check the validity of arguments passed to plotting functions defined in
-#   this script
+#'   Check the validity of arguments passed to \code{multi_gene.R} plotting functions
+#'
+#' @author Nicholas J. Eagles
+#' @inheritParams spot_plot_z_score
+#' @import SpatialExperiment SummarizedExperiment rlang
+#' @return NULL
 .multi_gene_validity_check = function(
         spe, genes, sample_id, assayname, minCount, ...
     ) {
