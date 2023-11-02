@@ -17,8 +17,8 @@ spot_plot_pca(
 \item{spe}{A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
 passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 
-\item{genes}{character() of gene names to plot in combination, expected to be
-in \code{rownames(spe)}}
+\item{genes}{character() of length >= 2 of gene names to plot in combination,
+expected to be in \code{rownames(spe)}}
 
 \item{sample_id}{character(1) passed to \code{sampleid} in
 \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a

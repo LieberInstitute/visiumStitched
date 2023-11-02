@@ -8,8 +8,8 @@
 #'
 #' @param spe A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
 #' passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
-#' @param genes character() of gene names to plot in combination, expected to be
-#' in \code{rownames(spe)}
+#' @param genes character() of length >= 2 of gene names to plot in combination,
+#' expected to be in \code{rownames(spe)}
 #' @param sample_id character(1) passed to \code{sampleid} in
 #' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
 #' donor, possibly consisting of several capture areas to plot at once
@@ -46,11 +46,9 @@
 #' )
 spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...) {
     #   Check validity of arguments
-    .multi_gene_validity_check(
+    spe = .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
-
-    spe <- spe[genes, spe$sample_id == sample_id]
 
     #   For each spot, average expression Z-scores across all selected genes
     a <- assays(spe)[[assayname]]
@@ -104,11 +102,9 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #' )
 spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minCount = 0.1, ...) {
     #   Check validity of arguments
-    .multi_gene_validity_check(
+    spe = .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
-
-    spe <- spe[genes, spe$sample_id == sample_id]
 
     #   For each spot, compute proportion of marker genes with nonzero
     #   expression
@@ -164,11 +160,9 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #' )
 spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...) {
     #   Check validity of arguments
-    .multi_gene_validity_check(
+    spe = .multi_gene_validity_check(
         spe, genes, sample_id, assayname, minCount, ...
     )
-
-    spe <- spe[genes, spe$sample_id == sample_id]
 
     pc_exp = prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
     spe$pc_select_genes <- pc_exp$x[,'PC1']
@@ -196,16 +190,24 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
     return(p)
 }
 
-#'   Check the validity of arguments passed to \code{multi_gene.R} plotting functions
+#' Check the validity of arguments passed to \code{multi_gene.R} plotting
+#' functions
+#' 
+#' Also subset \code{spe} to the selected sample and genes, dropping genes with
+#' constant expression across spots
 #'
 #' @author Nicholas J. Eagles
 #' @inheritParams spot_plot_z_score
 #' @import SpatialExperiment SummarizedExperiment
-#' @return NULL
+#' @return \class{SpatialExperiment} subsetted to the specified sample and to
+#' each of the non-constant-expression genes
 .multi_gene_validity_check <- function(spe, genes, sample_id, assayname, minCount, ...) {
     #   'genes'
     if (!all(genes %in% rownames(spe))) {
         stop("The SpatialExperiment does not contain the selected genes in its rownames")
+    }
+    if (length(genes) <= 1) {
+        stop("The behavior of this plotting function is only well-defined for a vector of at least 2 genes")
     }
 
     #   'sample_id'
@@ -222,4 +224,24 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
     if (any(c("var_name", "is_discrete") %in% names(list(...)))) {
         stop("The 'var_name' and 'is_discrete' parameters are internally handled and may not be specified through '...' arguments")
     }
+
+    #   Each multi-gene plotting function expects at least 2 genes with
+    #   non-constant expression across spots. Warn if some are dropped, but halt
+    #   if less than 2 remain after dropping
+    spe = spe[genes, spe$sample_id == sample_id]
+
+    good_indices = which(rowSds(assays(spe)[[assayname]]) != 0)
+    if (length(good_indices) < 2) {
+        stop("After dropping genes with no expression variation, less than 2 genes were left")
+    }
+    if (length(genes) - length(good_indices) > 0) {
+        warning(
+            sprintf(
+                "Dropping gene(s) '%s' which have no expression variation",
+                paste(genes[-good_indices], collapse = "', '")
+            )
+        )
+    }
+
+    return(spe[good_indices, ])
 }

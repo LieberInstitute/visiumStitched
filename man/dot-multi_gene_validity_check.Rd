@@ -2,7 +2,8 @@
 % Please edit documentation in R/multi_gene.R
 \name{.multi_gene_validity_check}
 \alias{.multi_gene_validity_check}
-\title{Check the validity of arguments passed to \code{multi_gene.R} plotting functions}
+\title{Check the validity of arguments passed to \code{multi_gene.R} plotting
+functions}
 \usage{
 .multi_gene_validity_check(spe, genes, sample_id, assayname, minCount, ...)
 }
@@ -10,8 +11,8 @@
 \item{spe}{A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
 passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 
-\item{genes}{character() of gene names to plot in combination, expected to be
-in \code{rownames(spe)}}
+\item{genes}{character() of length >= 2 of gene names to plot in combination,
+expected to be in \code{rownames(spe)}}
 
 \item{sample_id}{character(1) passed to \code{sampleid} in
 \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
@@ -24,8 +25,13 @@ donor, possibly consisting of several capture areas to plot at once}
 \item{...}{Parameters accepted by \code{spot_plot}, excluding
 \code{is_discrete} or \code{var_name}, which are handled internally}
 }
+\value{
+\class{SpatialExperiment} subsetted to the specified sample and to
+each of the non-constant-expression genes
+}
 \description{
-Check the validity of arguments passed to \code{multi_gene.R} plotting functions
+Also subset \code{spe} to the selected sample and genes, dropping genes with
+constant expression across spots
 }
 \author{
 Nicholas J. Eagles

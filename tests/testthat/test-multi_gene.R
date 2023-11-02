@@ -34,13 +34,23 @@ test_plot_fun <- function(spe, plot_fun) {
         "internally handled and may not be specified"
     )
     expect_error(
-        plot_fun(spe, genes, sample_id, var_name = TRUE),
+        plot_fun(spe, genes, sample_id, var_name = 'sample_id'),
         "internally handled and may not be specified"
+    )
+
+    #   Proper handling when some or too many genes have constant expression
+    expect_warning(
+        plot_fun(spe, genes, sample_id),
+        "^Dropping gene"
+    )
+    expect_error(
+        plot_fun(spe, genes = rownames(spe)[1:3], sample_id),
+        "less than 2 genes were left"
     )
 
     #   Here we essentially just check that the function runs without errors
     expect_equal(
-        class(plot_fun(spe, genes, sample_id)),
+        class(plot_fun(spe, genes = rownames(spe)[8:10], sample_id)),
         c("gg", "ggplot")
     )
 }
