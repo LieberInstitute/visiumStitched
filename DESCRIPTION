@@ -25,4 +25,5 @@ Imports:
     spatialLIBD,
     ggplot2,
     SpatialExperiment,
-    SummarizedExperiment
+    SummarizedExperiment,
+    rlang

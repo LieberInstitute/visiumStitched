@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment
+#' @import SpatialExperiment SummarizedExperiment rlang
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #' 
 #' @examples 
@@ -57,7 +57,10 @@ spot_plot_z_score = function(
     if (!(assayname %in% names(assays(spe)))) {
         stop(sprintf("'%s' is not an assay in 'spe'"))
     }
-    
+    if (!is.missing(var_name) || !is.missing(is_discrete)) {
+        stop("The 'var_name' and 'is_discrete' parameters are internally handled and may not be specified through '...' arguments")
+    }
+
     spe = spe[genes, spe$sample_id == sample_id]
 
     #   For each spot, average expression Z-scores across all selected genes

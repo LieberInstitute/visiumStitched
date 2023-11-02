@@ -33,11 +33,11 @@ test_that(
         #   handled and nonsensical
         expect_error(
             spot_plot_z_score(spe, genes, sample_id, is_discrete = TRUE),
-            "" #TODO
+            "internally handled and may not be specified"
         )
         expect_error(
             spot_plot_z_score(spe, genes, sample_id, var_name = TRUE),
-            "" #TODO
+            "internally handled and may not be specified"
         )
 
         #   Here we essentially just check that the function runs without errors
