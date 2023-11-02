@@ -26,7 +26,7 @@ donor, possibly consisting of several capture areas to plot at once}
 \code{is_discrete} or \code{var_name}, which are handled internally}
 }
 \value{
-\class{SpatialExperiment} subsetted to the specified sample and to
+\code{SpatialExperiment} subsetted to the specified sample and to
 each of the non-constant-expression genes
 }
 \description{

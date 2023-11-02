@@ -199,7 +199,7 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
 #' @author Nicholas J. Eagles
 #' @inheritParams spot_plot_z_score
 #' @import SpatialExperiment SummarizedExperiment
-#' @return \class{SpatialExperiment} subsetted to the specified sample and to
+#' @return \code{SpatialExperiment} subsetted to the specified sample and to
 #' each of the non-constant-expression genes
 .multi_gene_validity_check <- function(spe, genes, sample_id, assayname, minCount, ...) {
     #   'genes'
