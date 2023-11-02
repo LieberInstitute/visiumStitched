@@ -69,6 +69,73 @@ spot_plot_z_score = function(
     return(p)
 }
 
+#' Spatial plot of the proportion of select genes with nonzero expression by spot
+#'
+#' This function wraps around \code{spot_plot}, plotting a summary of expression
+#' across multiple genes in a single spatial plot. In each spot, a proportion is
+#' computed of how many \code{genes} have nonzero expression, and this quantity
+#' is plotted across the entire capture area.
+#'
+#' @param spe A \code{SpatialExperiment} with colData column \code{exclude_overlapping},
+#' passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
+#' @param genes character() of gene names to plot in combination, expected to be
+#' in \code{rownames(spe)}
+#' @param sample_id character(1) passed to \code{sampleid} in
+#' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
+#' donor, possibly consisting of several capture areas to plot at once
+#' @param assayname character(1) passed to \code{spatialLIBD::vis_gene}
+#' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene}
+#' @param ... Parameters accepted by \code{spot_plot}, excluding
+#' \code{is_discrete} or \code{var_name}, which are handled internally
+#' 
+#' @return A \code{ggplot} object containing a "spot plot" of the specified
+#' sample and genes
+#'
+#' @export
+#' @author Nicholas J. Eagles
+#' @import SpatialExperiment SummarizedExperiment rlang
+#' @family Spot plots summarizing expression of multiple genes simultaneously
+#' 
+#' @examples 
+#' 
+#' #   Grab an example SpatialExperiment and suppose all of its spots should be
+#' #   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely
+#' #   overlapping spots be TRUE)
+#' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+#' spe$exclude_overlapping <- FALSE
+#' 
+#' white_matter_genes = c(
+#'     "ENSG00000197971", "ENSG00000131095", "ENSG00000123560",
+#'     "ENSG00000171885"
+#' )
+#' spot_plot_sparsity(
+#'    spe = spe,
+#'    genes = white_matter_genes,
+#'    sample_id = unique(spe)$sample_id[1]
+#' )
+spot_plot_sparsity = function(
+        spe, genes, sample_id, assayname = "counts", minCount = 0.1, ...
+    ) {
+    #   Check validity of arguments
+    .multi_gene_validity_check(
+        spe, genes, sample_id, assayname, minCount, ...
+    )
+
+    spe = spe[genes, spe$sample_id == sample_id]
+
+    #   For each spot, compute proportion of marker genes with nonzero
+    #   expression
+    spe$prop_nonzero_marker <- colMeans(assays(spe)[[assayname]] > 0)
+
+    #   Plot spatial distribution of this proportion
+    p = spot_plot(
+        spe, sample_id, var_name = 'prop_nonzero_marker', 
+        is_discrete = FALSE, minCount = minCount, assayname = assayname, ...
+    )
+
+    return(p)
+}
+
 #   Check the validity of arguments passed to plotting functions defined in
 #   this script
 .multi_gene_validity_check = function(
