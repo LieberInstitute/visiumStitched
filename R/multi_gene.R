@@ -48,18 +48,9 @@ spot_plot_z_score = function(
         spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...
     ) {
     #   Check validity of arguments
-    if (!all(genes %in% rownames(spe))) {
-        stop("The SpatialExperiment does not contain the selected genes in its rownames")
-    }
-    if (!('sample_id' %in% colnames(colData(spe))) || !(sample_id %in% spe$sample_id)) {
-        stop(paste("'spe$sample_id' must exist and contain the ID", sample_id))
-    }
-    if (!(assayname %in% names(assays(spe)))) {
-        stop(sprintf("'%s' is not an assay in 'spe'"))
-    }
-    if (!is.missing(var_name) || !is.missing(is_discrete)) {
-        stop("The 'var_name' and 'is_discrete' parameters are internally handled and may not be specified through '...' arguments")
-    }
+    .multi_gene_validity_check(
+        spe, genes, sample_id, assayname = "logcounts", minCount = 0, ...
+    )
 
     spe = spe[genes, spe$sample_id == sample_id]
 
@@ -76,4 +67,30 @@ spot_plot_z_score = function(
     )
 
     return(p)
+}
+
+#   Check the validity of arguments passed to plotting functions defined in
+#   this script
+.multi_gene_validity_check = function(
+        spe, genes, sample_id, assayname = "counts", minCount = 0.1, ...
+    ) {
+    #   'genes'
+    if (!all(genes %in% rownames(spe))) {
+        stop("The SpatialExperiment does not contain the selected genes in its rownames")
+    }
+
+    #   'sample_id'
+    if (!('sample_id' %in% colnames(colData(spe))) || !(sample_id %in% spe$sample_id)) {
+        stop(paste("'spe$sample_id' must exist and contain the ID", sample_id))
+    }
+
+    #   'assayname'
+    if (!(assayname %in% names(assays(spe)))) {
+        stop(sprintf("'%s' is not an assay in 'spe'"))
+    }
+
+    #   Not-allowed '...' parameters
+    if (!is.missing(var_name) || !is.missing(is_discrete)) {
+        stop("The 'var_name' and 'is_discrete' parameters are internally handled and may not be specified through '...' arguments")
+    }
 }
