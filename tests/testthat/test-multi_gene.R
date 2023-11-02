@@ -54,3 +54,6 @@ test_that("spot_plot_z_score", {
 test_that("spot_plot_sparsity", {
     test_plot_fun(spe, spot_plot_sparsity)
 })
+test_that("spot_plot_pca", {
+    test_plot_fun(spe, spot_plot_pca)
+})

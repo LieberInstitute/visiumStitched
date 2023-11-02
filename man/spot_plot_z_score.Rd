@@ -50,19 +50,20 @@ This value is plotted spatially with \code{spot_plot}.
 spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
 spe$exclude_overlapping <- FALSE
 
-white_matter_genes = c(
+white_matter_genes <- c(
     "ENSG00000197971", "ENSG00000131095", "ENSG00000123560",
     "ENSG00000171885"
 )
 spot_plot_z_score(
-   spe = spe,
-   genes = white_matter_genes,
-   sample_id = unique(spe)$sample_id[1],
-   assayname = 'logcounts'
+    spe = spe,
+    genes = white_matter_genes,
+    sample_id = unique(spe)$sample_id[1],
+    assayname = "logcounts"
 )
 }
 \seealso{
 Other Spot plots summarizing expression of multiple genes simultaneously: 
+\code{\link{spot_plot_pca}()},
 \code{\link{spot_plot_sparsity}()}
 }
 \author{

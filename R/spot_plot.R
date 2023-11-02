@@ -38,9 +38,9 @@
 #' @export
 #' @author Nicholas J. Eagles
 #' @import viridisLite spatialLIBD ggplot2 SpatialExperiment SummarizedExperiment
-#' 
-#' @examples 
-#' 
+#'
+#' @examples
+#'
 #' #   Grab an example SpatialExperiment and suppose all of its spots should be
 #' #   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely
 #' #   overlapping spots be TRUE)
@@ -48,20 +48,19 @@
 #' spe$exclude_overlapping <- FALSE
 #'
 #' #   Plot age spatially for the first sample
-#' sample_id = unique(spe$sample_id)[1]
+#' sample_id <- unique(spe$sample_id)[1]
 #' p <- spot_plot(
-#'    spe, sample_id = sample_id,
-#'    title = sample_id, var_name = "age",
-#'    include_legend = TRUE, is_discrete = FALSE, minCount = 0,
-#'    assayname = "logcounts"
+#'     spe,
+#'     sample_id = sample_id,
+#'     title = sample_id, var_name = "age",
+#'     include_legend = TRUE, is_discrete = FALSE, minCount = 0,
+#'     assayname = "logcounts"
 #' )
 #' print(p)
-spot_plot <- function(
-        spe, sample_id, image_id = "lowres",
-        title = sprintf('%s_%s', sample_id, var_name), var_name,
-        include_legend = TRUE, is_discrete, colors = NULL,
-        assayname = "logcounts", minCount = 0.5
-    ) {
+spot_plot <- function(spe, sample_id, image_id = "lowres",
+    title = sprintf("%s_%s", sample_id, var_name), var_name,
+    include_legend = TRUE, is_discrete, colors = NULL,
+    assayname = "logcounts", minCount = 0.5) {
     #   This value was determined empirically, and results in good spot sizes.
     #   Note that it's sample-independent, and the final spot size to pass to
     #   'vis_gene' or 'vis_clus' uses this value along with the image
