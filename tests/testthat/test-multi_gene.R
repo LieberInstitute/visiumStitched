@@ -34,7 +34,7 @@ test_plot_fun <- function(spe, plot_fun) {
         "internally handled and may not be specified"
     )
     expect_error(
-        plot_fun(spe, genes, sample_id, var_name = 'sample_id'),
+        plot_fun(spe, genes, sample_id, var_name = "sample_id"),
         "internally handled and may not be specified"
     )
 

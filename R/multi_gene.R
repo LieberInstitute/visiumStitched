@@ -138,7 +138,7 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment Matrix
+#' @import SpatialExperiment SummarizedExperiment stats
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
