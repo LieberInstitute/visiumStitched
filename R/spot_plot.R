@@ -19,7 +19,8 @@
 #' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}. Assumed to be a
 #' donor, possibly consisting of several capture areas to plot at once
 #' @param image_id character(1) giving the name of the image (e.g. "lowres") to
-#' plot. Currently not displayed, but used to determine an appropriate spot size
+#' plot, used both to determine an appropriate spot size and passed to
+#' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
 #' @param title character(1) giving the title of the plot
 #' @param var_name character(1) passed to \code{geneid} for \code{spatialLIBD::vis_gene}
 #' or \code{clustervar} for \code{spatialLIBD::vis_clus}
@@ -32,6 +33,8 @@
 #' not \code{is_discrete}
 #' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene} if
 #' not \code{is_discrete}
+#' @param spatial logical(1) passed to \code{sampleid} in
+#' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
 #'
 #' @return A \code{ggplot} object containing a "spot plot" of the specified sample
 #'
@@ -60,7 +63,7 @@
 spot_plot <- function(spe, sample_id, image_id = "lowres",
     title = sprintf("%s_%s", sample_id, var_name), var_name,
     include_legend = TRUE, is_discrete, colors = NULL,
-    assayname = "logcounts", minCount = 0.5) {
+    assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
     #   This value was determined empirically, and results in good spot sizes.
     #   Note that it's sample-independent, and the final spot size to pass to
     #   'vis_gene' or 'vis_clus' uses this value along with the image
@@ -136,22 +139,22 @@ spot_plot <- function(spe, sample_id, image_id = "lowres",
         if (is.null(colors)) {
             p <- vis_clus(
                 spe_small,
-                sampleid = sample_id, clustervar = var_name, auto_crop = FALSE,
-                return_plots = TRUE, spatial = FALSE, point_size = spot_size
+                sampleid = sample_id, image_id = image_id, clustervar = var_name, auto_crop = FALSE,
+                return_plots = TRUE, spatial = spatial, point_size = spot_size
             )
         } else {
             p <- vis_clus(
                 spe_small,
-                sampleid = sample_id, clustervar = var_name, auto_crop = FALSE,
-                return_plots = TRUE, spatial = FALSE, colors = colors,
+                sampleid = sample_id, image_id = image_id, clustervar = var_name, auto_crop = FALSE,
+                return_plots = TRUE, spatial = spatial, colors = colors,
                 point_size = spot_size
             )
         }
     } else {
         p <- vis_gene(
             spe_small,
-            sampleid = sample_id, geneid = var_name, return_plots = TRUE,
-            spatial = FALSE, point_size = spot_size, assayname = assayname,
+            sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
+            spatial = spatial, point_size = spot_size, assayname = assayname,
             cont_colors = viridisLite::plasma(21), alpha = 1, auto_crop = FALSE,
             minCount = minCount
         )

@@ -15,7 +15,8 @@ spot_plot(
   is_discrete,
   colors = NULL,
   assayname = "logcounts",
-  minCount = 0.5
+  minCount = 0.5,
+  spatial = FALSE
 )
 }
 \arguments{
@@ -27,7 +28,8 @@ passed to \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 donor, possibly consisting of several capture areas to plot at once}
 
 \item{image_id}{character(1) giving the name of the image (e.g. "lowres") to
-plot. Currently not displayed, but used to determine an appropriate spot size}
+plot, used both to determine an appropriate spot size and passed to
+\code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 
 \item{title}{character(1) giving the title of the plot}
 
@@ -47,6 +49,9 @@ not \code{is_discrete}}
 
 \item{minCount}{numeric(1) passed to passed to \code{spatialLIBD::vis_gene} if
 not \code{is_discrete}}
+
+\item{spatial}{logical(1) passed to \code{sampleid} in
+\code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}}
 }
 \value{
 A \code{ggplot} object containing a "spot plot" of the specified sample
