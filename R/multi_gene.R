@@ -55,7 +55,7 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
     #   For each spot, average expression Z-scores across all selected genes
     a <- assays(spe)[[assayname]]
     gene_z <- (a - rowMeans(a)) / rowSds(a)
-    spe$temp_var <- colMeans(gene_z, na.rm = TRUE)
+    spe$Z_score <- colMeans(gene_z, na.rm = TRUE)
 
     #   Plot spatial distribution of averaged expression Z-scores for this
     #   sample
