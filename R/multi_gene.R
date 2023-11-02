@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment SummarizedExperiment MatrixGenerics
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -80,7 +80,7 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment SummarizedExperiment MatrixGenerics
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -138,7 +138,7 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment stats
+#' @import SpatialExperiment SummarizedExperiment
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
