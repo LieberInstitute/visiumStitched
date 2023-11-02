@@ -26,4 +26,4 @@ Imports:
     ggplot2,
     SpatialExperiment,
     SummarizedExperiment,
-    rlang
+    Matrix

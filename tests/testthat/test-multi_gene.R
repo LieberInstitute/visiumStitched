@@ -46,6 +46,7 @@ test_plot_fun = function(spe, plot_fun) {
 }
 
 spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
+spe$exclude_overlapping <- FALSE
 
 test_that("spot_plot_z_score", { test_plot_fun(spe, spot_plot_z_score) })
 test_that("spot_plot_sparsity", { test_plot_fun(spe, spot_plot_sparsity) })

@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment
+#' @import SpatialExperiment SummarizedExperiment Matrix
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #' 
 #' @examples 
@@ -55,14 +55,14 @@ spot_plot_z_score = function(
     spe = spe[genes, spe$sample_id == sample_id]
 
     #   For each spot, average expression Z-scores across all selected genes
-    gene_z = (assays(spe)[[assayname]] - rowMeans(assays(spe)[[assayname]])) /
-        (rowSdDiffs(assays(spe)[[assayname]]))
+    a = assays(spe)[[assayname]]
+    gene_z = (a - rowMeans(a)) / rowSds(a)
     spe$temp_var = colMeans(gene_z, na.rm = TRUE)
 
     #   Plot spatial distribution of averaged expression Z-scores for this
     #   sample
     p = spot_plot(
-        spe, sample_id, var_name = 'temp_var', is_discrete = FALSE,
+        spe, sample_id, var_name = 'Z_score', is_discrete = FALSE,
         minCount = minCount, assayname = assayname, ...
     )
 
@@ -83,7 +83,7 @@ spot_plot_z_score = function(
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment
+#' @import SpatialExperiment SummarizedExperiment Matrix
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #' 
 #' @examples 
@@ -130,7 +130,7 @@ spot_plot_sparsity = function(
 #'
 #' @author Nicholas J. Eagles
 #' @inheritParams spot_plot_z_score
-#' @import SpatialExperiment SummarizedExperiment rlang
+#' @import SpatialExperiment SummarizedExperiment
 #' @return NULL
 .multi_gene_validity_check = function(
         spe, genes, sample_id, assayname, minCount, ...
@@ -147,11 +147,11 @@ spot_plot_sparsity = function(
 
     #   'assayname'
     if (!(assayname %in% names(assays(spe)))) {
-        stop(sprintf("'%s' is not an assay in 'spe'"))
+        stop(sprintf("'%s' is not an assay in 'spe'", assayname))
     }
 
     #   Not-allowed '...' parameters
-    if (!is.missing(var_name) || !is.missing(is_discrete)) {
+    if (any(c('var_name', 'is_discrete') %in% names(list(...)))) {
         stop("The 'var_name' and 'is_discrete' parameters are internally handled and may not be specified through '...' arguments")
     }
 }
