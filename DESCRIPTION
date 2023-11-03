@@ -26,6 +26,5 @@ Imports:
     ggplot2,
     SpatialExperiment,
     SummarizedExperiment,
-    Matrix,
     MatrixGenerics,
-    stats
+    Matrix
