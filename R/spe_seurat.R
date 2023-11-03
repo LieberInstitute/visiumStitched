@@ -15,7 +15,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import Seurat spatialLIBD SpatialExperiment SummarizedExperiment
+#' @import SummarizedExperiment SpatialExperiment spatialLIBD Seurat
 #'
 #' @examples
 #'
