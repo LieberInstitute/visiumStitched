@@ -27,4 +27,5 @@ Imports:
     SpatialExperiment,
     SummarizedExperiment,
     MatrixGenerics,
-    Matrix
+    Matrix,
+    Seurat
