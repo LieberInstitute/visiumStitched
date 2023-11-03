@@ -22,11 +22,13 @@
 #' #   Grab an example SpatialExperiment and add dummy "transformed" versions of
 #' #   spatial coordinates, which are to be converted
 #' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
-#' for (col_name in c('array_row', 'array_col', 'pxl_row_in_fullres', 'pxl_col_in_fullres')) {
-#'     spe[[paste0(colname, '_transformed')]] = spe[[col_name]]
-#' }
+#' spe$array_row_transformed = spe$array_row
+#' spe$array_col_transformed = spe$array_col
+#' spe$pxl_row_in_fullres_transformed = spatialCoords(spe)[,'pxl_row_in_fullres']
+#' spe$pxl_col_in_fullres_transformed = spatialCoords(spe)[,'pxl_col_in_fullres']
+#' colnames(spe) = spe$key
 #'
-#' #   Plot age spatially for the first sample
+#' #   Convert
 #' seur = spe_to_seurat(spe)
 spe_to_seurat = function(spe, verbose = TRUE) {
     SPOT_DIAMETER = 55e-6
@@ -44,6 +46,11 @@ spe_to_seurat = function(spe, verbose = TRUE) {
                 paste(missing_cols, collapse = "', '")
             )
         )
+    }
+
+    #   Uniqueness of spot names
+    if (any(duplicated(colnames(spe)))) {
+        stop("Seurat requires colnames(spe) to be unique")
     }
 
     #   Low-res images must exist for each sample ID
