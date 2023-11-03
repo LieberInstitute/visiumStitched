@@ -65,13 +65,14 @@ prevent overplotting).</p>
 <span>  <span class="va">spe</span>,</span>
 <span>  <span class="va">sample_id</span>,</span>
 <span>  image_id <span class="op">=</span> <span class="st">"lowres"</span>,</span>
-<span>  <span class="va">title</span>,</span>
+<span>  title <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s_%s"</span>, <span class="va">sample_id</span>, <span class="va">var_name</span><span class="op">)</span>,</span>
 <span>  <span class="va">var_name</span>,</span>
-<span>  <span class="va">include_legend</span>,</span>
+<span>  include_legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">is_discrete</span>,</span>
 <span>  colors <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  assayname <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
-<span>  minCount <span class="op">=</span> <span class="fl">0.5</span></span>
+<span>  minCount <span class="op">=</span> <span class="fl">0.5</span>,</span>
+<span>  spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -90,7 +91,8 @@ donor, possibly consisting of several capture areas to plot at once</p></dd>
 
 <dt>image_id</dt>
 <dd><p>character(1) giving the name of the image (e.g. "lowres") to
-plot. Currently not displayed, but used to determine an appropriate spot size</p></dd>
+plot, used both to determine an appropriate spot size and passed to
+<code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_gene.html" class="external-link">spatialLIBD::vis_gene</a></code> or <code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">spatialLIBD::vis_clus</a></code></p></dd>
 
 
 <dt>title</dt>
@@ -125,6 +127,11 @@ not <code>is_discrete</code></p></dd>
 <dd><p>numeric(1) passed to passed to <code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_gene.html" class="external-link">spatialLIBD::vis_gene</a></code> if
 not <code>is_discrete</code></p></dd>
 
+
+<dt>spatial</dt>
+<dd><p>logical(1) passed to <code>sampleid</code> in
+<code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_gene.html" class="external-link">spatialLIBD::vis_gene</a></code> or <code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">spatialLIBD::vis_clus</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -152,16 +159,17 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 <span class="r-in"><span><span class="co">#   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely</span></span></span>
 <span class="r-in"><span><span class="co">#   overlapping spots be TRUE)</span></span></span>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023-11-02 15:36:03.786946 loading file /github/home/.cache/R/BiocFileCache/26b95ac86073_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023-11-03 14:29:50.847898 loading file /github/home/.cache/R/BiocFileCache/55612634b11_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span><span class="va">spe</span><span class="op">$</span><span class="va">exclude_overlapping</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#   Plot age spatially for the first sample</span></span></span>
-<span class="r-in"><span><span class="va">sample_id</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">sample_id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">sample_id</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">spot_plot</span><span class="op">(</span></span></span>
-<span class="r-in"><span>   <span class="va">spe</span>, sample_id <span class="op">=</span> <span class="va">sample_id</span>,</span></span>
-<span class="r-in"><span>   title <span class="op">=</span> <span class="va">sample_id</span>, var_name <span class="op">=</span> <span class="st">"age"</span>,</span></span>
-<span class="r-in"><span>   include_legend <span class="op">=</span> <span class="cn">TRUE</span>, is_discrete <span class="op">=</span> <span class="cn">FALSE</span>, minCount <span class="op">=</span> <span class="fl">0</span>,</span></span>
-<span class="r-in"><span>   assayname <span class="op">=</span> <span class="st">"logcounts"</span></span></span>
+<span class="r-in"><span>    <span class="va">spe</span>,</span></span>
+<span class="r-in"><span>    sample_id <span class="op">=</span> <span class="va">sample_id</span>,</span></span>
+<span class="r-in"><span>    title <span class="op">=</span> <span class="va">sample_id</span>, var_name <span class="op">=</span> <span class="st">"age"</span>,</span></span>
+<span class="r-in"><span>    include_legend <span class="op">=</span> <span class="cn">TRUE</span>, is_discrete <span class="op">=</span> <span class="cn">FALSE</span>, minCount <span class="op">=</span> <span class="fl">0</span>,</span></span>
+<span class="r-in"><span>    assayname <span class="op">=</span> <span class="st">"logcounts"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="spot_plot-1.png" alt="" width="700" height="433"></span>

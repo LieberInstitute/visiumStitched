@@ -25,9 +25,21 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/dot-multi_gene_validity_check.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/spot_plot.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spot_plot_pca.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spot_plot_sparsity.html</loc>
+  </url>
+  <url>
+    <loc>/reference/spot_plot_z_score.html</loc>
   </url>
 </urlset>
