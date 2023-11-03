@@ -31,6 +31,26 @@
 spe_to_seurat = function(spe, verbose = TRUE) {
     SPOT_DIAMETER = 55e-6
 
+    #   Ensure all necessary columns are present in colData
+    required_cols = c(
+        'sample_id', 'in_tissue', 'array_row_transformed', 'array_col_transformed',
+        'pxl_row_in_fullres_transformed', 'pxl_col_in_fullres_transformed'
+    )
+    if (!all(required_cols %in% colnames(colData(spe)))) {
+        missing_cols = required_cols[!(required_cols %in% colnames(colData(spe)))]
+        stop(
+            sprintf(
+                "Expected the following columns in colData(spe): '%s'",
+                paste(missing_cols, collapse = "', '")
+            )
+        )
+    }
+
+    #   Low-res images must exist for each sample ID
+    if (sum(imgData(spe)$image_id == 'lowres') < length(unique(spe$sample_id))) {
+        stop("Each sample ID must have a low-resolution image for conversion")
+    }
+
     if (verbose) message("Running 'as.Seurat(spe)'...")
     seur = as.Seurat(spe)
 
@@ -64,7 +84,8 @@ spe_to_seurat = function(spe, verbose = TRUE) {
         seur@images[[sample_id]] = Seurat:::VisiumV1(
             image = this_img,
             scale.factors = scalefactors(
-                spot = NA, fiducial = NA, hires = NA, lowres = scaleFactors(spe_small)
+                spot = NA, fiducial = NA, hires = NA,
+                lowres = imgData(spe)[imgData(spe_small)$image_id == 'lowres', 'scaleFactor']
             ),
             coordinates = coords,
             spot.radius = SPOT_DIAMETER / scaleFactors(spe_small),
