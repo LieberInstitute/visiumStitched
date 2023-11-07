@@ -28,4 +28,6 @@ Imports:
     SummarizedExperiment,
     MatrixGenerics,
     Matrix,
-    Seurat
+    Seurat,
+    grDevices,
+    stats
