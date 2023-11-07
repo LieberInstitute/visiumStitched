@@ -24,7 +24,7 @@
 #' @export
 #' @author Nicholas J. Eagles
 #' @import SpatialExperiment Matrix MatrixGenerics
-#' @importFrom SummarizedExperiment colData
+#' @importFrom SummarizedExperiment colData assays
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -82,7 +82,7 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #' @export
 #' @author Nicholas J. Eagles
 #' @import SpatialExperiment Matrix MatrixGenerics
-#' @importFrom SummarizedExperiment colData
+#' @importFrom SummarizedExperiment colData assays
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -141,7 +141,7 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #' @export
 #' @author Nicholas J. Eagles
 #' @import SpatialExperiment
-#' @importFrom SummarizedExperiment colData
+#' @importFrom SummarizedExperiment colData assays
 #' @importFrom stats prcomp
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
@@ -203,7 +203,7 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
 #' @author Nicholas J. Eagles
 #' @inheritParams spot_plot_z_score
 #' @import SpatialExperiment
-#' @importFrom SummarizedExperiment colData
+#' @importFrom SummarizedExperiment colData assays
 #' @return \code{SpatialExperiment} subsetted to the specified sample and to
 #' each of the non-constant-expression genes
 .multi_gene_validity_check <- function(spe, genes, sample_id, assayname, minCount, ...) {

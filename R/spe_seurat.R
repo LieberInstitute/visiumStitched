@@ -17,6 +17,7 @@
 #' @author Nicholas J. Eagles
 #' @import SpatialExperiment spatialLIBD Seurat
 #' @importFrom SummarizedExperiment colData
+#' @importFrom grDevices col2rgb
 #'
 #' @examples
 #'
