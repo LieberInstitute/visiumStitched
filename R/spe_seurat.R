@@ -15,7 +15,8 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SummarizedExperiment SpatialExperiment spatialLIBD Seurat
+#' @import SpatialExperiment spatialLIBD Seurat
+#' @importFrom SummarizedExperiment colData
 #'
 #' @examples
 #'
@@ -24,8 +25,8 @@
 #' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
 #' spe$array_row_transformed = spe$array_row
 #' spe$array_col_transformed = spe$array_col
-#' spe$pxl_row_in_fullres_transformed = spatialCoords(spe)[,'pxl_row_in_fullres']
-#' spe$pxl_col_in_fullres_transformed = spatialCoords(spe)[,'pxl_col_in_fullres']
+#' spe$pxl_row_in_fullres_transformed = SpatialExperiment::spatialCoords(spe)[,'pxl_row_in_fullres']
+#' spe$pxl_col_in_fullres_transformed = SpatialExperiment::spatialCoords(spe)[,'pxl_col_in_fullres']
 #' colnames(spe) = spe$key
 #'
 #' #   Convert
@@ -59,7 +60,7 @@ spe_to_seurat = function(spe, verbose = TRUE) {
     }
 
     if (verbose) message("Running 'as.Seurat(spe)'...")
-    seur = as.Seurat(spe)
+    seur = Seurat::as.Seurat(spe)
 
     for (sample_id in unique(spe$sample_id)) {
         if (verbose) {

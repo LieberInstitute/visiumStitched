@@ -23,7 +23,8 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment Matrix MatrixGenerics
+#' @importFrom SummarizedExperiment colData
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -80,7 +81,8 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment Matrix MatrixGenerics
+#' @importFrom SummarizedExperiment colData
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -138,7 +140,9 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment SummarizedExperiment
+#' @import SpatialExperiment
+#' @importFrom SummarizedExperiment colData
+#' @importFrom stats prcomp
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -164,7 +168,7 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
         spe, genes, sample_id, assayname, minCount, ...
     )
 
-    pc_exp <- prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
+    pc_exp <- stats::prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
     spe$pc_select_genes <- pc_exp$x[, "PC1"]
 
     #   Given that:
@@ -198,7 +202,8 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
 #'
 #' @author Nicholas J. Eagles
 #' @inheritParams spot_plot_z_score
-#' @import SpatialExperiment SummarizedExperiment
+#' @import SpatialExperiment
+#' @importFrom SummarizedExperiment colData
 #' @return \code{SpatialExperiment} subsetted to the specified sample and to
 #' each of the non-constant-expression genes
 .multi_gene_validity_check <- function(spe, genes, sample_id, assayname, minCount, ...) {

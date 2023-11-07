@@ -40,7 +40,9 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import viridisLite spatialLIBD ggplot2 SpatialExperiment SummarizedExperiment
+#' @import spatialLIBD ggplot2 SpatialExperiment
+#' @importFrom viridisLite plasma
+#' @importFrom SummarizedExperiment colData
 #'
 #' @examples
 #'
