@@ -24,24 +24,24 @@
 #' #   Grab an example SpatialExperiment and add dummy "transformed" versions of
 #' #   spatial coordinates, which are to be converted
 #' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
-#' spe$array_row_transformed = spe$array_row
-#' spe$array_col_transformed = spe$array_col
-#' spe$pxl_row_in_fullres_transformed = SpatialExperiment::spatialCoords(spe)[,'pxl_row_in_fullres']
-#' spe$pxl_col_in_fullres_transformed = SpatialExperiment::spatialCoords(spe)[,'pxl_col_in_fullres']
-#' colnames(spe) = spe$key
+#' spe$array_row_transformed <- spe$array_row
+#' spe$array_col_transformed <- spe$array_col
+#' spe$pxl_row_in_fullres_transformed <- SpatialExperiment::spatialCoords(spe)[, "pxl_row_in_fullres"]
+#' spe$pxl_col_in_fullres_transformed <- SpatialExperiment::spatialCoords(spe)[, "pxl_col_in_fullres"]
+#' colnames(spe) <- spe$key
 #'
 #' #   Convert
-#' seur = spe_to_seurat(spe)
-spe_to_seurat = function(spe, verbose = TRUE) {
-    SPOT_DIAMETER = 55e-6
+#' seur <- spe_to_seurat(spe)
+spe_to_seurat <- function(spe, verbose = TRUE) {
+    SPOT_DIAMETER <- 55e-6
 
     #   Ensure all necessary columns are present in colData
-    required_cols = c(
-        'sample_id', 'in_tissue', 'array_row_transformed', 'array_col_transformed',
-        'pxl_row_in_fullres_transformed', 'pxl_col_in_fullres_transformed'
+    required_cols <- c(
+        "sample_id", "in_tissue", "array_row_transformed", "array_col_transformed",
+        "pxl_row_in_fullres_transformed", "pxl_col_in_fullres_transformed"
     )
     if (!all(required_cols %in% colnames(colData(spe)))) {
-        missing_cols = required_cols[!(required_cols %in% colnames(colData(spe)))]
+        missing_cols <- required_cols[!(required_cols %in% colnames(colData(spe)))]
         stop(
             sprintf(
                 "Expected the following columns in colData(spe): '%s'",
@@ -56,12 +56,12 @@ spe_to_seurat = function(spe, verbose = TRUE) {
     }
 
     #   Low-res images must exist for each sample ID
-    if (sum(imgData(spe)$image_id == 'lowres') < length(unique(spe$sample_id))) {
+    if (sum(imgData(spe)$image_id == "lowres") < length(unique(spe$sample_id))) {
         stop("Each sample ID must have a low-resolution image for conversion")
     }
 
     if (verbose) message("Running 'as.Seurat(spe)'...")
-    seur = Seurat::as.Seurat(spe)
+    seur <- Seurat::as.Seurat(spe)
 
     for (sample_id in unique(spe$sample_id)) {
         if (verbose) {
@@ -72,34 +72,34 @@ spe_to_seurat = function(spe, verbose = TRUE) {
                 )
             )
         }
-        spe_small = spe[, spe$sample_id == sample_id]
+        spe_small <- spe[, spe$sample_id == sample_id]
 
-        coords = colData(spe_small)[
+        coords <- colData(spe_small)[
             ,
             c(
-                'in_tissue', 'array_row_transformed', 'array_col_transformed',
-                'pxl_row_in_fullres_transformed', 'pxl_col_in_fullres_transformed'
+                "in_tissue", "array_row_transformed", "array_col_transformed",
+                "pxl_row_in_fullres_transformed", "pxl_col_in_fullres_transformed"
             )
         ]
-        colnames(coords) = c('tissue', 'row', 'col', 'imagerow', 'imagecol')
-        coords$tissue = as.integer(coords$tissue)
-        coords = as.data.frame(coords)
+        colnames(coords) <- c("tissue", "row", "col", "imagerow", "imagecol")
+        coords$tissue <- as.integer(coords$tissue)
+        coords <- as.data.frame(coords)
 
-        this_img = array(
+        this_img <- array(
             t(col2rgb(imgRaster(spe_small))),
             dim = c(dim(imgRaster(spe_small)), 3)
         ) / 256
 
-        seur@images[[sample_id]] = Seurat:::VisiumV1(
+        seur@images[[sample_id]] <- Seurat:::VisiumV1(
             image = this_img,
             scale.factors = scalefactors(
                 spot = NA, fiducial = NA, hires = NA,
-                lowres = imgData(spe)[imgData(spe_small)$image_id == 'lowres', 'scaleFactor']
+                lowres = imgData(spe)[imgData(spe_small)$image_id == "lowres", "scaleFactor"]
             ),
             coordinates = coords,
             spot.radius = SPOT_DIAMETER / scaleFactors(spe_small),
             assay = "originalexp",
-            key = paste0(sample_id, '_')
+            key = paste0(sample_id, "_")
         )
     }
 
