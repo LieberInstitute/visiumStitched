@@ -143,6 +143,7 @@ spot_plot_sparsity <- function(spe, genes, sample_id, assayname = "counts", minC
 #' @import SpatialExperiment
 #' @importFrom SummarizedExperiment colData assays
 #' @importFrom stats prcomp
+#' @importFrom Matrix t
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
 #' @examples
@@ -168,7 +169,9 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
         spe, genes, sample_id, assayname, minCount, ...
     )
 
-    pc_exp <- stats::prcomp(t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE)
+    pc_exp <- stats::prcomp(
+        Matrix::t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE
+    )
     spe$pc_select_genes <- pc_exp$x[, "PC1"]
 
     #   Given that:
