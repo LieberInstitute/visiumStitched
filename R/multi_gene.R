@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment MatrixGenerics
 #' @importFrom SummarizedExperiment colData assays
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
@@ -81,7 +81,7 @@ spot_plot_z_score <- function(spe, genes, sample_id, assayname = "logcounts", mi
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment Matrix MatrixGenerics
+#' @import SpatialExperiment MatrixGenerics
 #' @importFrom SummarizedExperiment colData assays
 #' @family Spot plots summarizing expression of multiple genes simultaneously
 #'
