@@ -33,8 +33,8 @@ plot, used both to determine an appropriate spot size and passed to
 
 \item{title}{character(1) giving the title of the plot}
 
-\item{var_name}{character(1) passed to \code{geneid} for \code{spatialLIBD::vis_gene}
-or \code{clustervar} for \code{spatialLIBD::vis_clus}}
+\item{var_name}{character() passed to \code{geneid} for \code{spatialLIBD::vis_gene}
+or character(1) passed to \code{clustervar} for \code{spatialLIBD::vis_clus}}
 
 \item{include_legend}{logical(1): if FALSE, remove the plot legend}
 

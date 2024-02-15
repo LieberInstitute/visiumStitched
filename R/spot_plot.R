@@ -22,8 +22,8 @@
 #' plot, used both to determine an appropriate spot size and passed to
 #' \code{spatialLIBD::vis_gene} or \code{spatialLIBD::vis_clus}
 #' @param title character(1) giving the title of the plot
-#' @param var_name character(1) passed to \code{geneid} for \code{spatialLIBD::vis_gene}
-#' or \code{clustervar} for \code{spatialLIBD::vis_clus}
+#' @param var_name character() passed to \code{geneid} for \code{spatialLIBD::vis_gene}
+#' or character(1) passed to \code{clustervar} for \code{spatialLIBD::vis_clus}
 #' @param include_legend logical(1): if FALSE, remove the plot legend
 #' @param is_discrete logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
 #' otherwise, use \code{spatialLIBD::vis_gene}
