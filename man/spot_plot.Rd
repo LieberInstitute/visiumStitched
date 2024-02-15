@@ -41,8 +41,8 @@ or character(1) passed to \code{clustervar} for \code{spatialLIBD::vis_clus}}
 \item{is_discrete}{logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
 otherwise, use \code{spatialLIBD::vis_gene}}
 
-\item{colors}{character() of colors passed to \code{cont_colors} in
-\code{spatialLIBD::vis_gene} if not \code{is_discrete}}
+\item{colors}{character() of colors passed to \code{colors} for \code{spatialLIBD::vis_clus}
+if \code{is_discrete} or otherwise to \code{cont_colors} for \code{spatialLIBD::vis_gene}}
 
 \item{assayname}{character(1) passed to \code{spatialLIBD::vis_gene} if
 not \code{is_discrete}}

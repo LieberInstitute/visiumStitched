@@ -27,8 +27,8 @@
 #' @param include_legend logical(1): if FALSE, remove the plot legend
 #' @param is_discrete logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
 #' otherwise, use \code{spatialLIBD::vis_gene}
-#' @param colors character() of colors passed to \code{cont_colors} in
-#' \code{spatialLIBD::vis_gene} if not \code{is_discrete}
+#' @param colors character() of colors passed to \code{colors} for \code{spatialLIBD::vis_clus}
+#' if \code{is_discrete} or otherwise to \code{cont_colors} for \code{spatialLIBD::vis_gene} 
 #' @param assayname character(1) passed to \code{spatialLIBD::vis_gene} if
 #' not \code{is_discrete}
 #' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene} if
@@ -138,7 +138,8 @@ spot_plot <- function(
     #   If the quantity to plot is discrete, use 'vis_clus'. Otherwise use
     #   'vis_gene'.
     if (is_discrete) {
-        #   For 'vis_clus' only, supply a color scale if 'color' is not NULL
+        #   Supply a color scale if 'color' is not NULL. Otherwise, fall back
+        #   upon 'vis_clus' defaults
         if (is.null(colors)) {
             p <- vis_clus(
                 spe_small,
@@ -154,13 +155,23 @@ spot_plot <- function(
             )
         }
     } else {
-        p <- vis_gene(
-            spe_small,
-            sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
-            spatial = spatial, point_size = spot_size, assayname = assayname,
-            cont_colors = viridisLite::plasma(21), alpha = 1, auto_crop = FALSE,
-            minCount = minCount
-        )
+        if (is.null(colors)) {
+            p <- vis_gene(
+                spe_small,
+                sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
+                spatial = spatial, point_size = spot_size, assayname = assayname,
+                alpha = 1, auto_crop = FALSE,
+                minCount = minCount
+            )
+        } else {
+            p <- vis_gene(
+                spe_small,
+                sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
+                spatial = spatial, point_size = spot_size, assayname = assayname,
+                cont_colors = colors, alpha = 1, auto_crop = FALSE,
+                minCount = minCount
+            )
+        }
     }
 
     #   Remove the legend if requested
