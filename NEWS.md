@@ -1,5 +1,9 @@
 # spatialNAcUtils 0.99.1
 
+BUG FIXES
+
+* `spot_plot()` correctly receives `colors` parameter when `is_discrete` is `FALSE`, and documentation describing this was fixed
+
 # spatialNAcUtils 0.99.0
 
 NEW FEATURES
