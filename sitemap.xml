@@ -25,10 +25,10 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/dot-multi_gene_validity_check.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>/reference/multi_gene_validity_check.html</loc>
   </url>
   <url>
     <loc>/reference/spe_to_seurat.html</loc>

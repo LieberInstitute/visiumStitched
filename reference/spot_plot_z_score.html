@@ -123,8 +123,10 @@ sample and genes</p>
 <span class="r-in"><span><span class="co">#   Grab an example SpatialExperiment and suppose all of its spots should be</span></span></span>
 <span class="r-in"><span><span class="co">#   plotted (for spatialNAc, 'exclude_overlapping' will only have genuinely</span></span></span>
 <span class="r-in"><span><span class="co">#   overlapping spots be TRUE)</span></span></span>
-<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2023-12-11 22:24:13.496348 loading file /github/home/.cache/R/BiocFileCache/167f16c12c1d_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"spe"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-02-15 19:27:48.035945 loading file /github/home/.cache/R/BiocFileCache/174e6d2a4118_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span><span class="va">spe</span><span class="op">$</span><span class="va">exclude_overlapping</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">white_matter_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
