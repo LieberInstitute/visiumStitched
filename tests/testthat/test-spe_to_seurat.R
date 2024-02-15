@@ -1,7 +1,7 @@
 library(SpatialExperiment)
 
 test_that(
-    "spe_seurat",
+    "spe_to_seurat",
     {
         spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
 
