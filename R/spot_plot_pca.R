@@ -48,7 +48,8 @@ spot_plot_pca <- function(spe, genes, sample_id, assayname = "logcounts", minCou
     )
 
     pc_exp <- stats::prcomp(
-        Matrix::t(assays(spe)[[assayname]]), center = TRUE, scale = TRUE
+        Matrix::t(assays(spe)[[assayname]]),
+        center = TRUE, scale = TRUE
     )
     spe$pc_select_genes <- pc_exp$x[, "PC1"]
 

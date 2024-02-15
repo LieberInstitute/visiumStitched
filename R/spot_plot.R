@@ -28,7 +28,7 @@
 #' @param is_discrete logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
 #' otherwise, use \code{spatialLIBD::vis_gene}
 #' @param colors character() of colors passed to \code{colors} for \code{spatialLIBD::vis_clus}
-#' if \code{is_discrete} or otherwise to \code{cont_colors} for \code{spatialLIBD::vis_gene} 
+#' if \code{is_discrete} or otherwise to \code{cont_colors} for \code{spatialLIBD::vis_gene}
 #' @param assayname character(1) passed to \code{spatialLIBD::vis_gene} if
 #' not \code{is_discrete}
 #' @param minCount numeric(1) passed to passed to \code{spatialLIBD::vis_gene} if
@@ -64,11 +64,10 @@
 #'     assayname = "logcounts"
 #' )
 #' print(p)
-spot_plot <- function(
-        spe, sample_id, image_id = "lowres",
-        title = sprintf("%s_%s", sample_id, var_name), var_name,
-        include_legend = TRUE, is_discrete, colors = NULL,
-        assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
+spot_plot <- function(spe, sample_id, image_id = "lowres",
+    title = sprintf("%s_%s", sample_id, var_name), var_name,
+    include_legend = TRUE, is_discrete, colors = NULL,
+    assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
     #   This value was determined empirically, and results in good spot sizes.
     #   Note that it's sample-independent, and the final spot size to pass to
     #   'vis_gene' or 'vis_clus' uses this value along with the image
