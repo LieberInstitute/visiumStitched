@@ -23,7 +23,9 @@
 #'
 #' #   Grab an example SpatialExperiment and add dummy "transformed" versions of
 #' #   spatial coordinates, which are to be converted
-#' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+#' spe <- if (!exists("spe")) {
+#'     spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+#' }
 #' spe$array_row_transformed <- spe$array_row
 #' spe$array_col_transformed <- spe$array_col
 #' spe$pxl_row_in_fullres_transformed <- SpatialExperiment::spatialCoords(spe)[, "pxl_row_in_fullres"]
