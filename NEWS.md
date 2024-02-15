@@ -1,3 +1,5 @@
+# spatialNAcUtils 0.99.1
+
 # spatialNAcUtils 0.99.0
 
 NEW FEATURES
