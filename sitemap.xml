@@ -28,21 +28,9 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/multi_gene_validity_check.html</loc>
-  </url>
-  <url>
     <loc>/reference/spe_to_seurat.html</loc>
   </url>
   <url>
     <loc>/reference/spot_plot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spot_plot_pca.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spot_plot_sparsity.html</loc>
-  </url>
-  <url>
-    <loc>/reference/spot_plot_z_score.html</loc>
   </url>
 </urlset>
