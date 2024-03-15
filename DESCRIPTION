@@ -27,9 +27,6 @@ Imports:
     ggplot2,
     SpatialExperiment,
     SummarizedExperiment,
-    MatrixGenerics,
-    Matrix,
     Seurat,
     grDevices,
-    stats,
     rlang
