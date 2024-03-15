@@ -24,6 +24,10 @@
 #' @param title character(1) giving the title of the plot
 #' @param var_name character() passed to \code{geneid} for \code{spatialLIBD::vis_gene}
 #' or character(1) passed to \code{clustervar} for \code{spatialLIBD::vis_clus}
+#' @param multi_gene_method A \code{character(1)}: either "pca", "sparsity", or
+#' "z_score". This parameter controls how multiple continuous variables are
+#' combined for visualization, and only applies when \code{var_name} has length > 1
+#' and \code{is_discrete} is FALSE
 #' @param include_legend logical(1): if FALSE, remove the plot legend
 #' @param is_discrete logical(1): if TRUE, use \code{spatialLIBD::vis_clus};
 #' otherwise, use \code{spatialLIBD::vis_gene}
@@ -43,6 +47,7 @@
 #' @import spatialLIBD ggplot2 SpatialExperiment
 #' @importFrom viridisLite plasma
 #' @importFrom SummarizedExperiment colData
+#' @importFrom rlang arg_match
 #'
 #' @examples
 #'
@@ -64,8 +69,26 @@
 #'     assayname = "logcounts"
 #' )
 #' print(p)
+#' 
+#' #    Define several markers for white matter
+#' white_matter_genes <- c(
+#'     "ENSG00000197971", "ENSG00000131095", "ENSG00000123560",
+#'     "ENSG00000171885"
+#' )
+#' 
+#' #   Plot multiple white matter genes simultaneously for the first sample.
+#' #   Use the "pca" method for combining them
+#' p <- spot_plot(
+#'     spe,
+#'     sample_id = sample_id,
+#'     title = sample_id, var_name = white_matter_genes,
+#'     multi_gene_method = "pca", include_legend = TRUE, is_discrete = FALSE,
+#'     minCount = 0, assayname = "logcounts"
+#' )
+#' print(p)
 spot_plot <- function(spe, sample_id, image_id = "lowres",
     title = sprintf("%s_%s", sample_id, var_name), var_name,
+    multi_gene_method = c("z_score", "pca", "sparsity"),
     include_legend = TRUE, is_discrete, colors = NULL,
     assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
     #   This value was determined empirically, and results in good spot sizes.
@@ -82,6 +105,8 @@ spot_plot <- function(spe, sample_id, image_id = "lowres",
     # (Note that 'sample_id', 'var_name', 'assayname', 'minCount', and 'colors'
     # are not checked for validity here, since spatialLIBD functions handle
     # their validity)
+
+    multi_gene_method <- rlang::arg_match(multi_gene_method)
 
     #   Check validity of spatial coordinates
     if (!all(c("pxl_col_in_fullres", "pxl_row_in_fullres") == sort(colnames(spatialCoords(spe))))) {
@@ -159,7 +184,8 @@ spot_plot <- function(spe, sample_id, image_id = "lowres",
         if (is.null(colors)) {
             p <- vis_gene(
                 spe_small,
-                sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
+                sampleid = sample_id, image_id = image_id, geneid = var_name,
+                multi_gene_method = multi_gene_method, return_plots = TRUE,
                 spatial = spatial, point_size = spot_size, assayname = assayname,
                 alpha = 1, auto_crop = FALSE,
                 minCount = minCount
@@ -167,7 +193,8 @@ spot_plot <- function(spe, sample_id, image_id = "lowres",
         } else {
             p <- vis_gene(
                 spe_small,
-                sampleid = sample_id, image_id = image_id, geneid = var_name, return_plots = TRUE,
+                sampleid = sample_id, image_id = image_id, geneid = var_name,
+                multi_gene_method = multi_gene_method, return_plots = TRUE,
                 spatial = spatial, point_size = spot_size, assayname = assayname,
                 cont_colors = colors, alpha = 1, auto_crop = FALSE,
                 minCount = minCount
