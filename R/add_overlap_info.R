@@ -2,16 +2,17 @@
 #'
 #' Given a \code{SpatialExperiment} and column name in its \code{colData},
 #' return a modified copy of the \code{SpatialExperiment} with additional \code{colData}
-#' columns: \code{spe$exclude_overlapping} and \code{spe$overlap_capture_area}
+#' columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}
 #' 
 #' \code{spe$exclude_overlapping} is TRUE for spots with a higher-quality overlapping
 #' capture area and FALSE otherwise. \code{spot_plot} only displays FALSE spots to
-#' prevent overplotting in regions of overlap. \code{spe$overlap_capture_area} gives the
-#' name of the highest-quality overlapping capture area for spots in region of overlap.
-#' Otherwise, it holds the value "none".
+#' prevent overplotting in regions of overlap. \code{spe$overlap_key} gives comma-
+#' separated strings containing the keys of any overlapping spots, and is the empty
+#' string otherwise.
 #'
 #' @param spe A \code{SpatialExperiment} with colData columns \code{exclude_overlapping},
-#' \code{array_row_transformed}, and \code{array_col_transformed}
+#' \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
+#' \code{sample_id_original}
 #' @param metric_name character(1) in \code{colnames(colData(spe))}, where
 #' spots belonging to the capture area with highest average value for the metric
 #' take precedence over other spots
@@ -25,8 +26,6 @@
 #' @author Nicholas J. Eagles
 
 add_overlap_info = function(spe, metric_name) {
-    stop("This function is under development and may not be called yet")
-
     ############################################################################
     #   Compute 'overlap_key'
     ############################################################################
