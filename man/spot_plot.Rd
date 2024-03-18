@@ -63,8 +63,8 @@ not \code{is_discrete}}
 A \code{ggplot} object containing a "spot plot" of the specified sample
 }
 \description{
-This function is essentially a wrapper around spatialLIBD::vis_clus and
-spatialLIBD::vis_gene, suitable for merged samples (each sample in the
+This function is essentially a wrapper around \code{spatialLIBD::vis_clus} and
+\code{spatialLIBD::vis_gene}, suitable for merged samples (each sample in the
 SpatialExperiment 'spe' is a donor consisting of multiple capture areas, with
 colData column 'exclude_overlapping' indicating overlapping spots to drop (to
 prevent overplotting).
