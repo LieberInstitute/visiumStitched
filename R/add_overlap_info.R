@@ -26,6 +26,20 @@
 #' @author Nicholas J. Eagles
 
 add_overlap_info = function(spe, metric_name) {
+    #   State assumptions about columns expected to be in the colData
+    expected_cols <- c(
+        "array_row_transformed", "array_col_transformed", "sample_id",
+        "sample_id_original", "key", metric_name
+    )
+    if (!all(expected_cols %in% colnames(colData(spe)))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following colData columns: "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+
     ############################################################################
     #   Compute 'overlap_key'
     ############################################################################
