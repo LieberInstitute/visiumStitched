@@ -24,6 +24,24 @@
 #' @importFrom S4Vectors DataFrame
 #' @export
 #' @author Nicholas J. Eagles
+#' 
+#' @examples
+#' #   For internal testing
+#' \dontrun{
+#'     library(HDF5Array)
+#'     spe = loadHDF5SummarizedExperiment('dev/test_data/spe_filtered')
+#'     spe_new = add_overlap_info(spe, metric_name = 'sum_umi')
+#'     p_old = spot_plot(
+#'         spe, sample_id = 'Br8492', var_name = 'sample_id_original',
+#'         is_discrete = TRUE
+#'     )
+#'     p_new = spot_plot(
+#'         spe_new, sample_id = 'Br8492', var_name = 'sample_id_original',
+#'         is_discrete = TRUE
+#'     )
+#'     print(p_old)
+#'     print(p_new)
+#' }
 
 add_overlap_info = function(spe, metric_name) {
     #   State assumptions about columns expected to be in the colData
