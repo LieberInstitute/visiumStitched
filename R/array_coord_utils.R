@@ -84,3 +84,17 @@
     error <- sqrt((INTERVAL_X * dx)**2 + (INTERVAL_Y * dy)**2)
     return(list(x, y, error))
 }
+
+#' Round to the nearest integer, always rounding up at 0.5
+#' 
+#' This consistent behavior is favorable for our application, where we want to
+#' minimize duplicate mappings of spots to new array coordinates
+#' 
+#' @param x \code{numeric()} vector.
+#'
+#' @return A \code{numeric()} vector rounded to the nearest integer.
+#'
+#' @author Nicholas J. Eagles
+clean_round <- function(x) {
+    return(floor(x) + ((x * 10) %% 10 >= 5))
+}
