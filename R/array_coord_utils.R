@@ -95,6 +95,108 @@
 #' @return A \code{numeric()} vector rounded to the nearest integer.
 #'
 #' @author Nicholas J. Eagles
-clean_round <- function(x) {
+.clean_round <- function(x) {
     return(floor(x) + ((x * 10) %% 10 >= 5))
+}
+
+#' Fit spots to a new Visium-like array
+#' 
+#' Given transformed pixel coordinates, modify the 'array_row' and
+#' 'array_col' columns to represent a larger Visium capture area containing
+#' all capture areas in a common coordinate system. The number of
+#' array rows/cols generally changes from the Visium standards of 78 and 128
+#' (and even may change in ratio between num rows and num cols).
+#' 
+#' Runtime is O(n) with the number of spots, making it much faster than say,
+#' a distance-matrix-based approach running at O(n^2).
+#'
+#' @param coords A \code{tibble()} whose rows represent capture areas of the
+#' same group, and containing columns 'array_row', 'array_col',
+#' 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.
+#' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
+#' between any 2 spots in the new coordinates.
+#' @param INTERVAL_X \code{numeric(1)} giving pixel distance between coordinate
+#' units used for \code{x} (e.g. if x represents ideal \code{array_col} values,
+#' \code{INTERVAL_X} represents pixel distance between spot columns).
+#' @param INTERVAL_Y \code{numeric(1)} giving pixel distance between coordinate
+#' units used for \code{y}.
+#'
+#' @return A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
+#' well as new 'pxl_row_rounded' and 'pxl_col_rounded' columns representing the
+#' pixel coordinates rounded to the nearest exact array coordinates.
+#'
+#' @importFrom dplyr filter mutate
+#' @author Nicholas J. Eagles
+.fit_to_array <- function(coords, inter_spot_dist_px) {
+    MIN_ROW <- min(coords$pxl_col_in_fullres)
+    INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
+
+    MIN_COL <- min(coords$pxl_row_in_fullres)
+    MAX_COL <- max(coords$pxl_row_in_fullres)
+    INTERVAL_COL <- inter_spot_dist_px / 2
+
+    #   Calculate what "ideal" array rows and cols should be (allowed to be any
+    #   float). Don't round yet. Note array_row maps with pxl_col, while
+    #   array_col maps backwards with pxl_row
+    array_row_temp <- (coords$pxl_col_in_fullres - MIN_ROW) /
+        INTERVAL_ROW
+
+    array_col_temp <- (MAX_COL - coords$pxl_row_in_fullres) /
+        INTERVAL_COL
+
+    #   For now, find the nearest row first, then round to the nearest possible
+    #   column given the row
+    temp <- .refine_fit(array_row_temp, array_col_temp, INTERVAL_ROW, INTERVAL_COL)
+    error_row_first <- temp[[3]]
+    coords$array_row <- temp[[1]]
+    coords$array_col <- temp[[2]]
+
+    #   Perform the opposite order (column then row). When this ordering results
+    #   in lower error, use it instead
+    temp <- .refine_fit(array_col_temp, array_row_temp, INTERVAL_COL, INTERVAL_ROW)
+    error_col_first <- temp[[3]]
+    coords$array_row[error_row_first > error_col_first] <- temp[[2]][
+        error_row_first > error_col_first
+    ]
+    coords$array_col[error_row_first > error_col_first] <- temp[[1]][
+        error_row_first > error_col_first
+    ]
+
+    #   Now make new pixel columns based on just the array values (these columns
+    #   give the coordinates for given array row/cols)
+    coords$pxl_col_rounded <- MIN_ROW + coords$array_row * INTERVAL_ROW
+    coords$pxl_row_rounded <- MAX_COL - coords$array_col * INTERVAL_COL
+
+    #-------------------------------------------------------------------------------
+    #   array (0, 0) does not exist on an ordinary Visium array. Move any such
+    #   values to the nearest alternatives
+    #-------------------------------------------------------------------------------
+
+    #   Nearest points to (0, 0) are (0, 2) and (1, 1):
+    array_02 <- c(MIN_ROW, MIN_COL + 2 * INTERVAL_COL)
+    array_11 <- c(MIN_ROW + INTERVAL_ROW, MIN_COL + INTERVAL_COL)
+
+    #   Determine the distances to those nearest points
+    dist_coords <- coords |>
+        dplyr::filter(array_row == 0, array_col == 0) |>
+        dplyr::mutate(
+            dist_02 = (pxl_col_in_fullres - array_02[1])**2 +
+                (pxl_row_in_fullres - array_02[2])**2,
+            dist_11 = (pxl_col_in_fullres - array_11[1])**2 +
+                (pxl_row_in_fullres - array_11[2])**2,
+        )
+
+    #   Move any instances of (0, 0) to the nearest alternative
+    indices <- (coords$array_row == 0) & (coords$array_col == 0)
+    coords[indices, "array_row"] <- ifelse(
+        dist_coords$dist_02 < dist_coords$dist_11, 0, 1
+    )
+    coords[indices, "array_col"] <- ifelse(
+        dist_coords$dist_02 < dist_coords$dist_11, 2, 1
+    )
+
+    #   Verify the newly assigned array row and cols have reasonable values
+    .validate_array(coords)
+
+    return(coords)
 }
