@@ -13,6 +13,7 @@
 #'
 #' @importFrom dplyr filter summarize pull
 #' @author Nicholas J. Eagles
+#' @keywords internal
 .validate_array <- function(coords) {
     #   Even array rows can only use even column indices
     all_even_cols = coords |>
@@ -67,6 +68,7 @@
 #' rounding both \code{x} and \code{y}.
 #'
 #' @author Nicholas J. Eagles
+#' @keywords internal
 .refine_fit <- function(x, y, INTERVAL_X, INTERVAL_Y) {
     #   Round x to the nearest integer, and track the error from doing so in the
     #   variable 'dx'
@@ -95,6 +97,7 @@
 #' @return A \code{numeric()} vector rounded to the nearest integer.
 #'
 #' @author Nicholas J. Eagles
+#' @keywords internal
 .clean_round <- function(x) {
     return(floor(x) + ((x * 10) %% 10 >= 5))
 }
@@ -127,6 +130,7 @@
 #'
 #' @importFrom dplyr filter mutate
 #' @author Nicholas J. Eagles
+#' @keywords internal
 .fit_to_array <- function(coords, inter_spot_dist_px) {
     MIN_ROW <- min(coords$pxl_col_in_fullres)
     INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)

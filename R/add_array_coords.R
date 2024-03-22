@@ -91,7 +91,7 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
 
         #   Adjust 'array_row' and 'array_col' with values appropriate for the new
         #   coordinate system (a larger Visium grid with equal inter-spot distances)
-        coords_list[[i]] <- fit_to_array(coords, inter_spot_dist_px)
+        coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
     }
 
     coord_cols = c(
