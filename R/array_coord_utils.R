@@ -72,14 +72,14 @@
 .refine_fit <- function(x, y, INTERVAL_X, INTERVAL_Y) {
     #   Round x to the nearest integer, and track the error from doing so in the
     #   variable 'dx'
-    dx <- x - clean_round(x)
+    dx <- x - .clean_round(x)
     x <- x - dx
 
     #   Given x, round y to the nearest valid integer (y must be even iff x is),
     #   and track the error from doing so in the variable 'dy'
     dy <- rep(0, length(y))
-    dy[x %% 2 == 0] <- y[x %% 2 == 0] - clean_round(y[x %% 2 == 0] / 2) * 2
-    dy[x %% 2 == 1] <- y[x %% 2 == 1] - (clean_round(y[x %% 2 == 1] / 2 - 0.5) * 2 + 1)
+    dy[x %% 2 == 0] <- y[x %% 2 == 0] - .clean_round(y[x %% 2 == 0] / 2) * 2
+    dy[x %% 2 == 1] <- y[x %% 2 == 1] - (.clean_round(y[x %% 2 == 1] / 2 - 0.5) * 2 + 1)
     y <- y - dy
 
     #   Summarize error in Euclidean distance
@@ -125,8 +125,9 @@
 #' units used for \code{y}.
 #'
 #' @return A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
-#' well as new 'pxl_row_rounded' and 'pxl_col_rounded' columns representing the
-#' pixel coordinates rounded to the nearest exact array coordinates.
+#' well as new 'pxl_row_in_fullres_rounded' and 'pxl_col_in_fullres_rounded'
+#' columns representing the pixel coordinates rounded to the nearest exact array
+#' coordinates.
 #'
 #' @importFrom dplyr filter mutate
 #' @author Nicholas J. Eagles
@@ -168,8 +169,8 @@
 
     #   Now make new pixel columns based on just the array values (these columns
     #   give the coordinates for given array row/cols)
-    coords$pxl_col_rounded <- MIN_ROW + coords$array_row * INTERVAL_ROW
-    coords$pxl_row_rounded <- MAX_COL - coords$array_col * INTERVAL_COL
+    coords$pxl_col_in_fullres_rounded <- MIN_ROW + coords$array_row * INTERVAL_ROW
+    coords$pxl_row_in_fullres_rounded <- MAX_COL - coords$array_col * INTERVAL_COL
 
     #-------------------------------------------------------------------------------
     #   array (0, 0) does not exist on an ordinary Visium array. Move any such

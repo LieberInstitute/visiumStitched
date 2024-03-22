@@ -72,11 +72,7 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
                 coords_dir,
                 sprintf('tissue_positions_%s.csv', all_groups[i])
             ) |>
-            readr::read_csv(show_col_types = FALSE) |>
-            mutate(
-                group = all_groups[i],
-                capture_area = str_extract(key, '_(.*)', group = 1)
-            )
+            readr::read_csv(show_col_types = FALSE)
         
         #   From the spaceranger JSON, we have the spot diameter both in pixels
         #   and meters, and can therefore compute the image's pixel/m ratio.
@@ -99,22 +95,35 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
     )
     coords = do.call(rbind, coords_list) |>
         #   Coordinates must be integers
-        mutate_at(coord_cols, ~ as.integer(round(.))) |>
-        rename_with(coord_cols, ~ paste0(.x, '_transformed'))
+        mutate(
+            across(
+                matches('^(array|pxl)_(row|col)(_in_fullres)?'),
+                ~ as.integer(round(.x))
+            )
+        ) |>
+        rename_with(~ paste0(.x, '_transformed'), all_of(coord_cols))
+    
+    #   Line up and potentially subset Samui-refined coords to those in 'spe'
+    match_index = match(spe$key, coords$key)
+    if (any(is.na(match_index))) {
+        stop("Unrecognized key(s) in Samui-refined coords.")
+    }
+    coords = coords[match(spe$key, coords$key),] |>
+        select(-c(key, in_tissue))
 
     #   Add transformed coordinates as columns to colData
-    temp = colnames(spe)
-    colData(spe) = colData(spe) |>
-        as_tibble() |>
-        left_join(coords, by = "key") |>
-        DataFrame()
-    colnames(spe) = temp
+    colData(spe) = cbind(colData(spe), coords)
+
+    #   Retain "_original" copies of the coordinates
+    for(col_name in coord_cols) {
+        spe[[paste0(col_name, "_original")]] = spe[[col_name]]
+    }
 
     #   If 'overwrite', make transformed coordinates the default in the colData
     #   and spatialCoords
     if (overwrite) {
-        spatialCoords(spe)$pxl_col_in_fullres = coords$pxl_col_in_fullres_transformed
-        spatialCoords(spe)$pxl_row_in_fullres = coords$pxl_row_in_fullres_transformed
+        spatialCoords(spe)[, 'pxl_col_in_fullres'] = coords$pxl_col_in_fullres_transformed
+        spatialCoords(spe)[, 'pxl_row_in_fullres'] = coords$pxl_row_in_fullres_transformed
 
         #   Make transformed coordinates the default in the colData
         for(col_name in coord_cols) {
