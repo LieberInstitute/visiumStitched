@@ -33,25 +33,94 @@
 #' \code{pixel_col_in_fullres}, and additional corresponding columns ending in
 #' \code{_original}
 #'
+#' @importFrom readr read_csv
+#' @importFrom S4Vectors DataFrame
+#' @importFrom rjson fromJSON
 #' @export
 #' @author Nicholas J. Eagles
+#' 
+#' @examples
+#' #   For internal testing
+#' \dontrun{
+#'    library(HDF5Array)
+#'    spe = loadHDF5SummarizedExperiment('dev/test_data/spe_filtered')
+#'    sample_info = readr::read_csv('dev/test_data/sample_info.csv')
+#'    coords_dir = 'dev/test_data'
+#'    spe_new = add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+#'}
 
 add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
+    #   55-micrometer diameter for Visium spot; 100 micrometers between spots;
+    #   65-micrometer spot diameter used in 'spot_diameter_fullres' calculation
+    #   for spaceranger JSON. See documentation for respective quantities. The
+    #   difference between 55 and 65 does indeed exist and is properly
+    #   documented, but is likely a bug in the sense the choice was probably
+    #   unintentional
+    #   https://kb.10xgenomics.com/hc/en-us/articles/360035487812-What-is-the-size-of-the-spots-on-the-Visium-Gene-Expression-Slide-
+    #   https://kb.10xgenomics.com/hc/en-us/articles/360035487892-How-much-space-is-there-between-spots-referred-to-as-white-space-
+    #   https://support.10xgenomics.com/spatial-gene-expression/software/pipelines/latest/output/spatial
+    SPOT_DIAMETER_JSON_M <- 65e-6
+    INTER_SPOT_DIST_M <- 100e-6
+
     all_groups = unique(sample_info$group)
 
     #   Read in tissue positions for all groups, track group and capture area,
-    #   then merge into a single tibble
-    tissue_list = list()
+    #   then compute adjusted array coordinates
+    coords_list = list()
     for (i in seq(length(all_groups))) {
-        tissue_list[[i]] = file.path(
+        coords = file.path(
                 coords_dir,
                 sprintf('tissue_positions_%s.csv', all_groups[i])
             ) |>
-            read_csv(show_col_types = FALSE) |>
+            readr::read_csv(show_col_types = FALSE) |>
             mutate(
                 group = all_groups[i],
                 capture_area = str_extract(key, '_(.*)', group = 1)
             )
+        
+        #   From the spaceranger JSON, we have the spot diameter both in pixels
+        #   and meters, and can therefore compute the image's pixel/m ratio.
+        #   Then use that to compute the distance between spots in pixels
+        sr_json <- rjson::fromJSON(
+            file = file.path(
+                sample_info$spaceranger_dir[i], "scalefactors_json.json"
+            )
+        )
+        px_per_m <- sr_json$spot_diameter_fullres / SPOT_DIAMETER_JSON_M
+        inter_spot_dist_px <- INTER_SPOT_DIST_M * px_per_m
+
+        #   Adjust 'array_row' and 'array_col' with values appropriate for the new
+        #   coordinate system (a larger Visium grid with equal inter-spot distances)
+        coords_list[[i]] <- fit_to_array(coords, inter_spot_dist_px)
     }
-    coords = do.call(rbind, tissue_list)
+
+    coord_cols = c(
+        "array_row", "array_col", "pxl_row_in_fullres", "pxl_col_in_fullres"
+    )
+    coords = do.call(rbind, coords_list) |>
+        #   Coordinates must be integers
+        mutate_at(coord_cols, ~ as.integer(round(.))) |>
+        rename_with(coord_cols, ~ paste0(.x, '_transformed'))
+
+    #   Add transformed coordinates as columns to colData
+    temp = colnames(spe)
+    colData(spe) = colData(spe) |>
+        as_tibble() |>
+        left_join(coords, by = "key") |>
+        DataFrame()
+    colnames(spe) = temp
+
+    #   If 'overwrite', make transformed coordinates the default in the colData
+    #   and spatialCoords
+    if (overwrite) {
+        spatialCoords(spe)$pxl_col_in_fullres = coords$pxl_col_in_fullres_transformed
+        spatialCoords(spe)$pxl_row_in_fullres = coords$pxl_row_in_fullres_transformed
+
+        #   Make transformed coordinates the default in the colData
+        for(col_name in coord_cols) {
+            spe[[col_name]] = coords[[paste0(col_name, "_transformed")]]
+        }
+    }
+
+    return(spe)
 }
