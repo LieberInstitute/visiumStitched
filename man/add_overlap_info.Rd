@@ -31,6 +31,24 @@ prevent overplotting in regions of overlap. \code{spe$overlap_key} gives comma-
 separated strings containing the keys of any overlapping spots, and is the empty
 string otherwise.
 }
+\examples{
+#   For internal testing
+\dontrun{
+    library(HDF5Array)
+    spe = loadHDF5SummarizedExperiment('dev/test_data/spe_filtered')
+    spe_new = add_overlap_info(spe, metric_name = 'sum_umi')
+    p_old = spot_plot(
+        spe, sample_id = 'Br8492', var_name = 'sample_id_original',
+        is_discrete = TRUE
+    )
+    p_new = spot_plot(
+        spe_new, sample_id = 'Br8492', var_name = 'sample_id_original',
+        is_discrete = TRUE
+    )
+    print(p_old)
+    print(p_new)
+}
+}
 \author{
 Nicholas J. Eagles
 }
