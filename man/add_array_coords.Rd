@@ -27,7 +27,7 @@ original values are preserved even when TRUE, in versions of
 A \code{SpatialExperiment} object with modified \code{colData}
 columns \code{array_row}, \code{array_col}, \code{pixel_row_in_fullres}, and
 \code{pixel_col_in_fullres}, and additional corresponding columns ending in
-\code{_original}
+\code{_original} and (for pixel coordinates only) \code{_rounded}
 }
 \description{
 Given a \code{SpatialExperiment}, sample information, and coordinates

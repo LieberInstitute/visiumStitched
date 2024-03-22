@@ -31,7 +31,7 @@
 #' @return A \code{SpatialExperiment} object with modified \code{colData}
 #' columns \code{array_row}, \code{array_col}, \code{pixel_row_in_fullres}, and
 #' \code{pixel_col_in_fullres}, and additional corresponding columns ending in
-#' \code{_original}
+#' \code{_original} and (for pixel coordinates only) \code{_rounded}
 #'
 #' @importFrom readr read_csv
 #' @importFrom S4Vectors DataFrame

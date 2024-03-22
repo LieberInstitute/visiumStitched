@@ -23,8 +23,9 @@ units used for \code{y}.}
 }
 \value{
 A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
-well as new 'pxl_row_rounded' and 'pxl_col_rounded' columns representing the
-pixel coordinates rounded to the nearest exact array coordinates.
+well as new 'pxl_row_in_fullres_rounded' and 'pxl_col_in_fullres_rounded'
+columns representing the pixel coordinates rounded to the nearest exact array
+coordinates.
 }
 \description{
 Given transformed pixel coordinates, modify the 'array_row' and
