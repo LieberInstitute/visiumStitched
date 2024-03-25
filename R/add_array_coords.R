@@ -19,8 +19,9 @@
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
 #' \code{group}, and \code{spaceranger_dir}
 #' @param coords_dir A \code{character(1)} vector giving the directory
-#' containing \code{tissue_positions_[group].csv} files produced from refinement
-#' with Samui
+#' containing sample directories each with \code{tissue_positions.csv},
+#' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
+#' produced from refinement with Samui
 #' @param overwrite A \code{logical(1)} vector indicating whether to overwrite
 #' \code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
 #' \code{array_col}, \code{pixel_row_in_fullres}, and
@@ -69,8 +70,7 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
     coords_list = list()
     for (i in seq(length(all_groups))) {
         coords = file.path(
-                coords_dir,
-                sprintf('tissue_positions_%s.csv', all_groups[i])
+                coords_dir, all_groups[i], 'tissue_positions.csv'
             ) |>
             readr::read_csv(show_col_types = FALSE)
         

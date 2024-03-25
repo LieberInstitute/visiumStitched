@@ -13,8 +13,9 @@ add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
 \code{group}, and \code{spaceranger_dir}}
 
 \item{coords_dir}{A \code{character(1)} vector giving the directory
-containing \code{tissue_positions_[group].csv} files produced from refinement
-with Samui}
+containing sample directories each with \code{tissue_positions.csv},
+\code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
+produced from refinement with Samui}
 
 \item{overwrite}{A \code{logical(1)} vector indicating whether to overwrite
 \code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
