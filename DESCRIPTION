@@ -29,4 +29,8 @@ Imports:
     SummarizedExperiment,
     Seurat,
     grDevices,
-    rlang
+    rlang,
+    readr,
+    S4Vectors,
+    rjson,
+    dplyr
