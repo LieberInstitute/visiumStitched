@@ -33,4 +33,5 @@ Imports:
     readr,
     S4Vectors,
     rjson,
-    dplyr
+    dplyr,
+    tibble
