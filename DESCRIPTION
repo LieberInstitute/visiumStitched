@@ -46,3 +46,5 @@ Imports:
     tibble
 biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
     Visualization
+URL: https://github.com/LieberInstitute/visiumStitched
+BugReports: https://support.bioconductor.org/tag/visiumStitched
