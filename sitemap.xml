@@ -13,7 +13,7 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/spatialNAcUtils.html</loc>
+    <loc>/articles/visiumStitched.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -23,6 +23,27 @@
   </url>
   <url>
     <loc>/news/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/add_array_coords.html</loc>
+  </url>
+  <url>
+    <loc>/reference/add_overlap_info.html</loc>
+  </url>
+  <url>
+    <loc>/reference/build_spe.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dot-clean_round.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dot-fit_to_array.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dot-refine_fit.html</loc>
+  </url>
+  <url>
+    <loc>/reference/dot-validate_array.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>

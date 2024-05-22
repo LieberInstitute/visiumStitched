@@ -1,7 +1,7 @@
-pandoc: 3.1.1
-pkgdown: 2.0.7
-pkgdown_sha: ~
+pandoc: '3.2'
+pkgdown: 2.0.9.9000
+pkgdown_sha: 36db6570616631aabae3f9c4cc71588489519f7f
 articles:
-  spatialNAcUtils: spatialNAcUtils.html
-last_built: 2024-03-15T16:34Z
+  visiumStitched: visiumStitched.html
+last_built: 2024-05-22T20:21Z
 
