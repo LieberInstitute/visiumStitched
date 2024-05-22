@@ -31,6 +31,9 @@
 #' metric_name <- "sum_umi"
 #' spe <- build_spe(sample_info, coords_dir, metric_name)
 #' }
+#'
+#' ## TODO: add working examples
+#' args(build_spe)
 build_spe <- function(sample_info, coords_dir, metric_name, count_type = "sparse") {
     message("Building SpatialExperiment using capture area as sample ID")
     spe <- read10xVisium(

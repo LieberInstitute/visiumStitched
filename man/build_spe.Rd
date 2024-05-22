@@ -44,6 +44,9 @@ coords_dir <- "dev/test_data"
 metric_name <- "sum_umi"
 spe <- build_spe(sample_info, coords_dir, metric_name)
 }
+
+## TODO: add working examples
+args(build_spe)
 }
 \author{
 Nicholas J. Eagles

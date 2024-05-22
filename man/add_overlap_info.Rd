@@ -50,6 +50,9 @@ p_new <- spot_plot(
 print(p_old)
 print(p_new)
 }
+
+## TODO: add working examples
+args(add_overlap_info)
 }
 \author{
 Nicholas J. Eagles

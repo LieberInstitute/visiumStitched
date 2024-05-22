@@ -49,6 +49,9 @@
 #' coords_dir <- "dev/test_data"
 #' spe_new <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
 #' }
+#'
+#' ## TODO: add working examples
+#' args(add_array_coords)
 add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
     #   55-micrometer diameter for Visium spot; 100 micrometers between spots;
     #   65-micrometer spot diameter used in 'spot_diameter_fullres' calculation

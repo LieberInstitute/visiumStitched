@@ -44,6 +44,9 @@
 #' print(p_old)
 #' print(p_new)
 #' }
+#'
+#' ## TODO: add working examples
+#' args(add_overlap_info)
 add_overlap_info <- function(spe, metric_name) {
     #   State assumptions about columns expected to be in the colData
     expected_cols <- c(

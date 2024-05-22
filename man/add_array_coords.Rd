@@ -56,6 +56,9 @@ sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 coords_dir <- "dev/test_data"
 spe_new <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
 }
+
+## TODO: add working examples
+args(add_array_coords)
 }
 \author{
 Nicholas J. Eagles
