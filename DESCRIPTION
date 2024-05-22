@@ -1,13 +1,20 @@
 Package: visiumStitched
-Title: Functions Useful for the spatial_NAc Project
+Title: Helper package for working with stitched overlapping Visium capture areas
 Version: 0.99.0
-Date: 2024-02-15
+Date: 2024-05-22
 Authors@R: 
-    person("Nicholas J.", "Eagles", email = "nickeagles77@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-9808-5254"))
-Description: This package provides helper functions for repeated aspects of
-    analysis in the spatial_NAc project. For example, it includes a function for
-    plotting several capture areas stitched together.
+    c(
+    person("Nicholas J.", "Eagles", email = "nickeagles77@gmail.com",
+    role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9808-5254")),
+    person("Leonardo", "Collado-Torres", role = c("ctb"), 
+    email = "lcolladotor@gmail.com", comment = c(ORCID = "0000-0003-2140-308X"))
+    )
+Description: This package provides helper functions for working with
+	multiple Visium capture areas that overlap each other. This package was
+	developed along with the companion example use case data available from
+	https://github.com/LieberInstitute/visiumStitched. This packages, among
+	other utilities, it includes a function for plotting several capture areas
+	stitched together.
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -35,3 +42,5 @@ Imports:
     rjson,
     dplyr,
     tibble
+biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
+    Visualization
