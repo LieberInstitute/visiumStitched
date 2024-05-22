@@ -21,8 +21,8 @@
 #'
 #' @examples
 #'
-#' #   Grab an example SpatialExperiment and add dummy "transformed" versions of
-#' #   spatial coordinates, which are to be converted
+#' ## Grab an example SpatialExperiment and add dummy "transformed" versions of
+#' ## spatial coordinates, which are to be converted
 #' spe <- if (!exists("spe")) {
 #'     spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
 #' }
@@ -32,8 +32,9 @@
 #' spe$pxl_col_in_fullres_transformed <- SpatialExperiment::spatialCoords(spe)[, "pxl_col_in_fullres"]
 #' colnames(spe) <- spe$key
 #'
-#' #   Convert
+#' ## Convert from a SpatialExperiment to a Seurat object
 #' seur <- spe_to_seurat(spe)
+#' seur
 spe_to_seurat <- function(spe, verbose = TRUE) {
     SPOT_DIAMETER <- 55e-6
 

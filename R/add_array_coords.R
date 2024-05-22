@@ -43,7 +43,7 @@
 #' @examples
 #' #   For internal testing
 #' \dontrun{
-#' library(HDF5Array)
+#' library("HDF5Array")
 #' spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' coords_dir <- "dev/test_data"
