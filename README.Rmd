@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/LieberInstitute/visiumStitched/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/LieberInstitute/visiumStitched?branch=devel)
 <!-- badges: end -->
 
-`visiumStitched` is intended to provide re-usable functions helpful for various analyses in the [spatialNAc project](https://github.com/LieberInstitute/spatial_NAc). Code is maintained here in an R package for ease of use, and to ensure dependent `spatialNAc` code can easily refer to the latest functions here.
+`visiumStitched` provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from https://github.com/LieberInstitute/LS_visiumStitched. This packages, among other utilities, it includes a function for plotting several capture areas stitched together.
 
 For details, check the [documentation site](http://research.libd.org/visiumStitched/).
 

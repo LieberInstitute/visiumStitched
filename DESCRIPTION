@@ -12,7 +12,7 @@ Authors@R:
 Description: This package provides helper functions for working with
 	multiple Visium capture areas that overlap each other. This package was
 	developed along with the companion example use case data available from
-	https://github.com/LieberInstitute/visiumStitched. This packages, among
+	https://github.com/LieberInstitute/LS_visiumStitched. This packages, among
 	other utilities, it includes a function for plotting several capture areas
 	stitched together.
 License: Artistic-2.0
