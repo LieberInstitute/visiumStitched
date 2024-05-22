@@ -3,3 +3,4 @@
 ^\.github$
 ^codecov\.yml$
 ^visiumStitched\.Rproj$
+^\.Rproj\.user$

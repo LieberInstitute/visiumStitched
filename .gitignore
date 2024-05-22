@@ -1,3 +1,4 @@
 inst/doc
 dev/test_data
 *.Rproj
+.Rproj.user
