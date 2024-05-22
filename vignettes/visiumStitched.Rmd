@@ -3,8 +3,14 @@ title: "Introduction to visiumStitched"
 author: 
   - name: Nicholas J. Eagles
     affiliation:
-    - Lieber Institute for Brain Development
+    - &libd Lieber Institute for Brain Development
     email: nickeagles77@gmail.com
+  - name: Leonardo Collado-Torres
+    affiliation:
+    - *libd
+    - &ccb Center for Computational Biology, Johns Hopkins University
+    - &jhubiostat Department of Biostatistics, Johns Hopkins Bloomberg School of Public Health
+    email: lcolladotor@gmail.com
 output: 
   BiocStyle::html_document:
     self_contained: yes
