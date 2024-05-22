@@ -48,18 +48,17 @@ R. Please run this yourself to check for any updates on how to cite
 
 ``` r
 print(citation("visiumStitched"), bibtex = TRUE)
-#> Warning in citation("visiumStitched"): could not determine year for
-#> 'visiumStitched' from package DESCRIPTION file
 #> To cite package 'visiumStitched' in publications use:
 #> 
-#>   Eagles N (????). _visiumStitched: Functions Useful for the
-#>   spatial_NAc Project_. R package version 0.99.0.
+#>   Eagles N (2024). _visiumStitched: Helper package for working with
+#>   stitched overlapping Visium capture areas_. R package version 0.99.0.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {visiumStitched: Functions Useful for the spatial_NAc Project},
+#>     title = {visiumStitched: Helper package for working with stitched overlapping Visium capture areas},
 #>     author = {Nicholas J. Eagles},
+#>     year = {2024},
 #>     note = {R package version 0.99.0},
 #>   }
 ```
@@ -84,7 +83,7 @@ contributing to this project, you agree to abide by its terms.
   *[rcmdcheck](https://CRAN.R-project.org/package=rcmdcheck)* customized
   to use [Bioconductor’s docker
   containers](https://www.bioconductor.org/help/docker/) and
-  *[BiocCheck](https://bioconductor.org/packages/3.17/BiocCheck)*.
+  *[BiocCheck](https://bioconductor.org/packages/3.19/BiocCheck)*.
 - Code coverage assessment is possible thanks to
   [codecov](https://codecov.io/gh) and
   *[covr](https://CRAN.R-project.org/package=covr)*.
@@ -101,4 +100,4 @@ contributing to this project, you agree to abide by its terms.
 For more details, check the `dev` directory.
 
 This package was developed using
-*[biocthis](https://bioconductor.org/packages/3.17/biocthis)*.
+*[biocthis](https://bioconductor.org/packages/3.19/biocthis)*.
