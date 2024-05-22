@@ -73,7 +73,7 @@ add_overlap_info <- function(spe, metric_name) {
 
     #   Since we only want overlapping spot keys, remove the "identity spot"
     col_data$overlap_key <- sapply(
-        1:nrow(col_data),
+        seq_len(nrow(col_data)),
         function(i) {
             sub(col_data$key[i], "", col_data$overlap_key[i], fixed = TRUE)
         }
@@ -91,7 +91,7 @@ add_overlap_info <- function(spe, metric_name) {
         arrange(desc(mean_thing))
 
     col_data$exclude_overlapping <- sapply(
-        1:nrow(col_data),
+        seq_len(nrow(col_data)),
         function(i) {
             #   Don't exclude spots that don't overlap anything
             if (col_data$overlap_key[i] == "") {
