@@ -50,11 +50,11 @@ process each group as if it really were one capture area in the first place.
 \examples{
 #   For internal testing
 \dontrun{
-   library(HDF5Array)
-   spe = loadHDF5SummarizedExperiment('dev/test_data/spe_filtered')
-   sample_info = readr::read_csv('dev/test_data/sample_info.csv')
-   coords_dir = 'dev/test_data'
-   spe_new = add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+library(HDF5Array)
+spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
+sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+coords_dir <- "dev/test_data"
+spe_new <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
 }
 }
 \author{

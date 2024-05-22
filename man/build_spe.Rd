@@ -39,10 +39,10 @@ downstream analysis.
 \examples{
 #   For internal testing
 \dontrun{
-    sample_info = readr::read_csv('dev/test_data/sample_info.csv')
-    coords_dir = 'dev/test_data'
-    metric_name = 'sum_umi'
-    spe = build_spe(sample_info, coords_dir, metric_name)
+sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+coords_dir <- "dev/test_data"
+metric_name <- "sum_umi"
+spe <- build_spe(sample_info, coords_dir, metric_name)
 }
 }
 \author{

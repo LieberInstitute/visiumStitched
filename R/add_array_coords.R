@@ -4,7 +4,7 @@
 #' produced from the Samui refinement workflow, add array and pixel coordinates
 #' appropriate for the linearly transformed capture areas making up each group
 #' present in the \code{SpatialExperiment}.
-#' 
+#'
 #' Array coordinates are determined via an algorithm that fits each spot to
 #' the nearest spot on a new, imaginary, Visium-like capture area. The imaginary
 #' capture area differs from a real capture area only in its extent; array
@@ -39,18 +39,17 @@
 #' @importFrom rjson fromJSON
 #' @export
 #' @author Nicholas J. Eagles
-#' 
+#'
 #' @examples
 #' #   For internal testing
 #' \dontrun{
-#'    library(HDF5Array)
-#'    spe = loadHDF5SummarizedExperiment('dev/test_data/spe_filtered')
-#'    sample_info = readr::read_csv('dev/test_data/sample_info.csv')
-#'    coords_dir = 'dev/test_data'
-#'    spe_new = add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
-#'}
-
-add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
+#' library(HDF5Array)
+#' spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
+#' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+#' coords_dir <- "dev/test_data"
+#' spe_new <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+#' }
+add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
     #   55-micrometer diameter for Visium spot; 100 micrometers between spots;
     #   65-micrometer spot diameter used in 'spot_diameter_fullres' calculation
     #   for spaceranger JSON. See documentation for respective quantities. The
@@ -63,17 +62,17 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
     SPOT_DIAMETER_JSON_M <- 65e-6
     INTER_SPOT_DIST_M <- 100e-6
 
-    all_groups = unique(sample_info$group)
+    all_groups <- unique(sample_info$group)
 
     #   Read in tissue positions for all groups, track group and capture area,
     #   then compute adjusted array coordinates
-    coords_list = list()
+    coords_list <- list()
     for (i in seq(length(all_groups))) {
-        coords = file.path(
-                coords_dir, all_groups[i], 'tissue_positions.csv'
-            ) |>
+        coords <- file.path(
+            coords_dir, all_groups[i], "tissue_positions.csv"
+        ) |>
             readr::read_csv(show_col_types = FALSE)
-        
+
         #   From the spaceranger JSON, we have the spot diameter both in pixels
         #   and meters, and can therefore compute the image's pixel/m ratio.
         #   Then use that to compute the distance between spots in pixels
@@ -90,44 +89,44 @@ add_array_coords = function(spe, sample_info, coords_dir, overwrite = TRUE) {
         coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
     }
 
-    coord_cols = c(
+    coord_cols <- c(
         "array_row", "array_col", "pxl_row_in_fullres", "pxl_col_in_fullres"
     )
-    coords = do.call(rbind, coords_list) |>
+    coords <- do.call(rbind, coords_list) |>
         #   Coordinates must be integers
         mutate(
             across(
-                matches('^(array|pxl)_(row|col)(_in_fullres)?'),
+                matches("^(array|pxl)_(row|col)(_in_fullres)?"),
                 ~ as.integer(round(.x))
             )
         ) |>
-        rename_with(~ paste0(.x, '_transformed'), all_of(coord_cols))
-    
+        rename_with(~ paste0(.x, "_transformed"), all_of(coord_cols))
+
     #   Line up and potentially subset Samui-refined coords to those in 'spe'
-    match_index = match(spe$key, coords$key)
+    match_index <- match(spe$key, coords$key)
     if (any(is.na(match_index))) {
         stop("Unrecognized key(s) in Samui-refined coords.")
     }
-    coords = coords[match(spe$key, coords$key),] |>
+    coords <- coords[match(spe$key, coords$key), ] |>
         select(-c(key, in_tissue))
 
     #   Add transformed coordinates as columns to colData
-    colData(spe) = cbind(colData(spe), coords)
+    colData(spe) <- cbind(colData(spe), coords)
 
     #   Retain "_original" copies of the coordinates
-    for(col_name in coord_cols) {
-        spe[[paste0(col_name, "_original")]] = spe[[col_name]]
+    for (col_name in coord_cols) {
+        spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
     }
 
     #   If 'overwrite', make transformed coordinates the default in the colData
     #   and spatialCoords
     if (overwrite) {
-        spatialCoords(spe)[, 'pxl_col_in_fullres'] = coords$pxl_col_in_fullres_transformed
-        spatialCoords(spe)[, 'pxl_row_in_fullres'] = coords$pxl_row_in_fullres_transformed
+        spatialCoords(spe)[, "pxl_col_in_fullres"] <- coords$pxl_col_in_fullres_transformed
+        spatialCoords(spe)[, "pxl_row_in_fullres"] <- coords$pxl_row_in_fullres_transformed
 
         #   Make transformed coordinates the default in the colData
-        for(col_name in coord_cols) {
-            spe[[col_name]] = coords[[paste0(col_name, "_transformed")]]
+        for (col_name in coord_cols) {
+            spe[[col_name]] <- coords[[paste0(col_name, "_transformed")]]
         }
     }
 

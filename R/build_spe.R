@@ -22,17 +22,16 @@
 #' @importFrom dplyr mutate as_tibble
 #' @export
 #' @author Nicholas J. Eagles
-#' 
+#'
 #' @examples
 #' #   For internal testing
 #' \dontrun{
-#'     sample_info = readr::read_csv('dev/test_data/sample_info.csv')
-#'     coords_dir = 'dev/test_data'
-#'     metric_name = 'sum_umi'
-#'     spe = build_spe(sample_info, coords_dir, metric_name)
+#' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+#' coords_dir <- "dev/test_data"
+#' metric_name <- "sum_umi"
+#' spe <- build_spe(sample_info, coords_dir, metric_name)
 #' }
-
-build_spe = function(sample_info, coords_dir, metric_name, count_type = "sparse") {
+build_spe <- function(sample_info, coords_dir, metric_name, count_type = "sparse") {
     message("Building SpatialExperiment using capture area as sample ID")
     spe <- read10xVisium(
         samples = dirname(sample_info$spaceranger_dir),
@@ -44,7 +43,7 @@ build_spe = function(sample_info, coords_dir, metric_name, count_type = "sparse"
     )
 
     message("Overwriting imgData(spe) with merged images (one per group)")
-    all_groups = unique(sample_info$group)
+    all_groups <- unique(sample_info$group)
 
     img_data <- readImgData(
         path = file.path(coords_dir, all_groups),
@@ -58,7 +57,7 @@ build_spe = function(sample_info, coords_dir, metric_name, count_type = "sparse"
         load = TRUE
     )
 
-    coldata_fixed = colData(spe) |>
+    coldata_fixed <- colData(spe) |>
         dplyr::as_tibble() |>
         dplyr::mutate(
             capture_area = factor(sample_id),
@@ -80,8 +79,8 @@ build_spe = function(sample_info, coords_dir, metric_name, count_type = "sparse"
         imgData = img_data
     )
 
-    spe = add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
-    spe = add_overlap_info(spe, metric_name)
+    spe <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+    spe <- add_overlap_info(spe, metric_name)
 
     return(spe)
 }

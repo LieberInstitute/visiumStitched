@@ -2,7 +2,7 @@
 
 #' Check if coordinates are Visium-like
 #'
-#' Sanity check designed to catch unforeseen bugs: halt if the tibble-like 
+#' Sanity check designed to catch unforeseen bugs: halt if the tibble-like
 #' \code{coords}, expected to contain columns 'array_row' and 'array_col',
 #' represents an invalid Visium array
 #'
@@ -16,7 +16,7 @@
 #' @keywords internal
 .validate_array <- function(coords) {
     #   Even array rows can only use even column indices
-    all_even_cols = coords |>
+    all_even_cols <- coords |>
         dplyr::filter(array_row %% 2 == 0) |>
         dplyr::summarize(a = all(array_col %% 2 == 0)) |>
         dplyr::pull(a)
@@ -25,7 +25,7 @@
     }
 
     #   Odd array rows can only use odd column indices
-    all_odd_rows = coords |>
+    all_odd_rows <- coords |>
         dplyr::filter(array_row %% 2 == 1) |>
         dplyr::summarize(a = all(array_col %% 2 == 1)) |>
         dplyr::pull(a)
@@ -88,10 +88,10 @@
 }
 
 #' Round to the nearest integer, always rounding up at 0.5
-#' 
+#'
 #' This consistent behavior is favorable for our application, where we want to
 #' minimize duplicate mappings of spots to new array coordinates
-#' 
+#'
 #' @param x \code{numeric()} vector.
 #'
 #' @return A \code{numeric()} vector rounded to the nearest integer.
@@ -103,13 +103,13 @@
 }
 
 #' Fit spots to a new Visium-like array
-#' 
+#'
 #' Given transformed pixel coordinates, modify the 'array_row' and
 #' 'array_col' columns to represent a larger Visium capture area containing
 #' all capture areas in a common coordinate system. The number of
 #' array rows/cols generally changes from the Visium standards of 78 and 128
 #' (and even may change in ratio between num rows and num cols).
-#' 
+#'
 #' Runtime is O(n) with the number of spots, making it much faster than say,
 #' a distance-matrix-based approach running at O(n^2).
 #'
