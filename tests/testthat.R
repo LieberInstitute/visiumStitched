@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(spatialNAcUtils)
+library(visiumStitched)
 
-test_check("spatialNAcUtils")
+test_check("visiumStitched")
