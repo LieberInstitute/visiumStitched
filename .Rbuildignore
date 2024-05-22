@@ -2,3 +2,4 @@
 ^README\.Rmd$
 ^\.github$
 ^codecov\.yml$
+^visiumStitched\.Rproj$
