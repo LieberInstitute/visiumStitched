@@ -15,7 +15,7 @@
 #' \code{transform_x}, \code{transform_y}, and \code{transform_theta}
 #'
 #' @import xml2
-#' @importFrom dplyr mutate filter
+#' @importFrom dplyr mutate filter select
 #' @importFrom stringr str_replace_all str_split_i
 #' 
 #' @export
@@ -34,10 +34,14 @@ read_imagej_xml <- function(sample_info) {
             stop("Expected one unique path for 'imagej_out_path' per group in 'sample_info'.")
         }
 
+        #   Find all XML elements containing input image paths and
+        #   transformation matrices
         transform_nodes = this_sample_info$imagej_out_path[1] |>
             read_xml() |>
             xml_find_all('.//t2_patch')
         
+        #   Find paths to input images and the order the corresponding capture
+        #   areas appear in these paths
         input_paths = xml_attr(transform_nodes, 'file_path')
         input_indices = sapply(
             this_sample_info$capture_area, function(x) grep(x, input_paths)
@@ -45,8 +49,13 @@ read_imagej_xml <- function(sample_info) {
         if (length(input_paths) != nrow(this_sample_info) || any(is.na(input_indices))) {
             stop("Expected each capture area to be present exactly once in the input filenames to ImageJ for each group.")
         }
+
+        #   Specifically, the linear transform matrix ordered by capture area as
+        #   it appears in 'this_sample_info'
         transforms = xml_attr(transform_nodes, 'transform')[input_indices]
 
+        #   Add 'transform_x', 'transform_y' and 'transform_theta' to the sample
+        #   info for this group
         new_sample_info_list[[this_group]] = this_sample_info |>
             dplyr::mutate(
                 transform_x = transforms |>
@@ -73,7 +82,8 @@ read_imagej_xml <- function(sample_info) {
                     as.numeric() |>
                     sign(),
                 transform_theta = transform_theta * multiplier
-            )
+            ) |>
+            dplyr::select(-multiplier)
     }
 
     return(do.call(rbind, new_sample_info_list))
