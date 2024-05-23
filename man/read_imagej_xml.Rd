@@ -8,7 +8,7 @@ read_imagej_xml(sample_info)
 }
 \arguments{
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, and \code{imagej_out_path}}
+\code{group}, and \code{imagej_xml_path}}
 }
 \value{
 A \code{tibble}: a copy of \code{sample_info} with additional columns
@@ -16,7 +16,7 @@ A \code{tibble}: a copy of \code{sample_info} with additional columns
 }
 \description{
 Given a \code{tibble} of sample information (\code{sample_info}) with
-columns \code{capture_area}, \code{group}, and \code{imagej_out_path},
+columns \code{capture_area}, \code{group}, and \code{imagej_xml_path},
 expected to have one unique path to ImageJ XML output per group, return
 a copy of \code{sample_info} with additional columns \code{transform_x},
 \code{transform_y}, and \code{transform_theta} representing the rigid affine
