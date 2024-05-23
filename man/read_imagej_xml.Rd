@@ -24,7 +24,16 @@ transforms needed to be applied to capture areas within each group to
 produce the proper relative arrangements.
 }
 \examples{
+\dontrun{
 #   For internal testing
+sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+read_imagej_xml(sample_info) |>
+    dplyr::select(tidyselect::starts_with('transform')) |>
+    print()
+}
+
+## TODO: add working examples
+args(read_imagej_xml)
 }
 \author{
 Nicholas J. Eagles

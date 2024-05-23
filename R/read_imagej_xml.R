@@ -22,7 +22,16 @@
 #' @author Nicholas J. Eagles
 #'
 #' @examples
+#' \dontrun{
 #' #   For internal testing
+#' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+#' read_imagej_xml(sample_info) |>
+#'     dplyr::select(tidyselect::starts_with('transform')) |>
+#'     print()
+#' }
+#'
+#' ## TODO: add working examples
+#' args(read_imagej_xml)
 read_imagej_xml <- function(sample_info) {
     all_groups = unique(sample_info$group)
     new_sample_info_list = list()
