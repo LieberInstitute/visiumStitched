@@ -1,7 +1,7 @@
 #' Parse transform info from ImageJ XML output
 #'
 #' Given a \code{tibble} of sample information (\code{sample_info}) with
-#' columns \code{capture_area}, \code{group}, and \code{imagej_out_path},
+#' columns \code{capture_area}, \code{group}, and \code{imagej_xml_path},
 #' expected to have one unique path to ImageJ XML output per group, return
 #' a copy of \code{sample_info} with additional columns \code{transform_x},
 #' \code{transform_y}, and \code{transform_theta} representing the rigid affine
@@ -9,7 +9,7 @@
 #' produce the proper relative arrangements.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, and \code{imagej_out_path}
+#' \code{group}, and \code{imagej_xml_path}
 #'
 #' @return A \code{tibble}: a copy of \code{sample_info} with additional columns
 #' \code{transform_x}, \code{transform_y}, and \code{transform_theta}
@@ -33,19 +33,23 @@
 #' ## TODO: add working examples
 #' args(read_imagej_xml)
 read_imagej_xml <- function(sample_info) {
+    if (!all(file.exists(sample_info$imagej_xml_path))) {
+        stop("All files in 'sample_info$imagej_xml_path' must exist.")
+    }
+    
     all_groups = unique(sample_info$group)
     new_sample_info_list = list()
     for (this_group in all_groups) {
         this_sample_info = sample_info |>
             dplyr::filter(group == this_group)
 
-        if (length(unique(this_sample_info$imagej_out_path)) > 1) {
-            stop("Expected one unique path for 'imagej_out_path' per group in 'sample_info'.")
+        if (length(unique(this_sample_info$imagej_xml_path)) > 1) {
+            stop("Expected one unique path for 'imagej_xml_path' per group in 'sample_info'.")
         }
 
         #   Find all XML elements containing input image paths and
         #   transformation matrices
-        transform_nodes = this_sample_info$imagej_out_path[1] |>
+        transform_nodes = this_sample_info$imagej_xml_path[1] |>
             read_xml() |>
             xml_find_all('.//t2_patch')
         
