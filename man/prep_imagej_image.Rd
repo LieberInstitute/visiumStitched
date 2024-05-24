@@ -23,7 +23,7 @@ After stitching all groups in \code{sample_info} with ImageJ, images of
 various resolutions (pixel dimensions) are left. This function creates copies
 of each image whose largest dimension is \code{lowres_max_size} pixels. It
 also creates a corresponding \code{scalefactors_json.json} file much like
-Spaceranger's. In conjunction with \code{TODO function name}, this function
+Spaceranger's. In conjunction with \code{prep_imagej_image()}, this function
 prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 }
 \examples{
