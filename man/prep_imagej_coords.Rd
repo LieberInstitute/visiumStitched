@@ -26,18 +26,6 @@ a copy of \code{sample_info} with additional columns \code{transform_x},
 transforms needed to be applied to capture areas within each group to
 produce the proper relative arrangements.
 }
-\examples{
-\dontrun{
-#   For internal testing
-sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
-prep_imagej_coords(sample_info) |>
-    dplyr::select(tidyselect::starts_with('transform')) |>
-    print()
-}
-
-## TODO: add working examples
-args(prep_imagej_coords)
-}
 \author{
 Nicholas J. Eagles
 }

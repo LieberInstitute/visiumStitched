@@ -20,7 +20,7 @@
 #' @return NULL
 #'
 #' @import xml2
-#' @importFrom dplyr mutate filter select
+#' @importFrom dplyr mutate filter select rename
 #' @importFrom stringr str_replace_all
 #' @importFrom readr write_csv
 #' @importFrom tibble as_tibble
@@ -32,10 +32,7 @@
 #' \dontrun{
 #' #   For internal testing
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
-#' prep_imagej_coords(sample_info) |>
-#'     dplyr::select(tidyselect::starts_with('transform')) |>
-#'     print()
-#' }
+#' prep_imagej_coords(sample_info, tempdir())
 #'
 #' ## TODO: add working examples
 #' args(prep_imagej_coords)
@@ -48,8 +45,9 @@ prep_imagej_coords <- function(sample_info, out_dir) {
     if (!all(file.exists(sample_info$imagej_xml_path))) {
         stop("All files in 'sample_info$imagej_xml_path' must exist.")
     }
+
+    dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
     
-    new_sample_info_list = list()
     for (this_group in unique(sample_info$group)) {
         this_sample_info = sample_info |>
             dplyr::filter(group == this_group)
@@ -95,9 +93,10 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                 )[1] |>
                 read.csv(col.names = TISSUE_COLNAMES) |>
                 tibble::as_tibble() |>
+                dplyr::rename(key = barcode) |>
                 dplyr::mutate(
                     key = paste(
-                        barcode, this_sample_info$capture_area[i], sep = '_'
+                        key, this_sample_info$capture_area[i], sep = '_'
                     )
                 )
             
