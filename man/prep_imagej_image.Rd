@@ -2,7 +2,7 @@
 % Please edit documentation in R/prep_imagej_image.R
 \name{prep_imagej_image}
 \alias{prep_imagej_image}
-\title{Create low-res image and scale factors from high-res ImageJ output image}
+\title{Create low-res images and scale factors from high-res ImageJ output images}
 \usage{
 prep_imagej_image(sample_info, out_dir, lowres_max_size = 1200)
 }
@@ -19,9 +19,20 @@ pixels) of the larger dimension of the output image(s), considered to be "low
 resolution".}
 }
 \description{
-\link{DESCRIPTION HERE}
+After stitching all groups in \code{sample_info} with ImageJ, images of
+various resolutions (pixel dimensions) are left. This function creates copies
+of each image whose largest dimension is \code{lowres_max_size} pixels. It
+also creates a corresponding \code{scalefactors_json.json} file much like
+Spaceranger's. In conjunction with \code{TODO function name}, this function
+prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 }
 \examples{
+\dontrun{
+#   For internal testing
+sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+prep_imagej_image(sample_info, tempdir())
+}
+
 ## TODO: add working examples
 args(prep_imagej_image)
 }

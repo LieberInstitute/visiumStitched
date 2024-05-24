@@ -1,6 +1,11 @@
-#' Create low-res image and scale factors from high-res ImageJ output image
+#' Create low-res images and scale factors from high-res ImageJ output images
 #'
-#' [DESCRIPTION HERE]
+#' After stitching all groups in \code{sample_info} with ImageJ, images of
+#' various resolutions (pixel dimensions) are left. This function creates copies
+#' of each image whose largest dimension is \code{lowres_max_size} pixels. It
+#' also creates a corresponding \code{scalefactors_json.json} file much like
+#' Spaceranger's. In conjunction with \code{TODO function name}, this function
+#' prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
 #' \code{group}, \code{imagej_image_path}, and \code{spaceranger_dir}.
@@ -21,6 +26,12 @@
 #' @author Nicholas J. Eagles
 #'
 #' @examples
+#' \dontrun{
+#' #   For internal testing
+#' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
+#' prep_imagej_image(sample_info, tempdir())
+#' }
+#' 
 #' ## TODO: add working examples
 #' args(prep_imagej_image)
 
