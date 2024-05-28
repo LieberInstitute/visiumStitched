@@ -40,7 +40,7 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         stop("All files in 'sample_info$imagej_image_path' must exist.")
     }
 
-    dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+    dir.create(out_dir, showWarnings = FALSE)
 
     for (this_group in unique(sample_info$group)) {
         this_sample_info = sample_info |>
@@ -52,25 +52,28 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
 
         this_image = load.image(this_sample_info$imagej_image_path[1])
 
+        #   Combine info about the original scalefactors of the first capture
+        #   area with group-related scalars to form a new scalefactors JSON
+        #   for the whole stitched group
         sr_json <- rjson::fromJSON(
             file = file.path(
                 this_sample_info$spaceranger_dir[1], "scalefactors_json.json"
             )
         )
 
-        #   This is an approximation of the true scalefactors, which are complex
-        #   to precisely compute. In reality, we'd need the dimensions of the 
-        #   smallest rectangle containing the stitched full-resolution images.
-        #   This is far simpler to find, and probably close enough for plotting
-        #   purposes
-        hi_over_low = lowres_max_size / max(dim(this_image)[seq(2)])
-        sr_json$tissue_lowres_scalef = sr_json$tissue_hires_scalef * hi_over_low
-        sr_json$tissue_hires_scalef = NULL
+        low_over_hi = lowres_max_size / max(dim(this_image)[seq(2)])
+        sr_json = list(
+            tissue_hires_scalef = this_sample_info$group_hires_scalef[1],
+            tissue_lowres_scalef = this_sample_info$group_hires_scalef[1] *
+                low_over_hi,
+            spot_diameter_fullres = sr_json$spot_diameter_fullres *
+                this_sample_info$intra_group_scalar[1]
+        )
 
         this_image = resize(
             this_image,
-            as.integer(hi_over_low * dim(this_image)[1]),
-            as.integer(hi_over_low * dim(this_image)[2])
+            as.integer(low_over_hi * dim(this_image)[1]),
+            as.integer(low_over_hi * dim(this_image)[2])
         )
 
         #   Save the lowres image and scalefactors JSON in a subdirectory of
