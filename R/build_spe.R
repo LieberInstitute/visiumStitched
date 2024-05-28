@@ -18,6 +18,7 @@
 #' in the \code{spatialCoords}).
 #'
 #' @import SpatialExperiment
+#' @importFrom SummarizedExperiment assays
 #' @importFrom readr read_csv
 #' @importFrom dplyr mutate as_tibble
 #' @export
