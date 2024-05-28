@@ -78,13 +78,6 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
         #   Loop through all capture areas in this group
         for (i in seq(nrow(this_sample_info))) {
-            #   Read in spaceranger JSON to find scalefactors
-            sr_json <- rjson::fromJSON(
-                file = file.path(
-                    this_sample_info$spaceranger_dir[i], "scalefactors_json.json"
-                )
-            )
-
             #   Parse the rotation matrix from the ImageJ XML, and scale
             #   translations from high to fullres
             rot = transform_nodes[input_indices[i]] |>
@@ -94,7 +87,7 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                 unlist() |>
                 as.numeric() |>
                 matrix(nrow = 2, ncol = 3)
-            rot[,3] = rot[,3] / sr_json$tissue_hires_scalef
+            rot[,3] = rot[,3] / this_sample_info$group_hires_scalef[1]
             
             #   Read in the raw tissue positions for this capture area
             coords = list.files(
@@ -111,10 +104,17 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                     )
                 )
             
-            #   Take just the x and y coords, and apply the rotation matrix
+            #   Take just the x and y coords, scale to match the rest of the
+            #   group, and apply the rotation matrix
             coords_xy = coords |>
                 dplyr::select(pxl_row_in_fullres, pxl_col_in_fullres) |>
-                dplyr::mutate(ones = 1) |>
+                dplyr::mutate(
+                    pxl_row_in_fullres = this_sample_info$intra_group_scalar[i] *
+                        pxl_row_in_fullres,
+                    pxl_col_in_fullres = this_sample_info$intra_group_scalar[i] *
+                        pxl_col_in_fullres,
+                    ones = 1
+                ) |>
                 as.matrix()
             coords_xy = t(rot %*% t(coords_xy))
 
