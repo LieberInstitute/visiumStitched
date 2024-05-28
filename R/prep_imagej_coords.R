@@ -97,10 +97,12 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                     full.names = TRUE
                 )[1]
             if (stringr::str_detect(coords_path, 'tissue_positions_list\\.csv$')) {
-                coords = read_csv(coords_path, col_names = FALSE)
-                colnames(coords = TISSUE_COLNAMES)
+                coords = read_csv(
+                    coords_path, col_names = FALSE, show_col_types = FALSE
+                )
+                colnames(coords) = TISSUE_COLNAMES
             } else {
-                coords = read_csv(coords_path)
+                coords = read_csv(coords_path, show_col_types = FALSE)
             }
             
             coords = coords |>
