@@ -21,8 +21,8 @@
 #'
 #' @import xml2
 #' @importFrom dplyr mutate filter select rename
-#' @importFrom stringr str_replace_all
-#' @importFrom readr write_csv
+#' @importFrom stringr str_replace_all str_detect
+#' @importFrom readr read_csv write_csv
 #' @importFrom tibble as_tibble
 #' @importFrom rjson fromJSON
 #' 
@@ -89,14 +89,21 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                 matrix(nrow = 2, ncol = 3)
             rot[,3] = rot[,3] / this_sample_info$group_hires_scalef[1]
             
-            #   Read in the raw tissue positions for this capture area
-            coords = list.files(
+            #   Read in the raw tissue positions for this capture area, handling
+            #   the old and new format for tissue positions
+            coords_path = list.files(
                     this_sample_info$spaceranger_dir[i],
                     '^tissue_positions(_list)?\\.csv$',
                     full.names = TRUE
-                )[1] |>
-                read.csv(col.names = TISSUE_COLNAMES) |>
-                tibble::as_tibble() |>
+                )[1]
+            if (stringr::str_detect(coords_path, 'tissue_positions_list\\.csv$')) {
+                coords = read_csv(coords_path, col_names = FALSE)
+                colnames(coords = TISSUE_COLNAMES)
+            } else {
+                coords = read_csv(coords_path)
+            }
+            
+            coords = coords |>
                 dplyr::rename(key = barcode) |>
                 dplyr::mutate(
                     key = paste(
