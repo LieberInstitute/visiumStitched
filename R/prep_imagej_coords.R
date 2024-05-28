@@ -24,6 +24,7 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom readr write_csv
 #' @importFrom tibble as_tibble
+#' @importFrom rjson fromJSON
 #' 
 #' @export
 #' @author Nicholas J. Eagles
@@ -33,7 +34,8 @@
 #' #   For internal testing
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' prep_imagej_coords(sample_info, tempdir())
-#'
+#' }
+#' 
 #' ## TODO: add working examples
 #' args(prep_imagej_coords)
 prep_imagej_coords <- function(sample_info, out_dir) {
@@ -76,7 +78,15 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
         #   Loop through all capture areas in this group
         for (i in seq(nrow(this_sample_info))) {
-            #   Parse the rotation matrix from the ImageJ XML
+            #   Read in spaceranger JSON to find scalefactors
+            sr_json <- rjson::fromJSON(
+                file = file.path(
+                    this_sample_info$spaceranger_dir[i], "scalefactors_json.json"
+                )
+            )
+
+            #   Parse the rotation matrix from the ImageJ XML, and scale
+            #   translations from high to fullres
             rot = transform_nodes[input_indices[i]] |>
                 xml_attr('transform') |>
                 stringr::str_replace_all('matrix|[\\(\\)]', '') |>
@@ -84,6 +94,7 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                 unlist() |>
                 as.numeric() |>
                 matrix(nrow = 2, ncol = 3)
+            rot[,3] = rot[,3] / sr_json$tissue_hires_scalef
             
             #   Read in the raw tissue positions for this capture area
             coords = list.files(
