@@ -18,7 +18,7 @@
 #' in the \code{spatialCoords}).
 #'
 #' @import SpatialExperiment
-#' @importFrom SummarizedExperiment assays
+#' @importFrom SummarizedExperiment assays rowData
 #' @importFrom readr read_csv
 #' @importFrom dplyr mutate as_tibble
 #' @export
@@ -76,8 +76,8 @@ build_spe <- function(sample_info, coords_dir, metric_name, count_type = "sparse
         )
 
     spe <- SpatialExperiment(
-        assays = assays(spe),
-        rowData = rowData(spe),
+        assays = SummarizedExperiment::assays(spe),
+        rowData = SummarizedExperiment::rowData(spe),
         colData = coldata_fixed,
         spatialCoords = spatialCoords(spe),
         imgData = img_data
