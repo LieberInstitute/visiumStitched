@@ -9,7 +9,6 @@
 #' downstream analysis.
 #'
 #' @inheritParams add_array_coords
-#' @inheritParams add_overlap_info
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
 #' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"
 #'
@@ -29,13 +28,12 @@
 #' \dontrun{
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' coords_dir <- "dev/test_data"
-#' metric_name <- "sum_umi"
-#' spe <- build_spe(sample_info, coords_dir, metric_name)
+#' spe <- build_spe(sample_info, coords_dir)
 #' }
 #'
 #' ## TODO: add working examples
 #' args(build_spe)
-build_spe <- function(sample_info, coords_dir, metric_name, count_type = "sparse") {
+build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
     message("Building SpatialExperiment using capture area as sample ID")
     spe <- read10xVisium(
         samples = dirname(sample_info$spaceranger_dir),
@@ -84,7 +82,6 @@ build_spe <- function(sample_info, coords_dir, metric_name, count_type = "sparse
     )
 
     spe <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
-    spe <- add_overlap_info(spe, metric_name)
 
     return(spe)
 }

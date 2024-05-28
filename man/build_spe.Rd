@@ -4,7 +4,7 @@
 \alias{build_spe}
 \title{Build stitched \code{SpatialExperiment}}
 \usage{
-build_spe(sample_info, coords_dir, metric_name, count_type = "sparse")
+build_spe(sample_info, coords_dir, count_type = "sparse")
 }
 \arguments{
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
@@ -14,10 +14,6 @@ build_spe(sample_info, coords_dir, metric_name, count_type = "sparse")
 containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 produced from refinement with Samui}
-
-\item{metric_name}{character(1) in \code{colnames(colData(spe))}, where
-spots belonging to the capture area with highest average value for the metric
-take precedence over other spots}
 
 \item{count_type}{A \code{character(1)} vector passed to \code{type} from
 \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"}
@@ -41,8 +37,7 @@ downstream analysis.
 \dontrun{
 sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 coords_dir <- "dev/test_data"
-metric_name <- "sum_umi"
-spe <- build_spe(sample_info, coords_dir, metric_name)
+spe <- build_spe(sample_info, coords_dir)
 }
 
 ## TODO: add working examples
