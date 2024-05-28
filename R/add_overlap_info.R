@@ -12,7 +12,7 @@
 #'
 #' @param spe A \code{SpatialExperiment} with colData columns \code{exclude_overlapping},
 #' \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
-#' \code{sample_id_original}
+#' \code{capture_area}
 #' @param metric_name character(1) in \code{colnames(colData(spe))}, where
 #' spots belonging to the capture area with highest average value for the metric
 #' take precedence over other spots
@@ -33,12 +33,12 @@
 #' spe_new <- add_overlap_info(spe, metric_name = "sum_umi")
 #' p_old <- spot_plot(
 #'     spe,
-#'     sample_id = "Br8492", var_name = "sample_id_original",
+#'     sample_id = "Br8492", var_name = "capture_area",
 #'     is_discrete = TRUE
 #' )
 #' p_new <- spot_plot(
 #'     spe_new,
-#'     sample_id = "Br8492", var_name = "sample_id_original",
+#'     sample_id = "Br8492", var_name = "capture_area",
 #'     is_discrete = TRUE
 #' )
 #' print(p_old)
@@ -51,7 +51,7 @@ add_overlap_info <- function(spe, metric_name) {
     #   State assumptions about columns expected to be in the colData
     expected_cols <- c(
         "array_row_transformed", "array_col_transformed", "sample_id",
-        "sample_id_original", "key", metric_name
+        "capture_area", "key", metric_name
     )
     if (!all(expected_cols %in% colnames(colData(spe)))) {
         stop(
@@ -88,7 +88,7 @@ add_overlap_info <- function(spe, metric_name) {
     ############################################################################
 
     metrics_by_id <- col_data |>
-        group_by(sample_id_original) |>
+        group_by(capture_area) |>
         summarize(mean_thing = mean(eval(sym(metric_name)))) |>
         ungroup() |>
         arrange(desc(mean_thing))
@@ -102,7 +102,7 @@ add_overlap_info <- function(spe, metric_name) {
             }
 
             #   Get the capture areas this spot overlaps
-            each_array <- col_data$sample_id_original[
+            each_array <- col_data$capture_area[
                 match(
                     strsplit(col_data$overlap_key[i], ",")[[1]],
                     col_data$key
@@ -111,8 +111,8 @@ add_overlap_info <- function(spe, metric_name) {
 
             #   Exclude this spot if the highest-quality overlapping capture
             #   area is higher quality than the source capture area
-            exclude <- min(match(each_array, metrics_by_id$sample_id_original)) <
-                match(col_data$sample_id_original[i], metrics_by_id$sample_id_original)
+            exclude <- min(match(each_array, metrics_by_id$capture_area)) <
+                match(col_data$capture_area[i], metrics_by_id$capture_area)
 
             return(exclude)
         }

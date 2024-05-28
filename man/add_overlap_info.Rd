@@ -9,7 +9,7 @@ add_overlap_info(spe, metric_name)
 \arguments{
 \item{spe}{A \code{SpatialExperiment} with colData columns \code{exclude_overlapping},
 \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
-\code{sample_id_original}}
+\code{capture_area}}
 
 \item{metric_name}{character(1) in \code{colnames(colData(spe))}, where
 spots belonging to the capture area with highest average value for the metric
@@ -39,12 +39,12 @@ spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
 spe_new <- add_overlap_info(spe, metric_name = "sum_umi")
 p_old <- spot_plot(
     spe,
-    sample_id = "Br8492", var_name = "sample_id_original",
+    sample_id = "Br8492", var_name = "capture_area",
     is_discrete = TRUE
 )
 p_new <- spot_plot(
     spe_new,
-    sample_id = "Br8492", var_name = "sample_id_original",
+    sample_id = "Br8492", var_name = "capture_area",
     is_discrete = TRUE
 )
 print(p_old)
