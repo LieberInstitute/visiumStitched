@@ -1,7 +1,7 @@
 #' Add transformed array and pixel coordinates to a \code{SpatialExperiment}
 #'
 #' Given a \code{SpatialExperiment}, sample information, and coordinates
-#' produced from the Samui refinement workflow, add array and pixel coordinates
+#' produced from the refinement workflow, add array and pixel coordinates
 #' appropriate for the linearly transformed capture areas making up each group
 #' present in the \code{SpatialExperiment}.
 #'
@@ -21,7 +21,7 @@
 #' @param coords_dir A \code{character(1)} vector giving the directory
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
-#' produced from refinement with Samui
+#' produced from refinement with \code{prep_imagej_*()} functions
 #' @param overwrite A \code{logical(1)} vector indicating whether to overwrite
 #' \code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
 #' \code{array_col}, \code{pixel_row_in_fullres}, and
@@ -29,10 +29,13 @@
 #' original values are preserved even when TRUE, in versions of
 #' \code{colData(spe)} columns ending in \code{_original}.
 #'
-#' @return A \code{SpatialExperiment} object with modified \code{colData}
-#' columns \code{array_row}, \code{array_col}, \code{pixel_row_in_fullres}, and
-#' \code{pixel_col_in_fullres}, and additional corresponding columns ending in
-#' \code{_original} and (for pixel coordinates only) \code{_rounded}
+#' @return A \code{SpatialExperiment} object with additional \code{colData}
+#' columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
+#' with \code{[suffix]} values \code{original}, \code{transformed}, and
+#' \code{rounded}; \code{array_row_[suffix]} and \code{array_col_[suffix]}
+#' columns with \code{[suffix]} values \code{original} and \code{transformed}; and,
+#' if \code{overwrite}, modified colData columns \code{array_row} and
+#' \code{array_col} and \code{spatialCoords()} with their transformed values
 #'
 #' @importFrom readr read_csv
 #' @importFrom S4Vectors DataFrame
@@ -116,30 +119,34 @@ add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
         ) |>
         rename_with(~ paste0(.x, "_transformed"), all_of(coord_cols))
 
-    #   Line up and potentially subset Samui-refined coords to those in 'spe'
+    #   Line up and potentially subset refined coords to those in 'spe'
     match_index <- match(spe$key, coords$key)
     if (any(is.na(match_index))) {
-        stop("Unrecognized key(s) in Samui-refined coords.")
+        stop("Unrecognized key(s) in refined coords.")
     }
     coords <- coords[match(spe$key, coords$key), ] |>
         select(-c(key, in_tissue))
 
-    #   Add transformed coordinates as columns to colData
+    #   Add transformed coordinates and rounded pixel coordinates as columns to
+    #   colData
     colData(spe) <- cbind(colData(spe), coords)
 
     #   Retain "_original" copies of the coordinates
-    for (col_name in coord_cols) {
+    for (col_name in c("array_row", "array_col")) {
         spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
+    }
+    for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
+        spe[[paste0(col_name, "_original")]] <- spatialCoords(spe)[,col_name]
     }
 
     #   If 'overwrite', make transformed coordinates the default in the colData
     #   and spatialCoords
     if (overwrite) {
-        spatialCoords(spe)[, "pxl_col_in_fullres"] <- coords$pxl_col_in_fullres_transformed
-        spatialCoords(spe)[, "pxl_row_in_fullres"] <- coords$pxl_row_in_fullres_transformed
+        for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
+            spatialCoords(spe)[,col_name] <- coords[[paste0(col_name, "_transformed")]]
+        }
 
-        #   Make transformed coordinates the default in the colData
-        for (col_name in coord_cols) {
+        for (col_name in c("array_row", "array_col")) {
             spe[[col_name]] <- coords[[paste0(col_name, "_transformed")]]
         }
     }

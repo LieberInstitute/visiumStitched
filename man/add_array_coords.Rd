@@ -15,7 +15,7 @@ add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
-produced from refinement with Samui}
+produced from refinement with \code{prep_imagej_*()} functions}
 
 \item{overwrite}{A \code{logical(1)} vector indicating whether to overwrite
 \code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
@@ -25,14 +25,17 @@ original values are preserved even when TRUE, in versions of
 \code{colData(spe)} columns ending in \code{_original}.}
 }
 \value{
-A \code{SpatialExperiment} object with modified \code{colData}
-columns \code{array_row}, \code{array_col}, \code{pixel_row_in_fullres}, and
-\code{pixel_col_in_fullres}, and additional corresponding columns ending in
-\code{_original} and (for pixel coordinates only) \code{_rounded}
+A \code{SpatialExperiment} object with additional \code{colData}
+columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
+with \code{[suffix]} values \code{original}, \code{transformed}, and
+\code{rounded}; \code{array_row_[suffix]} and \code{array_col_[suffix]}
+columns with \code{[suffix]} values \code{original} and \code{transformed}; and,
+if \code{overwrite}, modified colData columns \code{array_row} and
+\code{array_col} and \code{spatialCoords()} with their transformed values
 }
 \description{
 Given a \code{SpatialExperiment}, sample information, and coordinates
-produced from the Samui refinement workflow, add array and pixel coordinates
+produced from the refinement workflow, add array and pixel coordinates
 appropriate for the linearly transformed capture areas making up each group
 present in the \code{SpatialExperiment}.
 }

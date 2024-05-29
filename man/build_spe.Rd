@@ -13,7 +13,7 @@ build_spe(sample_info, coords_dir, count_type = "sparse")
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
-produced from refinement with Samui}
+produced from refinement with \code{prep_imagej_*()} functions}
 
 \item{count_type}{A \code{character(1)} vector passed to \code{type} from
 \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"}
