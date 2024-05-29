@@ -68,7 +68,8 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
                     match(capture_area, sample_info$capture_area)
                 ]
             ),
-            sample_id = group,
+            #   Not made a factor because of https://github.com/drighelli/SpatialExperiment/issues/151
+            sample_id = as.character(group),
             barcode = colnames(spe),
             key = paste(barcode, capture_area, sep = "_")
         )
