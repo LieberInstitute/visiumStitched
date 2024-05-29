@@ -144,8 +144,8 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
             coords_list[[i]] = coords |>
                 dplyr::mutate(
-                    pxl_row_in_fullres = coords_xy[,1],
-                    pxl_col_in_fullres = coords_xy[,2]
+                    pxl_row_in_fullres = coords_xy[,2],
+                    pxl_col_in_fullres = coords_xy[,1]
                 )
         }
 
