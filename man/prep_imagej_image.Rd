@@ -8,7 +8,8 @@ prep_imagej_image(sample_info, out_dir, lowres_max_size = 1200)
 }
 \arguments{
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, \code{imagej_image_path}, and \code{spaceranger_dir}.}
+\code{group}, \code{imagej_image_path}, \code{spaceranger_dir},
+\code{intra_group_scalar}, and \code{group_hires_scalef}}
 
 \item{out_dir}{A character(1) vector giving a path to a directory to place
 the output image(s) and scale factors. Provided the parent exists, \code{out_dir}

@@ -8,7 +8,8 @@ prep_imagej_coords(sample_info, out_dir)
 }
 \arguments{
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, and \code{imagej_xml_path}}
+\code{group}, \code{imagej_xml_path}, \code{intra_group_scalar}, and
+\code{group_hires_scalef}}
 
 \item{out_dir}{A character(1) vector giving a path to a directory to place
 the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}

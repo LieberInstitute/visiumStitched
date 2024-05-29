@@ -34,6 +34,17 @@
 #' ## TODO: add working examples
 #' args(build_spe)
 build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c("capture_area", "group", "spaceranger_dir")
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+    
     message("Building SpatialExperiment using capture area as sample ID")
     spe <- read10xVisium(
         samples = dirname(sample_info$spaceranger_dir),

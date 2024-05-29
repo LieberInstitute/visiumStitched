@@ -12,7 +12,8 @@
 #' produce the proper relative arrangements.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, and \code{imagej_xml_path}
+#' \code{group}, \code{imagej_xml_path}, \code{intra_group_scalar}, and
+#' \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
@@ -43,6 +44,20 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         "barcode", "in_tissue", "array_row", "array_col", "pxl_row_in_fullres",
         "pxl_col_in_fullres"
     )
+
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c(
+        "capture_area", "group", "imagej_xml_path", "intra_group_scalar",
+        "group_hires_scalef"
+    )
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
 
     if (!all(file.exists(sample_info$imagej_xml_path))) {
         stop("All files in 'sample_info$imagej_xml_path' must exist.")

@@ -43,6 +43,17 @@
 #' ## TODO: add working examples
 #' args(rescale_imagej_inputs)
 rescale_imagej_inputs <- function(sample_info, out_dir) {
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c("capture_area", "group", "spaceranger_dir")
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+    
     dir.create(out_dir, showWarnings = FALSE)
 
     #   Read in high-res scalefactors and spot diameters for all samples

@@ -8,7 +8,8 @@
 #' prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, \code{imagej_image_path}, and \code{spaceranger_dir}.
+#' \code{group}, \code{imagej_image_path}, \code{spaceranger_dir},
+#' \code{intra_group_scalar}, and \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
@@ -36,6 +37,20 @@
 #' args(prep_imagej_image)
 
 prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c(
+        "capture_area", "group", "imagej_image_path", "intra_group_scalar",
+        "group_hires_scalef", "spaceranger_dir"
+    )
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+
     if (!all(file.exists(sample_info$imagej_image_path))) {
         stop("All files in 'sample_info$imagej_image_path' must exist.")
     }

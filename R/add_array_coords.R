@@ -53,6 +53,17 @@
 #' ## TODO: add working examples
 #' args(add_array_coords)
 add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c("capture_area", "group", "spaceranger_dir")
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+
     #   55-micrometer diameter for Visium spot; 100 micrometers between spots;
     #   65-micrometer spot diameter used in 'spot_diameter_fullres' calculation
     #   for spaceranger JSON. See documentation for respective quantities. The
