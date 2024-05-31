@@ -88,7 +88,7 @@ add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
         coords <- file.path(
             coords_dir, all_groups[i], "tissue_positions.csv"
         ) |>
-            readr::read_csv(show_col_types = FALSE)
+            readr::read_csv(show_col_types = FALSE, progress = FALSE)
 
         #   From the spaceranger JSON, we have the spot diameter both in pixels
         #   and meters, and can therefore compute the image's pixel/m ratio.

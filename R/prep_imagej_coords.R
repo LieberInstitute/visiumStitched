@@ -113,11 +113,14 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                 )[1]
             if (stringr::str_detect(coords_path, 'tissue_positions_list\\.csv$')) {
                 coords = read_csv(
-                    coords_path, col_names = FALSE, show_col_types = FALSE
+                    coords_path, col_names = FALSE, show_col_types = FALSE,
+                    progress = FALSE
                 )
                 colnames(coords) = TISSUE_COLNAMES
             } else {
-                coords = read_csv(coords_path, show_col_types = FALSE)
+                coords = read_csv(
+                    coords_path, show_col_types = FALSE, progress = FALSE
+                )
             }
             
             coords = coords |>
@@ -131,12 +134,12 @@ prep_imagej_coords <- function(sample_info, out_dir) {
             #   Take just the x and y coords, scale to match the rest of the
             #   group, and apply the rotation matrix
             coords_xy = coords |>
-                dplyr::select(pxl_row_in_fullres, pxl_col_in_fullres) |>
+                dplyr::select(pxl_col_in_fullres, pxl_row_in_fullres) |>
                 dplyr::mutate(
-                    pxl_row_in_fullres = this_sample_info$intra_group_scalar[i] *
-                        pxl_row_in_fullres,
                     pxl_col_in_fullres = this_sample_info$intra_group_scalar[i] *
                         pxl_col_in_fullres,
+                    pxl_row_in_fullres = this_sample_info$intra_group_scalar[i] *
+                        pxl_row_in_fullres,
                     ones = 1
                 ) |>
                 as.matrix()
@@ -144,8 +147,8 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
             coords_list[[i]] = coords |>
                 dplyr::mutate(
-                    pxl_row_in_fullres = coords_xy[,2],
-                    pxl_col_in_fullres = coords_xy[,1]
+                    pxl_col_in_fullres = coords_xy[,1],
+                    pxl_row_in_fullres = coords_xy[,2]
                 )
         }
 
@@ -154,7 +157,10 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         coords = do.call(rbind, coords_list)
         this_out_dir = file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
-        readr::write_csv(coords, file.path(this_out_dir, 'tissue_positions.csv'))
+        readr::write_csv(
+            coords, file.path(this_out_dir, 'tissue_positions.csv'),
+            progress = FALSE
+        )
     }
 
     return(NULL)
