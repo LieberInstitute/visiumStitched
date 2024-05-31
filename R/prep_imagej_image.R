@@ -104,5 +104,5 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         )
     }
 
-    return(NULL)
+    return(invisible(NULL))
 }

@@ -163,5 +163,5 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         )
     }
 
-    return(NULL)
+    return(invisible(NULL))
 }
