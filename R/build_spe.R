@@ -44,7 +44,7 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
             )
         )
     }
-    
+
     message("Building SpatialExperiment using capture area as sample ID")
     spe <- read10xVisium(
         samples = dirname(sample_info$spaceranger_dir),

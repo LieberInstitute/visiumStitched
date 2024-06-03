@@ -29,7 +29,7 @@
 #' @import imager
 #' @importFrom dplyr mutate select group_by ungroup
 #' @importFrom rjson fromJSON
-#' 
+#'
 #' @export
 #' @author Nicholas J. Eagles
 #'
@@ -39,7 +39,7 @@
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' prep_imagej_coords(sample_info, tempdir())
 #' }
-#' 
+#'
 #' ## TODO: add working examples
 #' args(rescale_imagej_inputs)
 rescale_imagej_inputs <- function(sample_info, out_dir) {
@@ -53,31 +53,31 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
             )
         )
     }
-    
+
     dir.create(out_dir, showWarnings = FALSE)
 
     #   Read in high-res scalefactors and spot diameters for all samples
-    sample_info$tissue_hires_scalef = vapply(
+    sample_info$tissue_hires_scalef <- vapply(
         sample_info$spaceranger_dir,
         function(x) {
             rjson::fromJSON(
                 file = file.path(x, "scalefactors_json.json")
-            )[['tissue_hires_scalef']]
+            )[["tissue_hires_scalef"]]
         },
         numeric(1)
     )
 
-    sample_info$spot_diameter_fullres = vapply(
+    sample_info$spot_diameter_fullres <- vapply(
         sample_info$spaceranger_dir,
         function(x) {
             rjson::fromJSON(
                 file = file.path(x, "scalefactors_json.json")
-            )[['spot_diameter_fullres']]
+            )[["spot_diameter_fullres"]]
         },
         numeric(1)
     )
 
-    sample_info = sample_info |>
+    sample_info <- sample_info |>
         dplyr::group_by(group) |>
         dplyr::mutate(
             #   For spot coordinates: scale up so all represent the same
@@ -92,15 +92,15 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
             group_hires_scalef = max(tissue_hires_scalef)
         ) |>
         dplyr::ungroup()
-    
+
     for (i in seq(nrow(sample_info))) {
-        this_image = load.image(
-            file.path(sample_info$spaceranger_dir[i], 'tissue_hires_image.png')
+        this_image <- load.image(
+            file.path(sample_info$spaceranger_dir[i], "tissue_hires_image.png")
         )
 
         #   Rescale according to the previously calculated factor to ensure
         #   consistent distance per pixel within the group
-        this_image = resize(
+        this_image <- resize(
             this_image,
             as.integer(
                 sample_info$intra_group_scalar_image[i] * dim(this_image)[1]
@@ -112,18 +112,18 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
 
         save.image(
             this_image,
-            file.path(out_dir, sprintf('%s.png', sample_info$capture_area[i]))
+            file.path(out_dir, sprintf("%s.png", sample_info$capture_area[i]))
         )
     }
 
-    sample_info = sample_info |>
+    sample_info <- sample_info |>
         dplyr::select(
             -c(
                 spot_diameter_fullres, tissue_hires_scalef,
                 intra_group_scalar_image
             )
         )
-    
+
     #   Return 'sample_info' with additional columns 'intra_group_scalar' and
     #   'group_hires_scalef'
     return(sample_info)

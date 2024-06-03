@@ -86,12 +86,11 @@
 #'     minCount = 0, assayname = "logcounts"
 #' )
 #' print(p)
-spot_plot <- function(
-        spe, sample_id, image_id = "lowres",
-        title = sprintf("%s_%s", sample_id, var_name), var_name,
-        multi_gene_method = c("z_score", "pca", "sparsity"),
-        include_legend = TRUE, is_discrete, colors = NULL,
-        assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
+spot_plot <- function(spe, sample_id, image_id = "lowres",
+    title = sprintf("%s_%s", sample_id, var_name), var_name,
+    multi_gene_method = c("z_score", "pca", "sparsity"),
+    include_legend = TRUE, is_discrete, colors = NULL,
+    assayname = "logcounts", minCount = 0.5, spatial = FALSE) {
     #   This value was determined empirically, and results in good spot sizes.
     #   Note that it's sample-independent, and the final spot size to pass to
     #   'vis_gene' or 'vis_clus' uses this value along with the image

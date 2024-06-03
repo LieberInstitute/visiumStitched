@@ -136,14 +136,14 @@ add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
         spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
     }
     for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
-        spe[[paste0(col_name, "_original")]] <- spatialCoords(spe)[,col_name]
+        spe[[paste0(col_name, "_original")]] <- spatialCoords(spe)[, col_name]
     }
 
     #   If 'overwrite', make transformed coordinates the default in the colData
     #   and spatialCoords
     if (overwrite) {
         for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
-            spatialCoords(spe)[,col_name] <- coords[[paste0(col_name, "_transformed")]]
+            spatialCoords(spe)[, col_name] <- coords[[paste0(col_name, "_transformed")]]
         }
 
         for (col_name in c("array_row", "array_col")) {

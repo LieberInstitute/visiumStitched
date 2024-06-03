@@ -22,7 +22,7 @@
 #' @import imager
 #' @importFrom rjson fromJSON toJSON
 #' @importFrom dplyr filter
-#' 
+#'
 #' @export
 #' @author Nicholas J. Eagles
 #'
@@ -32,10 +32,9 @@
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' prep_imagej_image(sample_info, tempdir())
 #' }
-#' 
+#'
 #' ## TODO: add working examples
 #' args(prep_imagej_image)
-
 prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c(
@@ -58,14 +57,14 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
     dir.create(out_dir, showWarnings = FALSE)
 
     for (this_group in unique(sample_info$group)) {
-        this_sample_info = sample_info |>
+        this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
 
         if (length(unique(this_sample_info$imagej_image_path)) > 1) {
             stop("Expected one unique path for 'imagej_image_path' per group in 'sample_info'.")
         }
 
-        this_image = load.image(this_sample_info$imagej_image_path[1])
+        this_image <- load.image(this_sample_info$imagej_image_path[1])
 
         #   Combine info about the original scalefactors of the first capture
         #   area with group-related scalars to form a new scalefactors JSON
@@ -76,8 +75,8 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
             )
         )
 
-        low_over_hi = lowres_max_size / max(dim(this_image)[seq(2)])
-        sr_json = list(
+        low_over_hi <- lowres_max_size / max(dim(this_image)[seq(2)])
+        sr_json <- list(
             tissue_hires_scalef = this_sample_info$group_hires_scalef[1],
             tissue_lowres_scalef = this_sample_info$group_hires_scalef[1] *
                 low_over_hi,
@@ -85,7 +84,7 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
                 this_sample_info$intra_group_scalar[1]
         )
 
-        this_image = resize(
+        this_image <- resize(
             this_image,
             as.integer(low_over_hi * dim(this_image)[1]),
             as.integer(low_over_hi * dim(this_image)[2])
@@ -93,14 +92,14 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
 
         #   Save the lowres image and scalefactors JSON in a subdirectory of
         #   'out_dir' named with the current group
-        this_out_dir = file.path(out_dir, this_group)
+        this_out_dir <- file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
         save.image(
-            this_image, file.path(this_out_dir, 'tissue_lowres_image.png')
+            this_image, file.path(this_out_dir, "tissue_lowres_image.png")
         )
         write(
             rjson::toJSON(sr_json),
-            file.path(this_out_dir, 'scalefactors_json.json')
+            file.path(this_out_dir, "scalefactors_json.json")
         )
     }
 

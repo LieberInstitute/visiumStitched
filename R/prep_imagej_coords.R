@@ -26,7 +26,7 @@
 #' @importFrom readr read_csv write_csv
 #' @importFrom tibble as_tibble
 #' @importFrom rjson fromJSON
-#' 
+#'
 #' @export
 #' @author Nicholas J. Eagles
 #'
@@ -36,7 +36,7 @@
 #' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
 #' prep_imagej_coords(sample_info, tempdir())
 #' }
-#' 
+#'
 #' ## TODO: add working examples
 #' args(prep_imagej_coords)
 prep_imagej_coords <- function(sample_info, out_dir) {
@@ -64,9 +64,9 @@ prep_imagej_coords <- function(sample_info, out_dir) {
     }
 
     dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-    
+
     for (this_group in unique(sample_info$group)) {
-        this_sample_info = sample_info |>
+        this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
 
         if (length(unique(this_sample_info$imagej_xml_path)) > 1) {
@@ -75,65 +75,68 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
         #   Find all XML elements containing input image paths and
         #   transformation matrices
-        transform_nodes = this_sample_info$imagej_xml_path[1] |>
+        transform_nodes <- this_sample_info$imagej_xml_path[1] |>
             read_xml() |>
-            xml_find_all('.//t2_patch')
-        
+            xml_find_all(".//t2_patch")
+
         #   Find paths to input images and the order the corresponding capture
         #   areas appear in these paths
-        input_paths = xml_attr(transform_nodes, 'file_path')
-        input_indices = sapply(
+        input_paths <- xml_attr(transform_nodes, "file_path")
+        input_indices <- sapply(
             this_sample_info$capture_area, function(x) grep(x, input_paths)
         )
         if (length(input_paths) != nrow(this_sample_info) || any(is.na(input_indices))) {
             stop("Expected each capture area to be present exactly once in the input filenames to ImageJ for each group.")
         }
 
-        coords_list = list()
+        coords_list <- list()
 
         #   Loop through all capture areas in this group
         for (i in seq(nrow(this_sample_info))) {
             #   Parse the rotation matrix from the ImageJ XML, and scale
             #   translations from high to fullres
-            rot = transform_nodes[input_indices[i]] |>
-                xml_attr('transform') |>
-                stringr::str_replace_all('matrix|[\\(\\)]', '') |>
-                strsplit(',') |>
+            rot <- transform_nodes[input_indices[i]] |>
+                xml_attr("transform") |>
+                stringr::str_replace_all("matrix|[\\(\\)]", "") |>
+                strsplit(",") |>
                 unlist() |>
                 as.numeric() |>
                 matrix(nrow = 2, ncol = 3)
-            rot[,3] = rot[,3] / this_sample_info$group_hires_scalef[1]
-            
+            rot[, 3] <- rot[, 3] / this_sample_info$group_hires_scalef[1]
+
             #   Read in the raw tissue positions for this capture area, handling
             #   the old and new format for tissue positions
-            coords_path = list.files(
-                    this_sample_info$spaceranger_dir[i],
-                    '^tissue_positions(_list)?\\.csv$',
-                    full.names = TRUE
-                )[1]
-            if (stringr::str_detect(coords_path, 'tissue_positions_list\\.csv$')) {
-                coords = read_csv(
-                    coords_path, col_names = FALSE, show_col_types = FALSE,
+            coords_path <- list.files(
+                this_sample_info$spaceranger_dir[i],
+                "^tissue_positions(_list)?\\.csv$",
+                full.names = TRUE
+            )[1]
+            if (stringr::str_detect(coords_path, "tissue_positions_list\\.csv$")) {
+                coords <- read_csv(
+                    coords_path,
+                    col_names = FALSE, show_col_types = FALSE,
                     progress = FALSE
                 )
-                colnames(coords) = TISSUE_COLNAMES
+                colnames(coords) <- TISSUE_COLNAMES
             } else {
-                coords = read_csv(
-                    coords_path, show_col_types = FALSE, progress = FALSE
+                coords <- read_csv(
+                    coords_path,
+                    show_col_types = FALSE, progress = FALSE
                 )
             }
-            
-            coords = coords |>
+
+            coords <- coords |>
                 dplyr::rename(key = barcode) |>
                 dplyr::mutate(
                     key = paste(
-                        key, this_sample_info$capture_area[i], sep = '_'
+                        key, this_sample_info$capture_area[i],
+                        sep = "_"
                     )
                 )
-            
+
             #   Take just the x and y coords, scale to match the rest of the
             #   group, and apply the rotation matrix
-            coords_xy = coords |>
+            coords_xy <- coords |>
                 dplyr::select(pxl_col_in_fullres, pxl_row_in_fullres) |>
                 dplyr::mutate(
                     pxl_col_in_fullres = this_sample_info$intra_group_scalar[i] *
@@ -143,22 +146,22 @@ prep_imagej_coords <- function(sample_info, out_dir) {
                     ones = 1
                 ) |>
                 as.matrix()
-            coords_xy = t(rot %*% t(coords_xy))
+            coords_xy <- t(rot %*% t(coords_xy))
 
-            coords_list[[i]] = coords |>
+            coords_list[[i]] <- coords |>
                 dplyr::mutate(
-                    pxl_col_in_fullres = coords_xy[,1],
-                    pxl_row_in_fullres = coords_xy[,2]
+                    pxl_col_in_fullres = coords_xy[, 1],
+                    pxl_row_in_fullres = coords_xy[, 2]
                 )
         }
 
         #   Merge coordinates for all capture areas in this group and write to
         #   CSV
-        coords = do.call(rbind, coords_list)
-        this_out_dir = file.path(out_dir, this_group)
+        coords <- do.call(rbind, coords_list)
+        this_out_dir <- file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
         readr::write_csv(
-            coords, file.path(this_out_dir, 'tissue_positions.csv'),
+            coords, file.path(this_out_dir, "tissue_positions.csv"),
             progress = FALSE
         )
     }
