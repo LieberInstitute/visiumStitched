@@ -10,7 +10,7 @@
 #' separated strings containing the keys of any overlapping spots, and is the empty
 #' string otherwise.
 #'
-#' @param spe A \code{SpatialExperiment} with colData columns \code{exclude_overlapping},
+#' @param spe A \code{SpatialExperiment} with colData columns
 #' \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
 #' \code{capture_area}
 #' @param metric_name character(1) in \code{colnames(colData(spe))}, where
@@ -18,7 +18,7 @@
 #' take precedence over other spots
 #'
 #' @return A \code{SpatialExperiment} object with additional \code{colData}
-#' columns \code{spe$exclude_overlapping} and \code{spe$overlap_capture_area}
+#' columns \code{spe$exclude_overlapping} and \code{spe$overlap_key}
 #'
 #' @import dplyr tibble
 #' @importFrom S4Vectors DataFrame

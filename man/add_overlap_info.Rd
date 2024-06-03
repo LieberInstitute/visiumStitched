@@ -7,7 +7,7 @@
 add_overlap_info(spe, metric_name)
 }
 \arguments{
-\item{spe}{A \code{SpatialExperiment} with colData columns \code{exclude_overlapping},
+\item{spe}{A \code{SpatialExperiment} with colData columns
 \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
 \code{capture_area}}
 
@@ -17,7 +17,7 @@ take precedence over other spots}
 }
 \value{
 A \code{SpatialExperiment} object with additional \code{colData}
-columns \code{spe$exclude_overlapping} and \code{spe$overlap_capture_area}
+columns \code{spe$exclude_overlapping} and \code{spe$overlap_key}
 }
 \description{
 Given a \code{SpatialExperiment} and column name in its \code{colData},
