@@ -44,7 +44,7 @@ array rows/cols generally changes from the Visium standards of 78 and 128
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Fit spots to a new Visium-like array</h1>
-    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/HEAD/R/array_coord_utils.R" class="external-link"><code>R/array_coord_utils.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/array_coord_utils.R" class="external-link"><code>R/array_coord_utils.R</code></a></small>
     <div class="hidden name"><code>dot-fit_to_array.Rd</code></div>
     </div>
     <div class="ref-description">
@@ -59,24 +59,17 @@ array rows/cols generally changes from the Visium standards of 78 and 128
     </div>
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt id="arg-coords">coords<a class="anchor" aria-label="anchor" href="#arg-coords"></a></dt>
+<dl><dt id="arg-coords">coords<a class="anchor" aria-label="anchor" href="#arg-coords"></a></dt>
 <dd><p>A <code>tibble()</code> whose rows represent capture areas of the
 same group, and containing columns 'array_row', 'array_col',
 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.</p></dd>
 <dt id="arg-inter-spot-dist-px">inter_spot_dist_px<a class="anchor" aria-label="anchor" href="#arg-inter-spot-dist-px"></a></dt>
 <dd><p><code>numeric(1)</code> vector giving the pixel distance
 between any 2 spots in the new coordinates.</p></dd>
-<dt id="arg-interval-x">INTERVAL_X<a class="anchor" aria-label="anchor" href="#arg-interval-x"></a></dt>
-<dd><p><code>numeric(1)</code> giving pixel distance between coordinate
-units used for <code>x</code> (e.g. if x represents ideal <code>array_col</code> values,
-<code>INTERVAL_X</code> represents pixel distance between spot columns).</p></dd>
-<dt id="arg-interval-y">INTERVAL_Y<a class="anchor" aria-label="anchor" href="#arg-interval-y"></a></dt>
-<dd><p><code>numeric(1)</code> giving pixel distance between coordinate
-units used for <code>y</code>.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-<p>A <code>tibble()</code> with modified 'array_row' + 'array_col' columns, as
+    <p>A <code>tibble()</code> with modified 'array_row' + 'array_col' columns, as
 well as new 'pxl_row_in_fullres_rounded' and 'pxl_col_in_fullres_rounded'
 columns representing the pixel coordinates rounded to the nearest exact array
 coordinates.</p>

@@ -44,7 +44,7 @@ prevent overplotting)."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Spatial plots of discrete or continuous features for stitched-together capture areas.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/HEAD/R/spot_plot.R" class="external-link"><code>R/spot_plot.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/spot_plot.R" class="external-link"><code>R/spot_plot.R</code></a></small>
     <div class="hidden name"><code>spot_plot.Rd</code></div>
     </div>
     <div class="ref-description">
@@ -67,12 +67,12 @@ prevent overplotting).</p>
 <span>  colors <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  assayname <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
 <span>  minCount <span class="op">=</span> <span class="fl">0.5</span>,</span>
-<span>  spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt id="arg-spe">spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a></dt>
+<dl><dt id="arg-spe">spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a></dt>
 <dd><p>A <code>SpatialExperiment</code> with colData column <code>exclude_overlapping</code>,
 passed to <code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_gene.html" class="external-link">spatialLIBD::vis_gene</a></code> or <code><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">spatialLIBD::vis_clus</a></code></p></dd>
 <dt id="arg-sample-id">sample_id<a class="anchor" aria-label="anchor" href="#arg-sample-id"></a></dt>
@@ -113,7 +113,7 @@ not <code>is_discrete</code></p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-<p>A <code>ggplot</code> object containing a "spot plot" of the specified sample</p>
+    <p>A <code>ggplot</code> object containing a "spot plot" of the specified sample</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -136,7 +136,7 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"spe"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-05-22 20:22:00.011856 loading file /github/home/.cache/R/BiocFileCache/2c69132a1f8e_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-06-05 20:23:32.199884 loading file /github/home/.cache/R/BiocFileCache/adf8de82fa_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span><span class="va">spe</span><span class="op">$</span><span class="va">exclude_overlapping</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#   Plot age spatially for the first sample</span></span></span>
