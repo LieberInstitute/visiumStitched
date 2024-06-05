@@ -44,7 +44,9 @@ Imports:
     rjson,
     dplyr,
     tibble,
-    imager
+    imager,
+    stringr,
+    xml2
 biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
     Visualization
 URL: https://github.com/LieberInstitute/visiumStitched
