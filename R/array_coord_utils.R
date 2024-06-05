@@ -118,11 +118,6 @@
 #' 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
-#' @param INTERVAL_X \code{numeric(1)} giving pixel distance between coordinate
-#' units used for \code{x} (e.g. if x represents ideal \code{array_col} values,
-#' \code{INTERVAL_X} represents pixel distance between spot columns).
-#' @param INTERVAL_Y \code{numeric(1)} giving pixel distance between coordinate
-#' units used for \code{y}.
 #'
 #' @return A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
 #' well as new 'pxl_row_in_fullres_rounded' and 'pxl_col_in_fullres_rounded'

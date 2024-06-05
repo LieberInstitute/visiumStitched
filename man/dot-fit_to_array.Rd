@@ -13,13 +13,6 @@ same group, and containing columns 'array_row', 'array_col',
 
 \item{inter_spot_dist_px}{\code{numeric(1)} vector giving the pixel distance
 between any 2 spots in the new coordinates.}
-
-\item{INTERVAL_X}{\code{numeric(1)} giving pixel distance between coordinate
-units used for \code{x} (e.g. if x represents ideal \code{array_col} values,
-\code{INTERVAL_X} represents pixel distance between spot columns).}
-
-\item{INTERVAL_Y}{\code{numeric(1)} giving pixel distance between coordinate
-units used for \code{y}.}
 }
 \value{
 A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
