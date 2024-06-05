@@ -26,7 +26,7 @@
 #' @return A \code{tibble}: a copy of \code{sample_info} with additional columns
 #' \code{intra_group_scalar} and \code{group_hires_scalef}
 #'
-#' @import imager
+#' @importFrom imager load.image resize save.image
 #' @importFrom dplyr mutate select group_by ungroup
 #' @importFrom rjson fromJSON
 #'
@@ -94,13 +94,13 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
         dplyr::ungroup()
 
     for (i in seq(nrow(sample_info))) {
-        this_image <- load.image(
+        this_image <- imager::load.image(
             file.path(sample_info$spaceranger_dir[i], "tissue_hires_image.png")
         )
 
         #   Rescale according to the previously calculated factor to ensure
         #   consistent distance per pixel within the group
-        this_image <- resize(
+        this_image <- imager::resize(
             this_image,
             as.integer(
                 sample_info$intra_group_scalar_image[i] * dim(this_image)[1]
@@ -110,7 +110,7 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
             )
         )
 
-        save.image(
+        imager::save.image(
             this_image,
             file.path(out_dir, sprintf("%s.png", sample_info$capture_area[i]))
         )

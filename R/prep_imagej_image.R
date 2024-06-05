@@ -19,7 +19,7 @@
 #'
 #' @return NULL
 #'
-#' @import imager
+#' @importFrom imager load.image resize save.image
 #' @importFrom rjson fromJSON toJSON
 #' @importFrom dplyr filter
 #'
@@ -64,7 +64,7 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
             stop("Expected one unique path for 'imagej_image_path' per group in 'sample_info'.")
         }
 
-        this_image <- load.image(this_sample_info$imagej_image_path[1])
+        this_image <- imager::load.image(this_sample_info$imagej_image_path[1])
 
         #   Combine info about the original scalefactors of the first capture
         #   area with group-related scalars to form a new scalefactors JSON
@@ -84,7 +84,7 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
                 this_sample_info$intra_group_scalar[1]
         )
 
-        this_image <- resize(
+        this_image <- imager::resize(
             this_image,
             as.integer(low_over_hi * dim(this_image)[1]),
             as.integer(low_over_hi * dim(this_image)[2])
@@ -94,7 +94,7 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         #   'out_dir' named with the current group
         this_out_dir <- file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
-        save.image(
+        imager::save.image(
             this_image, file.path(this_out_dir, "tissue_lowres_image.png")
         )
         write(
