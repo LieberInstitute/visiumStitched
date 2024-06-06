@@ -16,8 +16,8 @@
 #' process each group as if it really were one capture area in the first place.
 #'
 #' @param spe A \code{SpatialExperiment}
-#' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, and \code{spaceranger_dir}
+#' @param sample_info A \code{tibble} with columns \code{capture_area} and
+#' \code{group}
 #' @param coords_dir A \code{character(1)} vector giving the directory
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
@@ -57,7 +57,7 @@
 #' args(add_array_coords)
 add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
     #   State assumptions about columns expected to be in sample_info
-    expected_cols <- c("capture_area", "group", "spaceranger_dir")
+    expected_cols <- c("capture_area", "group")
     if (!all(expected_cols %in% colnames(sample_info))) {
         stop(
             sprintf(
@@ -95,7 +95,7 @@ add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
         #   Then use that to compute the distance between spots in pixels
         sr_json <- rjson::fromJSON(
             file = file.path(
-                sample_info$spaceranger_dir[i], "scalefactors_json.json"
+                coords_dir, all_groups[i], "scalefactors_json.json"
             )
         )
         px_per_m <- sr_json$spot_diameter_fullres / SPOT_DIAMETER_JSON_M

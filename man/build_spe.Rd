@@ -7,8 +7,8 @@
 build_spe(sample_info, coords_dir, count_type = "sparse")
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, and \code{spaceranger_dir}}
+\item{sample_info}{A \code{tibble} with columns \code{capture_area} and
+\code{group}}
 
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
