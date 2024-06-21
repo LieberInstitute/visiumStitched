@@ -1,0 +1,203 @@
+---
+title: "Introduction to visiumStitched"
+author: 
+  - name: Nicholas J. Eagles
+    affiliation:
+    - &libd Lieber Institute for Brain Development
+    email: nickeagles77@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('visiumStitched')`"
+vignette: >
+  %\VignetteIndexEntry{Stitching a Visium Experiment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html
+)
+```
+
+
+```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
+## Track time spent on making the vignette
+startTime <- Sys.time()
+
+## Bib setup
+library("RefManageR")
+
+## Write bibliography information
+bib <- c(
+    R = citation(),
+    BiocStyle = citation("BiocStyle")[1],
+    knitr = citation("knitr")[1],
+    RefManageR = citation("RefManageR")[1],
+    rmarkdown = citation("rmarkdown")[1],
+    sessioninfo = citation("sessioninfo")[1],
+    SpatialExperiment = citation('SpatialExperiment')[1],
+    tidyverse = citation('tidyverse')[1],
+    visiumStitched = citation("visiumStitched")[1]
+)
+```
+
+```{r "start", message=FALSE}
+library(SpatialExperiment)
+library(visiumStitched)
+library(tidyverse)
+```
+
+# Preparing Images for Fiji
+
+Before aligning anything in Fiji, we need to ensure the image of each capture area to align
+is on the same scale-- that is, a pixel in each image represents the same distance. This is
+typically approximately true, but is not guaranteed to be exactly true, especially when the
+capture areas to align come from different slides. `rescale_imagej_inputs()` reads in the
+[high-resolution tissue images](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-png)
+for each capture area, and uses info about their spot diameters in pixels and scale factors to
+rescale the images appropriately.
+
+TODO: note about setting group and things being rescaled by group
+
+For demonstration purposes, we'll set `out_dir` to a temporary location. Typically, it would
+really be any suitable directory to place the rescaled images for later input to Fiji.
+
+```{r "rescale_inputs", eval = FALSE}
+#   Generate rescaled approximately high-resolution images 
+rescale_imagej_inputs(sample_info, out_dir = tempdir())
+```
+
+# Building a `SpatialExperiment`
+
+## Parsing Outputs from Fiji
+
+While the alignment process in Fiji can't be part of this vignette, we can use the actual
+outputs for this dataset: an XML file specifying rigid affine transformations for each
+capture area, and the stitched approximately high-resolution image.
+
+Before building the `SpatialExperiment`, the idea is to create a directory very similar to
+[Spaceranger's spatial outputs](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs)
+for each *group*, as opposed to the *capture-area*-level directories we already have. We'll
+place this directory in a temporary location that will later be read in to produce the
+final `SpatialExperiment`.
+
+First, `prep_imagej_coords()` will apply the rigid affine transformations specified by Fiji's
+output XML file to the spatial coordinates, ultimately producing a group-level `tissue_positions.csv` file.
+Next, `prep_imagej_image()` will rescale the stitched image to have a default of 1200 pixels
+in its larger dimension. The idea is that in an experiment with multiple groups, the images
+stored in the `SpatialExperiment` for any group will be similarly scaled and occupy similar
+memory footprints.
+
+```{r "prep_imagej", eval = FALSE}
+spe_input_dir = tempdir()
+prep_imagej_coords(sample_info, out_dir = spe_input_dir)
+prep_imagej_image(sample_info, out_dir = spe_input_dir)
+```
+
+## Constructing the Object
+
+We now have all the pieces to create the `SpatialExperiment`.
+
+```{r "build_spe", eval = FALSE}
+spe = build_spe(sample_info, coords_dir = spe_input_dir)
+```
+
+To demonstrate that we've stitched both the gene expression and image data successfully,
+we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` to plot the distribution of white matter
+spatially. Note that we're plotting raw counts; prior to normalization, library-size
+variation across spots can bias the apparent distribution. Later, we'll show that
+normalization is critical to producing a visually seamless transition between overlapping
+capture areas.
+
+```{r "explore_coords", eval = FALSE}
+wm_genes = rownames(spe)[
+    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$symbol)
+]
+vis_gene(spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE)
+```
+
+Note also that the array coordinates (i.e. `spe$array_row` and `spe$array_col`) have been
+recomputed to more sensibly index the stitched data. By definition, these array coordinates
+(see [documentation from 10X](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-positions))
+are integer indices of each spot on a Visium capture area, numbering the typically 78 and 128
+rows and columns, respectively, for a 6.5mm capture area. The `build_spe()` function retains
+each capture area's original array coordinates, `spe$array_row_original` and `spe$array_col_original`,
+but these are typically not useful to represent our group-level, stitched data. In fact, each 
+stitched capture area has the same exact array coordinates, despite having different spatial
+positions after stitching. We'll take in-tissue spots only and use transparency to emphasize
+the overlap among capture areas:
+
+```{r "array_plot_orig", eval = FALSE}
+colData(spe) |>
+    as_tibble() |>
+    filter(in_tissue) |>
+    ggplot(
+        mapping = aes(
+            x = array_row_original, y = array_col_original, color = capture_area
+        )
+    ) +
+        geom_point(alpha = 0.3)
+```
+
+```{r "something", eval = FALSE}
+spe = readRDS('/dcs05/lieber/lcolladotor/visiumStitched_LIBD1070/LS_visiumStitched/processed-data/04_example_data/Visium_LS_spe.rds')
+```
+
+# Reproducibility
+
+Code for creating the vignette
+
+```{r createVignette, eval=FALSE}
+## Create the vignette
+library("rmarkdown")
+system.time(render("full_demo.Rmd", "BiocStyle::html_document"))
+
+## Extract the R code
+library("knitr")
+knit("full_demo.Rmd", tangle = TRUE)
+```
+
+Date the vignette was generated.
+
+```{r reproduce1, echo=FALSE}
+## Date the vignette was generated
+Sys.time()
+```
+
+Wallclock time spent generating the vignette.
+
+```{r reproduce2, echo=FALSE}
+## Processing time in seconds
+totalTime <- diff(c(startTime, Sys.time()))
+round(totalTime, digits = 3)
+```
+
+`R` session information.
+
+```{r reproduce3, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```
+
+# Bibliography
+
+This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+
+Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
+
+```{r vignetteBiblio, results = "asis", echo = FALSE, warning = FALSE, message = FALSE}
+## Print bibliography
+PrintBibliography(bib, .opts = list(hyperlink = "to.doc", style = "html"))
+```
