@@ -105,10 +105,30 @@ prep_imagej_image(sample_info, out_dir = spe_input_dir)
 
 ## Constructing the Object
 
-We now have all the pieces to create the `SpatialExperiment`.
+We now have all the pieces to create the `SpatialExperiment`. After constructing the
+base object, we'll add information related to how spots may overlap between capture
+areas in each group. We'll compute the `sum_umi` metric, which will be passed to
+`add_overlap_info()` to determine which spots in overlapping regions to exclude in
+plots. In particular, at regions of overlap, spots from capture areas with higher
+average UMI (unique molecular identifier) counts will be plotted, while any other
+spots will be dropped for visualization purposes.
 
 ```{r "build_spe", eval = FALSE}
 spe = build_spe(sample_info, coords_dir = spe_input_dir)
+
+spe$sum_umi = colSums(assays(spe)$counts)
+spe = add_overlap_info(spe, "sum_umi")
+```
+
+The `exclude_overlapping` `colData()` column added by `add_overlap_info()` controls
+which spots to drop for visualization purposes. Note also that the `overlap_key`
+column was added, which gives a comma-separated string of spot keys overlapping each
+given spot, or the empty string otherwise. This vignette won't cover the potential uses
+of this information, but one possibility is to perform clustering and check how frequently
+overlapping spots are assigned the same cluster.
+
+```{r "exclude_overlapping", eval = FALSE}
+table(spe$exclude_overlapping)
 ```
 
 To demonstrate that we've stitched both the gene expression and image data successfully,
