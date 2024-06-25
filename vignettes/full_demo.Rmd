@@ -41,6 +41,7 @@ bib <- c(
     R = citation(),
     BiocStyle = citation("BiocStyle")[1],
     knitr = citation("knitr")[1],
+    Matrix = citation("Matrix")[1],
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
@@ -54,6 +55,7 @@ bib <- c(
 library(SpatialExperiment)
 library(visiumStitched)
 library(tidyverse)
+library(Matrix)
 ```
 
 # Preparing Images for Fiji
@@ -131,6 +133,10 @@ overlapping spots are assigned the same cluster.
 table(spe$exclude_overlapping)
 ```
 
+# Examining the stitched data
+
+## Stitched plotting
+
 To demonstrate that we've stitched both the gene expression and image data successfully,
 we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` to plot the distribution of white matter
 spatially. Note that we're plotting raw counts; prior to normalization, library-size
@@ -144,6 +150,8 @@ wm_genes = rownames(spe)[
 ]
 vis_gene(spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE)
 ```
+
+## Array coordinates
 
 Note also that the array coordinates (i.e. `spe$array_row` and `spe$array_col`) have been
 recomputed to more sensibly index the stitched data. By definition, these array coordinates
@@ -168,9 +176,78 @@ colData(spe) |>
         geom_point(alpha = 0.3)
 ```
 
-```{r "something", eval = FALSE}
-spe = readRDS('/dcs05/lieber/lcolladotor/visiumStitched_LIBD1070/LS_visiumStitched/processed-data/04_example_data/Visium_LS_spe.rds')
+Let's contrast this with the array coordinates recomputed by `visiumStitched`.
+Briefly, `visiumStitched` forms a new hexagonal, Visium-like grid spanning the space occupied
+by all capture areas after stitching. Then, the true spot positions are fit to the nearest new
+spot positions, in terms of Euclidean distance. Finally, array coordinates are re-indexed
+according to the new spot assignments, resulting in spatially meaningful values that apply at
+the group level for stitched data. This ultimately enables downstream applications that use
+the array coordinates, like
+clustering with `BayesSpace` or `PRECAST`, to treat each group as a spatially continuous
+sample.
+
+```{r "array_plot_orig", eval = FALSE}
+colData(spe) |>
+    as_tibble() |>
+    filter(in_tissue) |>
+    ggplot(
+        mapping = aes(
+            x = array_row, y = array_col, color = capture_area
+        )
+    ) +
+        geom_point(alpha = 0.3)
 ```
+
+## Geometric transformations
+
+As a `SpatialExperiment`, the stitched data may be rotated or mirrored by group, such as with
+the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions.
+
+```{r "rotate", eval = FALSE}
+vis_gene(
+    rotateObject(spe, sample_id = 'Br2719', degrees = 90),
+    geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
+)
+```
+
+```{r "mirror", eval = FALSE}
+vis_gene(
+    mirrorObject(spe, sample_id = 'Br2719', axis = "v"),
+    geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
+)
+```
+
+## A note on normalization
+
+As noted above, library-size variation across spots can bias the apparent spatial
+distribution of genes when raw counts are used. The effect is often dramatic
+enough that spatial trends cannot be easily seen across the stitched data until
+data is log-normalized. Instead of performing normalization here, we'll fetch the
+object with [normalized](https://bioconductor.org/books/3.12/OSCA/normalization.html#normalization-by-deconvolution)
+counts from `spatialLIBD`, then plot a few white matter genes as before:
+
+```{r "fetch_norm", eval = FALSE}
+spe_norm = fetch_data(type = 'Visium_LS_spe')
+
+vis_gene(
+    spe_norm, geneid = wm_genes, assayname = 'logcounts', is_stitched = TRUE
+)
+```
+
+Recall the unnormalized version of this plot, which is not nearly as clean:
+
+```{r "unnorm_plot", eval = FALSE}
+vis_gene(
+    spe, geneid = wm_genes, assayname = 'logcounts', is_stitched = TRUE
+)
+```
+
+# Conclusion
+
+`visiumStitched` provides a set of helper functions, in conjunction with ImageJ/Fiji,
+intended to simplify the stitching of Visium data into a spatially integrated
+`SpatialExperiment` object ready for analysis. We hope you find it useful for your
+research!
 
 # Reproducibility
 
