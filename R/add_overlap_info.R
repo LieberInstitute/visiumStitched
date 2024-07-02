@@ -81,7 +81,11 @@ add_overlap_info <- function(spe, metric_name) {
             sub(col_data$key[i], "", col_data$overlap_key[i], fixed = TRUE)
         }
     )
-    col_data$overlap_key <- sub("^,|,,", "", col_data$overlap_key)
+    col_data$overlap_key <- sub(
+        ",,",
+        ",",
+        sub("^,", "", col_data$overlap_key)
+    )
 
     ############################################################################
     #   Compute 'exclude_overlapping'
