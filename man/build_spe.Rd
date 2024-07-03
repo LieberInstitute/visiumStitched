@@ -4,7 +4,13 @@
 \alias{build_spe}
 \title{Build stitched \code{SpatialExperiment}}
 \usage{
-build_spe(sample_info, coords_dir, count_type = "sparse")
+build_spe(
+  sample_info,
+  coords_dir,
+  count_type = "sparse",
+  reference_gtf = NULL,
+  gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")
+)
 }
 \arguments{
 \item{sample_info}{A \code{tibble} with columns \code{capture_area} and
@@ -17,6 +23,10 @@ produced from refinement with \code{prep_imagej_*()} functions}
 
 \item{count_type}{A \code{character(1)} vector passed to \code{type} from
 \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"}
+
+\item{reference_gtf}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}}
+
+\item{gtf_cols}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}}
 }
 \value{
 A \code{SpatialExperiment} object with one sample per group specified

@@ -11,6 +11,8 @@
 #' @inheritParams add_array_coords
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
 #' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"
+#' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]
+#' @param gtf_cols Passed to [spatialLIBD::read10xVisiumWrapper()]
 #'
 #' @return A \code{SpatialExperiment} object with one sample per group specified
 #' in \code{sample_info} using transformed pixel and array coordinates (including
@@ -19,6 +21,7 @@
 #' @import SpatialExperiment
 #' @importFrom SummarizedExperiment assays rowData
 #' @importFrom readr read_csv
+#' @importFrom spatialLIBD read10xVisiumWrapper
 #' @importFrom dplyr mutate as_tibble
 #' @export
 #' @author Nicholas J. Eagles
@@ -33,7 +36,7 @@
 #'
 #' ## TODO: add working examples
 #' args(build_spe)
-build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
+build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")) {
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group", "spaceranger_dir")
     if (!all(expected_cols %in% colnames(sample_info))) {
@@ -46,14 +49,28 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse") {
     }
 
     message("Building SpatialExperiment using capture area as sample ID")
-    spe <- read10xVisium(
-        samples = dirname(sample_info$spaceranger_dir),
-        sample_id = sample_info$capture_area,
-        type = count_type,
-        data = "raw",
-        images = "lowres",
-        load = FALSE
-    )
+    if(missing(reference_gtf)) {
+        spe <- spatialLIBD::read10xVisiumWrapper(
+            samples = dirname(sample_info$spaceranger_dir),
+            sample_id = sample_info$capture_area,
+            type = count_type,
+            data = "raw",
+            images = "lowres",
+            load = FALSE,
+            gtf_cols = gtf_cols
+        )
+    } else {
+        spe <- spatialLIBD::read10xVisiumWrapper(
+            samples = dirname(sample_info$spaceranger_dir),
+            sample_id = sample_info$capture_area,
+            type = count_type,
+            data = "raw",
+            images = "lowres",
+            load = FALSE,
+            reference_gtf = reference_gtf,
+            gtf_cols = gtf_cols
+        )
+    }
 
     message("Overwriting imgData(spe) with merged images (one per group)")
     all_groups <- unique(sample_info$group)
