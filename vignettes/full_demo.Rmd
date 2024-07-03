@@ -186,7 +186,7 @@ the array coordinates, like
 clustering with `BayesSpace` or `PRECAST`, to treat each group as a spatially continuous
 sample.
 
-```{r "array_plot_orig", eval = FALSE}
+```{r "array_plot_after", eval = FALSE}
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
