@@ -111,6 +111,9 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_
     )
 
     spe <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+    spe <- add_overlap_info(spe, "sum_umi")
+
+    colnames(spe) = spe$key
 
     return(spe)
 }
