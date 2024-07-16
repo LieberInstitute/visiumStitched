@@ -40,13 +40,14 @@ library("RefManageR")
 bib <- c(
     R = citation(),
     BiocStyle = citation("BiocStyle")[1],
+    dplyr = citation("dplyr")[1],
     knitr = citation("knitr")[1],
     Matrix = citation("Matrix")[1],
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
     SpatialExperiment = citation('SpatialExperiment')[1],
-    tidyverse = citation('tidyverse')[1],
+    spatialLIBD = citation("spatialLIBD")[1],
     visiumStitched = citation("visiumStitched")[1]
 )
 ```
@@ -54,8 +55,37 @@ bib <- c(
 ```{r "start", message=FALSE}
 library(SpatialExperiment)
 library(visiumStitched)
-library(tidyverse)
 library(Matrix)
+library(dplyr)
+library(spatialLIBD)
+```
+
+# Preparing Experiment Information
+
+Much of the `visiumStitched` package uses a tibble (or dataframe) defining information
+about the experiment. Most fundamentally, the `group` column allows you to line up which
+capture areas, in the `capture_area` column, are to be stitched together later. In our
+case, we have just one unique group, consisting of all three capture areas. Note multiple
+groups are supported. By the end of this demo, the `SpatialExperiment` will consist of
+just one sample composed of the three capture areas; in general, there will be one sample
+per group.
+
+```{r "sample_info"}
+sample_info = tibble(
+    group = "Br2719",
+    capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
+)
+```
+
+Next, we'll need the Spaceranger outputs for each capture area, which can be retrieved
+with `spatialLIBD::fetch_data()`.
+
+```{r "spaceranger_dir"}
+sr_dir = tempdir()
+temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+sample_info$spaceranger_dir = file.path(
+    sr_dir, sample_info$capture_area, 'outs', 'spatial'
+)
 ```
 
 # Preparing Images for Fiji
