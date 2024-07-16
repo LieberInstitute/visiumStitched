@@ -8,6 +8,8 @@ prepares for building the SpatialExperiment with build_spe()."><!-- mathjax --><
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -23,6 +25,7 @@ prepares for building the SpatialExperiment with build_spe()."><!-- mathjax --><
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
       </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav"><li>
   <a href="../articles/visiumStitched.html">Get started</a>
@@ -30,17 +33,31 @@ prepares for building the SpatialExperiment with build_spe()."><!-- mathjax --><
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/full_demo.html">Introduction to visiumStitched</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/LieberInstitute/visiumStitched/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+
+
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
@@ -48,6 +65,7 @@ prepares for building the SpatialExperiment with build_spe()."><!-- mathjax --><
     <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/prep_imagej_image.R" class="external-link"><code>R/prep_imagej_image.R</code></a></small>
     <div class="hidden name"><code>prep_imagej_image.Rd</code></div>
     </div>
+
     <div class="ref-description">
     <p>After stitching all groups in <code>sample_info</code> with ImageJ, images of
 various resolutions (pixel dimensions) are left. This function creates copies
@@ -56,28 +74,38 @@ also creates a corresponding <code>scalefactors_json.json</code> file much like
 Spaceranger's. In conjunction with <code>prep_imagej_image()</code>, this function
 prepares for building the <code>SpatialExperiment</code> with <code><a href="build_spe.html">build_spe()</a></code>.</p>
     </div>
+
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">prep_imagej_image</span><span class="op">(</span><span class="va">sample_info</span>, <span class="va">out_dir</span>, lowres_max_size <span class="op">=</span> <span class="fl">1200</span><span class="op">)</span></span></code></pre></div>
     </div>
+
     <div id="arguments">
     <h2>Arguments</h2>
+
+
 <dl><dt id="arg-sample-info">sample_info<a class="anchor" aria-label="anchor" href="#arg-sample-info"></a></dt>
 <dd><p>A <code>tibble</code> with columns <code>capture_area</code>,
 <code>group</code>, <code>imagej_image_path</code>, <code>spaceranger_dir</code>,
 <code>intra_group_scalar</code>, and <code>group_hires_scalef</code></p></dd>
+
+
 <dt id="arg-out-dir">out_dir<a class="anchor" aria-label="anchor" href="#arg-out-dir"></a></dt>
 <dd><p>A character(1) vector giving a path to a directory to place
 the output image(s) and scale factors. Provided the parent exists, <code>out_dir</code>
 will be created if necessary.</p></dd>
+
+
 <dt id="arg-lowres-max-size">lowres_max_size<a class="anchor" aria-label="anchor" href="#arg-lowres-max-size"></a></dt>
 <dd><p>An integer(1) vector: the resolution (number of
 pixels) of the larger dimension of the output image(s), considered to be "low
 resolution".</p></dd>
+
 </dl></div>
     <div id="author">
     <h2>Author</h2>
     <p>Nicholas J. Eagles</p>
     </div>
+
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
@@ -97,12 +125,22 @@ resolution".</p></dd>
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>
     </nav></div>
 </div>
+
+
       <footer><div class="copyright">
   <p></p><p>Developed by Nicholas J. Eagles.</p>
 </div>
+
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
 </div>
+
       </footer></div>
+
+
+
+
+
+
   </body></html>
 
