@@ -126,6 +126,13 @@ sample_info$imagej_xml_path = temp[grep('xml$', temp)]
 sample_info$imagej_image_path = temp[grep('png$', temp)]
 ```
 
+We now have every column present in `sample_info` that will be necessary for any
+`visiumStitched` function.
+
+```{r "print_info"}
+print(sample_info)
+```
+
 Before building the `SpatialExperiment`, the idea is to create a directory very similar to
 [Spaceranger's spatial outputs](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs)
 for each *group*, as opposed to the *capture-area*-level directories we already have. We'll
