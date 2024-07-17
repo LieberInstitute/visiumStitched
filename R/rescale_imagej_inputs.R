@@ -65,7 +65,7 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
             )[["tissue_hires_scalef"]]
         },
         numeric(1)
-    )
+    ) |> unname()
 
     sample_info$spot_diameter_fullres <- vapply(
         sample_info$spaceranger_dir,
@@ -75,7 +75,7 @@ rescale_imagej_inputs <- function(sample_info, out_dir) {
             )[["spot_diameter_fullres"]]
         },
         numeric(1)
-    )
+    ) |> unname()
 
     sample_info <- sample_info |>
         dplyr::group_by(group) |>
