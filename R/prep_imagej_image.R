@@ -77,11 +77,11 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
 
         low_over_hi <- lowres_max_size / max(dim(this_image)[seq(2)])
         sr_json <- list(
-            tissue_hires_scalef = this_sample_info$group_hires_scalef[1],
-            tissue_lowres_scalef = this_sample_info$group_hires_scalef[1] *
+            tissue_hires_scalef = this_sample_info$group_hires_scalef[[1]],
+            tissue_lowres_scalef = this_sample_info$group_hires_scalef[[1]] *
                 low_over_hi,
             spot_diameter_fullres = sr_json$spot_diameter_fullres *
-                this_sample_info$intra_group_scalar[1]
+                this_sample_info$intra_group_scalar[[1]]
         )
 
         this_image <- imager::resize(
