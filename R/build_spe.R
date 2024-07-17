@@ -18,7 +18,7 @@
 #' in \code{sample_info} using transformed pixel and array coordinates (including
 #' in the \code{spatialCoords}).
 #'
-#' @import SpatialExperiment
+#' @import SpatialExperiment DropletUtils
 #' @importFrom SummarizedExperiment assays rowData
 #' @importFrom readr read_csv
 #' @importFrom spatialLIBD read10xVisiumWrapper
