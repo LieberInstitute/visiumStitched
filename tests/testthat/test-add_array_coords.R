@@ -35,7 +35,7 @@ test_that(
         ########################################################################
 
         #   Remove any colData columns that should be added by add_array_coords()
-        added_cols_regex = "^(array|pxl)_(row|col)_(in_fullres)?_(transformed|original|rounded)$"
+        added_cols_regex = "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
         temp = colnames(spe)
         colData(spe) = colData(spe) |>
             as_tibble() |>
@@ -71,11 +71,11 @@ test_that(
         #   spatialCoords should be updated with transformed coordinates
         expect_equal(
             spe_new$pxl_row_in_fullres_transformed,
-            spatialCoords(spe)[['pxl_row_in_fullres']]
+            unname(spatialCoords(spe)[,'pxl_row_in_fullres'])
         )
         expect_equal(
             spe_new$pxl_col_in_fullres_transformed,
-            spatialCoords(spe)[['pxl_col_in_fullres']]
+            unname(spatialCoords(spe)[,'pxl_col_in_fullres'])
         )
     }
 )
