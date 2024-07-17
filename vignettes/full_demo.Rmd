@@ -39,6 +39,7 @@ library("RefManageR")
 ## Write bibliography information
 bib <- c(
     R = citation(),
+    BiocFileCache = citation("BiocFileCache")[1],
     BiocStyle = citation("BiocStyle")[1],
     dplyr = citation("dplyr")[1],
     knitr = citation("knitr")[1],
@@ -58,6 +59,7 @@ library(visiumStitched)
 library(Matrix)
 library(dplyr)
 library(spatialLIBD)
+library(BiocFileCache)
 ```
 
 # Preparing Experiment Information
@@ -162,8 +164,21 @@ plots. In particular, at regions of overlap, spots from capture areas with highe
 average UMI (unique molecular identifier) counts will be plotted, while any other
 spots will not be shown.
 
-```{r "build_spe", eval = FALSE}
-spe = build_spe(sample_info, coords_dir = spe_input_dir)
+```{r "gtf"}
+bfc <- BiocFileCache()
+gtf_cache <- bfcrpath(
+    bfc,
+    paste0(
+        "ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
+        "release_32/gencode.v32.annotation.gtf.gz"
+    )
+)
+```
+
+```{r "build_spe"}
+spe = build_spe(
+    sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache
+)
 ```
 
 The `exclude_overlapping` `colData()` column controls
@@ -190,7 +205,7 @@ capture areas.
 
 ```{r "explore_coords", eval = FALSE}
 wm_genes = rownames(spe)[
-    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$symbol)
+    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
 vis_gene(spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE)
 ```
@@ -273,8 +288,12 @@ counts from `spatialLIBD`, then plot a few white matter genes as before:
 ```{r "fetch_norm"}
 spe_norm = fetch_data(type = 'Visium_LS_spe')
 
+wm_genes_ens = rownames(spe_norm)[
+    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)
+]
+
 vis_gene(
-    spe_norm, geneid = wm_genes, assayname = 'logcounts', is_stitched = TRUE
+    spe_norm, geneid = wm_genes_ens, assayname = 'logcounts', is_stitched = TRUE
 )
 ```
 
@@ -282,7 +301,7 @@ Recall the unnormalized version of this plot, which is not nearly as clean:
 
 ```{r "unnorm_plot"}
 vis_gene(
-    spe, geneid = wm_genes, assayname = 'logcounts', is_stitched = TRUE
+    spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
 )
 ```
 
