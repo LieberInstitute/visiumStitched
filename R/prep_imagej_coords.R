@@ -5,11 +5,7 @@
 #' expected to have one unique path to ImageJ XML output per group, read in
 #' the pixel coordinates from each capture area's \code{tissue_positions.csv}
 #' file from Spaceranger, and transform using the rotation matrix specified
-#' by ImageJ. Write one new \code{tissue_positions.csv} file per group
-#' a copy of \code{sample_info} with additional columns \code{transform_x},
-#' \code{transform_y}, and \code{transform_theta} representing the rigid affine
-#' transforms needed to be applied to capture areas within each group to
-#' produce the proper relative arrangements.
+#' by ImageJ. Write one new \code{tissue_positions.csv} file per group.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
 #' \code{group}, \code{imagej_xml_path}, \code{intra_group_scalar}, and
