@@ -1,5 +1,3 @@
-library(SpatialExperiment)
-
 test_that(
     "spe_to_seurat",
     {

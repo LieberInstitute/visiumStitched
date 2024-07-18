@@ -1,8 +1,8 @@
 test_that(
     "build_spe",
     {
-        bfc <- BiocFileCache()
-        gtf_cache <- bfcrpath(
+        bfc <- BiocFileCache::BiocFileCache()
+        gtf_cache <- BiocFileCache::bfcrpath(
             bfc,
             paste0(
                 "ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/",
@@ -37,8 +37,16 @@ test_that(
         prep_imagej_coords(sample_info, out_dir = spe_input_dir)
         prep_imagej_image(sample_info, out_dir = spe_input_dir)
 
-        spe = build_spe(
-            sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache
+        #   TODO: find a way to match against the two warnings that
+        #   simultaneously occur due to using a different GTF; not good to
+        #   suppress all warnings
+        suppressWarnings(
+            {
+                spe = build_spe(
+                    sample_info, coords_dir = spe_input_dir,
+                    reference_gtf = gtf_cache
+                )
+            },
         )
 
         ########################################################################
