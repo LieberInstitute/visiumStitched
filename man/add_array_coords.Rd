@@ -51,17 +51,49 @@ that downstream applications, such as clustering with BayesSpace, can
 process each group as if it really were one capture area in the first place.
 }
 \examples{
-#   For internal testing
-\dontrun{
-library("HDF5Array")
-spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
-sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
-coords_dir <- "dev/test_data"
-spe_new <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
-}
+spe <- fetch_data(type = "Visium_LS_spe")
 
-## TODO: add working examples
-args(add_array_coords)
+########################################################################
+#   Prepare sample_info
+########################################################################
+
+sample_info = tibble(
+    group = "Br2719",
+    capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
+)
+#   Add 'spaceranger_dir' column
+sr_dir = tempdir()
+temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+sample_info$spaceranger_dir = file.path(
+    sr_dir, sample_info$capture_area, 'outs', 'spatial'
+)
+
+#   Add ImageJ-output-related columns
+imagej_dir = tempdir()
+temp = unzip(fetch_data("Visium_LS_ImageJ_out"), exdir = imagej_dir)
+sample_info$imagej_xml_path = temp[grep('xml$', temp)]
+sample_info$imagej_image_path = temp[grep('png$', temp)]
+
+sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
+
+spe_input_dir = tempdir()
+prep_imagej_coords(sample_info, out_dir = spe_input_dir)
+prep_imagej_image(sample_info, out_dir = spe_input_dir)
+
+########################################################################
+#   Add array coordinates
+########################################################################
+
+spe_new <- add_array_coords(spe, sample_info, tempdir())
+
+#    Many columns related to spatial coordinates were added
+added_cols_regex = "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
+colnames(colData(spe_new))[grep(added_cols_regex, colnames(colData(spe_new)))]
+
+#    array_row' and 'array_col' were overwritten with their transformed
+#    values
+head(spe$array_row)
+head(spe$array_col)
 }
 \author{
 Nicholas J. Eagles

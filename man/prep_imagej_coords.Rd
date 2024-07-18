@@ -24,14 +24,31 @@ file from Spaceranger, and transform using the rotation matrix specified
 by ImageJ. Write one new \code{tissue_positions.csv} file per group.
 }
 \examples{
-\dontrun{
-#   For internal testing
-sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
-prep_imagej_coords(sample_info, tempdir())
-}
+#    Define sample information for the example LS data 
+sample_info = tibble(
+    group = "Br2719",
+    capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
+)
+#   Add 'spaceranger_dir' column
+sr_dir = tempdir()
+temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+sample_info$spaceranger_dir = file.path(
+    sr_dir, sample_info$capture_area, 'outs', 'spatial'
+)
 
-## TODO: add working examples
-args(prep_imagej_coords)
+#   Add ImageJ-output-related columns
+imagej_dir = tempdir()
+temp = unzip(fetch_data("Visium_LS_ImageJ_out"), exdir = imagej_dir)
+sample_info$imagej_xml_path = temp[grep('xml$', temp)]
+sample_info$imagej_image_path = temp[grep('png$', temp)]
+
+sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
+
+spe_input_dir = tempdir()
+prep_imagej_coords(sample_info, out_dir = spe_input_dir)
+
+#    A file of spatial coordinates for the stitched Br2719 was produced
+list.files(spe_input_dir)
 }
 \author{
 Nicholas J. Eagles

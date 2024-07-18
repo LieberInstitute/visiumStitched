@@ -33,14 +33,33 @@
 #' @author Nicholas J. Eagles
 #'
 #' @examples
-#' \dontrun{
-#' #   For internal testing
-#' sample_info <- readr::read_csv("dev/test_data/sample_info.csv")
-#' prep_imagej_coords(sample_info, tempdir())
-#' }
-#'
-#' ## TODO: add working examples
-#' args(rescale_imagej_inputs)
+#' #    Define sample information for the example LS data 
+#' sample_info = tibble(
+#'     group = "Br2719",
+#'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
+#' )
+#' #   Add 'spaceranger_dir' column
+#' sr_dir = tempdir()
+#' temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+#' sample_info$spaceranger_dir = file.path(
+#'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
+#' )
+#' 
+#' #   Add ImageJ-output-related columns
+#' imagej_dir = tempdir()
+#' temp = unzip(fetch_data("Visium_LS_ImageJ_out"), exdir = imagej_dir)
+#' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
+#' sample_info$imagej_image_path = temp[grep('png$', temp)]
+#' 
+#' out_dir = tempdir()
+#' sample_info_new = rescale_imagej_inputs(sample_info, out_dir = out_dir)
+#' 
+#' #    Scale factors are computed that are necessary downstream (i.e. with
+#' #    prep_imagej_*() functions)
+#' sample_info_new[, setdiff(colnames(sample_info_new, sample_info))]
+#' 
+#' #    Image are produced that are ready for alignment in Fiji
+#' list.files(out_dir)
 rescale_imagej_inputs <- function(sample_info, out_dir) {
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group", "spaceranger_dir")

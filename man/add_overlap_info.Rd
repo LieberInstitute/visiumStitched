@@ -32,27 +32,23 @@ separated strings containing the keys of any overlapping spots, and is the empty
 string otherwise.
 }
 \examples{
-#   For internal testing
-\dontrun{
-library("HDF5Array")
-spe <- loadHDF5SummarizedExperiment("dev/test_data/spe_filtered")
-spe_new <- add_overlap_info(spe, metric_name = "sum_umi")
-p_old <- spot_plot(
-    spe,
-    sample_id = "Br8492", var_name = "capture_area",
-    is_discrete = TRUE
-)
-p_new <- spot_plot(
-    spe_new,
-    sample_id = "Br8492", var_name = "capture_area",
-    is_discrete = TRUE
-)
-print(p_old)
-print(p_new)
-}
+spe <- fetch_data(type = "Visium_LS_spe")
 
-## TODO: add working examples
-args(add_overlap_info)
+#    Find the mean of the 'sum_umi' metric by capture area to understand
+#    which capture areas will be excluded in regions of overlap
+colData(spe) |>
+    as_tibble() |>
+    group_by(capture_area) |>
+    summarize(mean_sum_umi = mean(sum_umi))
+
+spe = add_overlap_info(spe, 'sum_umi')
+
+#    See how many spots were excluded by capture area
+table(spe$exclude_overlapping, spe$capture_area)
+
+#    Examine how data about overlapping spots is stored (for the first
+#    few spots with overlap)
+head(spe$overlap_key[spe$overlap_key != ""])
 }
 \author{
 Nicholas J. Eagles
