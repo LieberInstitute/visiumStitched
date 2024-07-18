@@ -76,10 +76,13 @@ add_overlap_info <- function(spe, metric_name) {
             sub(col_data$key[i], "", col_data$overlap_key[i], fixed = TRUE)
         }
     )
+
+    #   Remove double commas (only possible in the middle) or leading/trailing
+    #   commas
     col_data$overlap_key <- sub(
         ",,",
         ",",
-        sub("^,", "", col_data$overlap_key)
+        sub("^,|,$", "", col_data$overlap_key)
     )
 
     ############################################################################

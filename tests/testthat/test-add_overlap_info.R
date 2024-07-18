@@ -13,23 +13,40 @@ test_that(
         #   V13B23-283_A1 should have excluded spots (lowest in my_metric) while
         #   V13B23-283_D1 should have none
         expect_equal(
-            any(spe$exclude_overlapping[spe$capture_area == "V13B23-283_A1"]),
+            any(spe_new$exclude_overlapping[spe_new$capture_area == "V13B23-283_A1"]),
             TRUE
         )
         expect_equal(
-            any(spe$exclude_overlapping[spe$capture_area == "V13B23-283_D1"]),
+            any(spe_new$exclude_overlapping[spe_new$capture_area == "V13B23-283_D1"]),
             FALSE
         )
 
-        overlap_keys = colData(spe) |>
+        #   'overlap_key' should consist of a comma-separated list of valid keys
+        #   (or the empty string)
+        one_key_regex = '[ACTG]+-1_V13B23-283_[ACD]1'
+        expect_equal(
+            all(
+                grepl(
+                    gsub('X', one_key_regex, '^(|X|X(,X)*)$'),
+                    spe_new$overlap_key
+                )
+            ),
+            TRUE
+        )
+
+        overlap_keys = colData(spe_new) |>
+            as_tibble() |>
             filter(capture_area == "V13B23-283_A1", overlap_key != "") |>
             pull(overlap_key) |>
             paste(collapse = ",") |>
-            str_split(',')
+            strsplit(',')
         
         #   All keys overlapping V13B23-283_A1 should exist in the object and
-        #   belong to capture area V13B23-283_D1
+        #   belong to capture area V13B23-283_D1 (or rarely V13B23-283_A1,
+        #   because of precision issues in pixel coordinates)
         expect_equal(all(overlap_keys[[1]] %in% spe$key), TRUE)
-        expect_equal(all(str_split_i(overlap_keys[[1]], '_', 2) == "D1"), TRUE)
+        expect_equal(
+            all(grepl('[ACTG]+-1_V13B23-283_[AD]1', overlap_keys[[1]])), TRUE
+        )
     }
 )

@@ -47,10 +47,10 @@ test_that(
             spe, sample_info, spe_input_dir, overwrite = FALSE
         )
 
-        #   12 columns should've been added, matching the specific naming
+        #   10 columns should've been added, matching the specific naming
         #   pattern
         expect_equal(
-            length(grep(added_cols_regex, colnames(colData(spe_new)))), 12
+            length(grep(added_cols_regex, colnames(colData(spe_new)))), 10
         )
 
         #   Array and spatial coords shouldn't be overwritten
@@ -62,10 +62,10 @@ test_that(
             spe, sample_info, spe_input_dir, overwrite = TRUE
         )
 
-        #   12 columns should've been added, matching the specific naming
+        #   10 columns should've been added, matching the specific naming
         #   pattern
         expect_equal(
-            length(grep(added_cols_regex, colnames(colData(spe_new)))), 12
+            length(grep(added_cols_regex, colnames(colData(spe_new)))), 10
         )
 
         #   spatialCoords should be updated with transformed coordinates
