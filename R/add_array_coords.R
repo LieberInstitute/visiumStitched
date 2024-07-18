@@ -37,6 +37,7 @@
 #' if \code{overwrite}, modified colData columns \code{array_row} and
 #' \code{array_col} and \code{spatialCoords()} with their transformed values
 #'
+#' @import dplyr
 #' @importFrom readr read_csv
 #' @importFrom S4Vectors DataFrame
 #' @importFrom rjson fromJSON

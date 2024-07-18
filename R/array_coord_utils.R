@@ -11,7 +11,6 @@
 #'
 #' @return NULL
 #'
-#' @importFrom dplyr filter summarize pull
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .validate_array <- function(coords) {
@@ -124,7 +123,6 @@
 #' columns representing the pixel coordinates rounded to the nearest exact array
 #' coordinates.
 #'
-#' @importFrom dplyr filter mutate
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .fit_to_array <- function(coords, inter_spot_dist_px) {

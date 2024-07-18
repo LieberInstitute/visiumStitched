@@ -21,7 +21,6 @@
 #'
 #' @importFrom imager load.image resize save.image
 #' @importFrom rjson fromJSON toJSON
-#' @importFrom dplyr filter
 #'
 #' @export
 #' @author Nicholas J. Eagles

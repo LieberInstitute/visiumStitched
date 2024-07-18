@@ -22,7 +22,6 @@
 #' @importFrom SummarizedExperiment assays rowData
 #' @importFrom readr read_csv
 #' @importFrom spatialLIBD read10xVisiumWrapper
-#' @importFrom dplyr mutate as_tibble
 #' @export
 #' @author Nicholas J. Eagles
 #'

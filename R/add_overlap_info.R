@@ -20,7 +20,6 @@
 #' @return A \code{SpatialExperiment} object with additional \code{colData}
 #' columns \code{spe$exclude_overlapping} and \code{spe$overlap_key}
 #'
-#' @import dplyr tibble
 #' @importFrom S4Vectors DataFrame
 #' @export
 #' @author Nicholas J. Eagles

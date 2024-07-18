@@ -27,7 +27,6 @@
 #' \code{intra_group_scalar} and \code{group_hires_scalef}
 #'
 #' @importFrom imager load.image resize save.image
-#' @importFrom dplyr mutate select group_by ungroup
 #' @importFrom rjson fromJSON
 #'
 #' @export

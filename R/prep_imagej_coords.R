@@ -17,10 +17,8 @@
 #' @return NULL
 #'
 #' @import xml2
-#' @importFrom dplyr mutate filter select rename
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom readr read_csv write_csv
-#' @importFrom tibble as_tibble
 #' @importFrom rjson fromJSON
 #'
 #' @export
