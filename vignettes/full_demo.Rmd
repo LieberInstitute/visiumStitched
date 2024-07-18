@@ -188,7 +188,7 @@ given spot, or the empty string otherwise. This vignette won't cover the potenti
 of this information, but one possibility is to perform clustering and check how frequently
 overlapping spots are assigned the same cluster.
 
-```{r "exclude_overlapping", eval = FALSE}
+```{r "exclude_overlapping"}
 table(spe$exclude_overlapping)
 ```
 
@@ -203,7 +203,7 @@ variation across spots can bias the apparent distribution. Later, we'll show tha
 normalization is critical to producing a visually seamless transition between overlapping
 capture areas.
 
-```{r "explore_coords", eval = FALSE}
+```{r "explore_coords"}
 wm_genes = rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
@@ -223,7 +223,7 @@ stitched capture area has the same exact array coordinates, despite having diffe
 positions after stitching. We'll take in-tissue spots only and use transparency to emphasize
 the overlap among capture areas:
 
-```{r "array_plot_orig", eval = FALSE}
+```{r "array_plot_orig"}
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
@@ -245,7 +245,7 @@ the array coordinates, like
 clustering with `BayesSpace` or `PRECAST`, to treat each group as a spatially continuous
 sample.
 
-```{r "array_plot_after", eval = FALSE}
+```{r "array_plot_after"}
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
@@ -262,14 +262,14 @@ colData(spe) |>
 As a `SpatialExperiment`, the stitched data may be rotated or mirrored by group, such as with
 the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions.
 
-```{r "rotate", eval = FALSE}
+```{r "rotate"}
 vis_gene(
     rotateObject(spe, sample_id = 'Br2719', degrees = 90),
     geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
 )
 ```
 
-```{r "mirror", eval = FALSE}
+```{r "mirror"}
 vis_gene(
     mirrorObject(spe, sample_id = 'Br2719', axis = "v"),
     geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
