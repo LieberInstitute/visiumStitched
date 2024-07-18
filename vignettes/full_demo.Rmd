@@ -42,6 +42,7 @@ bib <- c(
     BiocFileCache = citation("BiocFileCache")[1],
     BiocStyle = citation("BiocStyle")[1],
     dplyr = citation("dplyr")[1],
+    ggplot2 = citation("ggplot2")[1],
     knitr = citation("knitr")[1],
     Matrix = citation("Matrix")[1],
     RefManageR = citation("RefManageR")[1],
@@ -60,6 +61,7 @@ library(Matrix)
 library(dplyr)
 library(spatialLIBD)
 library(BiocFileCache)
+library(ggplot2)
 ```
 
 # Preparing Experiment Information
