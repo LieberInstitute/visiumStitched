@@ -71,6 +71,7 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         #   transformation matrices
         transform_nodes <- this_sample_info$imagej_xml_path[1] |>
             read_xml() |>
+            suppressWarnings() |>
             xml_find_all(".//t2_patch")
 
         #   Find paths to input images and the order the corresponding capture
