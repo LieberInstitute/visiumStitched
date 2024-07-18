@@ -32,14 +32,14 @@ separated strings containing the keys of any overlapping spots, and is the empty
 string otherwise.
 }
 \examples{
-spe <- fetch_data(type = "Visium_LS_spe")
+spe <- spatialLIBD::fetch_data(type = "Visium_LS_spe")
 
 #    Find the mean of the 'sum_umi' metric by capture area to understand
 #    which capture areas will be excluded in regions of overlap
 colData(spe) |>
-    as_tibble() |>
-    group_by(capture_area) |>
-    summarize(mean_sum_umi = mean(sum_umi))
+    dplyr::as_tibble() |>
+    dplyr::group_by(capture_area) |>
+    dplyr::summarize(mean_sum_umi = mean(sum_umi))
 
 spe = add_overlap_info(spe, 'sum_umi')
 

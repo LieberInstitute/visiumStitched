@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' spe <- fetch_data(type = "Visium_LS_spe")
+#' spe <- spatialLIBD::fetch_data(type = "Visium_LS_spe")
 #'
 #' ## Convert from a SpatialExperiment to a Seurat object
 #' seur <- spe_to_seurat(spe)
