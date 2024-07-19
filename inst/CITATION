@@ -1,0 +1,37 @@
+pkgVer <- function(pkg) {
+    if (!exists("meta") || is.null(meta)) meta <- packageDescription(pkg)
+    ver <- meta$Version
+    paste0('https://github.com/LieberInstitute/visiumStitched/', pkg, ' - R package version ', ver)
+}
+
+c(
+
+    bibentry(bibtype="manual",
+        title = "Helper package for working with stitched overlapping Visium capture areas",
+        author = personList(
+            as.person("Nicholas J. Eagles"),
+            as.person("Leonardo Collado-Torres")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        url = "http://www.bioconductor.org/packages/visiumStitched",
+        note = pkgVer('visiumStitched'),
+        doi = '10.18129/B9.bioc.visiumStitched'
+    ),
+    bibentry(bibtype="article",
+        title = "visiumStitched",
+        author = personList(
+            as.person("Nicholas J. Eagles"),
+            as.person("Svitlana Bach"),
+            as.person("Madhavi Tippani"),
+            as.person("Yufeng Du"),
+            as.person("Thomas M. Hyde"),
+            as.person("Stephanie C. Page"),
+            as.person("Keri Martinowich"),
+            as.person("Leonardo Collado-Torres")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        journal = "bioRxiv",
+        doi = "10.1101/TODO",
+        url = "https://www.biorxiv.org/content/10.1101/TODO"
+    )
+)
