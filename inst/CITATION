@@ -7,7 +7,7 @@ pkgVer <- function(pkg) {
 c(
 
     bibentry(bibtype="manual",
-        title = "Helper package for working with stitched overlapping Visium capture areas",
+        title = "Enable downstream analysis of Visium capture areas stitched together with Fiji",
         author = personList(
             as.person("Nicholas J. Eagles"),
             as.person("Leonardo Collado-Torres")
