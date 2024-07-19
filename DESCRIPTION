@@ -45,7 +45,6 @@ Imports:
     S4Vectors,
     rjson,
     dplyr,
-    tibble,
     imager,
     stringr,
     xml2,
