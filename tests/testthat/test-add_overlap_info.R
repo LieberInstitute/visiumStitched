@@ -1,7 +1,7 @@
 test_that(
     "add_overlap_info",
     {
-        spe <- fetch_data(type = "Visium_LS_spe")
+        spe <- fetch_data(type = "visiumStitched_brain_spe")
 
         spe$my_metric = 0
         spe$my_metric[spe$capture_area == "V13B23-283_A1"] = 1

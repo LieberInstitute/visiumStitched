@@ -11,7 +11,7 @@ test_that(
         )
         #   Add 'spaceranger_dir' column
         sr_dir = tempdir()
-        temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+        temp = unzip(fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir)
         sample_info$spaceranger_dir = file.path(
             sr_dir, sample_info$capture_area, 'outs', 'spatial'
         )

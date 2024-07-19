@@ -86,7 +86,7 @@ with `spatialLIBD::fetch_data()`.
 
 ```{r "spaceranger_dir"}
 sr_dir = tempdir()
-temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+temp = unzip(fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir)
 sample_info$spaceranger_dir = file.path(
     sr_dir, sample_info$capture_area, 'outs', 'spatial'
 )
@@ -125,7 +125,7 @@ respectively.
 
 ```{r "imagej_out"}
 imagej_dir = tempdir()
-temp = unzip(fetch_data("Visium_LS_ImageJ_out"), exdir = imagej_dir)
+temp = unzip(fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir)
 sample_info$imagej_xml_path = temp[grep('xml$', temp)]
 sample_info$imagej_image_path = temp[grep('png$', temp)]
 ```
@@ -288,7 +288,7 @@ object with [normalized](https://bioconductor.org/books/3.12/OSCA/normalization.
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ```{r "fetch_norm"}
-spe_norm = fetch_data(type = 'Visium_LS_spe')
+spe_norm = fetch_data(type = 'visiumStitched_brain_spe')
 
 wm_genes_ens = rownames(spe_norm)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)

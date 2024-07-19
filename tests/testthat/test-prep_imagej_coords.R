@@ -11,14 +11,14 @@ test_that(
         )
         #   Add 'spaceranger_dir' column
         sr_dir = tempdir()
-        temp = unzip(fetch_data("Visium_LS_spaceranger"), exdir = sr_dir)
+        temp = unzip(fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir)
         sample_info$spaceranger_dir = file.path(
             sr_dir, sample_info$capture_area, 'outs', 'spatial'
         )
 
         #   Add ImageJ-output-related columns
         imagej_dir = tempdir()
-        temp = unzip(fetch_data("Visium_LS_ImageJ_out"), exdir = imagej_dir)
+        temp = unzip(fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir)
         sample_info$imagej_xml_path = temp[grep('xml$', temp)]
         sample_info$imagej_image_path = temp[grep('png$', temp)]
 
