@@ -34,8 +34,12 @@ test_that(
         #   Remove most reducedDims, since too many names fail Seurat
         #   conventions and produce warnings that don't signify problems with
         #   'spe_to_seurat'
-        colnames(reducedDims(spe)[[4]]) <- paste0(colnames(reducedDims(spe)[[4]]), "_")
-        reducedDims(spe) <- list("first_rd" = reducedDims(spe)[[4]])
+        colnames(SingleCellExperiment::reducedDims(spe)[[4]]) <- paste0(
+            colnames(SingleCellExperiment::reducedDims(spe)[[4]]), "_"
+        )
+        SingleCellExperiment::reducedDims(spe) <- list(
+            "first_rd" = SingleCellExperiment::reducedDims(spe)[[4]]
+        )
 
         #   Now mostly just check that nothing fails during conversion
         seur <- spe_to_seurat(spe, verbose = FALSE)
