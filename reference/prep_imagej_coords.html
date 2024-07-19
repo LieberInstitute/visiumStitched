@@ -4,11 +4,7 @@ columns capture_area, group, and imagej_xml_path,
 expected to have one unique path to ImageJ XML output per group, read in
 the pixel coordinates from each capture area's tissue_positions.csv
 file from Spaceranger, and transform using the rotation matrix specified
-by ImageJ. Write one new tissue_positions.csv file per group
-a copy of sample_info with additional columns transform_x,
-transform_y, and transform_theta representing the rigid affine
-transforms needed to be applied to capture areas within each group to
-produce the proper relative arrangements."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+by ImageJ. Write one new tissue_positions.csv file per group."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -44,7 +40,7 @@ produce the proper relative arrangements."><!-- mathjax --><script src="https://
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/full_demo.html">Introduction to visiumStitched</a>
+      <a href="../articles/full_demo.html">Stitching a Visium Experiment</a>
     </li>
   </ul></li>
 <li>
@@ -76,11 +72,7 @@ columns <code>capture_area</code>, <code>group</code>, and <code>imagej_xml_path
 expected to have one unique path to ImageJ XML output per group, read in
 the pixel coordinates from each capture area's <code>tissue_positions.csv</code>
 file from Spaceranger, and transform using the rotation matrix specified
-by ImageJ. Write one new <code>tissue_positions.csv</code> file per group
-a copy of <code>sample_info</code> with additional columns <code>transform_x</code>,
-<code>transform_y</code>, and <code>transform_theta</code> representing the rigid affine
-transforms needed to be applied to capture areas within each group to
-produce the proper relative arrangements.</p>
+by ImageJ. Write one new <code>tissue_positions.csv</code> file per group.</p>
     </div>
 
     <div id="ref-usage">
@@ -110,16 +102,58 @@ will be created if necessary.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="co">#   For internal testing</span></span></span>
-<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"dev/test_data/sample_info.csv"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">prep_imagej_coords</span><span class="op">(</span><span class="va">sample_info</span>, <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#    Define sample information for the example human brain data</span></span></span>
+<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Br2719"</span>,</span></span>
+<span class="r-in"><span>    capture_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V13B23-283_A1"</span>, <span class="st">"V13B23-283_C1"</span>, <span class="st">"V13B23-283_D1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#   Add 'spaceranger_dir' column</span></span></span>
+<span class="r-in"><span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:51.389257 loading file /github/home/.cache/R/BiocFileCache/b9b69c591ce_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## TODO: add working examples</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html" class="external-link">args</a></span><span class="op">(</span><span class="va">prep_imagej_coords</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (sample_info, out_dir) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span><span class="co">#   Add ImageJ-output-related columns</span></span></span>
+<span class="r-in"><span><span class="va">imagej_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_ImageJ_out"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">imagej_dir</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:53.780508 loading file /github/home/.cache/R/BiocFileCache/b9b6010091e_visiumStitched_brain_imagej_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">imagej_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">imagej_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="rescale_imagej_inputs.html">rescale_imagej_inputs</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">prep_imagej_coords</span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#    A file of spatial coordinates for the stitched Br2719 was produced</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="va">spe_input_dir</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "Br2719"                                   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [2] "Br2719.png"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [3] "Br2719.xml"                               </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [4] "HDF5Array_dataset_creation_global_counter"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [5] "HDF5Array_dump"                           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [6] "HDF5Array_dump_log"                       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [7] "HDF5Array_dump_names_global_counter"      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [8] "V13B23-283_A1"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  [9] "V13B23-283_A1.png"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [10] "V13B23-283_C1"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [11] "V13B23-283_C1.png"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [12] "V13B23-283_D1"                            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [13] "V13B23-283_D1.png"                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [14] "downlit"                                  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "file3961246d1f2a"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "file396128593505"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "file39615181dd58"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "file39616ef7fdb8"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "file39617cedbca3"                         </span>
 </code></pre></div>
     </div>
   </div>

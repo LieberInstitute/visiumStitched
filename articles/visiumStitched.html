@@ -53,7 +53,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/full_demo.html">Introduction to visiumStitched</a>
+      <a href="../articles/full_demo.html">Stitching a Visium Experiment</a>
     </li>
   </ul>
 </li>
@@ -97,7 +97,7 @@ Hopkins Bloomberg School of Public
 Health<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">16 July 2024</h4>
+            <h4 data-toc-skip class="date">19 July 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/vignettes/visiumStitched.Rmd" class="external-link"><code>vignettes/visiumStitched.Rmd</code></a></small>
       <div class="hidden name"><code>visiumStitched.Rmd</code></div>
@@ -142,26 +142,30 @@ to cite the package and the overall approach. Thank you!</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"visiumStitched"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite package 'visiumStitched' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Eagles N (2024). _visiumStitched: Helper package for working with</span></span>
-<span><span class="co">#&gt;   stitched overlapping Visium capture areas_. R package version 0.99.0,</span></span>
-<span><span class="co">#&gt;   &lt;https://github.com/LieberInstitute/visiumStitched&gt;.</span></span>
+<span><span class="co">#&gt;   Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of</span></span>
+<span><span class="co">#&gt;   Visium capture areas stitched together with Fiji_.</span></span>
+<span><span class="co">#&gt;   doi:10.18129/B9.bioc.visiumStitched</span></span>
+<span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.visiumStitched&gt;,</span></span>
+<span><span class="co">#&gt;   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R</span></span>
+<span><span class="co">#&gt;   package version 0.99.0,</span></span>
+<span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/visiumStitched&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt;   Eagles NJ, Bach S, Tippani M, Du Y, Hyde TM, Page SC, Martinowich K,</span></span>
+<span><span class="co">#&gt;   Collado-Torres L (2024). "visiumStitched." _bioRxiv_.</span></span>
+<span><span class="co">#&gt;   doi:10.1101/TODO &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
+<span><span class="co">#&gt;   &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   @Manual{,</span></span>
-<span><span class="co">#&gt;     title = {visiumStitched: Helper package for working with stitched overlapping Visium capture areas},</span></span>
-<span><span class="co">#&gt;     author = {Nicholas J. Eagles},</span></span>
-<span><span class="co">#&gt;     year = {2024},</span></span>
-<span><span class="co">#&gt;     note = {R package version 0.99.0},</span></span>
-<span><span class="co">#&gt;     url = {https://github.com/LieberInstitute/visiumStitched},</span></span>
-<span><span class="co">#&gt;   }</span></span></code></pre></div>
+<span><span class="co">#&gt; To see these entries in BibTeX format, use 'print(&lt;citation&gt;,</span></span>
+<span><span class="co">#&gt; bibtex=TRUE)', 'toBibtex(.)', or set</span></span>
+<span><span class="co">#&gt; 'options(citation.bibtex.max=999)'.</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="reproducibility">Reproducibility<a class="anchor" aria-label="anchor" href="#reproducibility"></a>
 </h2>
 <p>The <em><a href="https://bioconductor.org/packages/3.20/visiumStitched" class="external-link">visiumStitched</a></em>
-package (Eagles, 2024) was made possible thanks to:</p>
+package (Eagles and Collado-Torres, 2024) was made possible thanks
+to:</p>
 <ul>
 <li>R (R Core Team, 2024)</li>
 <li>
@@ -195,9 +199,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"visiumStitched.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-16 13:11:02 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-19 21:56:11 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 0.715 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 0.733 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -209,7 +213,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-07-16</span></span>
+<span><span class="co">#&gt;  date     2024-07-19</span></span>
 <span><span class="co">#&gt;  pandoc   3.2 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -242,7 +246,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  plyr          1.8.9      <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  R6            2.5.1      <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  ragg          1.3.2      <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  Rcpp          1.0.12     <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  Rcpp          1.0.13     <span style="color: #555555;">2024-07-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR  * 1.4.0      <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rlang         1.1.4      <span style="color: #555555;">2024-06-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown     2.27       <span style="color: #555555;">2024-05-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -253,7 +257,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  systemfonts   1.1.0      <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  textshaping   0.4.0      <span style="color: #555555;">2024-05-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  timechange    0.3.0      <span style="color: #555555;">2024-01-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  xfun          0.45       <span style="color: #555555;">2024-06-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  xfun          0.46       <span style="color: #555555;">2024-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  xml2          1.3.6      <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  yaml          2.3.9      <span style="color: #555555;">2024-07-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt; </span></span>
@@ -279,11 +283,13 @@ for R</em>. R package version 2.27. 2024. URL:
 <a href="https://github.com/rstudio/rmarkdown" class="external-link">https://github.com/rstudio/rmarkdown</a>.</cite>
 </p>
 <p>
-<a id="bib-eagles2024visiumstitched"></a><a href="#cite-eagles2024visiumstitched">[2]</a><cite>
-N. Eagles. <em>visiumStitched: Helper package for working with stitched
-overlapping Visium capture areas</em>. R package version 0.99.0. 2024.
+<a id="bib-eagles2024enable"></a><a href="#cite-eagles2024enable">[2]</a><cite>
+N. J. Eagles and L. Collado-Torres. <em>Enable downstream analysis of
+Visium capture areas stitched together with Fiji</em>. <a href="https://github.com/LieberInstitute/visiumStitched/visiumStitched" class="external-link uri">https://github.com/LieberInstitute/visiumStitched/visiumStitched</a>
+- R package version 0.99.0. 2024. DOI:
+<a href="https://doi.org/10.18129/B9.bioc.visiumStitched" class="external-link">10.18129/B9.bioc.visiumStitched</a>.
 URL:
-<a href="https://github.com/LieberInstitute/visiumStitched" class="external-link">https://github.com/LieberInstitute/visiumStitched</a>.</cite>
+<a href="http://www.bioconductor.org/packages/visiumStitched" class="external-link">http://www.bioconductor.org/packages/visiumStitched</a>.</cite>
 </p>
 <p>
 <a id="bib-mclean2017refmanager"></a><a href="#cite-mclean2017refmanager">[3]</a><cite>

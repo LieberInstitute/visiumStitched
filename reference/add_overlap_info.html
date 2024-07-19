@@ -37,7 +37,7 @@ columns: spe$exclude_overlapping and spe$overlap_key"><!-- mathjax --><script sr
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/full_demo.html">Introduction to visiumStitched</a>
+      <a href="../articles/full_demo.html">Stitching a Visium Experiment</a>
     </li>
   </ul></li>
 <li>
@@ -109,29 +109,40 @@ string otherwise.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#   For internal testing</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st">"HDF5Array"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">loadHDF5SummarizedExperiment</span><span class="op">(</span><span class="st">"dev/test_data/spe_filtered"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">spe_new</span> <span class="op">&lt;-</span> <span class="fu">add_overlap_info</span><span class="op">(</span><span class="va">spe</span>, metric_name <span class="op">=</span> <span class="st">"sum_umi"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p_old</span> <span class="op">&lt;-</span> <span class="fu"><a href="spot_plot.html">spot_plot</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">spe</span>,</span></span>
-<span class="r-in"><span>    sample_id <span class="op">=</span> <span class="st">"Br8492"</span>, var_name <span class="op">=</span> <span class="st">"capture_area"</span>,</span></span>
-<span class="r-in"><span>    is_discrete <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">p_new</span> <span class="op">&lt;-</span> <span class="fu"><a href="spot_plot.html">spot_plot</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">spe_new</span>,</span></span>
-<span class="r-in"><span>    sample_id <span class="op">=</span> <span class="st">"Br8492"</span>, var_name <span class="op">=</span> <span class="st">"capture_area"</span>,</span></span>
-<span class="r-in"><span>    is_discrete <span class="op">=</span> <span class="cn">TRUE</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p_old</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p_new</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:52:54.362597 loading file /github/home/.cache/R/BiocFileCache/b9b18a5eeeb_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## TODO: add working examples</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html" class="external-link">args</a></span><span class="op">(</span><span class="va">add_overlap_info</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (spe, metric_name) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span><span class="co">#    Find the mean of the 'sum_umi' metric by capture area to understand</span></span></span>
+<span class="r-in"><span><span class="co">#    which capture areas will be excluded in regions of overlap</span></span></span>
+<span class="r-in"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">capture_area</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>mean_sum_umi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">sum_umi</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   capture_area  mean_sum_umi</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> V13B23-283_A1        <span style="text-decoration: underline;">2</span>075.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> V13B23-283_C1        <span style="text-decoration: underline;">1</span>188.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> V13B23-283_D1        <span style="text-decoration: underline;">2</span>083.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">add_overlap_info</span><span class="op">(</span><span class="va">spe</span>, <span class="st">"sum_umi"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#    See how many spots were excluded by capture area</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">exclude_overlapping</span>, <span class="va">spe</span><span class="op">$</span><span class="va">capture_area</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         V13B23-283_A1 V13B23-283_C1 V13B23-283_D1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FALSE          3920          4367          4596</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   TRUE           1032            50             0</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#    Examine how data about overlapping spots is stored (for the first</span></span></span>
+<span class="r-in"><span><span class="co">#    few spots with overlap)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">spe</span><span class="op">$</span><span class="va">overlap_key</span><span class="op">[</span><span class="va">spe</span><span class="op">$</span><span class="va">overlap_key</span> <span class="op">!=</span> <span class="st">""</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TCAGAACGGCGGTAAT-1_V13B23-283_D1,TGCCCGATAGTTAGAA-1_V13B23-283_D1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "CGACTTGCCGGGAAAT-1_V13B23-283_D1,TCATGAAGCGCTGCAT-1_V13B23-283_D1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3] "CCTTAAGTACGCAATT-1_V13B23-283_D1"                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "GAAGCCACTGATTATG-1_V13B23-283_D1"                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [5] "ACTCAAGTGCAAGGCT-1_V13B23-283_D1"                                 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [6] "GGCCTGCTTCTCCCGA-1_V13B23-283_D1"                                 </span>
 </code></pre></div>
     </div>
   </div>

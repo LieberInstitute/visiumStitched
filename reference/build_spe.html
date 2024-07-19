@@ -41,7 +41,7 @@ downstream analysis.'><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/full_demo.html">Introduction to visiumStitched</a>
+      <a href="../articles/full_demo.html">Stitching a Visium Experiment</a>
     </li>
   </ul></li>
 <li>
@@ -129,19 +129,87 @@ in the <code>spatialCoords</code>).</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#   For internal testing</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"dev/test_data/sample_info.csv"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">coords_dir</span> <span class="op">&lt;-</span> <span class="st">"dev/test_data"</span></span></span>
-<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">build_spe</span><span class="op">(</span><span class="va">sample_info</span>, <span class="va">coords_dir</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">########################################################################</span></span></span>
+<span class="r-in"><span><span class="co">#   Prepare sample_info</span></span></span>
+<span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## TODO: add working examples</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html" class="external-link">args</a></span><span class="op">(</span><span class="va">build_spe</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     gtf_cols = c("source", "type", "gene_id", "gene_version", </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         "gene_name", "gene_type")) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
+<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Br2719"</span>,</span></span>
+<span class="r-in"><span>    capture_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V13B23-283_A1"</span>, <span class="st">"V13B23-283_C1"</span>, <span class="st">"V13B23-283_D1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">#   Add 'spaceranger_dir' column</span></span></span>
+<span class="r-in"><span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:52:58.037464 loading file /github/home/.cache/R/BiocFileCache/b9b69c591ce_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#   Add ImageJ-output-related columns</span></span></span>
+<span class="r-in"><span><span class="va">imagej_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_ImageJ_out"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">imagej_dir</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:00.528498 loading file /github/home/.cache/R/BiocFileCache/b9b6010091e_visiumStitched_brain_imagej_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">imagej_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">imagej_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="rescale_imagej_inputs.html">rescale_imagej_inputs</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="prep_imagej_coords.html">prep_imagej_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="prep_imagej_image.html">prep_imagej_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">########################################################################</span></span></span>
+<span class="r-in"><span><span class="co">#   Build the SpatialExperiment</span></span></span>
+<span class="r-in"><span><span class="co">########################################################################</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#    Retrieve a GTF from GENCODE</span></span></span>
+<span class="r-in"><span><span class="va">bfc</span> <span class="op">&lt;-</span> <span class="fu">BiocFileCache</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html" class="external-link">BiocFileCache</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gtf_cache</span> <span class="op">&lt;-</span> <span class="fu">BiocFileCache</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html" class="external-link">bfcrpath</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">bfc</span>,</span></span>
+<span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="st">"ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/"</span>,</span></span>
+<span class="r-in"><span>        <span class="st">"release_32/gencode.v32.annotation.gtf.gz"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">build_spe</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span>,</span></span>
+<span class="r-in"><span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Building SpatialExperiment using capture area as sample ID</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:08.083142 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:14.834851 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:15.147913 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:15.460912 rtracklayer::import: reading the reference GTF file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:45.475324 adding gene information to the SPE object</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-19 21:53:45.895171 adding information used by spatialLIBD</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Overwriting imgData(spe) with merged images (one per group)</span>
+<span class="r-in"><span><span class="va">spe</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> class: SpatialExperiment </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> dim: 36380 14976 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> metadata(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> assays(1): counts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rownames(36380): ENSG00000243485.5 ENSG00000237613.2 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ENSG00000198695.2 ENSG00000198727.2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> rowData names(6): source type ... gene_type gene_search</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> colnames(14976): AAACAACGAATAGTTC-1_V13B23-283_A1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   TTGTTTGTGTAAATTC-1_V13B23-283_D1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> colData names(35): sample_id in_tissue ... overlap_key</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   exclude_overlapping</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> reducedDimNames(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> mainExpName: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> altExpNames(0):</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> imgData names(4): sample_id image_id data scaleFactor</span>
 </code></pre></div>
     </div>
   </div>
