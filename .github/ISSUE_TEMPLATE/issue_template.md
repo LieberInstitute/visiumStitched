@@ -6,7 +6,7 @@ labels: ''
 assignees: ''
 ---
 
-Please ask questions about how to use `spatialNAcUtils` on the
+Please ask questions about how to use `visiumStitched` on the
 [Bioconductor Support Site](https://support.bioconductor.org) using the
 appropriate tag(s) including the one for this package.
 
