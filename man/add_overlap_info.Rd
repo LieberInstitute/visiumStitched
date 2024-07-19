@@ -41,7 +41,7 @@ SummarizedExperiment::colData(spe) |>
     dplyr::group_by(capture_area) |>
     dplyr::summarize(mean_sum_umi = mean(sum_umi))
 
-spe = add_overlap_info(spe, 'sum_umi')
+spe <- add_overlap_info(spe, "sum_umi")
 
 #    See how many spots were excluded by capture area
 table(spe$exclude_overlapping, spe$capture_area)
