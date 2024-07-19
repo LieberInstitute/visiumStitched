@@ -24,7 +24,7 @@ file from Spaceranger, and transform using the rotation matrix specified
 by ImageJ. Write one new \code{tissue_positions.csv} file per group.
 }
 \examples{
-#    Define sample information for the example LS data 
+#    Define sample information for the example LS data
 sample_info = dplyr::tibble(
     group = "Br2719",
     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")

@@ -14,11 +14,14 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .validate_array <- function(coords) {
+    ## For R CMD check
+    array_row <- array_col <- tmp_array <- NULL
+
     #   Even array rows can only use even column indices
     all_even_cols <- coords |>
         dplyr::filter(array_row %% 2 == 0) |>
-        dplyr::summarize(a = all(array_col %% 2 == 0)) |>
-        dplyr::pull(a)
+        dplyr::summarize(tmp_array = all(array_col %% 2 == 0)) |>
+        dplyr::pull(tmp_array)
     if (!all_even_cols) {
         stop("Internal bug: failed to produce an array with even-indexed columns for all even rows!")
     }
@@ -26,8 +29,8 @@
     #   Odd array rows can only use odd column indices
     all_odd_rows <- coords |>
         dplyr::filter(array_row %% 2 == 1) |>
-        dplyr::summarize(a = all(array_col %% 2 == 1)) |>
-        dplyr::pull(a)
+        dplyr::summarize(tmp_array = all(array_col %% 2 == 1)) |>
+        dplyr::pull(tmp_array)
     if (!all_odd_rows) {
         stop("Internal bug: failed to produce an array with odd-indexed columns for all odd rows!")
     }
@@ -126,6 +129,9 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .fit_to_array <- function(coords, inter_spot_dist_px) {
+    ## For R CMD check
+    array_row <- array_col <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
+
     MIN_ROW <- min(coords$pxl_col_in_fullres)
     INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
 

@@ -26,7 +26,7 @@
 #' @author Nicholas J. Eagles
 #'
 #' @examples
-#' #    Define sample information for the example LS data 
+#' #    Define sample information for the example LS data
 #' sample_info = dplyr::tibble(
 #'     group = "Br2719",
 #'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
@@ -39,7 +39,7 @@
 #' sample_info$spaceranger_dir = file.path(
 #'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
 #' )
-#' 
+#'
 #' #   Add ImageJ-output-related columns
 #' imagej_dir = tempdir()
 #' temp = unzip(
@@ -47,14 +47,14 @@
 #' )
 #' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
 #' sample_info$imagej_image_path = temp[grep('png$', temp)]
-#' 
+#'
 #' sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
-#' 
+#'
 #' spe_input_dir = tempdir()
 #' prep_imagej_image(
 #'     sample_info, out_dir = spe_input_dir, lowres_max_size = 1000
 #' )
-#' 
+#'
 #' #    A "low resolution" stitched image was produced, which has 1000
 #' #    pixels in its largest dimension
 #' this_image <- imager::load.image(
@@ -62,6 +62,9 @@
 #' )
 #' dim(this_image)
 prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
+    ## For R CMD check
+    group <- NULL
+
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c(
         "capture_area", "group", "imagej_image_path", "intra_group_scalar",

@@ -26,23 +26,26 @@
 #'
 #' @examples
 #' spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#' 
+#'
 #' #    Find the mean of the 'sum_umi' metric by capture area to understand
 #' #    which capture areas will be excluded in regions of overlap
 #' SummarizedExperiment::colData(spe) |>
 #'     dplyr::as_tibble() |>
 #'     dplyr::group_by(capture_area) |>
 #'     dplyr::summarize(mean_sum_umi = mean(sum_umi))
-#' 
+#'
 #' spe = add_overlap_info(spe, 'sum_umi')
-#' 
+#'
 #' #    See how many spots were excluded by capture area
 #' table(spe$exclude_overlapping, spe$capture_area)
-#' 
+#'
 #' #    Examine how data about overlapping spots is stored (for the first
 #' #    few spots with overlap)
 #' head(spe$overlap_key[spe$overlap_key != ""])
 add_overlap_info <- function(spe, metric_name) {
+    ## For R CMD check
+    sample_id <- array_row_transformed <- array_col_transformed <- key <- capture_area <- exclude_overlapping_mean_tmp <- NULL
+
     #   State assumptions about columns expected to be in the colData
     expected_cols <- c(
         "array_row_transformed", "array_col_transformed", "sample_id",
@@ -91,9 +94,9 @@ add_overlap_info <- function(spe, metric_name) {
 
     metrics_by_id <- col_data |>
         group_by(capture_area) |>
-        summarize(mean_thing = mean(eval(sym(metric_name)))) |>
+        summarize(exclude_overlapping_mean_tmp = mean(eval(sym(metric_name)))) |>
         ungroup() |>
-        arrange(desc(mean_thing))
+        arrange(desc(exclude_overlapping_mean_tmp))
 
     col_data$exclude_overlapping <- sapply(
         seq_len(nrow(col_data)),

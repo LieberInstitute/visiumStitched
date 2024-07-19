@@ -29,7 +29,7 @@
 #' ########################################################################
 #' #   Prepare sample_info
 #' ########################################################################
-#' 
+#'
 #' sample_info = dplyr::tibble(
 #'     group = "Br2719",
 #'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
@@ -42,7 +42,7 @@
 #' sample_info$spaceranger_dir = file.path(
 #'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
 #' )
-#' 
+#'
 #' #   Add ImageJ-output-related columns
 #' imagej_dir = tempdir()
 #' temp = unzip(
@@ -50,9 +50,9 @@
 #' )
 #' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
 #' sample_info$imagej_image_path = temp[grep('png$', temp)]
-#' 
+#'
 #' sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
-#' 
+#'
 #' spe_input_dir = tempdir()
 #' prep_imagej_coords(sample_info, out_dir = spe_input_dir)
 #' prep_imagej_image(sample_info, out_dir = spe_input_dir)
@@ -60,7 +60,7 @@
 #' ########################################################################
 #' #   Build the SpatialExperiment
 #' ########################################################################
-#' 
+#'
 #' #    Retrieve a GTF from GENCODE
 #' bfc <- BiocFileCache::BiocFileCache()
 #' gtf_cache <- BiocFileCache::bfcrpath(
@@ -70,12 +70,15 @@
 #'         "release_32/gencode.v32.annotation.gtf.gz"
 #'     )
 #' )
-#' 
+#'
 #' spe = build_spe(
 #'     sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache
 #' )
 #' spe
 build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")) {
+    ## For R CMD check
+    sample_id <- capture_area <- group <- barcode <- NULL
+
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group", "spaceranger_dir")
     if (!all(expected_cols %in% colnames(sample_info))) {

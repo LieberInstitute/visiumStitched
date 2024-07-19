@@ -25,7 +25,7 @@
 #' @author Nicholas J. Eagles
 #'
 #' @examples
-#' #    Define sample information for the example LS data 
+#' #    Define sample information for the example LS data
 #' sample_info = dplyr::tibble(
 #'     group = "Br2719",
 #'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
@@ -38,7 +38,7 @@
 #' sample_info$spaceranger_dir = file.path(
 #'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
 #' )
-#' 
+#'
 #' #   Add ImageJ-output-related columns
 #' imagej_dir = tempdir()
 #' temp = unzip(
@@ -46,15 +46,18 @@
 #' )
 #' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
 #' sample_info$imagej_image_path = temp[grep('png$', temp)]
-#' 
+#'
 #' sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
-#' 
+#'
 #' spe_input_dir = tempdir()
 #' prep_imagej_coords(sample_info, out_dir = spe_input_dir)
-#' 
+#'
 #' #    A file of spatial coordinates for the stitched Br2719 was produced
 #' list.files(spe_input_dir)
 prep_imagej_coords <- function(sample_info, out_dir) {
+    ## For R CMD check
+    group <- barcode <- key <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
+
     TISSUE_COLNAMES <- c(
         "barcode", "in_tissue", "array_row", "array_col", "pxl_row_in_fullres",
         "pxl_col_in_fullres"
