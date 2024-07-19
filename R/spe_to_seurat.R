@@ -8,6 +8,9 @@
 #' @param spe A \code{SpatialExperiment} with colData columns \code{in_tissue},
 #' \code{array_row_transformed}, \code{array_col_transformed},
 #' \code{pxl_row_in_fullres_transformed}, and \code{pxl_col_in_fullres_transformed}
+#' @param spatial_cols A `character(5)` named vector mapping which `colData(spe)`
+#' or `spatialCoords(spe)` columns contain the `tissue`, `row`, `col`,
+#' `imagerow`, and `imagecol` information expected by Seurat.
 #' @param verbose A logical(1) vector. If true, print status updates about the
 #' conversion process
 #'
@@ -20,25 +23,69 @@
 #' @importFrom grDevices col2rgb
 #'
 #' @examples
-#'
+#' ## Download some example data
 #' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+#'
+#' ## Make the column names unique
+#' colnames(spe) <- spatialLIBD::add_key(spe)$key
 #'
 #' ## Convert from a SpatialExperiment to a Seurat object
 #' seur <- spe_to_seurat(spe)
 #' seur
-spe_to_seurat <- function(spe, verbose = TRUE) {
+#'
+#' ## Example with an stitched SPE object
+#' spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+#'
+#' ## Make some random counts (TODO delete this once the example data is updated
+#' ## to include the actual counts assay)
+#' tmp_counts <- assays(spe_stitched)$logcounts
+#' tmp_counts[tmp_counts > 0] <- sample(seq_len(1e4), sum(tmp_counts > 0), replace = TRUE)
+#' assays(spe_stitched)$counts <- tmp_counts
+#'
+#' ## Note how we use spatial_cols to map the default column names from
+#' ## visiumStitched::build_spe()
+#' seur_stitched <- spe_to_seurat(
+#'     spe_stitched,
+#'     spatial_cols = c(
+#'         "tissue" = "in_tissue",
+#'         "row" = "array_row_transformed",
+#'         "col" = "array_col_transformed",
+#'         "imagerow" = "pxl_row_in_fullres_transformed",
+#'         "imagecol" = "pxl_col_in_fullres_transformed"
+#'     )
+#' )
+#' seur_stitched
+spe_to_seurat <- function(spe,
+    spatial_cols = c(
+        "tissue" = "in_tissue",
+        "row" = "array_row",
+        "col" = "array_col",
+        "imagerow" = "pxl_row_in_fullres",
+        "imagecol" = "pxl_col_in_fullres"
+    ),
+    verbose = TRUE) {
+
     SPOT_DIAMETER <- 55e-6
 
     #   Ensure all necessary columns are present in colData
-    required_cols <- c(
-        "sample_id", "in_tissue", "array_row_transformed", "array_col_transformed",
-        "pxl_row_in_fullres_transformed", "pxl_col_in_fullres_transformed"
-    )
-    if (!all(required_cols %in% colnames(colData(spe)))) {
-        missing_cols <- required_cols[!(required_cols %in% colnames(colData(spe)))]
+    required_col_names <- c("tissue", "row", "col", "imagerow", "imagecol")
+    if (!all(required_col_names %in% names(spatial_cols))) {
+        missing_col_names <- required_col_names[!(required_col_names %in% names(spatial_cols))]
         stop(
             sprintf(
-                "Expected the following columns in colData(spe): '%s'",
+                "Expected the following named elements spatial_cols: '%s'",
+                paste(missing_col_names, collapse = "', '")
+            )
+        )
+    }
+
+    required_cols <- spatial_cols[required_col_names]
+    col_info <- cbind(colData(spe), SpatialExperiment::spatialCoords(spe))
+    if (!all(required_cols %in% colnames(col_info))) {
+        missing_cols <- required_cols[!(required_cols %in% colnames(col_info))]
+        stop(
+            sprintf(
+                "Expected the following columns in colData(spe) or spatialCoords(spe): '%s'",
                 paste(missing_cols, collapse = "', '")
             )
         )
@@ -68,14 +115,8 @@ spe_to_seurat <- function(spe, verbose = TRUE) {
         }
         spe_small <- spe[, spe$sample_id == sample_id]
 
-        coords <- colData(spe_small)[
-            ,
-            c(
-                "in_tissue", "array_row_transformed", "array_col_transformed",
-                "pxl_row_in_fullres_transformed", "pxl_col_in_fullres_transformed"
-            )
-        ]
-        colnames(coords) <- c("tissue", "row", "col", "imagerow", "imagecol")
+        coords <- col_info[, required_cols, drop = FALSE]
+        colnames(coords) <- required_col_names
         coords$tissue <- as.integer(coords$tissue)
         coords <- as.data.frame(coords)
 

@@ -4,12 +4,21 @@
 \alias{spe_to_seurat}
 \title{Convert a \code{SpatialExperiment} object to a \code{Seurat} object}
 \usage{
-spe_to_seurat(spe, verbose = TRUE)
+spe_to_seurat(
+  spe,
+  spatial_cols = c(tissue = "in_tissue", row = "array_row", col = "array_col", imagerow =
+    "pxl_row_in_fullres", imagecol = "pxl_col_in_fullres"),
+  verbose = TRUE
+)
 }
 \arguments{
 \item{spe}{A \code{SpatialExperiment} with colData columns \code{in_tissue},
 \code{array_row_transformed}, \code{array_col_transformed},
 \code{pxl_row_in_fullres_transformed}, and \code{pxl_col_in_fullres_transformed}}
+
+\item{spatial_cols}{A \code{character(5)} named vector mapping which \code{colData(spe)}
+or \code{spatialCoords(spe)} columns contain the \code{tissue}, \code{row}, \code{col},
+\code{imagerow}, and \code{imagecol} information expected by Seurat.}
 
 \item{verbose}{A logical(1) vector. If true, print status updates about the
 conversion process}
@@ -24,12 +33,38 @@ components (images, spatial coordinates) are added manually. The actual
 appearance of images are buggy for now.
 }
 \examples{
-
+## Download some example data
 spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+
+## Make the column names unique
+colnames(spe) <- spatialLIBD::add_key(spe)$key
 
 ## Convert from a SpatialExperiment to a Seurat object
 seur <- spe_to_seurat(spe)
 seur
+
+## Example with an stitched SPE object
+spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+
+## Make some random counts (TODO delete this once the example data is updated
+## to include the actual counts assay)
+tmp_counts <- assays(spe_stitched)$logcounts
+tmp_counts[tmp_counts > 0] <- sample(seq_len(1e4), sum(tmp_counts > 0), replace = TRUE)
+assays(spe_stitched)$counts <- tmp_counts
+
+## Note how we use spatial_cols to map the default column names from
+## visiumStitched::build_spe()
+seur_stitched <- spe_to_seurat(
+    spe_stitched,
+    spatial_cols = c(
+        "tissue" = "in_tissue",
+        "row" = "array_row_transformed",
+        "col" = "array_col_transformed",
+        "imagerow" = "pxl_row_in_fullres_transformed",
+        "imagecol" = "pxl_col_in_fullres_transformed"
+    )
+)
+seur_stitched
 }
 \author{
 Nicholas J. Eagles
