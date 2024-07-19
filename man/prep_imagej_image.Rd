@@ -28,7 +28,7 @@ Spaceranger's. In conjunction with \code{prep_imagej_image()}, this function
 prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 }
 \examples{
-#    Define sample information for the example LS data
+#    Define sample information for the example human brain data
 sample_info = dplyr::tibble(
     group = "Br2719",
     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
