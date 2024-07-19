@@ -30,30 +30,32 @@
 #' #   Prepare sample_info
 #' ########################################################################
 #'
-#' sample_info = dplyr::tibble(
+#' sample_info <- dplyr::tibble(
 #'     group = "Br2719",
 #'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
 #' )
 #' #   Add 'spaceranger_dir' column
-#' sr_dir = tempdir()
-#' temp = unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir
+#' sr_dir <- tempdir()
+#' temp <- unzip(
+#'     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
+#'     exdir = sr_dir
 #' )
-#' sample_info$spaceranger_dir = file.path(
-#'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
+#' sample_info$spaceranger_dir <- file.path(
+#'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
 #'
 #' #   Add ImageJ-output-related columns
-#' imagej_dir = tempdir()
-#' temp = unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir
+#' imagej_dir <- tempdir()
+#' temp <- unzip(
+#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"),
+#'     exdir = imagej_dir
 #' )
-#' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
-#' sample_info$imagej_image_path = temp[grep('png$', temp)]
+#' sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
+#' sample_info$imagej_image_path <- temp[grep("png$", temp)]
 #'
-#' sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
+#' sample_info <- rescale_imagej_inputs(sample_info, out_dir = tempdir())
 #'
-#' spe_input_dir = tempdir()
+#' spe_input_dir <- tempdir()
 #' prep_imagej_coords(sample_info, out_dir = spe_input_dir)
 #' prep_imagej_image(sample_info, out_dir = spe_input_dir)
 #'
@@ -71,8 +73,9 @@
 #'     )
 #' )
 #'
-#' spe = build_spe(
-#'     sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache
+#' spe <- build_spe(
+#'     sample_info,
+#'     coords_dir = spe_input_dir, reference_gtf = gtf_cache
 #' )
 #' spe
 build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")) {
@@ -91,7 +94,7 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_
     }
 
     message("Building SpatialExperiment using capture area as sample ID")
-    if(missing(reference_gtf)) {
+    if (missing(reference_gtf)) {
         spe <- spatialLIBD::read10xVisiumWrapper(
             samples = dirname(sample_info$spaceranger_dir),
             sample_id = sample_info$capture_area,
@@ -155,7 +158,7 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_
     spe <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
     spe <- add_overlap_info(spe, "sum_umi")
 
-    colnames(spe) = spe$key
+    colnames(spe) <- spe$key
 
     return(spe)
 }

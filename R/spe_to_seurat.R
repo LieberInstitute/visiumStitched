@@ -57,16 +57,16 @@
 #'     )
 #' )
 #' seur_stitched
-spe_to_seurat <- function(spe,
-    spatial_cols = c(
-        "tissue" = "in_tissue",
-        "row" = "array_row",
-        "col" = "array_col",
-        "imagerow" = "pxl_row_in_fullres",
-        "imagecol" = "pxl_col_in_fullres"
-    ),
-    verbose = TRUE) {
-
+spe_to_seurat <- function(
+        spe,
+        spatial_cols = c(
+            "tissue" = "in_tissue",
+            "row" = "array_row",
+            "col" = "array_col",
+            "imagerow" = "pxl_row_in_fullres",
+            "imagecol" = "pxl_col_in_fullres"
+        ),
+        verbose = TRUE) {
     SPOT_DIAMETER <- 55e-6
 
     #   Ensure all necessary columns are present in colData

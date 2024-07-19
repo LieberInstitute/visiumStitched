@@ -47,7 +47,7 @@ bib <- c(
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
-    SpatialExperiment = citation('SpatialExperiment')[1],
+    SpatialExperiment = citation("SpatialExperiment")[1],
     spatialLIBD = citation("spatialLIBD")[1],
     visiumStitched = citation("visiumStitched")[1]
 )
@@ -73,7 +73,7 @@ just one sample composed of the three capture areas; in general, there will be o
 per group.
 
 ```{r "sample_info"}
-sample_info = tibble(
+sample_info <- tibble(
     group = "Br2719",
     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
 )
@@ -83,10 +83,10 @@ Next, we'll need the Spaceranger outputs for each capture area, which can be ret
 with `spatialLIBD::fetch_data()`.
 
 ```{r "spaceranger_dir"}
-sr_dir = tempdir()
-temp = unzip(fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir)
-sample_info$spaceranger_dir = file.path(
-    sr_dir, sample_info$capture_area, 'outs', 'spatial'
+sr_dir <- tempdir()
+temp <- unzip(fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir)
+sample_info$spaceranger_dir <- file.path(
+    sr_dir, sample_info$capture_area, "outs", "spatial"
 )
 ```
 
@@ -106,8 +106,8 @@ For demonstration purposes, we'll set `out_dir` to a temporary location. Typical
 really be any suitable directory to place the rescaled images for later input to Fiji.
 
 ```{r "rescale_inputs"}
-#   Generate rescaled approximately high-resolution images 
-sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
+#   Generate rescaled approximately high-resolution images
+sample_info <- rescale_imagej_inputs(sample_info, out_dir = tempdir())
 ```
 
 # Building a `SpatialExperiment`
@@ -122,10 +122,10 @@ and PNG files to the `imagej_xml_path` and `imagej_image_path` columns of `sampl
 respectively.
 
 ```{r "imagej_out"}
-imagej_dir = tempdir()
-temp = unzip(fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir)
-sample_info$imagej_xml_path = temp[grep('xml$', temp)]
-sample_info$imagej_image_path = temp[grep('png$', temp)]
+imagej_dir <- tempdir()
+temp <- unzip(fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir)
+sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
+sample_info$imagej_image_path <- temp[grep("png$", temp)]
 ```
 
 We now have every column present in `sample_info` that will be necessary for any
@@ -149,7 +149,7 @@ stored in the `SpatialExperiment` for any group will be similarly scaled and occ
 memory footprints.
 
 ```{r "prep_imagej"}
-spe_input_dir = tempdir()
+spe_input_dir <- tempdir()
 prep_imagej_coords(sample_info, out_dir = spe_input_dir)
 prep_imagej_image(sample_info, out_dir = spe_input_dir)
 ```
@@ -176,8 +176,9 @@ gtf_cache <- bfcrpath(
 ```
 
 ```{r "build_spe"}
-spe = build_spe(
-    sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache
+spe <- build_spe(
+    sample_info,
+    coords_dir = spe_input_dir, reference_gtf = gtf_cache
 )
 ```
 
@@ -204,10 +205,10 @@ normalization is critical to producing a visually seamless transition between ov
 capture areas.
 
 ```{r "explore_coords"}
-wm_genes = rownames(spe)[
+wm_genes <- rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
-vis_gene(spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE)
+vis_gene(spe, geneid = wm_genes, assayname = "counts", is_stitched = TRUE)
 ```
 
 ## Array coordinates
@@ -232,7 +233,7 @@ colData(spe) |>
             x = array_row_original, y = array_col_original, color = capture_area
         )
     ) +
-        geom_point(alpha = 0.3)
+    geom_point(alpha = 0.3)
 ```
 
 Let's contrast this with the array coordinates recomputed by `visiumStitched`.
@@ -254,7 +255,7 @@ colData(spe) |>
             x = array_row, y = array_col, color = capture_area
         )
     ) +
-        geom_point(alpha = 0.3)
+    geom_point(alpha = 0.3)
 ```
 
 ## Geometric transformations
@@ -264,15 +265,15 @@ the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` f
 
 ```{r "rotate"}
 vis_gene(
-    rotateObject(spe, sample_id = 'Br2719', degrees = 90),
-    geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
+    rotateObject(spe, sample_id = "Br2719", degrees = 90),
+    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
 )
 ```
 
 ```{r "mirror"}
 vis_gene(
-    mirrorObject(spe, sample_id = 'Br2719', axis = "v"),
-    geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
+    mirrorObject(spe, sample_id = "Br2719", axis = "v"),
+    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
 )
 ```
 
@@ -286,14 +287,15 @@ object with [normalized](https://bioconductor.org/books/3.12/OSCA/normalization.
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ```{r "fetch_norm"}
-spe_norm = fetch_data(type = 'visiumStitched_brain_spe')
+spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
 
-wm_genes_ens = rownames(spe_norm)[
+wm_genes_ens <- rownames(spe_norm)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)
 ]
 
 vis_gene(
-    spe_norm, geneid = wm_genes_ens, assayname = 'logcounts', is_stitched = TRUE
+    spe_norm,
+    geneid = wm_genes_ens, assayname = "logcounts", is_stitched = TRUE
 )
 ```
 
@@ -301,7 +303,8 @@ Recall the unnormalized version of this plot, which is not nearly as clean:
 
 ```{r "unnorm_plot"}
 vis_gene(
-    spe, geneid = wm_genes, assayname = 'counts', is_stitched = TRUE
+    spe,
+    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
 )
 ```
 

@@ -51,30 +51,32 @@
 #' #   Prepare sample_info
 #' ########################################################################
 #'
-#' sample_info = dplyr::tibble(
+#' sample_info <- dplyr::tibble(
 #'     group = "Br2719",
 #'     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
 #' )
 #' #   Add 'spaceranger_dir' column
-#' sr_dir = tempdir()
-#' temp = unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"), exdir = sr_dir
+#' sr_dir <- tempdir()
+#' temp <- unzip(
+#'     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
+#'     exdir = sr_dir
 #' )
-#' sample_info$spaceranger_dir = file.path(
-#'     sr_dir, sample_info$capture_area, 'outs', 'spatial'
+#' sample_info$spaceranger_dir <- file.path(
+#'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
 #'
 #' #   Add ImageJ-output-related columns
-#' imagej_dir = tempdir()
-#' temp = unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"), exdir = imagej_dir
+#' imagej_dir <- tempdir()
+#' temp <- unzip(
+#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"),
+#'     exdir = imagej_dir
 #' )
-#' sample_info$imagej_xml_path = temp[grep('xml$', temp)]
-#' sample_info$imagej_image_path = temp[grep('png$', temp)]
+#' sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
+#' sample_info$imagej_image_path <- temp[grep("png$", temp)]
 #'
-#' sample_info = rescale_imagej_inputs(sample_info, out_dir = tempdir())
+#' sample_info <- rescale_imagej_inputs(sample_info, out_dir = tempdir())
 #'
-#' spe_input_dir = tempdir()
+#' spe_input_dir <- tempdir()
 #' prep_imagej_coords(sample_info, out_dir = spe_input_dir)
 #' prep_imagej_image(sample_info, out_dir = spe_input_dir)
 #'
@@ -85,7 +87,7 @@
 #' spe_new <- add_array_coords(spe, sample_info, tempdir())
 #'
 #' #    Many columns related to spatial coordinates were added
-#' added_cols_regex = "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
+#' added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
 #' colnames(SummarizedExperiment::colData(spe_new))[
 #'     grep(added_cols_regex, colnames(SummarizedExperiment::colData(spe_new)))
 #' ]
