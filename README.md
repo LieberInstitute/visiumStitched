@@ -19,9 +19,9 @@ coverage](https://codecov.io/gh/LieberInstitute/visiumStitched/branch/devel/grap
 `visiumStitched` provides helper functions for working with multiple
 Visium capture areas that overlap each other. This package was developed
 along with the companion example use case data available from
-<https://github.com/LieberInstitute/LS_visiumStitched>. This packages,
-among other utilities, it includes a function for plotting several
-capture areas stitched together.
+<https://github.com/LieberInstitute/visiumStitched_brain>. This
+packages, among other utilities, it includes a function for plotting
+several capture areas stitched together.
 
 For details, check the [documentation
 site](http://research.libd.org/visiumStitched/).
@@ -51,16 +51,39 @@ R. Please run this yourself to check for any updates on how to cite
 print(citation("visiumStitched"), bibtex = TRUE)
 #> To cite package 'visiumStitched' in publications use:
 #> 
-#>   Eagles N (2024). _visiumStitched: Helper package for working with
-#>   stitched overlapping Visium capture areas_. R package version 0.99.0.
+#>   Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of
+#>   Visium capture areas stitched together with Fiji_.
+#>   doi:10.18129/B9.bioc.visiumStitched
+#>   <https://doi.org/10.18129/B9.bioc.visiumStitched>,
+#>   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R
+#>   package version 0.99.0,
+#>   <http://www.bioconductor.org/packages/visiumStitched>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
-#>     title = {visiumStitched: Helper package for working with stitched overlapping Visium capture areas},
-#>     author = {Nicholas J. Eagles},
+#>     title = {Enable downstream analysis of Visium capture areas stitched together with Fiji},
+#>     author = {Nicholas J. Eagles and Leonardo Collado-Torres},
 #>     year = {2024},
-#>     note = {R package version 0.99.0},
+#>     url = {http://www.bioconductor.org/packages/visiumStitched},
+#>     note = {https://github.com/LieberInstitute/visiumStitched/visiumStitched - R package version 0.99.0},
+#>     doi = {10.18129/B9.bioc.visiumStitched},
+#>   }
+#> 
+#>   Eagles NJ, Bach S, Tippani M, Du Y, Hyde TM, Page SC, Martinowich K,
+#>   Collado-Torres L (2024). "visiumStitched." _bioRxiv_.
+#>   doi:10.1101/TODO <https://doi.org/10.1101/TODO>,
+#>   <https://www.biorxiv.org/content/10.1101/TODO>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Article{,
+#>     title = {visiumStitched},
+#>     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Yufeng Du and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},
+#>     year = {2024},
+#>     journal = {bioRxiv},
+#>     doi = {10.1101/TODO},
+#>     url = {https://www.biorxiv.org/content/10.1101/TODO},
 #>   }
 ```
 
