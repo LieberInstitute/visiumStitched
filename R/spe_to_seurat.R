@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+#' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
 #'
 #' ## Convert from a SpatialExperiment to a Seurat object
 #' seur <- spe_to_seurat(spe)
