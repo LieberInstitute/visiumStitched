@@ -1,5 +1,5 @@
 ---
-title: "Introduction to visiumStitched"
+title: "Stitching a Visium Experiment"
 author: 
   - name: Nicholas J. Eagles
     affiliation:
@@ -44,7 +44,6 @@ bib <- c(
     dplyr = citation("dplyr")[1],
     ggplot2 = citation("ggplot2")[1],
     knitr = citation("knitr")[1],
-    Matrix = citation("Matrix")[1],
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
@@ -55,13 +54,12 @@ bib <- c(
 ```
 
 ```{r "start", message=FALSE}
-library(SpatialExperiment)
-library(visiumStitched)
-library(Matrix)
-library(dplyr)
-library(spatialLIBD)
-library(BiocFileCache)
-library(ggplot2)
+library("SpatialExperiment")
+library("visiumStitched")
+library("dplyr")
+library("spatialLIBD")
+library("BiocFileCache")
+library("ggplot2")
 ```
 
 # Preparing Experiment Information
