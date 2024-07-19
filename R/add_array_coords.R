@@ -86,8 +86,8 @@
 #' 
 #' #    Many columns related to spatial coordinates were added
 #' added_cols_regex = "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
-#' colnames(SpatialExperiment::colData(spe_new))[
-#'     grep(added_cols_regex, colnames(SpatialExperiment::colData(spe_new)))
+#' colnames(SummarizedExperiment::colData(spe_new))[
+#'     grep(added_cols_regex, colnames(SummarizedExperiment::colData(spe_new)))
 #' ]
 #' 
 #' #    array_row' and 'array_col' were overwritten with their transformed

@@ -29,7 +29,7 @@
 #' 
 #' #    Find the mean of the 'sum_umi' metric by capture area to understand
 #' #    which capture areas will be excluded in regions of overlap
-#' SpatialExperiment::colData(spe) |>
+#' SummarizedExperiment::colData(spe) |>
 #'     dplyr::as_tibble() |>
 #'     dplyr::group_by(capture_area) |>
 #'     dplyr::summarize(mean_sum_umi = mean(sum_umi))
