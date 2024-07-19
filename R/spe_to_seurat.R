@@ -5,6 +5,8 @@
 #' components (images, spatial coordinates) are added manually. The actual
 #' appearance of images are buggy for now.
 #'
+#' Note that only the `lowres` images from `imgData(spe)` will be used.
+#'
 #' @param spe A \code{SpatialExperiment} with colData columns \code{in_tissue},
 #' \code{array_row_transformed}, \code{array_col_transformed},
 #' \code{pxl_row_in_fullres_transformed}, and \code{pxl_col_in_fullres_transformed}

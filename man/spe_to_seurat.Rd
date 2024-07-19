@@ -32,6 +32,9 @@ which operates on \code{SingleCellExperiment} objects. The remaining
 components (images, spatial coordinates) are added manually. The actual
 appearance of images are buggy for now.
 }
+\details{
+Note that only the \code{lowres} images from \code{imgData(spe)} will be used.
+}
 \examples{
 ## Download some example data
 spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
