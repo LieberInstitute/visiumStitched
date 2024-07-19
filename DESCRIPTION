@@ -21,7 +21,8 @@ Description: This package provides helper functions for working with
 	methods that rely on such grid to identify neighboring spots, such as
 	PRECAST and BayesSpace. The SpatialExperiment objects created by
 	visiumStitched are compatible with spatialLIBD, which can be used to build
-	interactive websites for stitched SpatialExperiment objects.
+	interactive websites for stitched SpatialExperiment objects. visiumStitched
+	also enables casting SpatialExperiment objects as Seurat objects.
 License: Artistic-2.0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
