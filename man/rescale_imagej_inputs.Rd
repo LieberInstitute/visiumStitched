@@ -64,7 +64,7 @@ sample_info_new = rescale_imagej_inputs(sample_info, out_dir = out_dir)
 
 #    Scale factors are computed that are necessary downstream (i.e. with
 #    prep_imagej_*() functions)
-sample_info_new[, setdiff(colnames(sample_info_new, sample_info))]
+sample_info_new[, setdiff(colnames(sample_info_new), colnames(sample_info))]
 
 #    Image are produced that are ready for alignment in Fiji
 list.files(out_dir)
