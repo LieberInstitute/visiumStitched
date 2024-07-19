@@ -3,22 +3,28 @@ test_that(
     {
         spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
 
-        #   Should be missing several "transformed" colData columns
-        expect_error(
-            spe_to_seurat(spe, verbose = FALSE),
-            "Expected the following columns"
-        )
-
-        #   Add the required transformed columns
-        spe$array_row_transformed <- spe$array_row
-        spe$array_col_transformed <- spe$array_col
-        spe$pxl_row_in_fullres_transformed <- spatialCoords(spe)[, "pxl_row_in_fullres"]
-        spe$pxl_col_in_fullres_transformed <- spatialCoords(spe)[, "pxl_col_in_fullres"]
-
-        #   Should be missing several "transformed" colData columns
         expect_error(
             spe_to_seurat(spe, verbose = FALSE),
             "Seurat requires colnames\\(spe\\) to be unique"
+        )
+
+        ## Make the column names unique
+        colnames(spe) <- spatialLIBD::add_key(spe)$key
+
+        #   Should be missing several "transformed" colData columns
+        expect_error(
+            spe_to_seurat(
+                spe,
+                spatial_cols = c(
+                    "tissue" = "in_tissue",
+                    "row" = "array_row_transformed",
+                    "col" = "array_col_transformed",
+                    "imagerow" = "pxl_row_in_fullres_transformed",
+                    "imagecol" = "pxl_col_in_fullres_transformed"
+                ),
+                verbose = FALSE
+            ),
+            "Expected the following columns"
         )
 
         #   Now (apparently) remove low-res images
