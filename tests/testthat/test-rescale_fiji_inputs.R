@@ -1,5 +1,5 @@
 test_that(
-    "rescale_imagej_inputs",
+    "rescale_fiji_inputs",
     {
         ########################################################################
         #   Prepare sample_info
@@ -20,7 +20,7 @@ test_that(
         #   Tests
         ########################################################################
 
-        sample_info_new <- rescale_imagej_inputs(
+        sample_info_new <- rescale_fiji_inputs(
             sample_info,
             out_dir = tempdir()
         )
