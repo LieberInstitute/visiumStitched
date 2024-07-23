@@ -127,7 +127,7 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">sr_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:30.793082 loading file /github/home/.cache/R/BiocFileCache/8a17bd815b4_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:23.485347 loading file /github/home/.cache/R/BiocFileCache/901625761a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -169,7 +169,7 @@ respectively.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">fiji_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:44.863631 loading file /github/home/.cache/R/BiocFileCache/8a125dc48d9_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:37.21135 loading file /github/home/.cache/R/BiocFileCache/9014d44f968_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>We now have every column present in <code>sample_info</code> that
@@ -179,9 +179,9 @@ will be necessary for any <code>visiumStitched</code> function.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpWtyqHm/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpWtyqHm/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpWtyqHm/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpiAv6YN/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpiAv6YN/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpiAv6YN/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: fiji_xml_path &lt;chr&gt;, fiji_image_path &lt;chr&gt;</span></span></span></code></pre></div>
 <p>Before building the <code>SpatialExperiment</code>, the idea is to
 create a directory very similar to <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs" class="external-link">Spaceranger’s
@@ -229,11 +229,11 @@ any other spots will not be shown.</p>
 <span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Building SpatialExperiment using capture area as sample ID</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:48.11367 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:55.009992 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:55.418677 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:36:55.769464 rtracklayer::import: reading the reference GTF file</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:37:26.849231 adding gene information to the SPE object</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:40.367083 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:47.180094 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:47.575282 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:43:47.916645 rtracklayer::import: reading the reference GTF file</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:44:18.669699 adding gene information to the SPE object</span></span>
 <span><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using</span></span>
 <span><span class="co">#&gt; the same GTF file as the one that was used by SpaceRanger. For example, one</span></span>
 <span><span class="co">#&gt; file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()</span></span>
@@ -241,7 +241,7 @@ any other spots will not be shown.</p>
 <span><span class="co">#&gt; Warning: Dropping 2226 out of 38606 genes for which we don't have information</span></span>
 <span><span class="co">#&gt; on the reference GTF file. This typically happens when you are not using the</span></span>
 <span><span class="co">#&gt; same GTF file as the one that was used by SpaceRanger.</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:37:27.07521 adding information used by spatialLIBD</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:44:18.896914 adding information used by spatialLIBD</span></span>
 <span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span></code></pre></div>
 <p>The <code>exclude_overlapping</code> <code>colData()</code> column
 controls which spots to drop for visualization purposes. Note also that
@@ -363,7 +363,7 @@ counts from <code>spatialLIBD</code>, then plot a few white matter genes
 as before:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spe_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-23 17:37:35.537008 loading file /github/home/.cache/R/BiocFileCache/8a177b161e7_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-23 19:44:27.2448 loading file /github/home/.cache/R/BiocFileCache/901483ff83e_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="va">wm_genes_ens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">[</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MBP"</span>, <span class="st">"GFAP"</span>, <span class="st">"PLP1"</span>, <span class="st">"AQP4"</span><span class="op">)</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span></span>
@@ -406,9 +406,9 @@ research!</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"full_demo.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-23 17:37:39 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-23 19:44:31 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 1.373 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 1.357 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -530,7 +530,7 @@ research!</p>
 <span><span class="co">#&gt;  lazyeval               0.2.2      <span style="color: #555555;">2019-03-15</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  leiden                 0.4.3.1    <span style="color: #555555;">2023-11-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  lifecycle              1.0.4      <span style="color: #555555;">2023-11-07</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  limma                  3.61.4     <span style="color: #555555;">2024-07-15</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.1)</span></span></span>
+<span><span class="co">#&gt;  limma                  3.61.5     <span style="color: #555555;">2024-07-22</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.1)</span></span></span>
 <span><span class="co">#&gt;  listenv                0.9.1      <span style="color: #555555;">2024-01-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  lmtest                 0.9-40     <span style="color: #555555;">2022-03-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  locfit                 1.5-9.10   <span style="color: #555555;">2024-06-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
