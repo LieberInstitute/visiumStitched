@@ -11,8 +11,12 @@
 #' @inheritParams add_array_coords
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
 #' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"
-#' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]
-#' @param gtf_cols Passed to [spatialLIBD::read10xVisiumWrapper()]
+#' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]. If
+#' working on the same system where Spaceranger was run, the GTF will be
+#' automatically found; otherwise a character(1) path may be supplied,
+#' pointing to a GTF file of gene annotation to populate \code{rowData()} with.
+#' @param gtf_cols Passed to [spatialLIBD::read10xVisiumWrapper()]. Columns
+#' in the reference GTF to extract and populate \code{rowData()}
 #'
 #' @return A \code{SpatialExperiment} object with one sample per group specified
 #' in \code{sample_info} using transformed pixel and array coordinates (including
@@ -63,7 +67,11 @@
 #' #   Build the SpatialExperiment
 #' ########################################################################
 #'
-#' #    Retrieve a GTF from GENCODE
+#' #    Since we don't have access to the original GTF used to run SpaceRanger,
+#' #    we must explicitly supply our own GTF to build_spe(). We use
+#' #    GENCODE release 32, intended to be quite close to the actual GTF used,
+#' #    which is available from:
+#' #    https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz
 #' bfc <- BiocFileCache::BiocFileCache()
 #' gtf_cache <- BiocFileCache::bfcrpath(
 #'     bfc,
