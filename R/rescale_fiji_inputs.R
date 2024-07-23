@@ -1,8 +1,8 @@
-#' Write same-scale hires images for input to ImageJ
+#' Write same-scale hires images for input to Fiji
 #'
 #' Given a \code{tibble} of sample information (\code{sample_info}) with
 #' columns \code{capture_area}, \code{group}, and \code{spaceranger_dir},
-#' Write new high-resolution images for use as input to ImageJ. Particularly
+#' Write new high-resolution images for use as input to Fiji. Particularly
 #' when capture areas come from different slides, there is a risk of significant
 #' scale differences among Spaceranger's \code{tissue_hires_image.png} images;
 #' that is, the physical distance represented by a pixel from each capture area
@@ -48,25 +48,25 @@
 #'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
 #'
-#' #   Add ImageJ-output-related columns
-#' imagej_dir <- tempdir()
+#' #   Add Fiji-output-related columns
+#' fiji_dir <- tempdir()
 #' temp <- unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"),
-#'     exdir = imagej_dir
+#'     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
+#'     exdir = fiji_dir
 #' )
-#' sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
-#' sample_info$imagej_image_path <- temp[grep("png$", temp)]
+#' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
+#' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
 #' out_dir <- tempdir()
-#' sample_info_new <- rescale_imagej_inputs(sample_info, out_dir = out_dir)
+#' sample_info_new <- rescale_fiji_inputs(sample_info, out_dir = out_dir)
 #'
 #' #    Scale factors are computed that are necessary downstream (i.e. with
-#' #    prep_imagej_*() functions)
+#' #    prep_fiji_*() functions)
 #' sample_info_new[, setdiff(colnames(sample_info_new), colnames(sample_info))]
 #'
 #' #    Image are produced that are ready for alignment in Fiji
 #' list.files(out_dir)
-rescale_imagej_inputs <- function(sample_info, out_dir) {
+rescale_fiji_inputs <- function(sample_info, out_dir) {
     ## For R CMD check
     group <- spot_diameter_fullres <- intra_group_scalar <- tissue_hires_scalef <- intra_group_scalar_image <- NULL
 

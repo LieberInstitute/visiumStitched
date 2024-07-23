@@ -1,14 +1,14 @@
-#' Apply transform info from ImageJ XML output
+#' Apply transform info from Fiji XML output
 #'
 #' Given a \code{tibble} of sample information (\code{sample_info}) with
-#' columns \code{capture_area}, \code{group}, and \code{imagej_xml_path},
-#' expected to have one unique path to ImageJ XML output per group, read in
+#' columns \code{capture_area}, \code{group}, and \code{fiji_xml_path},
+#' expected to have one unique path to Fiji XML output per group, read in
 #' the pixel coordinates from each capture area's \code{tissue_positions.csv}
 #' file from Spaceranger, and transform using the rotation matrix specified
-#' by ImageJ. Write one new \code{tissue_positions.csv} file per group.
+#' by Fiji. Write one new \code{tissue_positions.csv} file per group.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, \code{imagej_xml_path}, \code{intra_group_scalar}, and
+#' \code{group}, \code{fiji_xml_path}, \code{intra_group_scalar}, and
 #' \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
@@ -40,23 +40,23 @@
 #'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
 #'
-#' #   Add ImageJ-output-related columns
-#' imagej_dir <- tempdir()
+#' #   Add Fiji-output-related columns
+#' fiji_dir <- tempdir()
 #' temp <- unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"),
-#'     exdir = imagej_dir
+#'     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
+#'     exdir = fiji_dir
 #' )
-#' sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
-#' sample_info$imagej_image_path <- temp[grep("png$", temp)]
+#' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
+#' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
-#' sample_info <- rescale_imagej_inputs(sample_info, out_dir = tempdir())
+#' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
-#' prep_imagej_coords(sample_info, out_dir = spe_input_dir)
+#' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #'
 #' #    A file of spatial coordinates for the stitched Br2719 was produced
 #' list.files(spe_input_dir)
-prep_imagej_coords <- function(sample_info, out_dir) {
+prep_fiji_coords <- function(sample_info, out_dir) {
     ## For R CMD check
     group <- barcode <- key <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
 
@@ -67,7 +67,7 @@ prep_imagej_coords <- function(sample_info, out_dir) {
 
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c(
-        "capture_area", "group", "imagej_xml_path", "intra_group_scalar",
+        "capture_area", "group", "fiji_xml_path", "intra_group_scalar",
         "group_hires_scalef"
     )
     if (!all(expected_cols %in% colnames(sample_info))) {
@@ -79,8 +79,8 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         )
     }
 
-    if (!all(file.exists(sample_info$imagej_xml_path))) {
-        stop("All files in 'sample_info$imagej_xml_path' must exist.")
+    if (!all(file.exists(sample_info$fiji_xml_path))) {
+        stop("All files in 'sample_info$fiji_xml_path' must exist.")
     }
 
     dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
@@ -89,13 +89,13 @@ prep_imagej_coords <- function(sample_info, out_dir) {
         this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
 
-        if (length(unique(this_sample_info$imagej_xml_path)) > 1) {
-            stop("Expected one unique path for 'imagej_xml_path' per group in 'sample_info'.")
+        if (length(unique(this_sample_info$fiji_xml_path)) > 1) {
+            stop("Expected one unique path for 'fiji_xml_path' per group in 'sample_info'.")
         }
 
         #   Find all XML elements containing input image paths and
         #   transformation matrices
-        transform_nodes <- this_sample_info$imagej_xml_path[1] |>
+        transform_nodes <- this_sample_info$fiji_xml_path[1] |>
             read_xml() |>
             suppressWarnings() |>
             xml_find_all(".//t2_patch")
@@ -107,14 +107,14 @@ prep_imagej_coords <- function(sample_info, out_dir) {
             this_sample_info$capture_area, function(x) grep(x, input_paths)
         )
         if (length(input_paths) != nrow(this_sample_info) || any(is.na(input_indices))) {
-            stop("Expected each capture area to be present exactly once in the input filenames to ImageJ for each group.")
+            stop("Expected each capture area to be present exactly once in the input filenames to Fiji for each group.")
         }
 
         coords_list <- list()
 
         #   Loop through all capture areas in this group
         for (i in seq(nrow(this_sample_info))) {
-            #   Parse the rotation matrix from the ImageJ XML, and scale
+            #   Parse the rotation matrix from the Fiji XML, and scale
             #   translations from high to fullres
             rot <- transform_nodes[input_indices[i]] |>
                 xml_attr("transform") |>

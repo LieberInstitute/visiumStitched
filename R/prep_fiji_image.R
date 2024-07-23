@@ -1,14 +1,14 @@
-#' Create low-res images and scale factors from high-res ImageJ output images
+#' Create low-res images and scale factors from high-res Fiji output images
 #'
-#' After stitching all groups in \code{sample_info} with ImageJ, images of
+#' After stitching all groups in \code{sample_info} with Fiji, images of
 #' various resolutions (pixel dimensions) are left. This function creates copies
 #' of each image whose largest dimension is \code{lowres_max_size} pixels. It
 #' also creates a corresponding \code{scalefactors_json.json} file much like
-#' Spaceranger's. In conjunction with \code{prep_imagej_image()}, this function
+#' Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
 #' prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 #'
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, \code{imagej_image_path}, \code{spaceranger_dir},
+#' \code{group}, \code{fiji_image_path}, \code{spaceranger_dir},
 #' \code{intra_group_scalar}, and \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
@@ -41,19 +41,19 @@
 #'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
 #'
-#' #   Add ImageJ-output-related columns
-#' imagej_dir <- tempdir()
+#' #   Add Fiji-output-related columns
+#' fiji_dir <- tempdir()
 #' temp <- unzip(
-#'     spatialLIBD::fetch_data("visiumStitched_brain_ImageJ_out"),
-#'     exdir = imagej_dir
+#'     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
+#'     exdir = fiji_dir
 #' )
-#' sample_info$imagej_xml_path <- temp[grep("xml$", temp)]
-#' sample_info$imagej_image_path <- temp[grep("png$", temp)]
+#' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
+#' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
-#' sample_info <- rescale_imagej_inputs(sample_info, out_dir = tempdir())
+#' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
-#' prep_imagej_image(
+#' prep_fiji_image(
 #'     sample_info,
 #'     out_dir = spe_input_dir, lowres_max_size = 1000
 #' )
@@ -64,13 +64,13 @@
 #'     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
 #' )
 #' dim(this_image)
-prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
+prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
     ## For R CMD check
     group <- NULL
 
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c(
-        "capture_area", "group", "imagej_image_path", "intra_group_scalar",
+        "capture_area", "group", "fiji_image_path", "intra_group_scalar",
         "group_hires_scalef", "spaceranger_dir"
     )
     if (!all(expected_cols %in% colnames(sample_info))) {
@@ -82,8 +82,8 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         )
     }
 
-    if (!all(file.exists(sample_info$imagej_image_path))) {
-        stop("All files in 'sample_info$imagej_image_path' must exist.")
+    if (!all(file.exists(sample_info$fiji_image_path))) {
+        stop("All files in 'sample_info$fiji_image_path' must exist.")
     }
 
     dir.create(out_dir, showWarnings = FALSE)
@@ -92,11 +92,11 @@ prep_imagej_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
 
-        if (length(unique(this_sample_info$imagej_image_path)) > 1) {
-            stop("Expected one unique path for 'imagej_image_path' per group in 'sample_info'.")
+        if (length(unique(this_sample_info$fiji_image_path)) > 1) {
+            stop("Expected one unique path for 'fiji_image_path' per group in 'sample_info'.")
         }
 
-        this_image <- imager::load.image(this_sample_info$imagej_image_path[1])
+        this_image <- imager::load.image(this_sample_info$fiji_image_path[1])
 
         #   Combine info about the original scalefactors of the first capture
         #   area with group-related scalars to form a new scalefactors JSON
