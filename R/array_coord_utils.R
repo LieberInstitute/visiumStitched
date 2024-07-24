@@ -45,7 +45,7 @@
     if (any((coords$array_row == 0) & (coords$array_col == 0))) {
         stop("Internal bug: the invalid array coordinate (0, 0) exists after fitting")
     }
-    return(insivible(NULL))
+    return(invisible(NULL))
 }
 
 #' Return array coordinates fit to nearest spot with associated error
