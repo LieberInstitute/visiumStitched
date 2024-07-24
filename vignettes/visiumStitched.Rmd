@@ -84,8 +84,11 @@ We hope that `r Biocpkg("visiumStitched")` will be useful for your research. Ple
 citation("visiumStitched")
 ```
 
+## Packages used in this vignette
 
-```{r "start", message=FALSE}
+Let's load the packages we'll use in this vignette.
+
+```{r "start", message=FALSE, warning=FALSE}
 library("SpatialExperiment")
 library("visiumStitched")
 library("dplyr")
