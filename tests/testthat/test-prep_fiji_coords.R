@@ -29,11 +29,14 @@ test_that(
         ########################################################################
 
         spe_input_dir <- tempdir()
-        prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+        out_file_actual = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 
         #   The expected output file should be produced
-        out_file <- file.path(spe_input_dir, "Br2719", "tissue_positions.csv")
-        expect_equal(file.exists(out_file), TRUE)
+        out_file_expected <- file.path(
+            spe_input_dir, "Br2719", "tissue_positions.csv"
+        )
+        expect_equal(out_file_actual, out_file_expected)
+        expect_equal(file.exists(out_file_actual), TRUE)
 
         #   The tissue positions should have the expected columns
         coords <- readr::read_csv(out_file, show_col_types = FALSE)

@@ -29,17 +29,21 @@ test_that(
         ########################################################################
 
         spe_input_dir <- tempdir()
-        prep_fiji_image(
+        out_paths_actual = prep_fiji_image(
             sample_info,
             out_dir = spe_input_dir, lowres_max_size = 900
         )
 
-        #   The expected output file should be produced
-        out_file <- file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
-        expect_equal(file.exists(out_file), TRUE)
+        #   The expected output files should be produced
+        out_paths_expected = c(
+            file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png"),
+            file.path(spe_input_dir, "Br2719", "scalefactors_json.json")
+        )
+        expect_equal(all(file.exists(out_paths_expected)), TRUE)
+        expect_equal(setequal(out_paths_actual, out_paths_expected))
 
         #   The image should have the correct maximal dimension size
-        this_image <- imager::load.image(out_file)
+        this_image <- imager::load.image(out_paths_expected[1])
         expect_equal(max(dim(this_image)), 900)
     }
 )

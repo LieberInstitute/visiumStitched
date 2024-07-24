@@ -53,10 +53,10 @@
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
-#' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+#' out_file = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #'
 #' #    A file of spatial coordinates for the stitched Br2719 was produced
-#' list.files(spe_input_dir)
+#' print(readr::read_csv(out_file))
 prep_fiji_coords <- function(sample_info, out_dir) {
     ## For R CMD check
     group <- barcode <- key <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
@@ -86,6 +86,7 @@ prep_fiji_coords <- function(sample_info, out_dir) {
 
     dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
+    out_paths = list()
     for (this_group in unique(sample_info$group)) {
         this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
@@ -182,11 +183,12 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         coords <- do.call(rbind, coords_list)
         this_out_dir <- file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
+        out_paths[[i]] = file.path(this_out_dir, "tissue_positions.csv")
         readr::write_csv(
-            coords, file.path(this_out_dir, "tissue_positions.csv"),
+            coords, out_paths[[i]],
             progress = FALSE
         )
     }
 
-    return(invisible(NULL))
+    return(unlist(out_paths))
 }

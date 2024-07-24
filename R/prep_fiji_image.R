@@ -54,7 +54,7 @@
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
-#' prep_fiji_image(
+#' out_paths = prep_fiji_image(
 #'     sample_info,
 #'     out_dir = spe_input_dir, lowres_max_size = 1000
 #' )
@@ -65,6 +65,9 @@
 #'     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
 #' )
 #' dim(this_image)
+#' 
+#' #    In total, an image and scalefactors were written
+#' print(out_paths)
 prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
     ## For R CMD check
     group <- NULL
@@ -89,6 +92,7 @@ prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
 
     dir.create(out_dir, showWarnings = FALSE)
 
+    out_paths = list()
     for (this_group in unique(sample_info$group)) {
         this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
@@ -134,7 +138,11 @@ prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
             rjson::toJSON(sr_json),
             file.path(this_out_dir, "scalefactors_json.json")
         )
+        out_paths[[this_group]] = c(
+            file.path(this_out_dir, "tissue_lowres_image.png"),
+            file.path(this_out_dir, "scalefactors_json.json")
+        )
     }
 
-    return(invisible(NULL))
+    return(unname(unlist(out_paths)))
 }

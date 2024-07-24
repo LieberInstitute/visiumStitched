@@ -59,7 +59,7 @@ sample_info$fiji_image_path <- temp[grep("png$", temp)]
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 spe_input_dir <- tempdir()
-prep_fiji_image(
+out_paths = prep_fiji_image(
     sample_info,
     out_dir = spe_input_dir, lowres_max_size = 1000
 )
@@ -70,6 +70,9 @@ this_image <- imager::load.image(
     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
 )
 dim(this_image)
+
+#    In total, an image and scalefactors were written
+print(out_paths)
 }
 \author{
 Nicholas J. Eagles
