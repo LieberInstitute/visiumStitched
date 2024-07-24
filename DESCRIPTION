@@ -31,14 +31,14 @@ Depends:
     R (>= 4.4),
     SpatialExperiment
 Suggests: 
+    BiocFileCache,
     BiocStyle,
     knitr,
+    lobstr,
     RefManageR,
     rmarkdown,
     sessioninfo,
-    testthat (>= 3.0.0),
-    BiocFileCache,
-    lobstr
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Imports:
