@@ -278,7 +278,8 @@ colData(spe) |>
             x = array_row_original, y = array_col_original, color = capture_area
         )
     ) +
-    geom_point(alpha = 0.3)
+    geom_point(alpha = 0.3) +
+    coord_fixed()
 ```
 
 Let's contrast this with the array coordinates recomputed by `visiumStitched`.
@@ -300,7 +301,8 @@ colData(spe) |>
             x = array_row, y = array_col, color = capture_area
         )
     ) +
-    geom_point(alpha = 0.3)
+    geom_point(alpha = 0.3) +
+    coord_fixed()
 ```
 
 ## Geometric transformations
