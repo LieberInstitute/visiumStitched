@@ -163,7 +163,7 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_
         imgData = img_data
     )
 
-    spe <- add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+    spe <- add_array_coords(spe, sample_info, coords_dir)
     spe <- add_overlap_info(spe, "sum_umi")
 
     colnames(spe) <- spe$key

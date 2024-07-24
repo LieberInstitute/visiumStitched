@@ -7,8 +7,10 @@
 prep_fiji_image(sample_info, out_dir, lowres_max_size = 1200)
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area} and
-\code{group}}
+\item{sample_info}{A \code{tibble} with columns \code{capture_area},
+\code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
+\code{spaceranger_dir}, \code{intra_group_scalar}, and
+\code{group_hires_scalef}}
 
 \item{out_dir}{A character(1) vector giving a path to a directory to place
 the output image(s) and scale factors. Provided the parent exists, \code{out_dir}

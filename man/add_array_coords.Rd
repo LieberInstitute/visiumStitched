@@ -4,33 +4,28 @@
 \alias{add_array_coords}
 \title{Add transformed array and pixel coordinates to a \code{SpatialExperiment}}
 \usage{
-add_array_coords(spe, sample_info, coords_dir, overwrite = TRUE)
+add_array_coords(spe, sample_info, coords_dir)
 }
 \arguments{
 \item{spe}{A \code{SpatialExperiment}}
 
-\item{sample_info}{A \code{tibble} with columns \code{capture_area} and
-\code{group}}
+\item{sample_info}{A \code{tibble} with columns \code{capture_area},
+\code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
+\code{spaceranger_dir}, \code{intra_group_scalar}, and
+\code{group_hires_scalef}}
 
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 produced from refinement with \code{prep_fiji_*()} functions}
-
-\item{overwrite}{A \code{logical(1)} vector indicating whether to overwrite
-\code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
-\code{array_col}, \code{pixel_row_in_fullres}, and
-\code{pixel_col_in_fullres} with the transformed values. Note that the
-original values are preserved even when TRUE, in versions of
-\code{colData(spe)} columns ending in \code{_original}.}
 }
 \value{
 A \code{SpatialExperiment} object with additional \code{colData}
 columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
 with \code{[suffix]} values \code{original}, \code{transformed}, and
 \code{rounded}; \code{array_row_[suffix]} and \code{array_col_[suffix]}
-columns with \code{[suffix]} values \code{original} and \code{transformed}; and,
-if \code{overwrite}, modified colData columns \code{array_row} and
+columns with \code{[suffix]} values \code{original} and \code{transformed}; and
+modified colData columns \code{array_row} and
 \code{array_col} and \code{spatialCoords()} with their transformed values
 }
 \description{

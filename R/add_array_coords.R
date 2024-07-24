@@ -24,19 +24,13 @@
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 #' produced from refinement with \code{prep_fiji_*()} functions
-#' @param overwrite A \code{logical(1)} vector indicating whether to overwrite
-#' \code{spatialCoords(spe)}, and \code{colData(spe)} columns \code{array_row},
-#' \code{array_col}, \code{pixel_row_in_fullres}, and
-#' \code{pixel_col_in_fullres} with the transformed values. Note that the
-#' original values are preserved even when TRUE, in versions of
-#' \code{colData(spe)} columns ending in \code{_original}.
 #'
 #' @return A \code{SpatialExperiment} object with additional \code{colData}
 #' columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
 #' with \code{[suffix]} values \code{original}, \code{transformed}, and
 #' \code{rounded}; \code{array_row_[suffix]} and \code{array_col_[suffix]}
-#' columns with \code{[suffix]} values \code{original} and \code{transformed}; and,
-#' if \code{overwrite}, modified colData columns \code{array_row} and
+#' columns with \code{[suffix]} values \code{original} and \code{transformed}; and
+#' modified colData columns \code{array_row} and
 #' \code{array_col} and \code{spatialCoords()} with their transformed values
 #'
 #' @import dplyr
@@ -98,7 +92,7 @@
 #' #    values
 #' head(spe$array_row)
 #' head(spe$array_col)
-add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
+add_array_coords <- function(spe, sample_info, coords_dir) {
     ## For R CMD check
     key <- in_tissue <- NULL
 
@@ -177,24 +171,18 @@ add_array_coords <- function(spe, sample_info, coords_dir, overwrite = TRUE) {
     #   colData
     colData(spe) <- cbind(colData(spe), coords)
 
-    #   Retain "_original" copies of the coordinates
-    for (col_name in c("array_row", "array_col")) {
-        spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
-    }
+    #   Make transformed coordinates the default in the colData and
+    #   spatialCoords. Retain "_original" copies of the coordinates
     for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
         spe[[paste0(col_name, "_original")]] <- spatialCoords(spe)[, col_name]
+        spatialCoords(spe)[, col_name] <- coords[[
+            paste0(col_name, "_transformed")
+        ]]
     }
 
-    #   If 'overwrite', make transformed coordinates the default in the colData
-    #   and spatialCoords
-    if (overwrite) {
-        for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
-            spatialCoords(spe)[, col_name] <- coords[[paste0(col_name, "_transformed")]]
-        }
-
-        for (col_name in c("array_row", "array_col")) {
-            spe[[col_name]] <- coords[[paste0(col_name, "_transformed")]]
-        }
+    for (col_name in c("array_row", "array_col")) {
+        spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
+        spe[[col_name]] <- coords[[paste0(col_name, "_transformed")]]
     }
 
     return(spe)
