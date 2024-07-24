@@ -37,16 +37,11 @@ test_that(
         prep_fiji_coords(sample_info, out_dir = spe_input_dir)
         prep_fiji_image(sample_info, out_dir = spe_input_dir)
 
-        #   TODO: find a way to match against the two warnings that
-        #   simultaneously occur due to using a different GTF; not good to
-        #   suppress all warnings
-        suppressWarnings({
-            spe <- build_spe(
-                sample_info,
-                coords_dir = spe_input_dir,
-                reference_gtf = gtf_cache
-            )
-        }, )
+        spe <- pkgcond::suppress_warnings(
+            build_spe(sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache),
+            pattern = "GTF file as the one that was used by SpaceRanger"
+        )
+
 
         ########################################################################
         #   Tests

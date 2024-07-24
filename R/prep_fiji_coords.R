@@ -21,6 +21,7 @@
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom readr read_csv write_csv
 #' @importFrom rjson fromJSON
+#' @importFrom pkgcond suppress_warnings
 #'
 #' @export
 #' @author Nicholas J. Eagles
@@ -99,7 +100,8 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         #   transformation matrices
         transform_nodes <- this_sample_info$fiji_xml_path[1] |>
             read_xml() |>
-            suppressWarnings() |>
+            pkgcond::suppress_warnings(pattern = "Attribute o_width of element t2_patch") |>
+            pkgcond::suppress_warnings(pattern = "Attribute o_height of element t2_patch") |>
             xml_find_all(".//t2_patch")
 
         #   Find paths to input images and the order the corresponding capture

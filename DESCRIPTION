@@ -56,7 +56,8 @@ Imports:
     imager,
     stringr,
     xml2,
-    DropletUtils
+    DropletUtils,
+    pkgcond
 biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
     Visualization, DataImport
 URL: https://github.com/LieberInstitute/visiumStitched
