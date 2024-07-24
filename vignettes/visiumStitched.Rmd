@@ -198,7 +198,9 @@ areas in each group is added. The `sum_umi` metric will by default determine whi
 spots in overlapping regions to exclude in
 plots. In particular, at regions of overlap, spots from capture areas with higher
 average UMI (unique molecular identifier) counts will be plotted, while any other
-spots will not be shown.
+spots will not be shown. We'll also mirror the image and gene-expression data to
+match the orientation specified at the wet bench. More info about performing geometric
+transformations is [here](#geometric-transformations).
 
 ```{r "gtf"}
 bfc <- BiocFileCache()
@@ -216,6 +218,7 @@ spe <- build_spe(
     sample_info,
     coords_dir = spe_input_dir, reference_gtf = gtf_cache
 )
+spe <- mirrorObject(spe, axis = "h")
 ```
 
 The `exclude_overlapping` `colData()` column controls
