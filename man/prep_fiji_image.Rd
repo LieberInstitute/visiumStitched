@@ -19,6 +19,10 @@ will be created if necessary.}
 pixels) of the larger dimension of the output image(s), considered to be "low
 resolution".}
 }
+\value{
+This function returns \code{character()} with the file paths to the
+\code{tissue_lowres_image.png} and \code{scalefactors_json.json} files it created.
+}
 \description{
 After stitching all groups in \code{sample_info} with Fiji, images of
 various resolutions (pixel dimensions) are left. This function creates copies

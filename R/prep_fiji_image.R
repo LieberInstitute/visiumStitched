@@ -17,7 +17,8 @@
 #' pixels) of the larger dimension of the output image(s), considered to be "low
 #' resolution".
 #'
-#' @return NULL
+#' @return This function returns `character()` with the file paths to the
+#' `tissue_lowres_image.png` and `scalefactors_json.json` files it created.
 #'
 #' @importFrom imager load.image resize save.image
 #' @importFrom rjson fromJSON toJSON

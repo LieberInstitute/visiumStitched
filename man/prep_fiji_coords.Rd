@@ -15,6 +15,10 @@ prep_fiji_coords(sample_info, out_dir)
 the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
 will be created if necessary.}
 }
+\value{
+This function returns \code{character()} with the file paths to the
+\code{tissue_positions.csv} files it created.
+}
 \description{
 Given a \code{tibble} of sample information (\code{sample_info}) with
 columns \code{capture_area}, \code{group}, and \code{fiji_xml_path},

@@ -24,7 +24,7 @@ or \code{spatialCoords(spe)} columns contain the \code{tissue}, \code{row}, \cod
 conversion process}
 }
 \value{
-A \code{Seurat} object
+A \code{Seurat} object.
 }
 \description{
 Given a \code{SpatialExperiment} object, first \code{as.Seurat()} is run,

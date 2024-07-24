@@ -16,7 +16,7 @@
 #' @param verbose A logical(1) vector. If true, print status updates about the
 #' conversion process
 #'
-#' @return A \code{Seurat} object
+#' @return A \code{Seurat} object.
 #'
 #' @export
 #' @author Nicholas J. Eagles

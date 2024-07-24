@@ -9,7 +9,7 @@
 #' @param coords A \code{tibble} containing 'array_row' and 'array_col' columns
 #' calculated internally by \code{add_array_coords()}
 #'
-#' @return NULL
+#' @return It returns `NULL` if all tests were correct.
 #'
 #' @author Nicholas J. Eagles
 #' @keywords internal
@@ -45,6 +45,7 @@
     if (any((coords$array_row == 0) & (coords$array_col == 0))) {
         stop("Internal bug: the invalid array coordinate (0, 0) exists after fitting")
     }
+    return(insivible(NULL))
 }
 
 #' Return array coordinates fit to nearest spot with associated error

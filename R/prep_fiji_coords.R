@@ -14,7 +14,8 @@
 #' the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
 #'
-#' @return NULL
+#' @return This function returns `character()` with the file paths to the
+#' `tissue_positions.csv` files it created.
 #'
 #' @import xml2
 #' @importFrom stringr str_replace_all str_detect
