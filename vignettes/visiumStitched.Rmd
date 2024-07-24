@@ -128,15 +128,16 @@ sample_info$spaceranger_dir <- file.path(
 
 # Preparing Images for Fiji
 
-Before aligning anything in Fiji, we need to ensure the image of each capture area to align
+The `visiumStitched` workflow makes use of [Fiji](https://imagej.net/software/fiji/), a
+distribution of the ImageJ image-processing software, which includes an interface for
+aligning images on a shared coordinate system. Before aligning anything in Fiji, we need to
+ensure the image of each capture area to align
 is on the same scale-- that is, a pixel in each image represents the same distance. This is
 typically approximately true, but is not guaranteed to be exactly true, especially when the
 capture areas to align come from different slides. `rescale_fiji_inputs()` reads in the
 [high-resolution tissue images](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-png)
 for each capture area, and uses info about their spot diameters in pixels and scale factors to
 rescale the images appropriately.
-
-TODO: note about setting group and things being rescaled by group
 
 For demonstration purposes, we'll set `out_dir` to a temporary location. Typically, it would
 really be any suitable directory to place the rescaled images for later input to Fiji.
@@ -148,11 +149,16 @@ sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 # Building a `SpatialExperiment`
 
+Before building a `SpatialExperiment` for this dataset, we must align the images for each
+group in Fiji. Check out [this video](https://www.youtube.com/watch?v=kFLtpK3qbSY) for a
+guide through this process.
+
 ## Parsing Outputs from Fiji
 
-While the alignment process in Fiji can't be part of this vignette, we can use the actual
-outputs for this dataset: an XML file specifying rigid affine transformations for each
-capture area, and the stitched approximately high-resolution image. These files are also
+From the Fiji alignment, two output files will be produced: an XML file specifying rigid
+affine transformations for each
+capture area, and the stitched approximately high-resolution image. These files for this
+dataset are
 available through `spatialLIBD::fetch_data()`. We'll need to add the paths to the XML
 and PNG files to the `fiji_xml_path` and `fiji_image_path` columns of `sample_info`,
 respectively.
