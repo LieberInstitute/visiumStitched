@@ -40,7 +40,7 @@ test_that(
             file.path(spe_input_dir, "Br2719", "scalefactors_json.json")
         )
         expect_equal(all(file.exists(out_paths_expected)), TRUE)
-        expect_equal(setequal(out_paths_actual, out_paths_expected))
+        expect_equal(setequal(out_paths_actual, out_paths_expected), TRUE)
 
         #   The image should have the correct maximal dimension size
         this_image <- imager::load.image(out_paths_expected[1])

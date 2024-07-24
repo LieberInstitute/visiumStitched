@@ -39,7 +39,7 @@ test_that(
         expect_equal(file.exists(out_file_actual), TRUE)
 
         #   The tissue positions should have the expected columns
-        coords <- readr::read_csv(out_file, show_col_types = FALSE)
+        coords <- readr::read_csv(out_file_expected, show_col_types = FALSE)
         expect_equal(
             colnames(coords),
             c(
