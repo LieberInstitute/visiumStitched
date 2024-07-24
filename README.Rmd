@@ -27,6 +27,25 @@ knitr::opts_chunk$set(
 
 For details, check the [documentation site](http://research.libd.org/visiumStitched/).
 
+## Example data processed with visiumStitched
+
+Here is example human brain data from [LieberInstitute/visiumStitched_brain](https://github.com/LieberInstitute/visiumStitched_brain) that was stitched together using `visiumStitched`. The resulting data can be accessed and visualized with [`spatialLIBD`](https://research.libd.org/spatialLIBD/) version 1.17.8 or newer.
+
+```{r "example_visiumStitched_brain"}
+## Check that you have a recent version of spatialLIBD installed
+stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
+
+## Download the spot-level data, which is a SpatialExperiment object
+spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+
+## Explore the stitched data
+spe
+
+## Show clustering results from PRECAST at k = 8
+spatialLIBD::vis_clus(spe, clustervar = 'precast_k8', is_stitched = TRUE)
+```
+
+
 ## Installation instructions
 
 Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then install `visiumStitched` from [GitHub](https://github.com/LieberInstitute/visiumStitched) using the following code:

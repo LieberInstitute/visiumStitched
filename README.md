@@ -35,6 +35,48 @@ also enables casting `SpatialExperiment` objects as `Seurat` objects.
 For details, check the [documentation
 site](http://research.libd.org/visiumStitched/).
 
+## Example data processed with visiumStitched
+
+Here is example human brain data from
+[LieberInstitute/visiumStitched_brain](https://github.com/LieberInstitute/visiumStitched_brain)
+that was stitched together using `visiumStitched`. The resulting data
+can be accessed and visualized with
+[`spatialLIBD`](https://research.libd.org/spatialLIBD/) version 1.17.8
+or newer.
+
+``` r
+## Check that you have a recent version of spatialLIBD installed
+stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
+
+## Download the spot-level data, which is a SpatialExperiment object
+spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+#> 2024-07-24 11:29:28.810266 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+
+## Explore the stitched data
+spe
+#> class: SpatialExperiment 
+#> dim: 26369 13965 
+#> metadata(0):
+#> assays(2): counts logcounts
+#> rownames(26369): ENSG00000238009 ENSG00000241860 ... ENSG00000278817
+#>   ENSG00000277196
+#> rowData names(7): source type ... gene_type gene_search
+#> colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1
+#>   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1
+#>   TTGTTTGTGTAAATTC-1_V13B23-283_D1
+#> colData names(40): sample_id in_tissue ... precast_k4 precast_k8
+#> reducedDimNames(1): PCA
+#> mainExpName: NULL
+#> altExpNames(0):
+#> spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres
+#> imgData names(4): sample_id image_id data scaleFactor
+
+## Show clustering results from PRECAST at k = 8
+spatialLIBD::vis_clus(spe, clustervar = 'precast_k8', is_stitched = TRUE)
+```
+
+<img src="man/figures/README-example_visiumStitched_brain-1.png" width="100%" />
+
 ## Installation instructions
 
 Get the latest stable `R` release from
