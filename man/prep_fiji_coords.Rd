@@ -55,10 +55,10 @@ sample_info$fiji_image_path <- temp[grep("png$", temp)]
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 spe_input_dir <- tempdir()
-prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+out_file = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 
 #    A file of spatial coordinates for the stitched Br2719 was produced
-list.files(spe_input_dir)
+print(readr::read_csv(out_file))
 }
 \author{
 Nicholas J. Eagles
