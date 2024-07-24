@@ -7,15 +7,13 @@
 #' Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
 #' prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
 #'
-#' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, \code{fiji_image_path}, \code{spaceranger_dir},
-#' \code{intra_group_scalar}, and \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
 #' @param lowres_max_size An integer(1) vector: the resolution (number of
 #' pixels) of the larger dimension of the output image(s), considered to be "low
 #' resolution".
+#' @inheritParams add_array_coords
 #'
 #' @return This function returns `character()` with the file paths to the
 #' `tissue_lowres_image.png` and `scalefactors_json.json` files it created.

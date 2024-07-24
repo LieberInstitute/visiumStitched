@@ -17,11 +17,10 @@
 #' (as from Spaceranger's \code{scalefactors_json.json} file) appropriate for
 #' every capture area from the group.
 #'
-#' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, and \code{spaceranger_dir}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output images. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
+#' @inheritParams add_array_coords
 #'
 #' @return A \code{tibble}: a copy of \code{sample_info} with additional columns
 #' \code{intra_group_scalar} and \code{group_hires_scalef}
