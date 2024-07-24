@@ -16,8 +16,10 @@
 #' process each group as if it really were one capture area in the first place.
 #'
 #' @param spe A \code{SpatialExperiment}
-#' @param sample_info A \code{tibble} with columns \code{capture_area} and
-#' \code{group}
+#' @param sample_info A \code{tibble} with columns \code{capture_area},
+#' \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
+#' \code{spaceranger_dir}, \code{intra_group_scalar}, and
+#' \code{group_hires_scalef}
 #' @param coords_dir A \code{character(1)} vector giving the directory
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
