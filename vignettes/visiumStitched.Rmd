@@ -353,6 +353,31 @@ vis_gene(
 )
 ```
 
+# Downstream applications
+
+One common area of analysis in spatial transcriptomics involves clustering--
+in particular, spatially aware clustering. Many spatially aware clustering
+algorithms check the array coordinates to determine
+neighboring spots and ultimately produce spatially smooth clusters. Since
+`visiumStitched` [re-computes array coordinates](#array-coordinates) in a meaningful way,
+software like [BayesSpace](https://doi.org/10.1038/s41587-021-00935-2) and
+[PRECAST](https://doi.org/10.1038/s41467-023-35947-w) work out-of-the-box with
+stitched data, treating each group as a single continuous sample.
+
+[We've already run PRECAST](https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/03_precast.R),
+and can visualize the results here, where we see a fairly seamless transition of
+cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
+
+```{r "precast_k2", fig.height = 4}
+vis_clus(spe_norm, clustervar = "precast_k2", is_stitched = TRUE)
+```
+
+`k = 4` has also been computed:
+
+```{r "precast_k4", fig.height = 4}
+vis_clus(spe_norm, clustervar = "precast_k4", is_stitched = TRUE)
+```
+
 # Conclusion
 
 `visiumStitched` provides a set of helper functions, in conjunction with ImageJ/Fiji,
