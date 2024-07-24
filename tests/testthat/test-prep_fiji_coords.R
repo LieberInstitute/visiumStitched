@@ -29,7 +29,7 @@ test_that(
         ########################################################################
 
         spe_input_dir <- tempdir()
-        out_file_actual = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+        out_file_actual <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 
         #   The expected output file should be produced
         out_file_expected <- file.path(

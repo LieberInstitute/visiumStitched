@@ -21,6 +21,7 @@
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom readr read_csv write_csv
 #' @importFrom rjson fromJSON
+#' @importFrom pkgcond suppress_warnings
 #'
 #' @export
 #' @author Nicholas J. Eagles
@@ -53,7 +54,7 @@
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
-#' out_file = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+#' out_file <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #'
 #' #    A file of spatial coordinates for the stitched Br2719 was produced
 #' print(readr::read_csv(out_file))
@@ -86,7 +87,7 @@ prep_fiji_coords <- function(sample_info, out_dir) {
 
     dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
-    out_paths = list()
+    out_paths <- list()
     for (this_group in unique(sample_info$group)) {
         this_sample_info <- sample_info |>
             dplyr::filter(group == this_group)
@@ -99,7 +100,8 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         #   transformation matrices
         transform_nodes <- this_sample_info$fiji_xml_path[1] |>
             read_xml() |>
-            suppressWarnings() |>
+            pkgcond::suppress_warnings(pattern = "Attribute o_width of element t2_patch") |>
+            pkgcond::suppress_warnings(pattern = "Attribute o_height of element t2_patch") |>
             xml_find_all(".//t2_patch")
 
         #   Find paths to input images and the order the corresponding capture
@@ -183,7 +185,7 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         coords <- do.call(rbind, coords_list)
         this_out_dir <- file.path(out_dir, this_group)
         dir.create(this_out_dir, showWarnings = FALSE)
-        out_paths[[i]] = file.path(this_out_dir, "tissue_positions.csv")
+        out_paths[[i]] <- file.path(this_out_dir, "tissue_positions.csv")
         readr::write_csv(
             coords, out_paths[[i]],
             progress = FALSE

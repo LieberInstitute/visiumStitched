@@ -50,6 +50,7 @@ bib <- c(
     dplyr = citation("dplyr")[1],
     ggplot2 = citation("ggplot2")[1],
     knitr = citation("knitr")[1],
+    pkgcond = citation("pkgcond")[1],
     RefManageR = citation("RefManageR")[1],
     rmarkdown = citation("rmarkdown")[1],
     sessioninfo = citation("sessioninfo")[1],
@@ -360,6 +361,7 @@ The `r Biocpkg("visiumStitched")` package `r Citep(bib[["visiumStitched"]])` was
 * `r CRANpkg("dplyr")` `r Citep(bib[["dplyr"]])`
 * `r CRANpkg("ggplot2")` `r Citep(bib[["ggplot2"]])`
 * `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])`
+* `r CRANpkg("pkgcond")` `r Citep(bib[["pkgcond"]])`
 * `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`
 * `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
 * `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`

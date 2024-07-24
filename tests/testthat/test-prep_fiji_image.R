@@ -29,13 +29,13 @@ test_that(
         ########################################################################
 
         spe_input_dir <- tempdir()
-        out_paths_actual = prep_fiji_image(
+        out_paths_actual <- prep_fiji_image(
             sample_info,
             out_dir = spe_input_dir, lowres_max_size = 900
         )
 
         #   The expected output files should be produced
-        out_paths_expected = c(
+        out_paths_expected <- c(
             file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png"),
             file.path(spe_input_dir, "Br2719", "scalefactors_json.json")
         )

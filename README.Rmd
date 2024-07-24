@@ -42,7 +42,7 @@ spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 spe
 
 ## Show clustering results from PRECAST at k = 8
-spatialLIBD::vis_clus(spe, clustervar = 'precast_k8', is_stitched = TRUE)
+spatialLIBD::vis_clus(spe, clustervar = "precast_k8", is_stitched = TRUE)
 ```
 
 
