@@ -190,6 +190,10 @@ jobs:
         run: |
           ## Install spatialLIBD from latest git commit
           BiocManager::install("LieberInstitute/spatialLIBD")
+
+          ## We also need the development version of BiocCheck (temporarily)
+          ## due to https://github.com/Bioconductor/BiocCheck/commit/481d8d1fa9c5ac32672d1119a058b8add2a933ed
+          BiocManager::install("Bioconductor/BiocCheck")
         shell: Rscript {0}
 
       - name: Install BiocGenerics
