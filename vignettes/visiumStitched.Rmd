@@ -262,6 +262,7 @@ of this information, but one possibility is to perform clustering and check how 
 overlapping spots are assigned the same cluster.
 
 ```{r "exclude_overlapping"}
+## Examine spots to exclude for plotting
 table(spe$exclude_overlapping)
 ```
 
@@ -277,6 +278,7 @@ normalization is critical to producing a visually seamless transition between ov
 capture areas.
 
 ```{r "explore_coords", fig.height = 4}
+## Show combined raw expression of white-matter genes 
 wm_genes <- rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
@@ -297,6 +299,8 @@ positions after stitching. We'll take in-tissue spots only and use transparency 
 the overlap among capture areas:
 
 ```{r "array_plot_orig"}
+## Plot positions of default array coordinates, before overwriting with more
+## meaningful values
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
@@ -320,6 +324,7 @@ clustering with `BayesSpace` or `PRECAST`, to treat each group as a spatially co
 sample.
 
 ```{r "array_plot_after"}
+## Plot positions of redefined array coordinates
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
@@ -338,6 +343,8 @@ As a `SpatialExperiment`, the stitched data may be rotated or mirrored by group,
 the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions.
 
 ```{r "rotate", fig.height=4}
+## Rotate image and gene-expression data by 180 degrees, plotting a combination
+## of white-matter genes
 vis_gene(
     rotateObject(spe, sample_id = "Br2719", degrees = 180),
     geneid = wm_genes, assayname = "counts", is_stitched = TRUE
@@ -345,6 +352,8 @@ vis_gene(
 ```
 
 ```{r "mirror", fig.height = 4}
+## Mirror image and gene-expression data across a vertical axis, plotting a
+## combination of white-matter genes
 vis_gene(
     mirrorObject(spe, sample_id = "Br2719", axis = "v"),
     geneid = wm_genes, assayname = "counts", is_stitched = TRUE
@@ -361,12 +370,14 @@ object with [normalized](https://bioconductor.org/books/3.12/OSCA/normalization.
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ```{r "fetch_norm", fig.height = 4}
+## Grab SpatialExperiment with normalized counts
 spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
 
 wm_genes_ens <- rownames(spe_norm)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)
 ]
 
+## Plot combination of normalized counts for some white-matter genes 
 vis_gene(
     spe_norm,
     geneid = wm_genes_ens, assayname = "logcounts", is_stitched = TRUE
@@ -376,6 +387,7 @@ vis_gene(
 Recall the unnormalized version of this plot, which is not nearly as clean:
 
 ```{r "unnorm_plot", fig.height = 4}
+## Plot raw counts, which are noisier
 vis_gene(
     spe,
     geneid = wm_genes, assayname = "counts", is_stitched = TRUE
@@ -398,12 +410,14 @@ and can visualize the results here, where we see a fairly seamless transition of
 cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
 
 ```{r "precast_k2", fig.height = 4}
+## PRECAST k = 2 clusters
 vis_clus(spe_norm, clustervar = "precast_k2", is_stitched = TRUE)
 ```
 
 `k = 4` has also been computed:
 
 ```{r "precast_k4", fig.height = 4}
+## PRECAST k = 4 clusters
 vis_clus(spe_norm, clustervar = "precast_k4", is_stitched = TRUE)
 ```
 
