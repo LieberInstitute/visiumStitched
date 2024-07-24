@@ -175,7 +175,7 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">sr_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:05.813564 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1653d1b42d2d8_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:04.204911 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1653d1b42d2d8_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -183,16 +183,17 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <div class="section level2">
 <h2 id="preparing-images-for-fiji">Preparing Images for Fiji<a class="anchor" aria-label="anchor" href="#preparing-images-for-fiji"></a>
 </h2>
-<p>Before aligning anything in Fiji, we need to ensure the image of each
-capture area to align is on the same scale– that is, a pixel in each
-image represents the same distance. This is typically approximately
-true, but is not guaranteed to be exactly true, especially when the
-capture areas to align come from different slides.
-<code><a href="../reference/rescale_fiji_inputs.html">rescale_fiji_inputs()</a></code> reads in the <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-png" class="external-link">high-resolution
+<p>The <code>visiumStitched</code> workflow makes use of <a href="https://imagej.net/software/fiji/" class="external-link">Fiji</a>, a distribution of the
+ImageJ image-processing software, which includes an interface for
+aligning images on a shared coordinate system. Before aligning anything
+in Fiji, we need to ensure the image of each capture area to align is on
+the same scale– that is, a pixel in each image represents the same
+distance. This is typically approximately true, but is not guaranteed to
+be exactly true, especially when the capture areas to align come from
+different slides. <code><a href="../reference/rescale_fiji_inputs.html">rescale_fiji_inputs()</a></code> reads in the <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-png" class="external-link">high-resolution
 tissue images</a> for each capture area, and uses info about their spot
 diameters in pixels and scale factors to rescale the images
 appropriately.</p>
-<p>TODO: note about setting group and things being rescaled by group</p>
 <p>For demonstration purposes, we’ll set <code>out_dir</code> to a
 temporary location. Typically, it would really be any suitable directory
 to place the rescaled images for later input to Fiji.</p>
@@ -203,21 +204,23 @@ to place the rescaled images for later input to Fiji.</p>
 <div class="section level2">
 <h2 id="building-a-spatialexperiment">Building a <code>SpatialExperiment</code><a class="anchor" aria-label="anchor" href="#building-a-spatialexperiment"></a>
 </h2>
+<p>Before building a <code>SpatialExperiment</code> for this dataset, we
+must align the images for each group in Fiji. Check out <a href="https://www.youtube.com/watch?v=kFLtpK3qbSY" class="external-link">this video</a> for a
+guide through this process.</p>
 <div class="section level3">
 <h3 id="parsing-outputs-from-fiji">Parsing Outputs from Fiji<a class="anchor" aria-label="anchor" href="#parsing-outputs-from-fiji"></a>
 </h3>
-<p>While the alignment process in Fiji can’t be part of this vignette,
-we can use the actual outputs for this dataset: an XML file specifying
-rigid affine transformations for each capture area, and the stitched
-approximately high-resolution image. These files are also available
-through <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">spatialLIBD::fetch_data()</a></code>. We’ll need to add the
-paths to the XML and PNG files to the <code>fiji_xml_path</code> and
-<code>fiji_image_path</code> columns of <code>sample_info</code>,
-respectively.</p>
+<p>From the Fiji alignment, two output files will be produced: an XML
+file specifying rigid affine transformations for each capture area, and
+the stitched approximately high-resolution image. These files for this
+dataset are available through <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">spatialLIBD::fetch_data()</a></code>.
+We’ll need to add the paths to the XML and PNG files to the
+<code>fiji_xml_path</code> and <code>fiji_image_path</code> columns of
+<code>sample_info</code>, respectively.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">fiji_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:13.735451 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1653d4e4f1593_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:12.448014 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1653d4e4f1593_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>We now have every column present in <code>sample_info</code> that
@@ -249,10 +252,10 @@ and occupy similar memory footprints.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpu4AZrJ/Br2719/tissue_positions.csv"</span></span>
+<span><span class="co">#&gt; [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//RtmplrJuCh/Br2719/tissue_positions.csv"</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpu4AZrJ/Br2719/tissue_lowres_image.png"</span></span>
-<span><span class="co">#&gt; [2] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpu4AZrJ/Br2719/scalefactors_json.json"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//RtmplrJuCh/Br2719/tissue_lowres_image.png"</span></span>
+<span><span class="co">#&gt; [2] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//RtmplrJuCh/Br2719/scalefactors_json.json"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="constructing-the-object">Constructing the Object<a class="anchor" aria-label="anchor" href="#constructing-the-object"></a>
@@ -264,7 +267,9 @@ each group is added. The <code>sum_umi</code> metric will by default
 determine which spots in overlapping regions to exclude in plots. In
 particular, at regions of overlap, spots from capture areas with higher
 average UMI (unique molecular identifier) counts will be plotted, while
-any other spots will not be shown.</p>
+any other spots will not be shown. We’ll also mirror the image and
+gene-expression data to match the orientation specified at the wet
+bench. More info about performing geometric transformations is <a href="#geometric-transformations">here</a>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bfc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html" class="external-link">BiocFileCache</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">gtf_cache</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocFileCache/man/BiocFileCache-class.html" class="external-link">bfcrpath</a></span><span class="op">(</span></span>
@@ -280,11 +285,11 @@ any other spots will not be shown.</p>
 <span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Building SpatialExperiment using capture area as sample ID</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:15.684296 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:20.357414 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:20.696212 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:20.932543 rtracklayer::import: reading the reference GTF file</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:43.977975 adding gene information to the SPE object</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:14.492363 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:19.251251 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:19.607704 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:19.844932 rtracklayer::import: reading the reference GTF file</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:50.700862 adding gene information to the SPE object</span></span>
 <span><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using</span></span>
 <span><span class="co">#&gt; the same GTF file as the one that was used by SpaceRanger. For example, one</span></span>
 <span><span class="co">#&gt; file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()</span></span>
@@ -292,8 +297,9 @@ any other spots will not be shown.</p>
 <span><span class="co">#&gt; Warning: Dropping 2226 out of 38606 genes for which we don't have information</span></span>
 <span><span class="co">#&gt; on the reference GTF file. This typically happens when you are not using the</span></span>
 <span><span class="co">#&gt; same GTF file as the one that was used by SpaceRanger.</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:44.165839 adding information used by spatialLIBD</span></span>
-<span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span></code></pre></div>
+<span><span class="co">#&gt; 2024-07-24 14:26:50.887057 adding information used by spatialLIBD</span></span>
+<span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SpatialExperiment/man/SpatialExperiment-rotate-mirror.html" class="external-link">mirrorObject</a></span><span class="op">(</span><span class="va">spe</span>, axis <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>exclude_overlapping</code> <code>colData()</code> column
 controls which spots to drop for visualization purposes. Note also that
 the <code>overlap_key</code> column was added, which gives a
@@ -355,7 +361,8 @@ areas:</p>
 <span>            x <span class="op">=</span> <span class="va">array_row_original</span>, y <span class="op">=</span> <span class="va">array_col_original</span>, color <span class="op">=</span> <span class="va">capture_area</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visiumStitched_files/figure-html/array_plot_orig-1.png" width="700"></p>
 <p>Let’s contrast this with the array coordinates recomputed by
 <code>visiumStitched</code>. Briefly, <code>visiumStitched</code> forms
@@ -377,7 +384,8 @@ sample.</p>
 <span>            x <span class="op">=</span> <span class="va">array_row</span>, y <span class="op">=</span> <span class="va">array_col</span>, color <span class="op">=</span> <span class="va">capture_area</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visiumStitched_files/figure-html/array_plot_after-1.png" width="700"></p>
 </div>
 <div class="section level3">
@@ -412,7 +420,7 @@ counts from <code>spatialLIBD</code>, then plot a few white matter genes
 as before:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">spe_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-24 12:59:50.326039 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-24 14:26:57.356183 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="va">wm_genes_ens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">[</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MBP"</span>, <span class="st">"GFAP"</span>, <span class="st">"PLP1"</span>, <span class="st">"AQP4"</span><span class="op">)</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span></span>
@@ -432,6 +440,29 @@ clean:</p>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="visiumStitched_files/figure-html/unnorm_plot-1.png" width="700"></p>
 </div>
+</div>
+<div class="section level2">
+<h2 id="downstream-applications">Downstream applications<a class="anchor" aria-label="anchor" href="#downstream-applications"></a>
+</h2>
+<p>One common area of analysis in spatial transcriptomics involves
+clustering– in particular, spatially aware clustering. Many spatially
+aware clustering algorithms check the array coordinates to determine
+neighboring spots and ultimately produce spatially smooth clusters.
+Since <code>visiumStitched</code> <a href="#array-coordinates">re-computes array coordinates</a> in a
+meaningful way, software like <a href="https://doi.org/10.1038/s41587-021-00935-2" class="external-link">BayesSpace</a> and <a href="https://doi.org/10.1038/s41467-023-35947-w" class="external-link">PRECAST</a> work
+out-of-the-box with stitched data, treating each group as a single
+continuous sample.</p>
+<p><a href="https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/03_precast.R" class="external-link">We’ve
+already run PRECAST</a>, and can visualize the results here, where we
+see a fairly seamless transition of cluster assignments across
+capture-area boundaries. First, let’s examine <code>k = 2</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe_norm</span>, clustervar <span class="op">=</span> <span class="st">"precast_k2"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visiumStitched_files/figure-html/precast_k2-1.png" width="700"></p>
+<p><code>k = 4</code> has also been computed:</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe_norm</span>, clustervar <span class="op">=</span> <span class="st">"precast_k4"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visiumStitched_files/figure-html/precast_k4-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
@@ -492,7 +523,7 @@ Collado-Torres, 2022)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.19/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"visiumStitched.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -501,9 +532,9 @@ Collado-Torres, 2022)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"visiumStitched.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-24 12:59:52 EDT"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-24 14:27:00 EDT"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 55.618 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 1.109 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
