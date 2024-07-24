@@ -7,8 +7,8 @@
 rescale_fiji_inputs(sample_info, out_dir)
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, and \code{spaceranger_dir}}
+\item{sample_info}{A \code{tibble} with columns \code{capture_area} and
+\code{group}}
 
 \item{out_dir}{A character(1) vector giving a path to a directory to place
 the output images. Provided the parent exists, \code{out_dir}

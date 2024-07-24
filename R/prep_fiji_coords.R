@@ -7,12 +7,10 @@
 #' file from Spaceranger, and transform using the rotation matrix specified
 #' by Fiji. Write one new \code{tissue_positions.csv} file per group.
 #'
-#' @param sample_info A \code{tibble} with columns \code{capture_area},
-#' \code{group}, \code{fiji_xml_path}, \code{intra_group_scalar}, and
-#' \code{group_hires_scalef}
 #' @param out_dir A character(1) vector giving a path to a directory to place
 #' the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
+#' @inheritParams add_array_coords
 #'
 #' @return This function returns `character()` with the file paths to the
 #' `tissue_positions.csv` files it created.

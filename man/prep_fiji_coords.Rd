@@ -7,9 +7,8 @@
 prep_fiji_coords(sample_info, out_dir)
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
-\code{group}, \code{fiji_xml_path}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}}
+\item{sample_info}{A \code{tibble} with columns \code{capture_area} and
+\code{group}}
 
 \item{out_dir}{A character(1) vector giving a path to a directory to place
 the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
@@ -55,7 +54,7 @@ sample_info$fiji_image_path <- temp[grep("png$", temp)]
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 spe_input_dir <- tempdir()
-out_file = prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+out_file <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 
 #    A file of spatial coordinates for the stitched Br2719 was produced
 print(readr::read_csv(out_file))
