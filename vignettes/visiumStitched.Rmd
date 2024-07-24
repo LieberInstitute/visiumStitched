@@ -186,7 +186,7 @@ memory footprints.
 ```{r "prep_fiji"}
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
-prep_fiji_image(sample_info, out_dir = spe_input_dir)
+prep_fiji_image(sample_info, out_dir = spe_input_dir, lowres_max_size = 400)
 ```
 
 ## Constructing the Object
