@@ -58,7 +58,7 @@ Imports:
     xml2,
     DropletUtils
 biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
-    Visualization
+    Visualization, DataImport
 URL: https://github.com/LieberInstitute/visiumStitched
 BugReports: https://support.bioconductor.org/tag/visiumStitched
 LazyData: true
