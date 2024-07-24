@@ -10,10 +10,24 @@ issues](https://img.shields.io/github/issues/LieberInstitute/visiumStitched)](ht
 [![GitHub
 pulls](https://img.shields.io/github/issues-pr/LieberInstitute/visiumStitched)](https://github.com/LieberInstitute/visiumStitched/pulls)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R-CMD-check-bioc](https://github.com/LieberInstitute/visiumStitched/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/LieberInstitute/visiumStitched/actions/workflows/check-bioc.yml)
 [![Codecov test
 coverage](https://codecov.io/gh/LieberInstitute/visiumStitched/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/LieberInstitute/visiumStitched?branch=devel)
+[![Bioc release
+status](http://www.bioconductor.org/shields/build/release/bioc/visiumStitched.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/visiumStitched)
+[![Bioc devel
+status](http://www.bioconductor.org/shields/build/devel/bioc/visiumStitched.svg)](https://bioconductor.org/checkResults/devel/bioc-LATEST/visiumStitched)
+[![Bioc downloads
+rank](https://bioconductor.org/shields/downloads/release/visiumStitched.svg)](http://bioconductor.org/packages/stats/bioc/visiumStitched/)
+[![Bioc
+support](https://bioconductor.org/shields/posts/visiumStitched.svg)](https://support.bioconductor.org/tag/visiumStitched)
+[![Bioc
+history](https://bioconductor.org/shields/years-in-bioc/visiumStitched.svg)](https://bioconductor.org/packages/release/bioc/html/visiumStitched.html#since)
+[![Bioc last
+commit](https://bioconductor.org/shields/lastcommit/devel/bioc/visiumStitched.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/visiumStitched/)
+[![Bioc
+dependencies](https://bioconductor.org/shields/dependencies/release/visiumStitched.svg)](https://bioconductor.org/packages/release/bioc/html/visiumStitched.html#since)
 <!-- badges: end -->
 
 `visiumStitched` provides helper functions for working with multiple
@@ -50,7 +64,7 @@ stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
 ## Download the spot-level data, which is a SpatialExperiment object
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#> 2024-07-24 11:55:59.562912 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2024-07-24 14:40:50.071424 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Explore the stitched data
 spe
