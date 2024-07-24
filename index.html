@@ -46,18 +46,6 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/full_demo.html">Stitching a Visium Experiment</a>
-    </li>
-  </ul>
-</li>
 <li>
   <a href="news/index.html">Changelog</a>
 </li>
@@ -89,10 +77,45 @@
 <p><code>visiumStitched</code> provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from <a href="https://github.com/LieberInstitute/visiumStitched_brain" class="external-link uri">https://github.com/LieberInstitute/visiumStitched_brain</a>. <code>visiumStitched</code> prepares <code>SpaceRanger</code> (10x Genomics) output files so you can stitch the images from groups of capture areas together with <code>Fiji</code>. Then <code>visiumStitched</code> builds a <code>SpatialExperiment</code> object with the stitched data and makes an artificial hexogonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as <code>PRECAST</code> and <code>BayesSpace</code>. The <code>SpatialExperiment</code> objects created by <code>visiumStitched</code> are compatible with <code>spatialLIBD</code>, which can be used to build interactive websites for stitched <code>SpatialExperiment</code> objects (check the <a href="https://libd.shinyapps.io/visiumStitched_brain" class="external-link">example human brain data</a>). <code>visiumStitched</code> also enables casting <code>SpatialExperiment</code> objects as <code>Seurat</code> objects.</p>
 <p>For details, check the <a href="http://research.libd.org/visiumStitched/" class="external-link">documentation site</a>.</p>
 <div class="section level2">
+<h2 id="example-data-processed-with-visiumstitched">Example data processed with visiumStitched<a class="anchor" aria-label="anchor" href="#example-data-processed-with-visiumstitched"></a>
+</h2>
+<p>Here is example human brain data from <a href="https://github.com/LieberInstitute/visiumStitched_brain" class="external-link">LieberInstitute/visiumStitched_brain</a> that was stitched together using <code>visiumStitched</code>. The resulting data can be accessed and visualized with <a href="https://research.libd.org/spatialLIBD/" class="external-link"><code>spatialLIBD</code></a> version 1.17.8 or newer.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## Check that you have a recent version of spatialLIBD installed</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"spatialLIBD"</span><span class="op">)</span> <span class="op">&gt;=</span> <span class="st">"1.17.8"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## Download the spot-level data, which is a SpatialExperiment object</span></span>
+<span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 2024-07-24 11:55:59.562912 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span></span>
+<span><span class="co">## Explore the stitched data</span></span>
+<span><span class="va">spe</span></span>
+<span><span class="co">#&gt; class: SpatialExperiment </span></span>
+<span><span class="co">#&gt; dim: 26369 13965 </span></span>
+<span><span class="co">#&gt; metadata(0):</span></span>
+<span><span class="co">#&gt; assays(2): counts logcounts</span></span>
+<span><span class="co">#&gt; rownames(26369): ENSG00000238009 ENSG00000241860 ... ENSG00000278817</span></span>
+<span><span class="co">#&gt;   ENSG00000277196</span></span>
+<span><span class="co">#&gt; rowData names(7): source type ... gene_type gene_search</span></span>
+<span><span class="co">#&gt; colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1</span></span>
+<span><span class="co">#&gt;   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1</span></span>
+<span><span class="co">#&gt;   TTGTTTGTGTAAATTC-1_V13B23-283_D1</span></span>
+<span><span class="co">#&gt; colData names(40): sample_id in_tissue ... precast_k4 precast_k8</span></span>
+<span><span class="co">#&gt; reducedDimNames(1): PCA</span></span>
+<span><span class="co">#&gt; mainExpName: NULL</span></span>
+<span><span class="co">#&gt; altExpNames(0):</span></span>
+<span><span class="co">#&gt; spatialCoords names(2) : pxl_col_in_fullres pxl_row_in_fullres</span></span>
+<span><span class="co">#&gt; imgData names(4): sample_id image_id data scaleFactor</span></span>
+<span></span>
+<span><span class="co">## Show clustering results from PRECAST at k = 8</span></span>
+<span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe</span>, clustervar <span class="op">=</span> <span class="st">"precast_k8"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-example_visiumStitched_brain-1.png" width="100%"></p>
+</div>
+<div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
 <p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>visiumStitched</code> from <a href="https://github.com/LieberInstitute/visiumStitched" class="external-link">GitHub</a> using the following code:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -103,7 +126,7 @@
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>Below is the citation output from using <code>citation('visiumStitched')</code> in R. Please run this yourself to check for any updates on how to cite <strong>visiumStitched</strong>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"visiumStitched"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; To cite package 'visiumStitched' in publications use:</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -226,7 +249,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>

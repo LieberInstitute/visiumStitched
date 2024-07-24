@@ -32,16 +32,6 @@ prevent overplotting)."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/full_demo.html">Stitching a Visium Experiment</a>
-    </li>
-  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -61,7 +51,7 @@ prevent overplotting)."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Spatial plots of discrete or continuous features for stitched-together capture areas.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/spot_plot.R" class="external-link"><code>R/spot_plot.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/HEAD/R/spot_plot.R" class="external-link"><code>R/spot_plot.R</code></a></small>
     <div class="hidden name"><code>spot_plot.Rd</code></div>
     </div>
 
@@ -182,7 +172,6 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"spe"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-24 15:21:01.436063 loading file /github/home/.cache/R/BiocFileCache/ca3787fb890_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span><span class="va">spe</span><span class="op">$</span><span class="va">exclude_overlapping</span> <span class="op">&lt;-</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#   Plot age spatially for the first sample</span></span></span>
@@ -194,8 +183,9 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 <span class="r-in"><span>    include_legend <span class="op">=</span> <span class="cn">TRUE</span>, is_discrete <span class="op">=</span> <span class="cn">FALSE</span>, minCount <span class="op">=</span> <span class="fl">0</span>,</span></span>
 <span class="r-in"><span>    assayname <span class="op">=</span> <span class="st">"logcounts"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> unable to find an inherited method for function ‘spatialCoords’ for signature ‘x = "list"’</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="spot_plot-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'p' not found</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#    Define several markers for white matter</span></span></span>
 <span class="r-in"><span><span class="va">white_matter_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
@@ -212,8 +202,9 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 <span class="r-in"><span>    multi_gene_method <span class="op">=</span> <span class="st">"pca"</span>, include_legend <span class="op">=</span> <span class="cn">TRUE</span>, is_discrete <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    minCount <span class="op">=</span> <span class="fl">0</span>, assayname <span class="op">=</span> <span class="st">"logcounts"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> unable to find an inherited method for function ‘spatialCoords’ for signature ‘x = "list"’</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="spot_plot-2.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'p' not found</span>
 </code></pre></div>
     </div>
   </div>
@@ -228,7 +219,7 @@ ratios exactly consistently when writing to PDF (untested for other formats)</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>
