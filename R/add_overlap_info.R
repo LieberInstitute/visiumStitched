@@ -11,7 +11,7 @@
 #' string otherwise.
 #'
 #' @param spe A \code{SpatialExperiment} with colData columns
-#' \code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
+#' \code{array_row}, \code{array_col}, \code{key}, and
 #' \code{capture_area}
 #' @param metric_name character(1) in \code{colnames(colData(spe))}, where
 #' spots belonging to the capture area with highest average value for the metric
@@ -44,11 +44,11 @@
 #' head(spe$overlap_key[spe$overlap_key != ""])
 add_overlap_info <- function(spe, metric_name) {
     ## For R CMD check
-    sample_id <- array_row_transformed <- array_col_transformed <- key <- capture_area <- exclude_overlapping_mean_tmp <- NULL
+    sample_id <- array_row <- array_col <- key <- capture_area <- exclude_overlapping_mean_tmp <- NULL
 
     #   State assumptions about columns expected to be in the colData
     expected_cols <- c(
-        "array_row_transformed", "array_col_transformed", "sample_id",
+        "array_row", "array_col", "sample_id",
         "capture_area", "key", metric_name
     )
     if (!all(expected_cols %in% colnames(colData(spe)))) {
@@ -66,7 +66,7 @@ add_overlap_info <- function(spe, metric_name) {
 
     col_data <- colData(spe) |>
         as_tibble() |>
-        group_by(sample_id, array_row_transformed, array_col_transformed) |>
+        group_by(sample_id, array_row, array_col) |>
         #   Comma-separated list of spot keys at these coordinates (including
         #   each spot itself!)
         mutate(overlap_key = paste(unique(key), collapse = ",")) |>

@@ -7,9 +7,7 @@
 #'
 #' Note that only the `lowres` images from `imgData(spe)` will be used.
 #'
-#' @param spe A \code{SpatialExperiment} with colData columns \code{in_tissue},
-#' \code{array_row_transformed}, \code{array_col_transformed},
-#' \code{pxl_row_in_fullres_transformed}, and \code{pxl_col_in_fullres_transformed}
+#' @param spe A \code{SpatialExperiment}
 #' @param spatial_cols A `character(5)` named vector mapping which `colData(spe)`
 #' or `spatialCoords(spe)` columns contain the `tissue`, `row`, `col`,
 #' `imagerow`, and `imagecol` information expected by Seurat.
@@ -37,25 +35,7 @@
 #'
 #' ## Example with an stitched SPE object
 #' spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#'
-#' ## Make some random counts (TODO delete this once the example data is updated
-#' ## to include the actual counts assay)
-#' tmp_counts <- assays(spe_stitched)$logcounts
-#' tmp_counts[tmp_counts > 0] <- sample(seq_len(1e4), sum(tmp_counts > 0), replace = TRUE)
-#' assays(spe_stitched)$counts <- tmp_counts
-#'
-#' ## Note how we use spatial_cols to map the default column names from
-#' ## visiumStitched::build_spe()
-#' seur_stitched <- spe_to_seurat(
-#'     spe_stitched,
-#'     spatial_cols = c(
-#'         "tissue" = "in_tissue",
-#'         "row" = "array_row_transformed",
-#'         "col" = "array_col_transformed",
-#'         "imagerow" = "pxl_row_in_fullres_transformed",
-#'         "imagecol" = "pxl_col_in_fullres_transformed"
-#'     )
-#' )
+#' seur_stitched <- spe_to_seurat(spe_stitched)
 #' seur_stitched
 spe_to_seurat <- function(
         spe,

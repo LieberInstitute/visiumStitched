@@ -22,9 +22,8 @@ produced from refinement with \code{prep_fiji_*()} functions}
 \value{
 A \code{SpatialExperiment} object with additional \code{colData}
 columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
-with \code{[suffix]} values \code{original}, \code{transformed}, and
-\code{rounded}; \code{array_row_[suffix]} and \code{array_col_[suffix]}
-columns with \code{[suffix]} values \code{original} and \code{transformed}; and
+with \code{[suffix]} values \code{original} and \code{rounded};
+\code{array_row_original} and \code{array_col_original} columns; and
 modified colData columns \code{array_row} and
 \code{array_col} and \code{spatialCoords()} with their transformed values
 }
@@ -87,16 +86,17 @@ prep_fiji_image(sample_info, out_dir = spe_input_dir)
 
 spe_new <- add_array_coords(spe, sample_info, tempdir())
 
-#    Many columns related to spatial coordinates were added
-added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
+#    Several columns related to spatial coordinates were added
+added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"
 colnames(SummarizedExperiment::colData(spe_new))[
     grep(added_cols_regex, colnames(SummarizedExperiment::colData(spe_new)))
 ]
 
-#    array_row' and 'array_col' were overwritten with their transformed
-#    values
+#    'array_row', 'array_col', and spatialCoords() were overwritten with 
+#    their transformed values
 head(spe$array_row)
 head(spe$array_col)
+head(SpatialExperiment::spatialCoords(spe_new))
 }
 \author{
 Nicholas J. Eagles

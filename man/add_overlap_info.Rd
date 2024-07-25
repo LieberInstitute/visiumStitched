@@ -8,7 +8,7 @@ add_overlap_info(spe, metric_name)
 }
 \arguments{
 \item{spe}{A \code{SpatialExperiment} with colData columns
-\code{array_row_transformed}, \code{array_col_transformed}, \code{key}, and
+\code{array_row}, \code{array_col}, \code{key}, and
 \code{capture_area}}
 
 \item{metric_name}{character(1) in \code{colnames(colData(spe))}, where
