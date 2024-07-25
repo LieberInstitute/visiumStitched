@@ -75,9 +75,7 @@ appearance of images are buggy for now.</p>
 
 
 <dl><dt id="arg-spe">spe<a class="anchor" aria-label="anchor" href="#arg-spe"></a></dt>
-<dd><p>A <code>SpatialExperiment</code> with colData columns <code>in_tissue</code>,
-<code>array_row_transformed</code>, <code>array_col_transformed</code>,
-<code>pxl_row_in_fullres_transformed</code>, and <code>pxl_col_in_fullres_transformed</code></p></dd>
+<dd><p>A <code>SpatialExperiment</code></p></dd>
 
 
 <dt id="arg-spatial-cols">spatial_cols<a class="anchor" aria-label="anchor" href="#arg-spatial-cols"></a></dt>
@@ -108,7 +106,7 @@ conversion process</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Download some example data</span></span></span>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-24 19:58:54.847461 loading file /github/home/.cache/R/BiocFileCache/cac7f106361_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-25 21:23:34.297754 loading file /github/home/.cache/R/BiocFileCache/cac4bcf66e7_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Make the column names unique</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/add_key.html" class="external-link">add_key</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">key</span></span></span>
@@ -139,26 +137,8 @@ conversion process</p></dd>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Example with an stitched SPE object</span></span></span>
 <span class="r-in"><span><span class="va">spe_stitched</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-24 19:59:05.260956 loading file /github/home/.cache/R/BiocFileCache/1e42b2b2bce_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Make some random counts (TODO delete this once the example data is updated</span></span></span>
-<span class="r-in"><span><span class="co">## to include the actual counts assay)</span></span></span>
-<span class="r-in"><span><span class="va">tmp_counts</span> <span class="op">&lt;-</span> <span class="fu">assays</span><span class="op">(</span><span class="va">spe_stitched</span><span class="op">)</span><span class="op">$</span><span class="va">logcounts</span></span></span>
-<span class="r-in"><span><span class="va">tmp_counts</span><span class="op">[</span><span class="va">tmp_counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">1e4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">tmp_counts</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">assays</span><span class="op">(</span><span class="va">spe_stitched</span><span class="op">)</span><span class="op">$</span><span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">tmp_counts</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Note how we use spatial_cols to map the default column names from</span></span></span>
-<span class="r-in"><span><span class="co">## visiumStitched::build_spe()</span></span></span>
-<span class="r-in"><span><span class="va">seur_stitched</span> <span class="op">&lt;-</span> <span class="fu">spe_to_seurat</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">spe_stitched</span>,</span></span>
-<span class="r-in"><span>    spatial_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>        <span class="st">"tissue"</span> <span class="op">=</span> <span class="st">"in_tissue"</span>,</span></span>
-<span class="r-in"><span>        <span class="st">"row"</span> <span class="op">=</span> <span class="st">"array_row_transformed"</span>,</span></span>
-<span class="r-in"><span>        <span class="st">"col"</span> <span class="op">=</span> <span class="st">"array_col_transformed"</span>,</span></span>
-<span class="r-in"><span>        <span class="st">"imagerow"</span> <span class="op">=</span> <span class="st">"pxl_row_in_fullres_transformed"</span>,</span></span>
-<span class="r-in"><span>        <span class="st">"imagecol"</span> <span class="op">=</span> <span class="st">"pxl_col_in_fullres_transformed"</span></span></span>
-<span class="r-in"><span>    <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-25 21:23:45.621609 loading file /github/home/.cache/R/BiocFileCache/1e53d542eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
+<span class="r-in"><span><span class="va">seur_stitched</span> <span class="op">&lt;-</span> <span class="fu">spe_to_seurat</span><span class="op">(</span><span class="va">spe_stitched</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running 'as.Seurat(spe)'...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Keys should be one or more alphanumeric characters followed by an underscore, setting key from PC to PC_</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding spot coordinates and images for sample Br2719...</span>
