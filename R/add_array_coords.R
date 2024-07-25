@@ -82,16 +82,17 @@
 #'
 #' spe_new <- add_array_coords(spe, sample_info, tempdir())
 #'
-#' #    Many columns related to spatial coordinates were added
-#' added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
+#' #    Several columns related to spatial coordinates were added
+#' added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"
 #' colnames(SummarizedExperiment::colData(spe_new))[
 #'     grep(added_cols_regex, colnames(SummarizedExperiment::colData(spe_new)))
 #' ]
 #'
-#' #    array_row' and 'array_col' were overwritten with their transformed
-#' #    values
+#' #    'array_row', 'array_col', and spatialCoords() were overwritten with 
+#' #    their transformed values
 #' head(spe$array_row)
 #' head(spe$array_col)
+#' head(SpatialExperiment::spatialCoords(spe_new))
 add_array_coords <- function(spe, sample_info, coords_dir) {
     ## For R CMD check
     key <- in_tissue <- NULL
@@ -146,9 +147,6 @@ add_array_coords <- function(spe, sample_info, coords_dir) {
         coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
     }
 
-    coord_cols <- c(
-        "array_row", "array_col", "pxl_row_in_fullres", "pxl_col_in_fullres"
-    )
     coords <- do.call(rbind, coords_list) |>
         #   Coordinates must be integers
         mutate(
@@ -156,8 +154,7 @@ add_array_coords <- function(spe, sample_info, coords_dir) {
                 matches("^(array|pxl)_(row|col)(_in_fullres)?"),
                 ~ as.integer(round(.x))
             )
-        ) |>
-        rename_with(~ paste0(.x, "_transformed"), all_of(coord_cols))
+        )
 
     #   Line up and potentially subset refined coords to those in 'spe'
     match_index <- match(spe$key, coords$key)
@@ -167,22 +164,30 @@ add_array_coords <- function(spe, sample_info, coords_dir) {
     coords <- coords[match(spe$key, coords$key), ] |>
         select(-c(key, in_tissue))
 
+    #   Retain "_original" copies of the array coordinates
+    for (col_name in c("array_row", "array_col")) {
+        spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
+    }
+
     #   Add transformed coordinates and rounded pixel coordinates as columns to
-    #   colData
-    colData(spe) <- cbind(colData(spe), coords)
+    #   colData. Don't add transformed pixel coordinates, which will become
+    #   the spatialCoords()
+    colData(spe) <- colData(spe) |>
+        as.data.frame() |>
+        #   Remove the original array coordinates
+        select(-c("array_row", "array_col")) |>
+        cbind(
+            coords |>
+                #   Don't add transformed pixel coordinates to colData
+                select(-matches('^pxl_(row|col)_in_fullres$'))
+        ) |>
+        S4Vectors::DataFrame()
 
     #   Make transformed coordinates the default in the colData and
     #   spatialCoords. Retain "_original" copies of the coordinates
     for (col_name in c("pxl_row_in_fullres", "pxl_col_in_fullres")) {
         spe[[paste0(col_name, "_original")]] <- spatialCoords(spe)[, col_name]
-        spatialCoords(spe)[, col_name] <- coords[[
-            paste0(col_name, "_transformed")
-        ]]
-    }
-
-    for (col_name in c("array_row", "array_col")) {
-        spe[[paste0(col_name, "_original")]] <- spe[[col_name]]
-        spe[[col_name]] <- coords[[paste0(col_name, "_transformed")]]
+        spatialCoords(spe)[, col_name] <- coords[[col_name]]
     }
 
     return(spe)

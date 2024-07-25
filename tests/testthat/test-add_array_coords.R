@@ -35,7 +35,7 @@ test_that(
         ########################################################################
 
         #   Remove any colData columns that should be added by add_array_coords()
-        added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(transformed|original|rounded)$"
+        added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"
         temp <- colnames(spe)
         colData(spe) <- colData(spe) |>
             as_tibble() |>
@@ -43,41 +43,24 @@ test_that(
             DataFrame()
         colnames(spe) <- temp
 
-        spe_new <- add_array_coords(
-            spe, sample_info, spe_input_dir,
-            overwrite = FALSE
-        )
+        spe_new <- add_array_coords(spe, sample_info, spe_input_dir)
 
-        #   10 columns should've been added, matching the specific naming
+        #   6 columns should've been added, matching the specific naming
         #   pattern
         expect_equal(
-            length(grep(added_cols_regex, colnames(colData(spe_new)))), 10
+            length(grep(added_cols_regex, colnames(colData(spe_new)))), 6
         )
 
-        #   Array and spatial coords shouldn't be overwritten
-        expect_identical(spe$array_row, spe_new$array_row)
-        expect_identical(spe$array_col, spe_new$array_col)
-        expect_identical(spatialCoords(spe), spatialCoords(spe_new))
-
-        spe_new <- add_array_coords(
-            spe, sample_info, spe_input_dir,
-            overwrite = TRUE
+        #   "Original" columns should actually have their original values
+        expect_identical(spe$array_row, spe_new$array_row_original)
+        expect_identical(spe$array_col, spe_new$array_col_original)
+        expect_identical(
+            spatialCoords(spe)[, 'pxl_row_in_fullres'],
+            spe_new$pxl_row_in_fullres_original
         )
-
-        #   10 columns should've been added, matching the specific naming
-        #   pattern
-        expect_equal(
-            length(grep(added_cols_regex, colnames(colData(spe_new)))), 10
+        expect_identical(
+            spatialCoords(spe)[, 'pxl_col_in_fullres'],
+            spe_new$pxl_col_in_fullres_original
         )
-
-        #   spatialCoords should be updated with transformed coordinates
-        # expect_equal(
-        #     spe_new$pxl_row_in_fullres_transformed,
-        #     unname(spatialCoords(spe)[, "pxl_row_in_fullres"])
-        # )
-        # expect_equal(
-        #     spe_new$pxl_col_in_fullres_transformed,
-        #     unname(spatialCoords(spe)[, "pxl_col_in_fullres"])
-        # )
     }
 )
