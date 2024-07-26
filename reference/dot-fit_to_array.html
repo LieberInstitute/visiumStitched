@@ -72,7 +72,7 @@ array rows/cols generally changes from the Visium standards of 78 and 128
 
 
 <dl><dt id="arg-coords">coords<a class="anchor" aria-label="anchor" href="#arg-coords"></a></dt>
-<dd><p>A <code>tibble()</code> whose rows represent capture areas of the
+<dd><p>A <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> whose rows represent capture areas of the
 same group, and containing columns 'array_row', 'array_col',
 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.</p></dd>
 
@@ -84,7 +84,7 @@ between any 2 spots in the new coordinates.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>tibble()</code> with modified <code>array_row</code> + <code>array_col</code>
+    <p>A <a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a> with modified <code>array_row</code> + <code>array_col</code>
 columns, as well as new <code>pxl_row_in_fullres_rounded</code> and
 <code>pxl_col_in_fullres_rounded</code> columns representing the pixel coordinates
 rounded to the nearest exact array coordinates.</p>
