@@ -48,16 +48,25 @@ bib <- c(
     BiocFileCache = citation("BiocFileCache")[1],
     BiocStyle = citation("BiocStyle")[1],
     dplyr = citation("dplyr")[1],
+    DropletUtils = citation("DropletUtils")[1],
     ggplot2 = citation("ggplot2")[1],
+    imager = citation("imager")[1],
     knitr = citation("knitr")[1],
     pkgcond = citation("pkgcond")[1],
+    readr = citation("readr")[1],
     RefManageR = citation("RefManageR")[1],
+    rjson = citation("rjson")[1],
     rmarkdown = citation("rmarkdown")[1],
+    S4Vectors = citation("S4Vectors")[1],
     sessioninfo = citation("sessioninfo")[1],
+    Seurat = citation("Seurat")[1],
     SpatialExperiment = citation("SpatialExperiment")[1],
     spatialLIBD = citation("spatialLIBD")[1],
+    stringr = citation("stringr")[1],
+    SummarizedExperiment = citation("SummarizedExperiment")[1],
     testthat = citation("testthat")[1],
-    visiumStitched = citation("visiumStitched")[1]
+    visiumStitched = citation("visiumStitched")[1],
+    xml2 = citation("xml2")[1]
 )
 ```
 
@@ -460,15 +469,23 @@ The `r Biocpkg("visiumStitched")` package `r Citep(bib[["visiumStitched"]])` was
 * `r Biocpkg("BiocFileCache")` `r Citep(bib[["BiocFileCache"]])`
 * `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
 * `r CRANpkg("dplyr")` `r Citep(bib[["dplyr"]])`
+* `r Biocpkg("DropletUtils")` `r Citep(bib[["DropletUtils"]])`
 * `r CRANpkg("ggplot2")` `r Citep(bib[["ggplot2"]])`
+* `r CRANpkg("imager")` `r Citep(bib[["imager"]])`
 * `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])`
 * `r CRANpkg("pkgcond")` `r Citep(bib[["pkgcond"]])`
 * `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`
+* `r CRANpkg("rjson")` `r Citep(bib[["rjson"]])`
 * `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])`
+* `r Biocpkg("S4Vectors")` `r Citep(bib[["S4Vectors"]])`
 * `r CRANpkg("sessioninfo")` `r Citep(bib[["sessioninfo"]])`
+* `r CRANpkg("Seurat")` `r Citep(bib[["Seurat"]])`
 * `r Biocpkg("SpatialExperiment")` `r Citep(bib[["SpatialExperiment"]])`
 * `r Biocpkg("spatialLIBD")` `r Citep(bib[["spatialLIBD"]])`
+* `r CRANpkg("stringr")` `r Citep(bib[["stringr"]])`
+* `r Biocpkg("SummarizedExperiment")` `r Citep(bib[["SummarizedExperiment"]])`
 * `r CRANpkg("testthat")` `r Citep(bib[["testthat"]])`
+* `r CRANpkg("xml2")` `r Citep(bib[["xml2"]])`
 
 This package was developed using `r BiocStyle::Biocpkg("biocthis")`.
 
