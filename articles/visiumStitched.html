@@ -187,7 +187,7 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span>
 <span>    exdir <span class="op">=</span> <span class="va">sr_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:43:46.139568 loading file /github/home/.cache/R/BiocFileCache/1e55d735767_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:05.334274 loading file /github/home/.cache/R/BiocFileCache/1e553c21ee2_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span>
 <span><span class="op">)</span></span>
@@ -197,9 +197,9 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir                           </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpM2Ldd9/V13B23-283_A1/outs/spatial</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpM2Ldd9/V13B23-283_C1/outs/spatial</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpM2Ldd9/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpgWHH5p/V13B23-283_A1/outs/spatial</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpgWHH5p/V13B23-283_C1/outs/spatial</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpgWHH5p/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="preparing-images-for-fiji">Preparing Images for Fiji<a class="anchor" aria-label="anchor" href="#preparing-images-for-fiji"></a>
@@ -228,9 +228,9 @@ to place the rescaled images for later input to Fiji.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpM2Ldd9/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpM2Ldd9/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpM2Ldd9/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpgWHH5p/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpgWHH5p/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpgWHH5p/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="building-a-spatialexperiment">Building a <code>SpatialExperiment</code><a class="anchor" aria-label="anchor" href="#building-a-spatialexperiment"></a>
@@ -254,7 +254,7 @@ respectively.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">fiji_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:00.516548 loading file /github/home/.cache/R/BiocFileCache/1e57eaffc3e_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:20.840802 loading file /github/home/.cache/R/BiocFileCache/1e57492d48c_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>We now have every column present in <code>sample_info</code> that
@@ -265,9 +265,9 @@ will be necessary for any <code>visiumStitched</code> function.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpM2Ldd9/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpM2Ldd9/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpM2Ldd9/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpgWHH5p/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpgWHH5p/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpgWHH5p/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: fiji_xml_path &lt;chr&gt;, fiji_image_path &lt;chr&gt;</span></span></span></code></pre></div>
 <p>Before building the <code>SpatialExperiment</code>, the idea is to
 create a directory structure very similar to <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs" class="external-link">Spaceranger’s
@@ -290,10 +290,10 @@ and occupy similar memory footprints.</p>
 <span><span class="co">## the standard directory structure from SpaceRanger (10x Genomics)</span></span>
 <span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpM2Ldd9/Br2719/tissue_positions.csv"</span></span>
+<span><span class="co">#&gt; [1] "/tmp/RtmpgWHH5p/Br2719/tissue_positions.csv"</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpM2Ldd9/Br2719/tissue_lowres_image.png"</span></span>
-<span><span class="co">#&gt; [2] "/tmp/RtmpM2Ldd9/Br2719/scalefactors_json.json"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpgWHH5p/Br2719/tissue_lowres_image.png"</span></span>
+<span><span class="co">#&gt; [2] "/tmp/RtmpgWHH5p/Br2719/scalefactors_json.json"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="constructing-the-object">Constructing the Object<a class="anchor" aria-label="anchor" href="#constructing-the-object"></a>
@@ -334,11 +334,11 @@ geometric transformations is <a href="#geometric-transformations">here</a>.</p>
 <span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Building SpatialExperiment using capture area as sample ID</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:03.844194 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:10.859205 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:11.268481 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:11.631102 rtracklayer::import: reading the reference GTF file</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:43.767966 adding gene information to the SPE object</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:24.28295 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:31.342454 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:31.773491 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:53:32.144424 rtracklayer::import: reading the reference GTF file</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:54:03.924986 adding gene information to the SPE object</span></span>
 <span><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using</span></span>
 <span><span class="co">#&gt; the same GTF file as the one that was used by SpaceRanger. For example, one</span></span>
 <span><span class="co">#&gt; file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()</span></span>
@@ -346,7 +346,7 @@ geometric transformations is <a href="#geometric-transformations">here</a>.</p>
 <span><span class="co">#&gt; Warning: Dropping 2226 out of 38606 genes for which we don't have information</span></span>
 <span><span class="co">#&gt; on the reference GTF file. This typically happens when you are not using the</span></span>
 <span><span class="co">#&gt; same GTF file as the one that was used by SpaceRanger.</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:44.001564 adding information used by spatialLIBD</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:54:04.163123 adding information used by spatialLIBD</span></span>
 <span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span>
 <span></span>
 <span><span class="co">## The images in this example data have to be mirrored across the horizontal axis.</span></span>
@@ -505,7 +505,7 @@ as before:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab SpatialExperiment with normalized counts</span></span>
 <span><span class="va">spe_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:44:52.922951 loading file /github/home/.cache/R/BiocFileCache/1e561544425_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 14:54:12.544979 loading file /github/home/.cache/R/BiocFileCache/1e513d0f41a_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="va">wm_genes_ens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">[</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MBP"</span>, <span class="st">"GFAP"</span>, <span class="st">"PLP1"</span>, <span class="st">"AQP4"</span><span class="op">)</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span></span>
@@ -606,8 +606,15 @@ to:</p>
 <em><a href="https://CRAN.R-project.org/package=dplyr" class="external-link">dplyr</a></em> (Wickham,
 François, Henry, Müller, and Vaughan, 2023)</li>
 <li>
+<em><a href="https://bioconductor.org/packages/3.20/DropletUtils" class="external-link">DropletUtils</a></em>
+(Lun, Riesenfeld, Andrews, Dao, Gomes, participants in the 1st Human
+Cell Atlas Jamboree, and Marioni, 2019)</li>
+<li>
 <em><a href="https://CRAN.R-project.org/package=ggplot2" class="external-link">ggplot2</a></em>
 (Wickham, 2016)</li>
+<li>
+<em><a href="https://CRAN.R-project.org/package=imager" class="external-link">imager</a></em>
+(Barthelme, 2024)</li>
 <li>
 <em><a href="https://CRAN.R-project.org/package=knitr" class="external-link">knitr</a></em> (Xie,
 2024)</li>
@@ -618,12 +625,22 @@ and R Documentation Task Force, 2021)</li>
 <em><a href="https://CRAN.R-project.org/package=RefManageR" class="external-link">RefManageR</a></em>
 (McLean, 2017)</li>
 <li>
+<em><a href="https://CRAN.R-project.org/package=rjson" class="external-link">rjson</a></em>
+(Couture-Beil, 2022)</li>
+<li>
 <em><a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a></em>
 (Allaire, Xie, Dervieux, McPherson, Luraschi, Ushey, Atkins, Wickham,
 Cheng, Chang, and Iannone, 2024)</li>
 <li>
+<em><a href="https://bioconductor.org/packages/3.20/S4Vectors" class="external-link">S4Vectors</a></em>
+(Pagès, Lawrence, and Aboyoun, 2024)</li>
+<li>
 <em><a href="https://CRAN.R-project.org/package=sessioninfo" class="external-link">sessioninfo</a></em>
 (Wickham, Chang, Flight, Müller, and Hester, 2021)</li>
+<li>
+<em><a href="https://CRAN.R-project.org/package=Seurat" class="external-link">Seurat</a></em> (Hao,
+Stuart, Kowalski, Choudhary, Hoffman, Hartman, Srivastava, Molla, Madad,
+Fernandez-Granda, and Satija, 2023)</li>
 <li>
 <em><a href="https://bioconductor.org/packages/3.20/SpatialExperiment" class="external-link">SpatialExperiment</a></em>
 (Righelli, Weber, Crowell, Pardo, Collado-Torres, Ghazanfar, Lun, Hicks,
@@ -633,8 +650,17 @@ and Risso, 2022)</li>
 (Pardo, Spangler, Weber, Hicks, Jaffe, Martinowich, Maynard, and
 Collado-Torres, 2022)</li>
 <li>
+<em><a href="https://CRAN.R-project.org/package=stringr" class="external-link">stringr</a></em>
+(Wickham, 2023)</li>
+<li>
+<em><a href="https://bioconductor.org/packages/3.20/SummarizedExperiment" class="external-link">SummarizedExperiment</a></em>
+(Morgan, Obenchain, Hester, and Pagès, 2024)</li>
+<li>
 <em><a href="https://CRAN.R-project.org/package=testthat" class="external-link">testthat</a></em>
 (Wickham, 2011)</li>
+<li>
+<em><a href="https://CRAN.R-project.org/package=xml2" class="external-link">xml2</a></em>
+(Wickham, Hester, and Ooms, 2023)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.20/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
@@ -647,9 +673,9 @@ Collado-Torres, 2022)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"visiumStitched.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-26 14:44:59 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-26 14:54:20 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 1.476 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 1.509 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -918,7 +944,19 @@ for R</em>. R package version 2.27. 2024. URL:
 <a href="https://github.com/rstudio/rmarkdown" class="external-link">https://github.com/rstudio/rmarkdown</a>.</cite>
 </p>
 <p>
-<a id="bib-eagles2024enable"></a><a href="#cite-eagles2024enable">[2]</a><cite>
+<a id="bib-barthelme2024imager"></a><a href="#cite-barthelme2024imager">[2]</a><cite>
+S. Barthelme. <em>imager: Image Processing Library Based on ‘CImg’</em>.
+R package version 1.0.2, <a href="https://github.com/asgr/imager/" class="external-link uri">https://github.com/asgr/imager/</a>. 2024. URL:
+<a href="https://asgr.github.io/imager/" class="external-link">https://asgr.github.io/imager/</a>.</cite>
+</p>
+<p>
+<a id="bib-couturebeil2022rjson"></a><a href="#cite-couturebeil2022rjson">[3]</a><cite>
+A. Couture-Beil. <em>rjson: JSON for R</em>. R package version 0.2.21.
+2022. URL:
+<a href="https://github.com/alexcb/rjson" class="external-link">https://github.com/alexcb/rjson</a>.</cite>
+</p>
+<p>
+<a id="bib-eagles2024enable"></a><a href="#cite-eagles2024enable">[4]</a><cite>
 N. J. Eagles and L. Collado-Torres. <em>Enable downstream analysis of
 Visium capture areas stitched together with Fiji</em>. <a href="https://github.com/LieberInstitute/visiumStitched/visiumStitched" class="external-link uri">https://github.com/LieberInstitute/visiumStitched/visiumStitched</a>
 - R package version 0.99.0. 2024. DOI:
@@ -927,14 +965,39 @@ URL:
 <a href="http://www.bioconductor.org/packages/visiumStitched" class="external-link">http://www.bioconductor.org/packages/visiumStitched</a>.</cite>
 </p>
 <p>
-<a id="bib-mclean2017refmanager"></a><a href="#cite-mclean2017refmanager">[3]</a><cite>
+<a id="bib-hao2023dictionary"></a><a href="#cite-hao2023dictionary">[5]</a><cite>
+Y. Hao, T. Stuart, M. H. Kowalski, et al. “Dictionary learning for
+integrative, multimodal and scalable single-cell analysis”. In:
+<em>Nature Biotechnology</em> (2023). DOI:
+<a href="https://doi.org/10.1038/s41587-023-01767-y" class="external-link">10.1038/s41587-023-01767-y</a>.
+URL:
+<a href="https://doi.org/10.1038/s41587-023-01767-y" class="external-link">https://doi.org/10.1038/s41587-023-01767-y</a>.</cite>
+</p>
+<p>
+<a id="bib-lun2019emptydrops"></a><a href="#cite-lun2019emptydrops">[6]</a><cite>
+A. T. L. Lun, S. Riesenfeld, T. Andrews, et al. “EmptyDrops:
+distinguishing cells from empty droplets in droplet-based single-cell
+RNA sequencing data”. In: <em>Genome Biol.</em> 20 (2019), p. 63. DOI:
+<a href="https://doi.org/10.1186/s13059-019-1662-y" class="external-link">10.1186/s13059-019-1662-y</a>.</cite>
+</p>
+<p>
+<a id="bib-mclean2017refmanager"></a><a href="#cite-mclean2017refmanager">[7]</a><cite>
 M. W. McLean. “RefManageR: Import and Manage BibTeX and BibLaTeX
 References in R”. In: <em>The Journal of Open Source Software</em>
 (2017). DOI:
 <a href="https://doi.org/10.21105/joss.00338" class="external-link">10.21105/joss.00338</a>.</cite>
 </p>
 <p>
-<a id="bib-ole2024biocstyle"></a><a href="#cite-ole2024biocstyle">[4]</a><cite>
+<a id="bib-morgan2024summarizedexperiment"></a><a href="#cite-morgan2024summarizedexperiment">[8]</a><cite>
+M. Morgan, V. Obenchain, J. Hester, et al. <em>SummarizedExperiment:
+SummarizedExperiment container</em>. R package version 1.35.1. 2024.
+DOI:
+<a href="https://doi.org/10.18129/B9.bioc.SummarizedExperiment" class="external-link">10.18129/B9.bioc.SummarizedExperiment</a>.
+URL:
+<a href="https://bioconductor.org/packages/SummarizedExperiment" class="external-link">https://bioconductor.org/packages/SummarizedExperiment</a>.</cite>
+</p>
+<p>
+<a id="bib-ole2024biocstyle"></a><a href="#cite-ole2024biocstyle">[9]</a><cite>
 A. Oleś. <em>BiocStyle: Standard styles for vignettes and other
 Bioconductor documents</em>. R package version 2.33.1. 2024. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.BiocStyle" class="external-link">10.18129/B9.bioc.BiocStyle</a>.
@@ -942,7 +1005,16 @@ URL:
 <a href="https://bioconductor.org/packages/BiocStyle" class="external-link">https://bioconductor.org/packages/BiocStyle</a>.</cite>
 </p>
 <p>
-<a id="bib-pardo2022spatiallibd"></a><a href="#cite-pardo2022spatiallibd">[5]</a><cite>
+<a id="bib-pags2024s4vectors"></a><a href="#cite-pags2024s4vectors">[10]</a><cite>
+H. Pagès, M. Lawrence, and P. Aboyoun. <em>S4Vectors: Foundation of
+vector-like and list-like containers in Bioconductor</em>. R package
+version 0.43.2. 2024. DOI:
+<a href="https://doi.org/10.18129/B9.bioc.S4Vectors" class="external-link">10.18129/B9.bioc.S4Vectors</a>.
+URL:
+<a href="https://bioconductor.org/packages/S4Vectors" class="external-link">https://bioconductor.org/packages/S4Vectors</a>.</cite>
+</p>
+<p>
+<a id="bib-pardo2022spatiallibd"></a><a href="#cite-pardo2022spatiallibd">[11]</a><cite>
 B. Pardo, A. Spangler, L. M. Weber, et al. “spatialLIBD: an
 R/Bioconductor package to visualize spatially-resolved transcriptomics
 data”. In: <em>BMC Genomics</em> (2022). DOI:
@@ -951,27 +1023,27 @@ URL:
 <a href="https://doi.org/10.1186/s12864-022-08601-w" class="external-link">https://doi.org/10.1186/s12864-022-08601-w</a>.</cite>
 </p>
 <p>
-<a id="bib-2024language"></a><a href="#cite-2024language">[6]</a><cite>
+<a id="bib-2024language"></a><a href="#cite-2024language">[12]</a><cite>
 R Core Team. <em>R: A Language and Environment for Statistical
 Computing</em>. R Foundation for Statistical Computing. Vienna, Austria,
 2024. URL:
 <a href="https://www.R-project.org/" class="external-link">https://www.R-project.org/</a>.</cite>
 </p>
 <p>
-<a id="bib-redd2021pkgcond"></a><a href="#cite-redd2021pkgcond">[7]</a><cite>
+<a id="bib-redd2021pkgcond"></a><a href="#cite-redd2021pkgcond">[13]</a><cite>
 A. Redd and R Documentation Task Force. <em>pkgcond: Classed Error and
 Warning Conditions</em>. R package version 0.1.1. 2021. URL:
 <a href="https://github.com/RDocTaskForce/pkgcond" class="external-link">https://github.com/RDocTaskForce/pkgcond</a>.</cite>
 </p>
 <p>
-<a id="bib-righelli2022spatialexperiment"></a><a href="#cite-righelli2022spatialexperiment">[8]</a><cite>
+<a id="bib-righelli2022spatialexperiment"></a><a href="#cite-righelli2022spatialexperiment">[14]</a><cite>
 D. Righelli, L. M. Weber, H. L. Crowell, et al. “SpatialExperiment:
 infrastructure for spatially-resolved transcriptomics data in R using
 Bioconductor”. In: <em>Bioinformatics</em> 38.11 (2022), pp. -3. DOI:
 <a href="https://doi.org/https://doi.org/10.1093/bioinformatics/btac299" class="external-link">https://doi.org/10.1093/bioinformatics/btac299</a>.</cite>
 </p>
 <p>
-<a id="bib-shepherd2024biocfilecache"></a><a href="#cite-shepherd2024biocfilecache">[9]</a><cite>
+<a id="bib-shepherd2024biocfilecache"></a><a href="#cite-shepherd2024biocfilecache">[15]</a><cite>
 L. Shepherd and M. Morgan. <em>BiocFileCache: Manage Files Across
 Sessions</em>. R package version 2.13.0. 2024. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.BiocFileCache" class="external-link">10.18129/B9.bioc.BiocFileCache</a>.
@@ -979,31 +1051,43 @@ URL:
 <a href="https://bioconductor.org/packages/BiocFileCache" class="external-link">https://bioconductor.org/packages/BiocFileCache</a>.</cite>
 </p>
 <p>
-<a id="bib-wickham2016ggplot2"></a><a href="#cite-wickham2016ggplot2">[10]</a><cite>
+<a id="bib-wickham2016ggplot2"></a><a href="#cite-wickham2016ggplot2">[16]</a><cite>
 H. Wickham. <em>ggplot2: Elegant Graphics for Data Analysis</em>.
 Springer-Verlag New York, 2016. ISBN: 978-3-319-24277-4. URL:
 <a href="https://ggplot2.tidyverse.org" class="external-link">https://ggplot2.tidyverse.org</a>.</cite>
 </p>
 <p>
-<a id="bib-wickham2011testthat"></a><a href="#cite-wickham2011testthat">[11]</a><cite>
+<a id="bib-wickham2023stringr"></a><a href="#cite-wickham2023stringr">[17]</a><cite>
+H. Wickham. <em>stringr: Simple, Consistent Wrappers for Common String
+Operations</em>. R package version 1.5.1, <a href="https://github.com/tidyverse/stringr" class="external-link uri">https://github.com/tidyverse/stringr</a>. 2023. URL:
+<a href="https://stringr.tidyverse.org" class="external-link">https://stringr.tidyverse.org</a>.</cite>
+</p>
+<p>
+<a id="bib-wickham2011testthat"></a><a href="#cite-wickham2011testthat">[18]</a><cite>
 H. Wickham. “testthat: Get Started with Testing”. In: <em>The R
 Journal</em> 3 (2011), pp. 5–10. URL:
 <a href="https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf" class="external-link">https://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf</a>.</cite>
 </p>
 <p>
-<a id="bib-wickham2021sessioninfo"></a><a href="#cite-wickham2021sessioninfo">[12]</a><cite>
+<a id="bib-wickham2021sessioninfo"></a><a href="#cite-wickham2021sessioninfo">[19]</a><cite>
 H. Wickham, W. Chang, R. Flight, et al. <em>sessioninfo: R Session
 Information</em>. R package version 1.2.2, <a href="https://r-lib.github.io/sessioninfo/" class="external-link uri">https://r-lib.github.io/sessioninfo/</a>. 2021. URL:
 <a href="https://github.com/r-lib/sessioninfo#readme" class="external-link">https://github.com/r-lib/sessioninfo#readme</a>.</cite>
 </p>
 <p>
-<a id="bib-wickham2023dplyr"></a><a href="#cite-wickham2023dplyr">[13]</a><cite>
+<a id="bib-wickham2023dplyr"></a><a href="#cite-wickham2023dplyr">[20]</a><cite>
 H. Wickham, R. François, L. Henry, et al. <em>dplyr: A Grammar of Data
 Manipulation</em>. R package version 1.1.4, <a href="https://github.com/tidyverse/dplyr" class="external-link uri">https://github.com/tidyverse/dplyr</a>. 2023. URL:
 <a href="https://dplyr.tidyverse.org" class="external-link">https://dplyr.tidyverse.org</a>.</cite>
 </p>
 <p>
-<a id="bib-xie2024knitr"></a><a href="#cite-xie2024knitr">[14]</a><cite>
+<a id="bib-wickham2023xml2"></a><a href="#cite-wickham2023xml2">[21]</a><cite>
+H. Wickham, J. Hester, and J. Ooms. <em>xml2: Parse XML</em>. R package
+version 1.3.6, <a href="https://github.com/r-lib/xml2" class="external-link uri">https://github.com/r-lib/xml2</a>. 2023. URL:
+<a href="https://xml2.r-lib.org/" class="external-link">https://xml2.r-lib.org/</a>.</cite>
+</p>
+<p>
+<a id="bib-xie2024knitr"></a><a href="#cite-xie2024knitr">[22]</a><cite>
 Y. Xie. <em>knitr: A General-Purpose Package for Dynamic Report
 Generation in R</em>. R package version 1.48. 2024. URL:
 <a href="https://yihui.org/knitr/" class="external-link">https://yihui.org/knitr/</a>.</cite>
