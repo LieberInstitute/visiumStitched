@@ -111,7 +111,7 @@ exists, <code>out_dir</code> will be created if necessary.</p></dd>
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 21:36:53.535244 loading file /github/home/.cache/R/BiocFileCache/29568ba5edc_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 21:56:46.770418 loading file /github/home/.cache/R/BiocFileCache/295cadcce1_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -122,7 +122,7 @@ exists, <code>out_dir</code> will be created if necessary.</p></dd>
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">fiji_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 21:36:56.051034 loading file /github/home/.cache/R/BiocFileCache/2957d42eaad_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 21:56:49.203861 loading file /github/home/.cache/R/BiocFileCache/2952159e44b_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
@@ -132,7 +132,7 @@ exists, <code>out_dir</code> will be created if necessary.</p></dd>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out_file</span> <span class="op">&lt;-</span> <span class="fu">prep_fiji_coords</span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">out_file</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmppEj2ir/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpUBo1My/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#    A file of spatial coordinates for the stitched Br2719 was produced</span></span></span>
 <span class="r-in"><span><span class="fu">readr</span><span class="fu">::</span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="va">out_file</span><span class="op">)</span></span></span>
