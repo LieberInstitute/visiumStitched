@@ -5,12 +5,13 @@
 #' of each image whose largest dimension is \code{lowres_max_size} pixels. It
 #' also creates a corresponding \code{scalefactors_json.json} file much like
 #' Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
-#' prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
+#' prepares for building the [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' with \code{build_spe()}.
 #'
-#' @param out_dir A character(1) vector giving a path to a directory to place
+#' @param out_dir A \code{character(1)} vector giving a path to a directory to place
 #' the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
 #' will be created if necessary.
-#' @param lowres_max_size An integer(1) vector: the resolution (number of
+#' @param lowres_max_size An \code{integer(1)} vector: the resolution (number of
 #' pixels) of the larger dimension of the output image(s), considered to be "low
 #' resolution".
 #' @inheritParams add_array_coords
@@ -21,6 +22,8 @@
 #' @importFrom imager load.image resize save.image
 #' @importFrom rjson fromJSON toJSON
 #'
+#' @family functions for parsing Fiji outputs
+#' 
 #' @export
 #' @author Nicholas J. Eagles
 #'

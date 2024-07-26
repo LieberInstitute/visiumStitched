@@ -8,7 +8,7 @@
 }
 \arguments{
 \item{coords}{A \code{tibble} containing 'array_row' and 'array_col' columns
-calculated internally by \code{add_array_coords()}}
+calculated internally by \code{add_array_coords()}.}
 }
 \value{
 It returns \code{NULL} if all tests were correct.
@@ -16,7 +16,7 @@ It returns \code{NULL} if all tests were correct.
 \description{
 Sanity check designed to catch unforeseen bugs: halt if the tibble-like
 \code{coords}, expected to contain columns 'array_row' and 'array_col',
-represents an invalid Visium array
+represents an invalid Visium array.
 }
 \author{
 Nicholas J. Eagles

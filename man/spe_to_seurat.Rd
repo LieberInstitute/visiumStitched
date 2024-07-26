@@ -12,23 +12,21 @@ spe_to_seurat(
 )
 }
 \arguments{
-\item{spe}{A \code{SpatialExperiment}}
+\item{spe}{A \code{SpatialExperiment} with \code{colData()} or \code{spatialCoords()}
+columns given by \code{spatial_cols}.}
 
 \item{spatial_cols}{A \code{character(5)} named vector mapping which \code{colData(spe)}
 or \code{spatialCoords(spe)} columns contain the \code{tissue}, \code{row}, \code{col},
 \code{imagerow}, and \code{imagecol} information expected by Seurat.}
 
-\item{verbose}{A logical(1) vector. If true, print status updates about the
-conversion process}
+\item{verbose}{A \code{logical(1)} vector. If true, print status updates about the
+conversion process.}
 }
 \value{
 A \code{Seurat} object.
 }
 \description{
-Given a \code{SpatialExperiment} object, first \code{as.Seurat()} is run,
-which operates on \code{SingleCellExperiment} objects. The remaining
-components (images, spatial coordinates) are added manually. The actual
-appearance of images are buggy for now.
+
 }
 \details{
 Note that only the \code{lowres} images from \code{imgData(spe)} will be used.

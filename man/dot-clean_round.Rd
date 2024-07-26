@@ -14,7 +14,7 @@ A \code{numeric()} vector rounded to the nearest integer.
 }
 \description{
 This consistent behavior is favorable for our application, where we want to
-minimize duplicate mappings of spots to new array coordinates
+minimize duplicate mappings of spots to new array coordinates.
 }
 \author{
 Nicholas J. Eagles

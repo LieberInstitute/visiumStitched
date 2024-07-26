@@ -10,11 +10,11 @@ prep_fiji_coords(sample_info, out_dir)
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}}
+\code{group_hires_scalef}.}
 
-\item{out_dir}{A character(1) vector giving a path to a directory to place
-the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
-will be created if necessary.}
+\item{out_dir}{A \code{character(1)} vector giving a path to a directory to
+place the output pixel coordinates CSVs. Provided the parent exists,
+\code{out_dir} will be created if necessary.}
 }
 \value{
 This function returns \code{character()} with the file paths to the
@@ -61,6 +61,11 @@ out_file <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #    A file of spatial coordinates for the stitched Br2719 was produced
 print(readr::read_csv(out_file))
 }
+\seealso{
+Other functions for parsing Fiji outputs: 
+\code{\link{prep_fiji_image}()}
+}
 \author{
 Nicholas J. Eagles
 }
+\concept{functions for parsing Fiji outputs}

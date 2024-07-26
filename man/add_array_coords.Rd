@@ -7,28 +7,30 @@
 add_array_coords(spe, sample_info, coords_dir)
 }
 \arguments{
-\item{spe}{A \code{SpatialExperiment}}
+\item{spe}{A \code{SpatialExperiment}.}
 
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}}
+\code{group_hires_scalef}.}
 
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
-produced from refinement with \code{prep_fiji_*()} functions}
+produced from refinement with \link[=prep_fiji_coords]{prep_fiji_coords()}
+and related functions.}
 }
 \value{
 A \code{SpatialExperiment} object with additional \code{colData}
 columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
 with \code{[suffix]} values \code{original} and \code{rounded};
 \code{array_row_original} and \code{array_col_original} columns; and
-modified colData columns \code{array_row} and
-\code{array_col} and \code{spatialCoords()} with their transformed values
+modified \code{colData()} columns \code{array_row} and
+\code{array_col} and \code{spatialCoords()} with their transformed values.
 }
 \description{
-Given a \code{SpatialExperiment}, sample information, and coordinates
+Given a \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class},
+sample information, and coordinates
 produced from the refinement workflow, add array and pixel coordinates
 appropriate for the linearly transformed capture areas making up each group
 present in the \code{SpatialExperiment}.

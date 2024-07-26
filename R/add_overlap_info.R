@@ -1,8 +1,9 @@
 #' Add info about how spots overlap among capture areas
 #'
-#' Given a \code{SpatialExperiment} and column name in its \code{colData},
+#' Given a [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' and column name in its \code{colData},
 #' return a modified copy of the \code{SpatialExperiment} with additional \code{colData}
-#' columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}
+#' columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}.
 #'
 #' \code{spe$exclude_overlapping} is TRUE for spots with a higher-quality overlapping
 #' capture area and FALSE otherwise. \code{spot_plot} only displays FALSE spots to
@@ -12,13 +13,14 @@
 #'
 #' @param spe A \code{SpatialExperiment} with colData columns
 #' \code{array_row}, \code{array_col}, \code{key}, and
-#' \code{capture_area}
-#' @param metric_name character(1) in \code{colnames(colData(spe))}, where
+#' \code{capture_area}.
+#' @param metric_name \code{character(1)} in \code{colnames(colData(spe))}, where
 #' spots belonging to the capture area with highest average value for the metric
-#' take precedence over other spots
+#' take precedence over other spots.
 #'
-#' @return A \code{SpatialExperiment} object with additional \code{colData}
-#' columns \code{spe$exclude_overlapping} and \code{spe$overlap_key}
+#' @return A [SpatialExperiment][SpatialExperiment::SpatialExperiment-class]
+#' object with additional \code{colData} columns \code{spe$exclude_overlapping}
+#' and \code{spe$overlap_key}.
 #'
 #' @importFrom S4Vectors DataFrame
 #' @export

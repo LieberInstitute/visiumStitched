@@ -10,13 +10,13 @@ prep_fiji_image(sample_info, out_dir, lowres_max_size = 1200)
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}}
+\code{group_hires_scalef}.}
 
-\item{out_dir}{A character(1) vector giving a path to a directory to place
+\item{out_dir}{A \code{character(1)} vector giving a path to a directory to place
 the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
 will be created if necessary.}
 
-\item{lowres_max_size}{An integer(1) vector: the resolution (number of
+\item{lowres_max_size}{An \code{integer(1)} vector: the resolution (number of
 pixels) of the larger dimension of the output image(s), considered to be "low
 resolution".}
 }
@@ -30,7 +30,8 @@ various resolutions (pixel dimensions) are left. This function creates copies
 of each image whose largest dimension is \code{lowres_max_size} pixels. It
 also creates a corresponding \code{scalefactors_json.json} file much like
 Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
-prepares for building the \code{SpatialExperiment} with \code{build_spe()}.
+prepares for building the \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
+with \code{build_spe()}.
 }
 \examples{
 #    Define sample information for the example human brain data
@@ -75,6 +76,11 @@ dim(this_image)
 #    In total, an image and scalefactors were written
 print(out_paths)
 }
+\seealso{
+Other functions for parsing Fiji outputs: 
+\code{\link{prep_fiji_coords}()}
+}
 \author{
 Nicholas J. Eagles
 }
+\concept{functions for parsing Fiji outputs}

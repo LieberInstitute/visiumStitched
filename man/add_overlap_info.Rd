@@ -9,20 +9,22 @@ add_overlap_info(spe, metric_name)
 \arguments{
 \item{spe}{A \code{SpatialExperiment} with colData columns
 \code{array_row}, \code{array_col}, \code{key}, and
-\code{capture_area}}
+\code{capture_area}.}
 
-\item{metric_name}{character(1) in \code{colnames(colData(spe))}, where
+\item{metric_name}{\code{character(1)} in \code{colnames(colData(spe))}, where
 spots belonging to the capture area with highest average value for the metric
-take precedence over other spots}
+take precedence over other spots.}
 }
 \value{
-A \code{SpatialExperiment} object with additional \code{colData}
-columns \code{spe$exclude_overlapping} and \code{spe$overlap_key}
+A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment}
+object with additional \code{colData} columns \code{spe$exclude_overlapping}
+and \code{spe$overlap_key}.
 }
 \description{
-Given a \code{SpatialExperiment} and column name in its \code{colData},
+Given a \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
+and column name in its \code{colData},
 return a modified copy of the \code{SpatialExperiment} with additional \code{colData}
-columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}
+columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}.
 }
 \details{
 \code{spe$exclude_overlapping} is TRUE for spots with a higher-quality overlapping

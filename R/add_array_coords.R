@@ -1,6 +1,7 @@
 #' Add transformed array and pixel coordinates to a \code{SpatialExperiment}
 #'
-#' Given a \code{SpatialExperiment}, sample information, and coordinates
+#' Given a [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class],
+#' sample information, and coordinates
 #' produced from the refinement workflow, add array and pixel coordinates
 #' appropriate for the linearly transformed capture areas making up each group
 #' present in the \code{SpatialExperiment}.
@@ -15,22 +16,23 @@
 #' that downstream applications, such as clustering with BayesSpace, can
 #' process each group as if it really were one capture area in the first place.
 #'
-#' @param spe A \code{SpatialExperiment}
+#' @param spe A \code{SpatialExperiment}.
 #' @param sample_info A \code{tibble} with columns \code{capture_area},
 #' \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 #' \code{spaceranger_dir}, \code{intra_group_scalar}, and
-#' \code{group_hires_scalef}
+#' \code{group_hires_scalef}.
 #' @param coords_dir A \code{character(1)} vector giving the directory
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
-#' produced from refinement with \code{prep_fiji_*()} functions
+#' produced from refinement with [prep_fiji_coords()][visiumStitched::prep_fiji_coords]
+#' and related functions.
 #'
 #' @return A \code{SpatialExperiment} object with additional \code{colData}
 #' columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
 #' with \code{[suffix]} values \code{original} and \code{rounded};
 #' \code{array_row_original} and \code{array_col_original} columns; and
-#' modified colData columns \code{array_row} and
-#' \code{array_col} and \code{spatialCoords()} with their transformed values
+#' modified \code{colData()} columns \code{array_row} and
+#' \code{array_col} and \code{spatialCoords()} with their transformed values.
 #'
 #' @import dplyr
 #' @importFrom readr read_csv

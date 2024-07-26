@@ -1,18 +1,20 @@
 #' Convert a \code{SpatialExperiment} object to a \code{Seurat} object
 #'
-#' Given a \code{SpatialExperiment} object, first \code{as.Seurat()} is run,
-#' which operates on \code{SingleCellExperiment} objects. The remaining
-#' components (images, spatial coordinates) are added manually. The actual
-#' appearance of images are buggy for now.
+#' Given a [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' object, first \code{as.Seurat()} is run, which operates on
+#' [SingleCellExperiment-class][SingleCellExperiment::SingleCellExperiment-class]}
+#' objects. The remaining components (images, spatial coordinates) are added
+#' manually. The actual appearance of images are buggy for now.
 #'
 #' Note that only the `lowres` images from `imgData(spe)` will be used.
 #'
-#' @param spe A \code{SpatialExperiment}
+#' @param spe A \code{SpatialExperiment} with \code{colData()} or \code{spatialCoords()}
+#' columns given by \code{spatial_cols}.
 #' @param spatial_cols A `character(5)` named vector mapping which `colData(spe)`
 #' or `spatialCoords(spe)` columns contain the `tissue`, `row`, `col`,
 #' `imagerow`, and `imagecol` information expected by Seurat.
-#' @param verbose A logical(1) vector. If true, print status updates about the
-#' conversion process
+#' @param verbose A \code{logical(1)} vector. If true, print status updates about the
+#' conversion process.
 #'
 #' @return A \code{Seurat} object.
 #'

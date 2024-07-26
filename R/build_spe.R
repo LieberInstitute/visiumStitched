@@ -1,6 +1,6 @@
 #' Build stitched \code{SpatialExperiment}
 #'
-#' First, read in capture-area-level spaceranger outputs. Then, overwrite
+#' First, read in capture-area-level SpaceRanger outputs. Then, overwrite
 #' spatial coordinates and images to represent group-level samples using
 #' \code{sample_info$group} (though keep original coordinates in
 #' \code{colData} columns ending in "_original"). Next, add info about
@@ -10,17 +10,18 @@
 #'
 #' @inheritParams add_array_coords
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
-#' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse"
+#' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse".
 #' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]. If
 #' working on the same system where Spaceranger was run, the GTF will be
 #' automatically found; otherwise a character(1) path may be supplied,
 #' pointing to a GTF file of gene annotation to populate \code{rowData()} with.
 #' @param gtf_cols Passed to [spatialLIBD::read10xVisiumWrapper()]. Columns
-#' in the reference GTF to extract and populate \code{rowData()}
+#' in the reference GTF to extract and populate \code{rowData()}.
 #'
-#' @return A \code{SpatialExperiment} object with one sample per group specified
-#' in \code{sample_info} using transformed pixel and array coordinates (including
-#' in the \code{spatialCoords}).
+#' @return A [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' object with one sample per group specified in \code{sample_info} using
+#' transformed pixel and array coordinates (including  in the
+#' \code{spatialCoords()}).
 #'
 #' @import SpatialExperiment DropletUtils
 #' @importFrom SummarizedExperiment assays rowData

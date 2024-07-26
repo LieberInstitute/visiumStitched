@@ -4,10 +4,10 @@
 #'
 #' Sanity check designed to catch unforeseen bugs: halt if the tibble-like
 #' \code{coords}, expected to contain columns 'array_row' and 'array_col',
-#' represents an invalid Visium array
+#' represents an invalid Visium array.
 #'
 #' @param coords A \code{tibble} containing 'array_row' and 'array_col' columns
-#' calculated internally by \code{add_array_coords()}
+#' calculated internally by \code{add_array_coords()}.
 #'
 #' @return It returns `NULL` if all tests were correct.
 #'
@@ -93,7 +93,7 @@
 #' Round to the nearest integer, always rounding up at 0.5
 #'
 #' This consistent behavior is favorable for our application, where we want to
-#' minimize duplicate mappings of spots to new array coordinates
+#' minimize duplicate mappings of spots to new array coordinates.
 #'
 #' @param x \code{numeric()} vector.
 #'
@@ -122,10 +122,10 @@
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
 #'
-#' @return A \code{tibble()} with modified 'array_row' + 'array_col' columns, as
-#' well as new 'pxl_row_in_fullres_rounded' and 'pxl_col_in_fullres_rounded'
-#' columns representing the pixel coordinates rounded to the nearest exact array
-#' coordinates.
+#' @return A \code{tibble()} with modified \code{array_row} + \code{array_col}
+#' columns, as well as new \code{pxl_row_in_fullres_rounded} and
+#' \code{pxl_col_in_fullres_rounded} columns representing the pixel coordinates
+#' rounded to the nearest exact array coordinates.
 #'
 #' @author Nicholas J. Eagles
 #' @keywords internal

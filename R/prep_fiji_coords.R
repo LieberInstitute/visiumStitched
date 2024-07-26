@@ -7,9 +7,9 @@
 #' file from Spaceranger, and transform using the rotation matrix specified
 #' by Fiji. Write one new \code{tissue_positions.csv} file per group.
 #'
-#' @param out_dir A character(1) vector giving a path to a directory to place
-#' the output pixel coordinates CSVs. Provided the parent exists, \code{out_dir}
-#' will be created if necessary.
+#' @param out_dir A \code{character(1)} vector giving a path to a directory to
+#' place the output pixel coordinates CSVs. Provided the parent exists,
+#' \code{out_dir} will be created if necessary.
 #' @inheritParams add_array_coords
 #'
 #' @return This function returns `character()` with the file paths to the
@@ -20,6 +20,8 @@
 #' @importFrom readr read_csv write_csv
 #' @importFrom rjson fromJSON
 #' @importFrom pkgcond suppress_warnings
+#' 
+#' @family functions for parsing Fiji outputs
 #'
 #' @export
 #' @author Nicholas J. Eagles

@@ -10,15 +10,15 @@ rescale_fiji_inputs(sample_info, out_dir)
 \item{sample_info}{A \code{tibble} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}}
+\code{group_hires_scalef}.}
 
-\item{out_dir}{A character(1) vector giving a path to a directory to place
-the output images. Provided the parent exists, \code{out_dir}
-will be created if necessary.}
+\item{out_dir}{A \code{character(1)} vector giving a path to a directory to
+place the output images. Provided the parent exists, \code{out_dir} will be
+created if necessary.}
 }
 \value{
 A \code{tibble}: a copy of \code{sample_info} with additional columns
-\code{intra_group_scalar} and \code{group_hires_scalef}
+\code{intra_group_scalar} and \code{group_hires_scalef}.
 }
 \description{
 Given a \code{tibble} of sample information (\code{sample_info}) with
