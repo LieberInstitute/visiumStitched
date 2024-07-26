@@ -12,21 +12,28 @@ spe_to_seurat(
 )
 }
 \arguments{
-\item{spe}{A \code{SpatialExperiment} with \code{colData()} or \code{spatialCoords()}
-columns given by \code{spatial_cols}.}
+\item{spe}{A
+\link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class} with
+\code{colData()} or \code{spatialCoords()}
+columns given by \code{spatial_cols}. This does not have to be a stitched
+\code{spe} object as this function should work with any type of \code{spe} objects.}
 
 \item{spatial_cols}{A \code{character(5)} named vector mapping which \code{colData(spe)}
 or \code{spatialCoords(spe)} columns contain the \code{tissue}, \code{row}, \code{col},
 \code{imagerow}, and \code{imagecol} information expected by Seurat.}
 
-\item{verbose}{A \code{logical(1)} vector. If true, print status updates about the
-conversion process.}
+\item{verbose}{A \code{logical(1)} vector. If \code{TRUE}, print status update
+about the conversion process. This information can be useful for debugging.}
 }
 \value{
 A \code{Seurat} object.
 }
 \description{
-
+Given a \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
+object, first \code{as.Seurat()} is run, which operates on
+\link[SingleCellExperiment:SingleCellExperiment]{SingleCellExperiment-class}
+objects. The remaining components (images, spatial coordinates) are added
+manually. The actual appearance of images are buggy for now.
 }
 \details{
 Note that only the \code{lowres} images from \code{imgData(spe)} will be used.
@@ -45,6 +52,8 @@ seur
 ## Example with an stitched SPE object
 spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 seur_stitched <- spe_to_seurat(spe_stitched)
+
+## Let's look at our resulting Seurat object
 seur_stitched
 }
 \author{

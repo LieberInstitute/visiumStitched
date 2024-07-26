@@ -5,13 +5,15 @@
 #' return a modified copy of the \code{SpatialExperiment} with additional \code{colData}
 #' columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}.
 #'
-#' \code{spe$exclude_overlapping} is TRUE for spots with a higher-quality overlapping
-#' capture area and FALSE otherwise. \code{spot_plot} only displays FALSE spots to
-#' prevent overplotting in regions of overlap. \code{spe$overlap_key} gives comma-
-#' separated strings containing the keys of any overlapping spots, and is the empty
-#' string otherwise.
+#' \code{spe$exclude_overlapping} is `TRUE` for spots with a higher-quality
+#' overlapping capture area and `FALSE` otherwise.
+#' [vis_clus][spatialLIBD::vis_clus] onlydisplays `FALSE` spots to
+#' prevent overplotting in regions of overlap. \code{spe$overlap_key} gives
+#' comma-separated strings containing the keys of any overlapping spots, and is
+#' the empty string otherwise.
 #'
-#' @param spe A \code{SpatialExperiment} with colData columns
+#' @param spe A [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' with `colData(spe)` columns
 #' \code{array_row}, \code{array_col}, \code{key}, and
 #' \code{capture_area}.
 #' @param metric_name \code{character(1)} in \code{colnames(colData(spe))}, where

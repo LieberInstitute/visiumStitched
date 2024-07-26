@@ -1,19 +1,23 @@
 #' Build stitched \code{SpatialExperiment}
 #'
-#' First, read in capture-area-level SpaceRanger outputs. Then, overwrite
+#' First, read in capture-area-level `SpaceRanger`
+#' <https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/running-pipelines/space-ranger-count>
+#' outputs. Then, overwrite
 #' spatial coordinates and images to represent group-level samples using
 #' \code{sample_info$group} (though keep original coordinates in
-#' \code{colData} columns ending in "_original"). Next, add info about
-#' overlaps (via \code{spe$exclude_overlapping} and \code{spe$overlap_key}).
-#' Ultimately, return a \code{SpatialExperiment} ready for visualization or
-#' downstream analysis.
+#' \code{colData} columns ending with the suffix `"_original"`). Next, add info
+#' about overlaps (via \code{spe$exclude_overlapping} and
+#' \code{spe$overlap_key}).
+#' Ultimately, return a
+#' [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class] ready
+#' for visualization or downstream analysis.
 #'
 #' @inheritParams add_array_coords
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
 #' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse".
 #' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]. If
-#' working on the same system where Spaceranger was run, the GTF will be
-#' automatically found; otherwise a character(1) path may be supplied,
+#' working on the same system where SpaceRanger was run, the GTF will be
+#' automatically found; otherwise a `character(1)` path may be supplied,
 #' pointing to a GTF file of gene annotation to populate \code{rowData()} with.
 #' @param gtf_cols Passed to [spatialLIBD::read10xVisiumWrapper()]. Columns
 #' in the reference GTF to extract and populate \code{rowData()}.
@@ -58,8 +62,10 @@
 #' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
+#' ## Re-size images and add more information to the sample_info
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
+#' ## Preparing Fiji coordinates and images for build_spe()
 #' spe_input_dir <- tempdir()
 #' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #' prep_fiji_image(sample_info, out_dir = spe_input_dir)
@@ -82,10 +88,13 @@
 #'     )
 #' )
 #'
+#' ## Now we can build the stitched SpatialExperiment object
 #' spe <- build_spe(
 #'     sample_info,
 #'     coords_dir = spe_input_dir, reference_gtf = gtf_cache
 #' )
+#'
+#' ## Let's explore the stitched SpatialExperiment object
 #' spe
 build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")) {
     ## For R CMD check

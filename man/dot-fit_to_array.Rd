@@ -7,7 +7,7 @@
 .fit_to_array(coords, inter_spot_dist_px)
 }
 \arguments{
-\item{coords}{A \code{tibble()} whose rows represent capture areas of the
+\item{coords}{A \code{data.frame()} whose rows represent capture areas of the
 same group, and containing columns 'array_row', 'array_col',
 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.}
 
@@ -15,7 +15,7 @@ same group, and containing columns 'array_row', 'array_col',
 between any 2 spots in the new coordinates.}
 }
 \value{
-A \code{tibble()} with modified \code{array_row} + \code{array_col}
+A \link[tibble:tibble]{tibble} with modified \code{array_row} + \code{array_col}
 columns, as well as new \code{pxl_row_in_fullres_rounded} and
 \code{pxl_col_in_fullres_rounded} columns representing the pixel coordinates
 rounded to the nearest exact array coordinates.

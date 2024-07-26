@@ -7,7 +7,8 @@
 add_overlap_info(spe, metric_name)
 }
 \arguments{
-\item{spe}{A \code{SpatialExperiment} with colData columns
+\item{spe}{A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
+with \code{colData(spe)} columns
 \code{array_row}, \code{array_col}, \code{key}, and
 \code{capture_area}.}
 
@@ -27,11 +28,12 @@ return a modified copy of the \code{SpatialExperiment} with additional \code{col
 columns: \code{spe$exclude_overlapping} and \code{spe$overlap_key}.
 }
 \details{
-\code{spe$exclude_overlapping} is TRUE for spots with a higher-quality overlapping
-capture area and FALSE otherwise. \code{spot_plot} only displays FALSE spots to
-prevent overplotting in regions of overlap. \code{spe$overlap_key} gives comma-
-separated strings containing the keys of any overlapping spots, and is the empty
-string otherwise.
+\code{spe$exclude_overlapping} is \code{TRUE} for spots with a higher-quality
+overlapping capture area and \code{FALSE} otherwise.
+\link[spatialLIBD:vis_clus]{vis_clus} onlydisplays \code{FALSE} spots to
+prevent overplotting in regions of overlap. \code{spe$overlap_key} gives
+comma-separated strings containing the keys of any overlapping spots, and is
+the empty string otherwise.
 }
 \examples{
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")

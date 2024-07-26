@@ -4,30 +4,36 @@
 #' sample information, and coordinates
 #' produced from the refinement workflow, add array and pixel coordinates
 #' appropriate for the linearly transformed capture areas making up each group
-#' present in the \code{SpatialExperiment}.
+#' present in the [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class].
 #'
 #' Array coordinates are determined via an algorithm that fits each spot to
 #' the nearest spot on a new, imaginary, Visium-like capture area. The imaginary
 #' capture area differs from a real capture area only in its extent; array
 #' coordinates still start at 0 but may extend arbitrarily beyond the normal
 #' maximum indices of 77 and 127 to fit every capture area in each group
-#' defined in the \code{SpatialExperiment}. The goal is to return well-defined
+#' defined in the [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class].
+#' The goal is to return well-defined
 #' array coordinates in a consistent spatial orientation for each group, such
-#' that downstream applications, such as clustering with BayesSpace, can
+#' that downstream applications, such as clustering with `BayesSpace`, can
 #' process each group as if it really were one capture area in the first place.
+#' See
+#' <https://research.libd.org/visiumStitched/articles/visiumStitched.html#defining-array-coordinates>
+#' for more details.
 #'
-#' @param spe A \code{SpatialExperiment}.
-#' @param sample_info A \code{tibble} with columns \code{capture_area},
+#' @param spe A
+#' [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class] object.
+#' @param sample_info A `data.frame()` with columns \code{capture_area},
 #' \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 #' \code{spaceranger_dir}, \code{intra_group_scalar}, and
-#' \code{group_hires_scalef}.
+#' \code{group_hires_scalef}. The last two are made by `rescale_fiji_inputs()`.
 #' @param coords_dir A \code{character(1)} vector giving the directory
 #' containing sample directories each with \code{tissue_positions.csv},
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 #' produced from refinement with [prep_fiji_coords()][visiumStitched::prep_fiji_coords]
 #' and related functions.
 #'
-#' @return A \code{SpatialExperiment} object with additional \code{colData}
+#' @return A [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
+#' object with additional \code{colData}
 #' columns \code{pxl_row_in_fullres_[suffix]} and \code{pxl_col_in_fullres_[suffix]}
 #' with \code{[suffix]} values \code{original} and \code{rounded};
 #' \code{array_row_original} and \code{array_col_original} columns; and
@@ -71,8 +77,10 @@
 #' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
+#' ## Re-size images and add more information to the sample_info
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
+#' ## Preparing Fiji coordinates and images for build_spe()
 #' spe_input_dir <- tempdir()
 #' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #' prep_fiji_image(sample_info, out_dir = spe_input_dir)
@@ -89,7 +97,7 @@
 #'     grep(added_cols_regex, colnames(SummarizedExperiment::colData(spe_new)))
 #' ]
 #'
-#' #    'array_row', 'array_col', and spatialCoords() were overwritten with 
+#' #    'array_row', 'array_col', and spatialCoords() were overwritten with
 #' #    their transformed values
 #' head(spe$array_row)
 #' head(spe$array_col)

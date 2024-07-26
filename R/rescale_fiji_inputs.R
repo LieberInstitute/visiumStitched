@@ -1,28 +1,32 @@
 #' Write same-scale hires images for input to Fiji
 #'
-#' Given a \code{tibble} of sample information (\code{sample_info}) with
+#' Given a `data.frame()` of sample information (\code{sample_info})
+#' with
 #' columns \code{capture_area}, \code{group}, and \code{spaceranger_dir},
-#' Write new high-resolution images for use as input to Fiji. Particularly
+#' Write new high-resolution images for use as input to Fiji
+#' <https://imagej.net/software/fiji/>. Particularly
 #' when capture areas come from different slides, there is a risk of significant
-#' scale differences among Spaceranger's \code{tissue_hires_image.png} images;
+#' scale differences among SpaceRanger's \code{tissue_hires_image.png} images;
 #' that is, the physical distance represented by a pixel from each capture area
 #' may differ nontrivially, leading to a distance-distorted output image, and
 #' inconsistent scaling when later transforming pixel coordinates. This function
 #' writes approximately high-res images whose pixels are of equal physical size
 #' within each \code{group}, then adds \code{intra_group_scalar} and
 #' \code{group_hires_scalef} columns to \code{sample_info}. \code{intra_group_scalar}
-#' gives the scalar by a which a given capture area's hires image and pixel
+#' gives the scalar by a which a given capture area's
+#' \code{tissue_hires_image.png} image and pixel
 #' coordinates must be multiplied to match the scale of other \code{group}
 #' members; \code{group_hires_scalef} gives the new \code{tissue_hires_scalef}
-#' (as from Spaceranger's \code{scalefactors_json.json} file) appropriate for
+#' (as from SpaceRanger's \code{scalefactors_json.json} file) appropriate for
 #' every capture area from the group.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to
-#' place the output images. Provided the parent exists, \code{out_dir} will be 
-#' created if necessary.
+#' place the output images. Provided the parent directory exists, \code{out_dir}
+#' will be created if necessary.
 #' @inheritParams add_array_coords
 #'
-#' @return A \code{tibble}: a copy of \code{sample_info} with additional columns
+#' @return A [tibble][tibble::tibble]: a copy of \code{sample_info} with
+#' additional columns
 #' \code{intra_group_scalar} and \code{group_hires_scalef}.
 #'
 #' @importFrom imager load.image resize save.image
@@ -56,6 +60,7 @@
 #' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
+#' ## Re-size images and add more information to the sample_info
 #' out_dir <- tempdir()
 #' sample_info_new <- rescale_fiji_inputs(sample_info, out_dir = out_dir)
 #'

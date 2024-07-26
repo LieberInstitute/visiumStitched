@@ -4,16 +4,18 @@
 #' various resolutions (pixel dimensions) are left. This function creates copies
 #' of each image whose largest dimension is \code{lowres_max_size} pixels. It
 #' also creates a corresponding \code{scalefactors_json.json} file much like
-#' Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
+#' SpaceRanger's. In conjunction with `prep_fiji_coords()`, this function
 #' prepares for building the [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
 #' with \code{build_spe()}.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to place
-#' the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
-#' will be created if necessary.
+#' the output image(s) and scale factors. Provided the parent directory exists,
+#' \code{out_dir} will be created if necessary.
 #' @param lowres_max_size An \code{integer(1)} vector: the resolution (number of
 #' pixels) of the larger dimension of the output image(s), considered to be "low
-#' resolution".
+#' resolution". The default value of `1200` assumes that you are stitching
+#' together at most a 2 by 2 grid of Visium capture areas, where each has at
+#' most 600 pixels on the longest dimension (as is the default in SpaceRanger).
 #' @inheritParams add_array_coords
 #'
 #' @return This function returns `character()` with the file paths to the
@@ -22,8 +24,8 @@
 #' @importFrom imager load.image resize save.image
 #' @importFrom rjson fromJSON toJSON
 #'
-#' @family functions for parsing Fiji outputs
-#' 
+#' @family functions for parsing Fiji <https://imagej.net/software/fiji/> outputs
+#'
 #' @export
 #' @author Nicholas J. Eagles
 #'
@@ -52,6 +54,7 @@
 #' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #' sample_info$fiji_image_path <- temp[grep("png$", temp)]
 #'
+#' ## Re-size images and add more information to the sample_info
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
 #' spe_input_dir <- tempdir()
@@ -66,9 +69,11 @@
 #'     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
 #' )
 #' dim(this_image)
+#' library("imager")
+#' plot(this_image)
 #'
 #' #    In total, an image and scalefactors were written
-#' print(out_paths)
+#' out_paths
 prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
     ## For R CMD check
     group <- NULL

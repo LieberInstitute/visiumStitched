@@ -7,7 +7,8 @@
 .validate_array(coords)
 }
 \arguments{
-\item{coords}{A \code{tibble} containing 'array_row' and 'array_col' columns
+\item{coords}{A \code{data.frame()} containing \code{'array_row'} and
+\code{'array_col'} columns
 calculated internally by \code{add_array_coords()}.}
 }
 \value{

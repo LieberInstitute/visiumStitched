@@ -13,10 +13,10 @@ build_spe(
 )
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
+\item{sample_info}{A \code{data.frame()} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}.}
+\code{group_hires_scalef}. The last two are made by \code{rescale_fiji_inputs()}.}
 
 \item{coords_dir}{A \code{character(1)} vector giving the directory
 containing sample directories each with \code{tissue_positions.csv},
@@ -28,8 +28,8 @@ and related functions.}
 \code{SpatialExperiment::read10xVisium}, defaulting to "sparse".}
 
 \item{reference_gtf}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}. If
-working on the same system where Spaceranger was run, the GTF will be
-automatically found; otherwise a character(1) path may be supplied,
+working on the same system where SpaceRanger was run, the GTF will be
+automatically found; otherwise a \code{character(1)} path may be supplied,
 pointing to a GTF file of gene annotation to populate \code{rowData()} with.}
 
 \item{gtf_cols}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}. Columns
@@ -42,13 +42,17 @@ transformed pixel and array coordinates (including  in the
 \code{spatialCoords()}).
 }
 \description{
-First, read in capture-area-level SpaceRanger outputs. Then, overwrite
+First, read in capture-area-level \code{SpaceRanger}
+\url{https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/running-pipelines/space-ranger-count}
+outputs. Then, overwrite
 spatial coordinates and images to represent group-level samples using
 \code{sample_info$group} (though keep original coordinates in
-\code{colData} columns ending in "_original"). Next, add info about
-overlaps (via \code{spe$exclude_overlapping} and \code{spe$overlap_key}).
-Ultimately, return a \code{SpatialExperiment} ready for visualization or
-downstream analysis.
+\code{colData} columns ending with the suffix \code{"_original"}). Next, add info
+about overlaps (via \code{spe$exclude_overlapping} and
+\code{spe$overlap_key}).
+Ultimately, return a
+\link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class} ready
+for visualization or downstream analysis.
 }
 \examples{
 ########################################################################
@@ -78,8 +82,10 @@ temp <- unzip(
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
+## Re-size images and add more information to the sample_info
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
+## Preparing Fiji coordinates and images for build_spe()
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 prep_fiji_image(sample_info, out_dir = spe_input_dir)
@@ -102,10 +108,13 @@ gtf_cache <- BiocFileCache::bfcrpath(
     )
 )
 
+## Now we can build the stitched SpatialExperiment object
 spe <- build_spe(
     sample_info,
     coords_dir = spe_input_dir, reference_gtf = gtf_cache
 )
+
+## Let's explore the stitched SpatialExperiment object
 spe
 }
 \author{

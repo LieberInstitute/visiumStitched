@@ -2,19 +2,22 @@
 #'
 #' Given a [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
 #' object, first \code{as.Seurat()} is run, which operates on
-#' [SingleCellExperiment-class][SingleCellExperiment::SingleCellExperiment-class]}
+#' [SingleCellExperiment-class][SingleCellExperiment::SingleCellExperiment-class]
 #' objects. The remaining components (images, spatial coordinates) are added
 #' manually. The actual appearance of images are buggy for now.
 #'
 #' Note that only the `lowres` images from `imgData(spe)` will be used.
 #'
-#' @param spe A \code{SpatialExperiment} with \code{colData()} or \code{spatialCoords()}
-#' columns given by \code{spatial_cols}.
+#' @param spe A
+#' [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class] with
+#' \code{colData()} or \code{spatialCoords()}
+#' columns given by \code{spatial_cols}. This does not have to be a stitched
+#' `spe` object as this function should work with any type of `spe` objects.
 #' @param spatial_cols A `character(5)` named vector mapping which `colData(spe)`
 #' or `spatialCoords(spe)` columns contain the `tissue`, `row`, `col`,
 #' `imagerow`, and `imagecol` information expected by Seurat.
-#' @param verbose A \code{logical(1)} vector. If true, print status updates about the
-#' conversion process.
+#' @param verbose A \code{logical(1)} vector. If `TRUE`, print status update
+#' about the conversion process. This information can be useful for debugging.
 #'
 #' @return A \code{Seurat} object.
 #'
@@ -38,6 +41,8 @@
 #' ## Example with an stitched SPE object
 #' spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 #' seur_stitched <- spe_to_seurat(spe_stitched)
+#'
+#' ## Let's look at our resulting Seurat object
 #' seur_stitched
 spe_to_seurat <- function(
         spe,

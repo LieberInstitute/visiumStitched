@@ -7,18 +7,20 @@
 prep_fiji_image(sample_info, out_dir, lowres_max_size = 1200)
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
+\item{sample_info}{A \code{data.frame()} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}.}
+\code{group_hires_scalef}. The last two are made by \code{rescale_fiji_inputs()}.}
 
 \item{out_dir}{A \code{character(1)} vector giving a path to a directory to place
-the output image(s) and scale factors. Provided the parent exists, \code{out_dir}
-will be created if necessary.}
+the output image(s) and scale factors. Provided the parent directory exists,
+\code{out_dir} will be created if necessary.}
 
 \item{lowres_max_size}{An \code{integer(1)} vector: the resolution (number of
 pixels) of the larger dimension of the output image(s), considered to be "low
-resolution".}
+resolution". The default value of \code{1200} assumes that you are stitching
+together at most a 2 by 2 grid of Visium capture areas, where each has at
+most 600 pixels on the longest dimension (as is the default in SpaceRanger).}
 }
 \value{
 This function returns \code{character()} with the file paths to the
@@ -29,7 +31,7 @@ After stitching all groups in \code{sample_info} with Fiji, images of
 various resolutions (pixel dimensions) are left. This function creates copies
 of each image whose largest dimension is \code{lowres_max_size} pixels. It
 also creates a corresponding \code{scalefactors_json.json} file much like
-Spaceranger's. In conjunction with \code{prep_fiji_image()}, this function
+SpaceRanger's. In conjunction with \code{prep_fiji_coords()}, this function
 prepares for building the \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
 with \code{build_spe()}.
 }
@@ -58,6 +60,7 @@ temp <- unzip(
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
+## Re-size images and add more information to the sample_info
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 spe_input_dir <- tempdir()
@@ -72,15 +75,13 @@ this_image <- imager::load.image(
     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
 )
 dim(this_image)
+library("imager")
+plot(this_image)
 
 #    In total, an image and scalefactors were written
-print(out_paths)
-}
-\seealso{
-Other functions for parsing Fiji outputs: 
-\code{\link{prep_fiji_coords}()}
+out_paths
 }
 \author{
 Nicholas J. Eagles
 }
-\concept{functions for parsing Fiji outputs}
+\concept{functions for parsing Fiji \url{https://imagej.net/software/fiji/} outputs}

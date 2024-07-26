@@ -7,26 +7,27 @@
 prep_fiji_coords(sample_info, out_dir)
 }
 \arguments{
-\item{sample_info}{A \code{tibble} with columns \code{capture_area},
+\item{sample_info}{A \code{data.frame()} with columns \code{capture_area},
 \code{group}, \code{fiji_xml_path}, \code{fiji_image_path},
 \code{spaceranger_dir}, \code{intra_group_scalar}, and
-\code{group_hires_scalef}.}
+\code{group_hires_scalef}. The last two are made by \code{rescale_fiji_inputs()}.}
 
 \item{out_dir}{A \code{character(1)} vector giving a path to a directory to
-place the output pixel coordinates CSVs. Provided the parent exists,
-\code{out_dir} will be created if necessary.}
+place the output pixel coordinates CSVs. Provided the parent directory
+exists, \code{out_dir} will be created if necessary.}
 }
 \value{
-This function returns \code{character()} with the file paths to the
+This function returns a \code{character()} with the file paths to the
 \code{tissue_positions.csv} files it created.
 }
 \description{
-Given a \code{tibble} of sample information (\code{sample_info}) with
+Given a \code{data.frame()} of sample information (\code{sample_info}) with
 columns \code{capture_area}, \code{group}, and \code{fiji_xml_path},
 expected to have one unique path to Fiji XML output per group, read in
 the pixel coordinates from each capture area's \code{tissue_positions.csv}
-file from Spaceranger, and transform using the rotation matrix specified
-by Fiji. Write one new \code{tissue_positions.csv} file per group.
+file from SpaceRanger, and transform using the rotation matrix specified
+by Fiji \url{https://imagej.net/software/fiji/}.
+Write one new \code{tissue_positions.csv} file per group.
 }
 \examples{
 #    Define sample information for the example human brain data
@@ -53,17 +54,15 @@ temp <- unzip(
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
+## Re-size images and add more information to the sample_info
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
 spe_input_dir <- tempdir()
 out_file <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+out_file
 
 #    A file of spatial coordinates for the stitched Br2719 was produced
-print(readr::read_csv(out_file))
-}
-\seealso{
-Other functions for parsing Fiji outputs: 
-\code{\link{prep_fiji_image}()}
+readr::read_csv(out_file)
 }
 \author{
 Nicholas J. Eagles

@@ -6,7 +6,8 @@
 #' \code{coords}, expected to contain columns 'array_row' and 'array_col',
 #' represents an invalid Visium array.
 #'
-#' @param coords A \code{tibble} containing 'array_row' and 'array_col' columns
+#' @param coords A `data.frame()` containing `'array_row'` and
+#' `'array_col'` columns
 #' calculated internally by \code{add_array_coords()}.
 #'
 #' @return It returns `NULL` if all tests were correct.
@@ -116,13 +117,13 @@
 #' Runtime is O(n) with the number of spots, making it much faster than say,
 #' a distance-matrix-based approach running at O(n^2).
 #'
-#' @param coords A \code{tibble()} whose rows represent capture areas of the
+#' @param coords A `data.frame()` whose rows represent capture areas of the
 #' same group, and containing columns 'array_row', 'array_col',
 #' 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
 #'
-#' @return A \code{tibble()} with modified \code{array_row} + \code{array_col}
+#' @return A [tibble][tibble::tibble] with modified \code{array_row} + \code{array_col}
 #' columns, as well as new \code{pxl_row_in_fullres_rounded} and
 #' \code{pxl_col_in_fullres_rounded} columns representing the pixel coordinates
 #' rounded to the nearest exact array coordinates.
