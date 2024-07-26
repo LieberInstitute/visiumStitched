@@ -6,6 +6,12 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Enable downstream analysis of Visium capture areas stitched together with Fiji • visiumStitched</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -87,7 +93,7 @@
 <span></span>
 <span><span class="co">## Download the spot-level data, which is a SpatialExperiment object</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 14:06:21.739878 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 17:05:30.544877 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Explore the stitched data</span></span>
 <span><span class="va">spe</span></span>
@@ -150,8 +156,8 @@
 <span><span class="co">#&gt;     doi = {10.18129/B9.bioc.visiumStitched},</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Eagles NJ, Bach S, Tippani M, Du Y, Hyde TM, Page SC, Martinowich K,</span></span>
-<span><span class="co">#&gt;   Collado-Torres L (2024). "visiumStitched." _bioRxiv_.</span></span>
+<span><span class="co">#&gt;   Eagles NJ, Bach S, Tippani M, Du Y, Miller RA, Hyde TM, Page SC,</span></span>
+<span><span class="co">#&gt;   Martinowich K, Collado-Torres L (2024). "visiumStitched." _bioRxiv_.</span></span>
 <span><span class="co">#&gt;   doi:10.1101/TODO &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
 <span><span class="co">#&gt;   &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -159,7 +165,7 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   @Article{,</span></span>
 <span><span class="co">#&gt;     title = {visiumStitched},</span></span>
-<span><span class="co">#&gt;     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Yufeng Du and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},</span></span>
+<span><span class="co">#&gt;     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Yufeng Du and Ryan A. Miller and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},</span></span>
 <span><span class="co">#&gt;     year = {2024},</span></span>
 <span><span class="co">#&gt;     journal = {bioRxiv},</span></span>
 <span><span class="co">#&gt;     doi = {10.1101/TODO},</span></span>
@@ -257,7 +263,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
