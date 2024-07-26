@@ -110,8 +110,8 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         #   Find paths to input images and the order the corresponding capture
         #   areas appear in these paths
         input_paths <- xml_attr(transform_nodes, "file_path")
-        input_indices <- sapply(
-            this_sample_info$capture_area, function(x) grep(x, input_paths)
+        input_indices <- vapply(
+            this_sample_info$capture_area, function(x) grep(x, input_paths), integer(1)
         )
         if (length(input_paths) != nrow(this_sample_info) || any(is.na(input_indices))) {
             stop("Expected each capture area to be present exactly once in the input filenames to Fiji for each group.")

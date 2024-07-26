@@ -77,11 +77,12 @@ add_overlap_info <- function(spe, metric_name) {
         ungroup()
 
     #   Since we only want overlapping spot keys, remove the "identity spot"
-    col_data$overlap_key <- sapply(
+    col_data$overlap_key <- vapply(
         seq_len(nrow(col_data)),
         function(i) {
             sub(col_data$key[i], "", col_data$overlap_key[i], fixed = TRUE)
-        }
+        },
+        character(1)
     )
 
     #   Remove double commas (only possible in the middle) or leading/trailing
@@ -102,7 +103,7 @@ add_overlap_info <- function(spe, metric_name) {
         ungroup() |>
         arrange(desc(exclude_overlapping_mean_tmp))
 
-    col_data$exclude_overlapping <- sapply(
+    col_data$exclude_overlapping <- vapply(
         seq_len(nrow(col_data)),
         function(i) {
             #   Don't exclude spots that don't overlap anything
@@ -124,7 +125,8 @@ add_overlap_info <- function(spe, metric_name) {
                 match(col_data$capture_area[i], metrics_by_id$capture_area)
 
             return(exclude)
-        }
+        },
+        logical(1)
     )
 
     #   Add colData back to the SpatialExperiment
