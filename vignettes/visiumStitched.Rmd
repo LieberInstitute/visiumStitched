@@ -314,7 +314,10 @@ the overlap among capture areas:
 
 ```{r "array_plot_orig"}
 ## Plot positions of default array coordinates, before overwriting with more
-## meaningful values
+## meaningful values. Use custom colors for each capture area
+ca_colors = c("#A33B20", "#e7bb41", "#3d3b8e")
+names(ca_colors) = c("V13B23-283_C1", "V13B23-283_D1", "V13B23-283_A1")
+
 colData(spe) |>
     as_tibble() |>
     filter(in_tissue) |>
@@ -324,7 +327,7 @@ colData(spe) |>
         )
     ) +
     geom_point(alpha = 0.3) +
-    coord_fixed()
+    scale_color_manual(values = ca_colors)
 ```
 
 Let's contrast this with the array coordinates recomputed by `visiumStitched`.
@@ -345,7 +348,7 @@ colData(spe) |>
         )
     ) +
     geom_point(alpha = 0.3) +
-    coord_fixed()
+    scale_color_manual(values = ca_colors)
 ```
 
 An important downstream application of these array coordinates, is that it enables
