@@ -112,7 +112,7 @@ about the conversion process. This information can be useful for debugging.</p><
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Download some example data</span></span></span>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 18:33:48.929309 loading file /github/home/.cache/R/BiocFileCache/d7410d7ae43_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 18:34:54.769072 loading file /github/home/.cache/R/BiocFileCache/d74272cc73b_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Make the column names unique</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/add_key.html" class="external-link">add_key</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">key</span></span></span>
@@ -143,7 +143,7 @@ about the conversion process. This information can be useful for debugging.</p><
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Example with an stitched SPE object</span></span></span>
 <span class="r-in"><span><span class="va">spe_stitched</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 18:34:00.544698 loading file /github/home/.cache/R/BiocFileCache/2ab7f5916f3_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-26 18:35:05.705695 loading file /github/home/.cache/R/BiocFileCache/2aa316c4122_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
 <span class="r-in"><span><span class="va">seur_stitched</span> <span class="op">&lt;-</span> <span class="fu">spe_to_seurat</span><span class="op">(</span><span class="va">spe_stitched</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running 'as.Seurat(spe)'...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Keys should be one or more alphanumeric characters followed by an underscore, setting key from PC to PC_</span>

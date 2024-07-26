@@ -187,7 +187,7 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span>
 <span>    exdir <span class="op">=</span> <span class="va">sr_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:21.363863 loading file /github/home/.cache/R/BiocFileCache/2ab2c5cf8fa_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:25.661588 loading file /github/home/.cache/R/BiocFileCache/2aa161edeab_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span>
 <span><span class="op">)</span></span>
@@ -197,9 +197,9 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir                           </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/Rtmp8BzNaV/V13B23-283_A1/outs/spatial</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/Rtmp8BzNaV/V13B23-283_C1/outs/spatial</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/Rtmp8BzNaV/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpzaGKBG/V13B23-283_A1/outs/spatial</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpzaGKBG/V13B23-283_C1/outs/spatial</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpzaGKBG/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="preparing-inputs-to-fiji">Preparing Inputs to Fiji<a class="anchor" aria-label="anchor" href="#preparing-inputs-to-fiji"></a>
@@ -228,9 +228,9 @@ to place the rescaled images for later input to Fiji.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/Rtmp8BzNaV/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/Rtmp8BzNaV/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/Rtmp8BzNaV/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpzaGKBG/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpzaGKBG/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpzaGKBG/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="building-a-spatialexperiment">Building a <code>SpatialExperiment</code><a class="anchor" aria-label="anchor" href="#building-a-spatialexperiment"></a>
@@ -258,7 +258,7 @@ respectively.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">fiji_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:36.534866 loading file /github/home/.cache/R/BiocFileCache/2ab384f9d1c_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:40.787131 loading file /github/home/.cache/R/BiocFileCache/2aa366ab32d_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>We now have every column present in <code>sample_info</code> that
@@ -269,9 +269,9 @@ will be necessary for any <code>visiumStitched</code> function.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/Rtmp8BzNaV/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/Rtmp8BzNaV/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/Rtmp8BzNaV/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpzaGKBG/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpzaGKBG/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpzaGKBG/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: fiji_xml_path &lt;chr&gt;, fiji_image_path &lt;chr&gt;</span></span></span></code></pre></div>
 <p>Before building the <code>SpatialExperiment</code>, the idea is to
 create a directory structure very similar to <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs" class="external-link">Spaceranger’s
@@ -294,10 +294,10 @@ and occupy similar memory footprints.</p>
 <span><span class="co">## the standard directory structure from SpaceRanger (10x Genomics)</span></span>
 <span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/Rtmp8BzNaV/Br2719/tissue_positions.csv"</span></span>
+<span><span class="co">#&gt; [1] "/tmp/RtmpzaGKBG/Br2719/tissue_positions.csv"</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/Rtmp8BzNaV/Br2719/tissue_lowres_image.png"</span></span>
-<span><span class="co">#&gt; [2] "/tmp/Rtmp8BzNaV/Br2719/scalefactors_json.json"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/RtmpzaGKBG/Br2719/tissue_lowres_image.png"</span></span>
+<span><span class="co">#&gt; [2] "/tmp/RtmpzaGKBG/Br2719/scalefactors_json.json"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="constructing-the-object">Constructing the Object<a class="anchor" aria-label="anchor" href="#constructing-the-object"></a>
@@ -338,11 +338,11 @@ geometric transformations is <a href="#geometric-transformations">here</a>.</p>
 <span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Building SpatialExperiment using capture area as sample ID</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:39.689923 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:46.643242 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:47.06622 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:34:47.427486 rtracklayer::import: reading the reference GTF file</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:35:18.798724 adding gene information to the SPE object</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:44.035847 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:50.972202 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:51.371096 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:35:51.720437 rtracklayer::import: reading the reference GTF file</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:36:22.768934 adding gene information to the SPE object</span></span>
 <span><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using</span></span>
 <span><span class="co">#&gt; the same GTF file as the one that was used by SpaceRanger. For example, one</span></span>
 <span><span class="co">#&gt; file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()</span></span>
@@ -350,7 +350,7 @@ geometric transformations is <a href="#geometric-transformations">here</a>.</p>
 <span><span class="co">#&gt; Warning: Dropping 2226 out of 38606 genes for which we don't have information</span></span>
 <span><span class="co">#&gt; on the reference GTF file. This typically happens when you are not using the</span></span>
 <span><span class="co">#&gt; same GTF file as the one that was used by SpaceRanger.</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:35:19.02729 adding information used by spatialLIBD</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:36:22.997012 adding information used by spatialLIBD</span></span>
 <span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span>
 <span></span>
 <span><span class="co">## The images in this example data have to be mirrored across the horizontal axis.</span></span>
@@ -512,7 +512,7 @@ as before:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab SpatialExperiment with normalized counts</span></span>
 <span><span class="va">spe_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-26 18:35:28.329636 loading file /github/home/.cache/R/BiocFileCache/2ab7f5916f3_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-07-26 18:36:31.772382 loading file /github/home/.cache/R/BiocFileCache/2aa316c4122_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="va">wm_genes_ens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">[</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MBP"</span>, <span class="st">"GFAP"</span>, <span class="st">"PLP1"</span>, <span class="st">"AQP4"</span><span class="op">)</span>, <span class="fu">rowData</span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span><span class="op">$</span><span class="va">gene_name</span><span class="op">)</span></span>
@@ -554,8 +554,17 @@ already run PRECAST</a>, and can visualize the results here, where we
 see a fairly seamless transition of cluster assignments across
 capture-area boundaries. First, let’s examine <code>k = 2</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## PRECAST k = 2 clusters</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe_norm</span>, clustervar <span class="op">=</span> <span class="st">"precast_k2"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## PRECAST k = 2 clusters with our manually chosen colors</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span></span>
+<span>    <span class="va">spe_norm</span>,</span>
+<span>    clustervar <span class="op">=</span> <span class="st">"precast_k2"</span>,</span>
+<span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    colors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>        <span class="st">"1"</span> <span class="op">=</span> <span class="st">"gold"</span>,</span>
+<span>        <span class="st">"2"</span> <span class="op">=</span> <span class="st">"darkblue"</span>,</span>
+<span>        <span class="st">"NA"</span> <span class="op">=</span> <span class="st">"white"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="visiumStitched_files/figure-html/precast_k2-1.png" width="700"></p>
 <p>We can see that these two spatial clusters are differentiating the
 white vs the gray matter based on the white matter marker genes we <a href="https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization" class="external-link">previously
@@ -568,7 +577,7 @@ also been computed. Let’s visualize the <code>k = 4</code> results.</p>
 <span><span class="va">vars</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"precast"</span>, <span class="va">vars</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; [1] "precast_k2" "precast_k4" "precast_k8"</span></span>
 <span></span>
-<span><span class="co">## PRECAST k = 4 clusters</span></span>
+<span><span class="co">## PRECAST k = 4 clusters with default cluster colors</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe_norm</span>, clustervar <span class="op">=</span> <span class="st">"precast_k4"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visiumStitched_files/figure-html/precast_k4-1.png" width="700"></p>
 <p>The biological interpretation of these spatial clusters would need
@@ -680,9 +689,9 @@ Collado-Torres, 2022)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"visiumStitched.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-26 18:35:35 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-26 18:36:39 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 1.487 mins</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 1.458 mins</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
