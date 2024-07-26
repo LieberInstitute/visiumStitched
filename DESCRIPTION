@@ -43,19 +43,19 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Imports:
-    spatialLIBD,
-    SummarizedExperiment,
-    Seurat,
-    grDevices,
-    readr,
-    S4Vectors,
-    rjson,
     dplyr,
-    imager,
-    stringr,
-    xml2,
     DropletUtils,
-    pkgcond
+    grDevices,
+    imager,
+    pkgcond,
+    readr,
+    rjson,
+    S4Vectors,
+    Seurat,
+    spatialLIBD,
+    stringr,
+    SummarizedExperiment,
+    xml2
 biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
     Visualization, DataImport
 URL: https://github.com/LieberInstitute/visiumStitched
