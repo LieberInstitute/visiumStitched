@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![DOI](https://zenodo.org/badge/709323164.svg)](https://zenodo.org/doi/10.5281/zenodo.13012339)
 [![GitHub
 issues](https://img.shields.io/github/issues/LieberInstitute/visiumStitched)](https://github.com/LieberInstitute/visiumStitched/issues)
 [![GitHub
@@ -64,7 +65,7 @@ stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
 ## Download the spot-level data, which is a SpatialExperiment object
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#> 2024-07-26 17:05:30.544877 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2024-07-26 18:36:29.721855 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Explore the stitched data
 spe
