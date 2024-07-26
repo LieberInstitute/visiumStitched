@@ -25,7 +25,7 @@
 #' will be created if necessary.
 #' @inheritParams add_array_coords
 #'
-#' @return A [tibble][tibble::tibble]: a copy of \code{sample_info} with
+#' @return A [tibble][dplyr::reexports]: a copy of \code{sample_info} with
 #' additional columns
 #' \code{intra_group_scalar} and \code{group_hires_scalef}.
 #'

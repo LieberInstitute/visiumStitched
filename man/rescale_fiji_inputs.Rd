@@ -17,7 +17,7 @@ place the output images. Provided the parent directory exists, \code{out_dir}
 will be created if necessary.}
 }
 \value{
-A \link[tibble:tibble]{tibble}: a copy of \code{sample_info} with
+A \link[dplyr:reexports]{tibble}: a copy of \code{sample_info} with
 additional columns
 \code{intra_group_scalar} and \code{group_hires_scalef}.
 }

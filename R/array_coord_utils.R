@@ -123,7 +123,7 @@
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
 #'
-#' @return A [tibble][tibble::tibble] with modified \code{array_row} + \code{array_col}
+#' @return A [tibble][dplyr::reexports] with modified \code{array_row} + \code{array_col}
 #' columns, as well as new \code{pxl_row_in_fullres_rounded} and
 #' \code{pxl_col_in_fullres_rounded} columns representing the pixel coordinates
 #' rounded to the nearest exact array coordinates.
