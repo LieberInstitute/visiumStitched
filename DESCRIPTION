@@ -35,7 +35,6 @@ Suggests:
     BiocStyle,
     ggplot2,
     knitr,
-    lobstr,
     RefManageR,
     rmarkdown,
     sessioninfo,
