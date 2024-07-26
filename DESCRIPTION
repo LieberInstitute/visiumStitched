@@ -33,6 +33,7 @@ Depends:
 Suggests: 
     BiocFileCache,
     BiocStyle,
+    ggplot2,
     knitr,
     lobstr,
     RefManageR,
@@ -42,13 +43,10 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Imports:
-    viridisLite,
     spatialLIBD,
-    ggplot2,
     SummarizedExperiment,
     Seurat,
     grDevices,
-    rlang,
     readr,
     S4Vectors,
     rjson,
