@@ -452,7 +452,8 @@ vis_clus(
         "1" = "gold",
         "2" = "darkblue",
         "NA" = "white"
-    )
+    ),
+    spatial = FALSE
 )
 ```
 
