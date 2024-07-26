@@ -4,3 +4,4 @@
 ^codecov\.yml$
 ^visiumStitched\.Rproj$
 ^\.Rproj\.user$
+^pkgdown$
