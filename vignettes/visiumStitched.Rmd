@@ -404,7 +404,10 @@ wm_genes_ens <- rownames(spe_norm)[
 ## Plot combination of normalized counts for some white-matter genes 
 vis_gene(
     spe_norm,
-    geneid = wm_genes_ens, assayname = "logcounts", is_stitched = TRUE
+    geneid = wm_genes_ens,
+    assayname = "logcounts",
+    is_stitched = TRUE,
+    spatial = FALSE
 )
 ```
 
@@ -412,9 +415,13 @@ Recall the unnormalized version of this plot, which is not nearly as clean:
 
 ```{r "unnorm_plot", fig.height = 4}
 ## Plot raw counts, which are noisier
+## Same plot we made before, but this time with no histology images
 vis_gene(
     spe,
-    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
+    geneid = wm_genes,
+    assayname = "counts",
+    is_stitched = TRUE,
+    spatial = FALSE
 )
 ```
 
@@ -459,7 +466,12 @@ vars <- colnames(colData(spe_norm))
 vars[grep("precast", vars)]
 
 ## PRECAST k = 4 clusters with default cluster colors
-vis_clus(spe_norm, clustervar = "precast_k4", is_stitched = TRUE)
+vis_clus(
+    spe_norm,
+    clustervar = "precast_k4",
+    is_stitched = TRUE,
+    spatial = FALSE
+)
 ```
 
 The biological interpretation of these spatial clusters would need further work, using methods such as:
