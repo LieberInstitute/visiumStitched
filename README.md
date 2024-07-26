@@ -64,7 +64,7 @@ stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
 ## Download the spot-level data, which is a SpatialExperiment object
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#> 2024-07-26 14:06:21.739878 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2024-07-26 17:05:30.544877 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Explore the stitched data
 spe
@@ -135,8 +135,8 @@ print(citation("visiumStitched"), bibtex = TRUE)
 #>     doi = {10.18129/B9.bioc.visiumStitched},
 #>   }
 #> 
-#>   Eagles NJ, Bach S, Tippani M, Du Y, Hyde TM, Page SC, Martinowich K,
-#>   Collado-Torres L (2024). "visiumStitched." _bioRxiv_.
+#>   Eagles NJ, Bach S, Tippani M, Du Y, Miller RA, Hyde TM, Page SC,
+#>   Martinowich K, Collado-Torres L (2024). "visiumStitched." _bioRxiv_.
 #>   doi:10.1101/TODO <https://doi.org/10.1101/TODO>,
 #>   <https://www.biorxiv.org/content/10.1101/TODO>.
 #> 
@@ -144,7 +144,7 @@ print(citation("visiumStitched"), bibtex = TRUE)
 #> 
 #>   @Article{,
 #>     title = {visiumStitched},
-#>     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Yufeng Du and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},
+#>     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Yufeng Du and Ryan A. Miller and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},
 #>     year = {2024},
 #>     journal = {bioRxiv},
 #>     doi = {10.1101/TODO},
