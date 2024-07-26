@@ -254,12 +254,12 @@ spe <- build_spe(
 spe <- SpatialExperiment::mirrorObject(spe, axis = "h")
 ```
 
-The `exclude_overlapping` `colData()` column controls
+The `colData(spe)$exclude_overlapping` column controls
 which spots to drop for visualization purposes. Note also that the `overlap_key`
 column was added, which gives a comma-separated string of spot keys overlapping each
-given spot, or the empty string otherwise. This vignette won't cover the potential uses
-of this information, but one possibility is to perform clustering and check how frequently
-overlapping spots are assigned the same cluster.
+given spot, or the empty string otherwise. After spatial clustering, the `overlap_key`
+information can be useful to check how frequently overlapping spots are assigned
+the same cluster.
 
 ```{r "exclude_overlapping"}
 ## Examine spots to exclude for plotting
@@ -271,24 +271,27 @@ table(spe$exclude_overlapping)
 ## Stitched plotting
 
 To demonstrate that we've stitched both the gene expression and image data successfully,
-we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` to plot the distribution of white matter
-spatially. Note that we're plotting raw counts; prior to normalization, library-size
-variation across spots can bias the apparent distribution. Later, we'll show that
-normalization is critical to producing a visually seamless transition between overlapping
-capture areas.
+we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` (version 1.17.8 or newer) to plot the distribution of white matter
+spatially. For more context on human brain white matter spatial marker genes, check [our previous work on this subject](https://doi.org/10.1038/s41593-020-00787-0).
 
 ```{r "explore_coords", fig.height = 4}
-## Show combined raw expression of white-matter genes 
+## Show combined raw expression of white-matter marker genes 
 wm_genes <- rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
 vis_gene(spe, geneid = wm_genes, assayname = "counts", is_stitched = TRUE)
 ```
 
+Note that we're plotting raw counts; prior to normalization, library-size
+variation across spots can bias the apparent distribution. Later, we'll show that
+normalization is critical to producing a visually seamless transition between overlapping
+capture areas.
+
 ## Array coordinates
 
-Note also that the array coordinates (i.e. `spe$array_row` and `spe$array_col`) have been
-recomputed to more sensibly index the stitched data. By definition, these array coordinates
+Given that the stitched data is larger than a default Visium capture area, `add_array_coords()` (which is used internally by `build_spe()`) recomputed the array coordinates (i.e. `spe$array_row` and `spe$array_col`) to more sensibly index the stitched data. 
+
+Let's explain this in more detail. By definition, these array coordinates
 (see [documentation from 10X](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-positions))
 are integer indices of each spot on a Visium capture area, numbering the typically 78 and 128
 rows and columns, respectively, for a 6.5mm capture area. The `build_spe()` function retains
@@ -318,10 +321,7 @@ Briefly, `visiumStitched` forms a new hexagonal, Visium-like grid spanning the s
 by all capture areas after stitching. Then, the true spot positions are fit to the nearest new
 spot positions, in terms of Euclidean distance. Finally, array coordinates are re-indexed
 according to the new spot assignments, resulting in spatially meaningful values that apply at
-the group level for stitched data. This ultimately enables downstream applications that use
-the array coordinates, like
-clustering with `BayesSpace` or `PRECAST`, to treat each group as a spatially continuous
-sample.
+the group level for stitched data. 
 
 ```{r "array_plot_after"}
 ## Plot positions of redefined array coordinates
@@ -337,10 +337,20 @@ colData(spe) |>
     coord_fixed()
 ```
 
+An important downstream application of these array coordinates, is that it enables
+methods that rely on the hexagonal grid structure of Visium to find more than the original
+six neighboring spots. This enables clustering with [`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) or [`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w), to treat each group as a spatially continuous
+sample. We can see here how [`BayesSpace:::.find_neighbors()`](https://github.com/edward130603/BayesSpace/blob/8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd/R/spatialCluster.R#L214-L220) version 1.11.0 uses the hexagonal Visium grid properties to find the spot neighbors. See also [`BayesSpace` Figure 1b](https://www.nature.com/articles/s41587-021-00935-2/figures/1) for an illustration of this process.
+
+<iframe frameborder="0" scrolling="no" style="width:100%; height:226px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fedward130603%2FBayesSpace%2Fblob%2F8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd%2FR%2FspatialCluster.R%23L214-L220&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
+
+Yet, it doesn't matter if there are actually two or more spots on each of those six neighbor positions. `visiumStitched` takes advantage of this property to enable `BayesSpace` and other spatially-aware clustering methods to use data from overlapping spots when performing spatial clustering. You can then use `colData(spe)$overlap_key` to inspect whether overlapping spots were assigned to the same spatial cluster.
+
 ## Geometric transformations
 
 As a `SpatialExperiment`, the stitched data may be rotated or mirrored by group, such as with
-the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions.
+the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions. These
+functions are useful in case the image needs to be transformed to reach the preferred tissue orientation.
 
 ```{r "rotate", fig.height=4}
 ## Rotate image and gene-expression data by 180 degrees, plotting a combination
@@ -366,7 +376,7 @@ As noted above, library-size variation across spots can bias the apparent spatia
 distribution of genes when raw counts are used. The effect is often dramatic
 enough that spatial trends cannot be easily seen across the stitched data until
 data is log-normalized. Instead of performing normalization here, we'll fetch the
-object with [normalized](https://bioconductor.org/books/3.12/OSCA/normalization.html#normalization-by-deconvolution)
+object with [normalized](https://bioconductor.org/books/3.19/OSCA.basic/normalization.html#normalization-by-deconvolution)
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ```{r "fetch_norm", fig.height = 4}
@@ -394,15 +404,17 @@ vis_gene(
 )
 ```
 
+The actual normalization code for this example data is available [here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
+
 # Downstream applications
 
 One common area of analysis in spatial transcriptomics involves clustering--
-in particular, spatially aware clustering. Many spatially aware clustering
+in particular, spatially-aware clustering. Many spatially-aware clustering
 algorithms check the array coordinates to determine
-neighboring spots and ultimately produce spatially smooth clusters. Since
+neighboring spots and ultimately produce spatially smooth clusters. As we have previously explained, 
 `visiumStitched` [re-computes array coordinates](#array-coordinates) in a meaningful way,
-software like [BayesSpace](https://doi.org/10.1038/s41587-021-00935-2) and
-[PRECAST](https://doi.org/10.1038/s41467-023-35947-w) work out-of-the-box with
+such that software like [`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) and
+[`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w) work out-of-the-box with
 stitched data, treating each group as a single continuous sample.
 
 [We've already run PRECAST](https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/03_precast.R),
@@ -414,16 +426,28 @@ cluster assignments across capture-area boundaries. First, let's examine `k = 2`
 vis_clus(spe_norm, clustervar = "precast_k2", is_stitched = TRUE)
 ```
 
-`k = 4` has also been computed:
+We can see that these two spatial clusters are differentiating the white vs the gray matter based on the white matter marker genes we [previously visualized](https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization).
+
+In the example data, `k = 4` and `k =8` have also been computed. Let's visualize the `k = 4` results.
 
 ```{r "precast_k4", fig.height = 4}
+## PRECAST results already available in this example data
+vars <- colnames(colData(spe_norm))
+vars[grep("precast", vars)]
+
 ## PRECAST k = 4 clusters
 vis_clus(spe_norm, clustervar = "precast_k4", is_stitched = TRUE)
 ```
 
+The biological interpretation of these spatial clusters would need further work, using methods such as:
+
+* [spatial registration](https://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html) of reference sc/snRNA-seq or spatial data,
+* visualization of known marker genes for the tissue of interest,
+* or identification of data driven marker genes using [`spatialLIBD::registration_wrapper()`](https://research.libd.org/spatialLIBD/reference/registration_wrapper.html), [`DeconvoBuddies::findMarkers_1vAll()`](https://research.libd.org/DeconvoBuddies/reference/findMarkers_1vAll.html), [`DeconvoBuiddies::get_mean_ratio()`](https://research.libd.org/DeconvoBuddies/reference/get_mean_ratio.html) or other tools. See [Pullin and McCarthy, _Genome Biol._, 2024](https://doi.org/10.1186/s13059-024-03183-0) for a list of marker gene selection methods.
+
 # Conclusion
 
-`visiumStitched` provides a set of helper functions, in conjunction with ImageJ/Fiji,
+`visiumStitched` provides a set of helper functions, in conjunction with `ImageJ`/`Fiji`,
 intended to simplify the stitching of Visium data into a spatially integrated
 `SpatialExperiment` object ready for analysis. We hope you find it useful for your
 research!
