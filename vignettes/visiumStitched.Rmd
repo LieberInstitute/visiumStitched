@@ -135,7 +135,8 @@ with `spatialLIBD::fetch_data()`.
 ## Download example SpaceRanger output files
 sr_dir <- tempdir()
 temp <- unzip(spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
-    exdir = sr_dir)
+    exdir = sr_dir
+)
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -286,7 +287,7 @@ we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` (version 1.17.8 or newer) 
 spatially. For more context on human brain white matter spatial marker genes, check [our previous work on this subject](https://doi.org/10.1038/s41593-020-00787-0).
 
 ```{r "explore_coords", fig.height = 4}
-## Show combined raw expression of white-matter marker genes 
+## Show combined raw expression of white-matter marker genes
 wm_genes <- rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
 ]
@@ -315,8 +316,8 @@ the overlap among capture areas:
 ```{r "array_plot_orig"}
 ## Plot positions of default array coordinates, before overwriting with more
 ## meaningful values. Use custom colors for each capture area
-ca_colors = c("#A33B20", "#e7bb41", "#3d3b8e")
-names(ca_colors) = c("V13B23-283_C1", "V13B23-283_D1", "V13B23-283_A1")
+ca_colors <- c("#A33B20", "#e7bb41", "#3d3b8e")
+names(ca_colors) <- c("V13B23-283_C1", "V13B23-283_D1", "V13B23-283_A1")
 
 colData(spe) |>
     as_tibble() |>
@@ -401,7 +402,7 @@ wm_genes_ens <- rownames(spe_norm)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)
 ]
 
-## Plot combination of normalized counts for some white-matter genes 
+## Plot combination of normalized counts for some white-matter genes
 vis_gene(
     spe_norm,
     geneid = wm_genes_ens,

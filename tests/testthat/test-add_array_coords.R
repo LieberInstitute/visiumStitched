@@ -55,11 +55,11 @@ test_that(
         expect_identical(spe$array_row, spe_new$array_row_original)
         expect_identical(spe$array_col, spe_new$array_col_original)
         expect_identical(
-            spatialCoords(spe)[, 'pxl_row_in_fullres'],
+            spatialCoords(spe)[, "pxl_row_in_fullres"],
             spe_new$pxl_row_in_fullres_original
         )
         expect_identical(
-            spatialCoords(spe)[, 'pxl_col_in_fullres'],
+            spatialCoords(spe)[, "pxl_col_in_fullres"],
             spe_new$pxl_col_in_fullres_original
         )
     }

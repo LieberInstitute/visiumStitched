@@ -188,7 +188,7 @@ add_array_coords <- function(spe, sample_info, coords_dir) {
         cbind(
             coords |>
                 #   Don't add transformed pixel coordinates to colData
-                select(-matches('^pxl_(row|col)_in_fullres$'))
+                select(-matches("^pxl_(row|col)_in_fullres$"))
         ) |>
         S4Vectors::DataFrame()
 
