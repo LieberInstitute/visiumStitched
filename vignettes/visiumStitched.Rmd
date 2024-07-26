@@ -144,7 +144,7 @@ sample_info$spaceranger_dir <- file.path(
 sample_info
 ```
 
-# Preparing Images for Fiji
+# Preparing Inputs to Fiji
 
 The `visiumStitched` workflow makes use of [Fiji](https://imagej.net/software/fiji/), a
 distribution of the `ImageJ` image-processing software, which includes an interface for
@@ -170,13 +170,15 @@ sample_info
 
 # Building a `SpatialExperiment`
 
+## Stitching Images with Fiji
+
 Before building a `SpatialExperiment` for a stitched dataset, we must align the images for each
 group in Fiji. Check out [this video](https://www.youtube.com/watch?v=kFLtpK3qbSY) for a
 guide through this process with the example data.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kFLtpK3qbSY?si=CF-rv7Nd5yc7W6nC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-## Parsing Outputs from Fiji
+## Creating Group-Level Samples
 
 From the Fiji alignment, two output files will be produced: an `XML` file specifying rigid
 affine transformations for each
@@ -296,7 +298,7 @@ variation across spots can bias the apparent distribution. Later, we'll show tha
 normalization is critical to producing a visually seamless transition between overlapping
 capture areas.
 
-## Array coordinates
+## Defining Array Coordinates
 
 Given that the stitched data is larger than a default Visium capture area, `add_array_coords()` (which is used internally by `build_spe()`) recomputed the array coordinates (i.e. `spe$array_row` and `spe$array_col`) to more sensibly index the stitched data. 
 
