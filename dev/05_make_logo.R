@@ -11,9 +11,9 @@ vis_clus(
     clustervar = "precast_k2",
     is_stitched = TRUE,
     colors = c(
-        "2" = "darkblue",
         "1" = "gold",
-        "NA" = "red"
+        "2" = "darkblue",
+        "NA" = "white"
     ),
     spatial = FALSE
 )

@@ -436,8 +436,17 @@ and can visualize the results here, where we see a fairly seamless transition of
 cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
 
 ```{r "precast_k2", fig.height = 4}
-## PRECAST k = 2 clusters
-vis_clus(spe_norm, clustervar = "precast_k2", is_stitched = TRUE)
+## PRECAST k = 2 clusters with our manually chosen colors
+vis_clus(
+    spe_norm,
+    clustervar = "precast_k2",
+    is_stitched = TRUE,
+    colors = c(
+        "1" = "gold",
+        "2" = "darkblue",
+        "NA" = "white"
+    )
+)
 ```
 
 We can see that these two spatial clusters are differentiating the white vs the gray matter based on the white matter marker genes we [previously visualized](https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization).
@@ -449,7 +458,7 @@ In the example data, `k = 4` and `k =8` have also been computed. Let's visualize
 vars <- colnames(colData(spe_norm))
 vars[grep("precast", vars)]
 
-## PRECAST k = 4 clusters
+## PRECAST k = 4 clusters with default cluster colors
 vis_clus(spe_norm, clustervar = "precast_k4", is_stitched = TRUE)
 ```
 
