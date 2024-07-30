@@ -46,6 +46,16 @@ every capture area from the group."><meta property="og:image" content="/logo.png
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Articles
+
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu"><li>
+      <a href="../articles/misc.html">Miscellaneous notes</a>
+    </li>
+  </ul></li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -136,7 +146,7 @@ additional columns
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-30 13:47:16.838772 loading file /github/home/.cache/R/BiocFileCache/87c18448b43_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-30 14:28:32.641985 loading file /github/home/.cache/R/BiocFileCache/22077dbe5de_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -147,7 +157,7 @@ additional columns
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">fiji_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-30 13:47:19.124153 loading file /github/home/.cache/R/BiocFileCache/87c293a3da0_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-07-30 14:28:35.127847 loading file /github/home/.cache/R/BiocFileCache/2207166af2d_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
@@ -181,12 +191,12 @@ additional columns
 <span class="r-out co"><span class="r-pr">#&gt;</span> [12] "V13B23-283_D1"                            </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13] "V13B23-283_D1.png"                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [14] "downlit"                                  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "file35af4525f0e3"                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "file35af5a3b396a"                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "file35af623d0145"                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "file35af7b782f80"                         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "file35af964b145"                          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "file35afae8c9fe"                          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [15] "file303c1508f472"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [16] "file303c160928a9"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [17] "file303c29f27fbf"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [18] "file303c56d4ef75"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [19] "file303c58484fb5"                         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [20] "file303cbacb4d3"                          </span>
 </code></pre></div>
     </div>
   </div>
