@@ -119,7 +119,7 @@ per group.
 
 ```{r "sample_info"}
 ## Create initial sample_info
-sample_info <- tibble::tibble(
+sample_info <- data.frame(
     group = "Br2719",
     capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
 )
@@ -264,6 +264,9 @@ spe <- build_spe(
 
 ## The images in this example data have to be mirrored across the horizontal axis.
 spe <- SpatialExperiment::mirrorObject(spe, axis = "h")
+
+## Explore stitched spe object
+spe
 ```
 
 The `colData(spe)$exclude_overlapping` column controls
