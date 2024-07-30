@@ -364,73 +364,6 @@ sample. We can see here how [`BayesSpace:::.find_neighbors()`](https://github.co
 
 Yet, it doesn't matter if there are actually two or more spots on each of those six neighbor positions. `visiumStitched` takes advantage of this property to enable `BayesSpace` and other spatially-aware clustering methods to use data from overlapping spots when performing spatial clustering. You can then use `colData(spe)$overlap_key` to inspect whether overlapping spots were assigned to the same spatial cluster.
 
-## Geometric transformations
-
-As a `SpatialExperiment`, the stitched data may be rotated or mirrored by group, such as with
-the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions. These
-functions are useful in case the image needs to be transformed to reach the preferred tissue orientation.
-
-```{r "rotate", fig.height=4}
-## Rotate image and gene-expression data by 180 degrees, plotting a combination
-## of white-matter genes
-vis_gene(
-    rotateObject(spe, sample_id = "Br2719", degrees = 180),
-    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
-)
-```
-
-```{r "mirror", fig.height = 4}
-## Mirror image and gene-expression data across a vertical axis, plotting a
-## combination of white-matter genes
-vis_gene(
-    mirrorObject(spe, sample_id = "Br2719", axis = "v"),
-    geneid = wm_genes, assayname = "counts", is_stitched = TRUE
-)
-```
-
-## A note on normalization
-
-As noted above, library-size variation across spots can bias the apparent spatial
-distribution of genes when raw counts are used. The effect is often dramatic
-enough that spatial trends cannot be easily seen across the stitched data until
-data is log-normalized. Instead of performing normalization here, we'll fetch the
-object with [normalized](https://bioconductor.org/books/3.19/OSCA.basic/normalization.html#normalization-by-deconvolution)
-counts from `spatialLIBD`, then plot a few white matter genes as before:
-
-```{r "fetch_norm", fig.height = 4}
-## Grab SpatialExperiment with normalized counts
-spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
-
-wm_genes_ens <- rownames(spe_norm)[
-    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe_norm)$gene_name)
-]
-
-## Plot combination of normalized counts for some white-matter genes
-vis_gene(
-    spe_norm,
-    geneid = wm_genes_ens,
-    assayname = "logcounts",
-    is_stitched = TRUE,
-    spatial = FALSE
-)
-```
-
-Recall the unnormalized version of this plot, which is not nearly as clean:
-
-```{r "unnorm_plot", fig.height = 4}
-## Plot raw counts, which are noisier
-## Same plot we made before, but this time with no histology images
-vis_gene(
-    spe,
-    geneid = wm_genes,
-    assayname = "counts",
-    is_stitched = TRUE,
-    spatial = FALSE
-)
-```
-
-The actual normalization code for this example data is available [here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
-
 # Downstream applications
 
 One common area of analysis in spatial transcriptomics involves clustering--
@@ -447,6 +380,10 @@ and can visualize the results here, where we see a fairly seamless transition of
 cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
 
 ```{r "precast_k2", fig.height = 4}
+## Grab SpatialExperiment with normalized counts
+spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
+assayNames(spe_norm)
+
 ## PRECAST k = 2 clusters with our manually chosen colors
 vis_clus(
     spe_norm,

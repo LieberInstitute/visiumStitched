@@ -1,0 +1,129 @@
+---
+title: "Miscellaneous notes"
+author: 
+  - name: Nicholas J. Eagles
+    affiliation:
+    - &libd Lieber Institute for Brain Development
+    email: nickeagles77@gmail.com
+  - name: Leonardo Collado-Torres
+    affiliation:
+    - *libd
+    - &ccb Center for Computational Biology, Johns Hopkins University
+    - &jhubiostat Department of Biostatistics, Johns Hopkins Bloomberg School of Public Health
+    email: lcolladotor@gmail.com
+output: 
+  BiocStyle::html_document:
+    self_contained: yes
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    code_folding: show
+date: "`r doc_date()`"
+package: "`r pkg_ver('visiumStitched')`"
+vignette: >
+  %\VignetteIndexEntry{Miscellaneous notes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>",
+    crop = NULL ## Related to https://stat.ethz.ch/pipermail/bioc-devel/2020-April/016656.html
+)
+```
+
+This vignette has some extra companion notes to the _Introduction to `visiumStiched`_ main vignette.
+
+# Load data
+
+Let's load the `spatialLIBD` package we'll use in this vignette.
+
+```{r "start", message=FALSE, warning=FALSE}
+library("spatialLIBD")
+```
+
+Now we can download the example `visiumStitched_brain` data that includes normalized `logcounts`. We'll define the same example white matter marker genes.
+
+```{r "normalized_data_download"}
+## Grab SpatialExperiment with normalized counts
+spe <- fetch_data(type = "visiumStitched_brain_spe")
+
+## Check that spe does contain the "logcounts" assay
+assayNames(spe)
+
+## Define white matter marker genes
+wm_genes <- rownames(spe)[
+    match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
+]
+```
+
+
+# Geometric transformations notes
+
+As a `SpatialExperiment`, the stitched data you constructed with `visiumStitched::build_spe()` may need to be rotated or mirrored by group. This can be done using
+the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions. These
+functions are useful in case the image needs to be transformed to reach the preferred tissue orientation.
+
+```{r "rotate", fig.height=4}
+## Rotate image and gene-expression data by 180 degrees, plotting a combination
+## of white-matter genes
+vis_gene(
+    rotateObject(spe, sample_id = "Br2719", degrees = 180),
+    geneid = wm_genes,
+    assayname = "counts",
+    is_stitched = TRUE,
+    spatial = FALSE
+)
+```
+
+```{r "mirror", fig.height = 4}
+## Mirror image and gene-expression data across a vertical axis, plotting a
+## combination of white-matter genes
+vis_gene(
+    mirrorObject(spe, sample_id = "Br2719", axis = "v"),
+    geneid = wm_genes,
+    assayname = "counts",
+    is_stitched = TRUE,
+    spatial = FALSE
+)
+```
+
+You might want to re-make these plots with `spatial = TRUE` so you can see how the histology image gets rotated and/or mirrored. For file size purposes of this vignette, here we had to use `spatial = FALSE`.
+
+## A note on normalization
+
+As noted [in the main vignette](https://research.libd.org/visiumStitched/articles/visiumStitched.html#stitched-plotting), library-size variation across spots can bias the apparent spatial
+distribution of genes when raw counts are used. The effect is often dramatic
+enough that spatial trends cannot be easily seen across the stitched data until
+data is log-normalized. Instead of performing normalization here, we'll fetch the
+object with [normalized](https://bioconductor.org/books/3.19/OSCA.basic/normalization.html#normalization-by-deconvolution)
+counts from `spatialLIBD`, then plot a few white matter genes as before:
+
+```{r "fetch_norm", fig.height = 4}
+## Plot combination of normalized counts for some white-matter genes
+vis_gene(
+    spe,
+    geneid = wm_genes,
+    assayname = "logcounts",
+    is_stitched = TRUE,
+    spatial = FALSE
+)
+```
+
+Recall the unnormalized version of this plot, which is not nearly as clean:
+
+```{r "unnorm_plot", fig.height = 4}
+## Plot raw counts, which are noisier
+## Same plot we made before, but this time with no histology images
+vis_gene(
+    spe,
+    geneid = wm_genes,
+    assayname = "counts",
+    is_stitched = TRUE,
+    spatial = FALSE
+)
+```
+
+The actual normalization code for this example data is available [here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
