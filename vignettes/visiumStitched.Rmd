@@ -375,7 +375,7 @@ such that software like [`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-
 [`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w) work out-of-the-box with
 stitched data, treating each group as a single continuous sample.
 
-[We've already run PRECAST](https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/03_precast.R),
+[We've already run PRECAST](https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/06_precast.R),
 and can visualize the results here, where we see a fairly seamless transition of
 cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
 
