@@ -387,7 +387,7 @@ assayNames(spe_norm)
 ## PRECAST k = 2 clusters with our manually chosen colors
 vis_clus(
     spe_norm,
-    clustervar = "precast_k2",
+    clustervar = "precast_k2_stitched",
     is_stitched = TRUE,
     colors = c(
         "1" = "gold",
@@ -400,7 +400,7 @@ vis_clus(
 
 We can see that these two spatial clusters are differentiating the white vs the gray matter based on the white matter marker genes we [previously visualized](https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization).
 
-In the example data, `k = 4` and `k =8` have also been computed. Let's visualize the `k = 4` results.
+In the example data, `k = 4` and `k = 8` have also been computed. Let's visualize the `k = 4` results.
 
 ```{r "precast_k4", fig.height = 4}
 ## PRECAST results already available in this example data
@@ -410,7 +410,7 @@ vars[grep("precast", vars)]
 ## PRECAST k = 4 clusters with default cluster colors
 vis_clus(
     spe_norm,
-    clustervar = "precast_k4",
+    clustervar = "precast_k4_stitched",
     is_stitched = TRUE,
     spatial = FALSE
 )
