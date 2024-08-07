@@ -1,7 +1,7 @@
 pandoc: '3.2'
-pkgdown: 2.1.0.9000
-pkgdown_sha: 1d40a80e6b3564a6d7da0ce467b0a4570aa5665e
+pkgdown: 2.1.0
+pkgdown_sha: ~
 articles:
   misc: misc.html
   visiumStitched: visiumStitched.html
-last_built: 2024-08-06T15:30Z
+last_built: 2024-08-07T18:41Z

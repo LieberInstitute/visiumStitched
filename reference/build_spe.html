@@ -67,7 +67,7 @@ for visualization or downstream analysis.'><meta property="og:image" content="/l
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Build stitched <code>SpatialExperiment</code></h1>
-    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/build_spe.R" class="external-link"><code>R/build_spe.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/HEAD/R/build_spe.R" class="external-link"><code>R/build_spe.R</code></a></small>
     <div class="hidden name"><code>build_spe.Rd</code></div>
     </div>
 
@@ -159,7 +159,8 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:18.889552 loading file /github/home/.cache/R/BiocFileCache/4e13c5d9e33_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2024-04-29</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:41:58.988415 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/183c753add3c3_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
@@ -170,7 +171,8 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">fiji_dir</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:21.243631 loading file /github/home/.cache/R/BiocFileCache/4e16112c84b_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2024-04-29</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:00.507652 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/183c76c583117_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
@@ -180,10 +182,10 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span><span class="co">## Preparing Fiji coordinates and images for build_spe()</span></span></span>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpswlckh/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpetvm3F/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmpswlckh/Br2719/tissue_lowres_image.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/Rtmpswlckh/Br2719/scalefactors_json.json" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpetvm3F/Br2719/tissue_lowres_image.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/var/folders/_2/hqcmhc1d1bl3lqxgcrkpv8_00000gn/T//Rtmpetvm3F/Br2719/scalefactors_json.json" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Build the SpatialExperiment</span></span></span>
@@ -202,6 +204,8 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>        <span class="st">"release_32/gencode.v32.annotation.gtf.gz"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> adding rname 'ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_32/gencode.v32.annotation.gtf.gz'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Now we can build the stitched SpatialExperiment object</span></span></span>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">build_spe</span><span class="op">(</span></span></span>
@@ -209,14 +213,14 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Building SpatialExperiment using capture area as sample ID</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:27.36514 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:33.326616 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:33.717882 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:31:34.031163 rtracklayer::import: reading the reference GTF file</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:32:03.178129 adding gene information to the SPE object</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:09.712605 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:14.178939 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:14.518438 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:14.748949 rtracklayer::import: reading the reference GTF file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:37.139117 adding gene information to the SPE object</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:32:03.401 adding information used by spatialLIBD</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:42:37.339491 adding information used by spatialLIBD</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Overwriting imgData(spe) with merged images (one per group)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Let's explore the stitched SpatialExperiment object</span></span></span>
@@ -252,7 +256,7 @@ transformed pixel and array coordinates (including  in the
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>

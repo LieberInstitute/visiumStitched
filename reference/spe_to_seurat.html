@@ -61,7 +61,7 @@ manually. The actual appearance of images are buggy for now."><meta property="og
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert a <code>SpatialExperiment</code> object to a <code>Seurat</code> object</h1>
-    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/R/spe_to_seurat.R" class="external-link"><code>R/spe_to_seurat.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/HEAD/R/spe_to_seurat.R" class="external-link"><code>R/spe_to_seurat.R</code></a></small>
     <div class="hidden name"><code>spe_to_seurat.Rd</code></div>
     </div>
 
@@ -122,7 +122,10 @@ about the conversion process. This information can be useful for debugging.</p><
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## Download some example data</span></span></span>
 <span class="r-in"><span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"spatialDLPFC_Visium_example_subset"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:32:37.9247 loading file /github/home/.cache/R/BiocFileCache/1084f56aecf_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2024-04-29</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> adding rname 'https://www.dropbox.com/s/3jm3kjab9lzaemo/spatialDLPFC_spe_subset_example.rds?dl=1'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:43:09.357041 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/183c76449acd1_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Make the column names unique</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/add_key.html" class="external-link">add_key</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span><span class="op">$</span><span class="va">key</span></span></span>
@@ -153,7 +156,8 @@ about the conversion process. This information can be useful for debugging.</p><
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Example with an stitched SPE object</span></span></span>
 <span class="r-in"><span><span class="va">spe_stitched</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-06 15:32:48.038304 loading file /github/home/.cache/R/BiocFileCache/4e15e345704_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> snapshotDate(): 2024-04-29</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-07 14:43:15.683673 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1769558ae4ac_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
 <span class="r-in"><span><span class="va">seur_stitched</span> <span class="op">&lt;-</span> <span class="fu">spe_to_seurat</span><span class="op">(</span><span class="va">spe_stitched</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running 'as.Seurat(spe)'...</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Keys should be one or more alphanumeric characters followed by an underscore, setting key from PC to PC_</span>
@@ -182,7 +186,7 @@ about the conversion process. This information can be useful for debugging.</p><
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer></div>

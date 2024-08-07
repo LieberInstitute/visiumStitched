@@ -105,7 +105,7 @@
 <span></span>
 <span><span class="co">## Download the spot-level data, which is a SpatialExperiment object</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-07-31 12:06:58.719486 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-08-07 14:26:16.510237 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1769558ae4ac_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Explore the stitched data</span></span>
 <span><span class="va">spe</span></span>
@@ -119,7 +119,8 @@
 <span><span class="co">#&gt; colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1</span></span>
 <span><span class="co">#&gt;   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1</span></span>
 <span><span class="co">#&gt;   TTGTTTGTGTAAATTC-1_V13B23-283_D1</span></span>
-<span><span class="co">#&gt; colData names(40): sample_id in_tissue ... precast_k4 precast_k8</span></span>
+<span><span class="co">#&gt; colData names(43): sample_id in_tissue ... precast_k16_unstitched</span></span>
+<span><span class="co">#&gt;   precast_k24_unstitched</span></span>
 <span><span class="co">#&gt; reducedDimNames(1): PCA</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span>
@@ -127,7 +128,11 @@
 <span><span class="co">#&gt; imgData names(4): sample_id image_id data scaleFactor</span></span>
 <span></span>
 <span><span class="co">## Show clustering results from PRECAST at k = 8</span></span>
-<span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span><span class="va">spe</span>, clustervar <span class="op">=</span> <span class="st">"precast_k8"</span>, is_stitched <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span></span>
+<span>    <span class="va">spe</span>,</span>
+<span>    clustervar <span class="op">=</span> <span class="st">"precast_k8_stitched"</span>,</span>
+<span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example_visiumStitched_brain-1.png" width="100%"></p>
 </div>
 <div class="section level2">
@@ -277,7 +282,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
