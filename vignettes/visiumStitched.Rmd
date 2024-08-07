@@ -379,7 +379,7 @@ stitched data, treating each group as a single continuous sample.
 and can visualize the results here, where we see a fairly seamless transition of
 cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
 
-```{r "precast_k2", fig.height = 4}
+```{r "precast_k2_stitched", fig.height = 4}
 ## Grab SpatialExperiment with normalized counts
 spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
 assayNames(spe_norm)
@@ -387,7 +387,7 @@ assayNames(spe_norm)
 ## PRECAST k = 2 clusters with our manually chosen colors
 vis_clus(
     spe_norm,
-    clustervar = "precast_k2",
+    clustervar = "precast_k2_stitched",
     is_stitched = TRUE,
     colors = c(
         "1" = "gold",
@@ -402,7 +402,7 @@ We can see that these two spatial clusters are differentiating the white vs the 
 
 In the example data, `k = 4` and `k =8` have also been computed. Let's visualize the `k = 4` results.
 
-```{r "precast_k4", fig.height = 4}
+```{r "precast_k4_stitched", fig.height = 4}
 ## PRECAST results already available in this example data
 vars <- colnames(colData(spe_norm))
 vars[grep("precast", vars)]
@@ -410,7 +410,7 @@ vars[grep("precast", vars)]
 ## PRECAST k = 4 clusters with default cluster colors
 vis_clus(
     spe_norm,
-    clustervar = "precast_k4",
+    clustervar = "precast_k4_stitched",
     is_stitched = TRUE,
     spatial = FALSE
 )

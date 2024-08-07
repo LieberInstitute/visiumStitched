@@ -65,7 +65,7 @@ stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
 ## Download the spot-level data, which is a SpatialExperiment object
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#> 2024-07-31 12:06:58.719486 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/154352e7328f0_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2024-08-07 14:26:16.510237 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1769558ae4ac_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Explore the stitched data
 spe
@@ -79,7 +79,8 @@ spe
 #> colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1
 #>   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1
 #>   TTGTTTGTGTAAATTC-1_V13B23-283_D1
-#> colData names(40): sample_id in_tissue ... precast_k4 precast_k8
+#> colData names(43): sample_id in_tissue ... precast_k16_unstitched
+#>   precast_k24_unstitched
 #> reducedDimNames(1): PCA
 #> mainExpName: NULL
 #> altExpNames(0):
@@ -87,7 +88,11 @@ spe
 #> imgData names(4): sample_id image_id data scaleFactor
 
 ## Show clustering results from PRECAST at k = 8
-spatialLIBD::vis_clus(spe, clustervar = "precast_k8", is_stitched = TRUE)
+spatialLIBD::vis_clus(
+    spe,
+    clustervar = "precast_k8_stitched",
+    is_stitched = TRUE
+)
 ```
 
 <img src="man/figures/README-example_visiumStitched_brain-1.png" width="100%" />
