@@ -1,3 +1,5 @@
+# visiumStitched 0.99.2
+
 # visiumStitched 0.99.1
 
 # visiumStitched 0.99.0
