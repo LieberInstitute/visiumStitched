@@ -52,7 +52,7 @@ Imports:
     rjson,
     S4Vectors,
     Seurat,
-    spatialLIBD,
+    spatialLIBD (>= 1.17.8),
     stringr,
     SummarizedExperiment,
     xml2
