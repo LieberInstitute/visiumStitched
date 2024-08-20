@@ -26,7 +26,6 @@
 #' @import SpatialExperiment spatialLIBD Seurat
 #' @importFrom SummarizedExperiment colData
 #' @importFrom grDevices col2rgb
-#' @importFrom SingleCellExperiment reducedDims
 #'
 #' @examples
 #' ## Download some example data
