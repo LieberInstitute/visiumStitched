@@ -36,7 +36,9 @@ prepares for building the \link[SpatialExperiment:SpatialExperiment]{SpatialExpe
 with \code{build_spe()}.
 }
 \examples{
-if (!(exists("sample_info"))) {
+if (file.exists("sample_info.rds")) {
+    sample_info <- readRDS('sample_info.rds')
+} else {
     sample_info <- dplyr::tibble(
         group = "Br2719",
         capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
@@ -62,6 +64,8 @@ if (!(exists("sample_info"))) {
 
     ## Re-size images and add more information to the sample_info
     sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
+
+    saveRDS(sample_info, "sample_info.rds")
 }
 
 spe_input_dir <- tempdir()
