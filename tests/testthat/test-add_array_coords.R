@@ -1,7 +1,9 @@
 test_that(
     "add_array_coords",
     {
-        spe <- fetch_data(type = "visiumStitched_brain_spe")
+        if (!exists("spe")) {
+            spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+        }
 
         ########################################################################
         #   Prepare sample_info

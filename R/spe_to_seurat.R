@@ -29,18 +29,22 @@
 #'
 #' @examples
 #' ## Download some example data
-#' spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")
+#' spe_unstitched <- spatialLIBD::fetch_data(
+#'     type = "spatialDLPFC_Visium_example_subset"
+#' )
 #'
 #' ## Make the column names unique
-#' colnames(spe) <- spatialLIBD::add_key(spe)$key
+#' colnames(spe_unstitched) <- spatialLIBD::add_key(spe_unstitched)$key
 #'
 #' ## Convert from a SpatialExperiment to a Seurat object
-#' seur <- spe_to_seurat(spe)
+#' seur <- spe_to_seurat(spe_unstitched)
 #' seur
 #'
 #' ## Example with an stitched SPE object
-#' spe_stitched <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#' seur_stitched <- spe_to_seurat(spe_stitched)
+#' if (!exists("spe")) {
+#'     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+#' }
+#' seur_stitched <- spe_to_seurat(spe)
 #'
 #' ## Let's look at our resulting Seurat object
 #' seur_stitched
