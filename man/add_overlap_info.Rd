@@ -36,7 +36,9 @@ comma-separated strings containing the keys of any overlapping spots, and is
 the empty string otherwise.
 }
 \examples{
-spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+if (!exists("spe")) {
+    spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
+}
 
 #    Find the mean of the 'sum_umi' metric by capture area to understand
 #    which capture areas will be excluded in regions of overlap
