@@ -42,7 +42,7 @@ Note that only the \code{lowres} images from \code{imgData(spe)} will be used.
 ## Download some example data
 spe_unstitched <- spatialLIBD::fetch_data(
     type = "spatialDLPFC_Visium_example_subset"
-)
+)[seq(100), seq(100)]
 
 ## Make the column names unique
 colnames(spe_unstitched) <- spatialLIBD::add_key(spe_unstitched)$key
@@ -55,7 +55,7 @@ seur
 if (!exists("spe")) {
     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 }
-seur_stitched <- spe_to_seurat(spe)
+seur_stitched <- spe_to_seurat(spe[seq(100), seq(100)])
 
 ## Let's look at our resulting Seurat object
 seur_stitched
