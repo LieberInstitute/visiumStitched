@@ -38,7 +38,7 @@
 #' ########################################################################
 #' #   Prepare sample_info
 #' ########################################################################
-#'
+#' \dontrun{
 #' if (!(exists("sample_info"))) {
 #'     sample_info <- dplyr::tibble(
 #'         group = "Br2719",
@@ -66,7 +66,7 @@
 #'     ## Re-size images and add more information to the sample_info
 #'     sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #' }
-#'
+#' }
 #' ## Preparing Fiji coordinates and images for build_spe()
 #' spe_input_dir <- tempdir()
 #' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
