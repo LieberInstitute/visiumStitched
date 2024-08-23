@@ -184,10 +184,10 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span><span class="co">## Preparing Fiji coordinates and images for build_spe()</span></span></span>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpF3YpqL/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpfrwfBL/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpF3YpqL/Br2719/tissue_lowres_image.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpF3YpqL/Br2719/scalefactors_json.json" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpfrwfBL/Br2719/tissue_lowres_image.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpfrwfBL/Br2719/scalefactors_json.json" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Build the SpatialExperiment</span></span></span>
@@ -213,14 +213,14 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Building SpatialExperiment using capture area as sample ID</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:00.509741 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:06.64796 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:07.085227 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:07.413301 rtracklayer::import: reading the reference GTF file</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:35.121717 adding gene information to the SPE object</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:03.704573 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:10.618479 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:10.971693 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:11.300599 rtracklayer::import: reading the reference GTF file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:41.005388 adding gene information to the SPE object</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 16:43:35.354336 adding information used by spatialLIBD</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 17:24:41.240671 adding information used by spatialLIBD</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Overwriting imgData(spe) with merged images (one per group)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Let's explore the stitched SpatialExperiment object</span></span></span>
