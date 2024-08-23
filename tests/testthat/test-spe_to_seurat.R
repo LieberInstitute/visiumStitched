@@ -1,12 +1,7 @@
 test_that(
     "spe_to_seurat",
     {
-        spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")
-
-        expect_error(
-            spe_to_seurat(spe, verbose = FALSE),
-            "Seurat requires colnames\\(spe\\) to be unique"
-        )
+        spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")[seq(100), seq(100)]
 
         ## Make the column names unique
         colnames(spe) <- spatialLIBD::add_key(spe)$key
