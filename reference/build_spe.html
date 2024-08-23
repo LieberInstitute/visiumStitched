@@ -149,41 +149,43 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span><span class="co">#   Prepare sample_info</span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    group <span class="op">=</span> <span class="st">"Br2719"</span>,</span></span>
-<span class="r-in"><span>    capture_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V13B23-283_A1"</span>, <span class="st">"V13B23-283_C1"</span>, <span class="st">"V13B23-283_D1"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co">#   Add 'spaceranger_dir' column</span></span></span>
-<span class="r-in"><span><span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:42.346968 loading file /github/home/.cache/R/BiocFileCache/3842cce6ee7_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
-<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"sample_info"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        group <span class="op">=</span> <span class="st">"Br2719"</span>,</span></span>
+<span class="r-in"><span>        capture_area <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"V13B23-283_A1"</span>, <span class="st">"V13B23-283_C1"</span>, <span class="st">"V13B23-283_D1"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="co">#   Add 'spaceranger_dir' column</span></span></span>
+<span class="r-in"><span>    <span class="va">sr_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        exdir <span class="op">=</span> <span class="va">sr_dir</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#   Add Fiji-output-related columns</span></span></span>
-<span class="r-in"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    exdir <span class="op">=</span> <span class="va">fiji_dir</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:44.806971 loading file /github/home/.cache/R/BiocFileCache/3842a2700f3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
-<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span>    <span class="co">#   Add Fiji-output-related columns</span></span></span>
+<span class="r-in"><span>    <span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>        <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>        exdir <span class="op">=</span> <span class="va">fiji_dir</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## Re-size images and add more information to the sample_info</span></span></span>
-<span class="r-in"><span><span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="rescale_fiji_inputs.html">rescale_fiji_inputs</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="co">## Re-size images and add more information to the sample_info</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="rescale_fiji_inputs.html">rescale_fiji_inputs</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:08.16577 loading file /github/home/.cache/R/BiocFileCache/2e255210847_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:10.75532 loading file /github/home/.cache/R/BiocFileCache/2e2337f63d_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Preparing Fiji coordinates and images for build_spe()</span></span></span>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkmNBoH/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsQoiBV/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpkmNBoH/Br2719/tissue_lowres_image.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpkmNBoH/Br2719/scalefactors_json.json" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpsQoiBV/Br2719/tissue_lowres_image.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpsQoiBV/Br2719/scalefactors_json.json" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Build the SpatialExperiment</span></span></span>
@@ -209,14 +211,14 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Building SpatialExperiment using capture area as sample ID</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:50.755971 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:56.583364 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:56.97069 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:42:57.282831 rtracklayer::import: reading the reference GTF file</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:43:25.832165 adding gene information to the SPE object</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:17.634459 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:23.583434 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:23.901139 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:24.215058 rtracklayer::import: reading the reference GTF file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:53.230995 adding gene information to the SPE object</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-20 20:43:26.055609 adding information used by spatialLIBD</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 15:09:53.465169 adding information used by spatialLIBD</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Overwriting imgData(spe) with merged images (one per group)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Let's explore the stitched SpatialExperiment object</span></span></span>
