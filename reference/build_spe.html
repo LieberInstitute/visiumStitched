@@ -91,7 +91,8 @@ for visualization or downstream analysis.</p>
 <span>  <span class="va">coords_dir</span>,</span>
 <span>  count_type <span class="op">=</span> <span class="st">"sparse"</span>,</span>
 <span>  reference_gtf <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  gtf_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"source"</span>, <span class="st">"type"</span>, <span class="st">"gene_id"</span>, <span class="st">"gene_version"</span>, <span class="st">"gene_name"</span>, <span class="st">"gene_type"</span><span class="op">)</span></span>
+<span>  gtf_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"source"</span>, <span class="st">"type"</span>, <span class="st">"gene_id"</span>, <span class="st">"gene_version"</span>, <span class="st">"gene_name"</span>, <span class="st">"gene_type"</span><span class="op">)</span>,</span>
+<span>  calc_error_metrics <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -130,6 +131,17 @@ pointing to a GTF file of gene annotation to populate <code>rowData()</code> wit
 <dd><p>Passed to <code><a href="https://rdrr.io/pkg/spatialLIBD/man/read10xVisiumWrapper.html" class="external-link">spatialLIBD::read10xVisiumWrapper()</a></code>. Columns
 in the reference GTF to extract and populate <code>rowData()</code>.</p></dd>
 
+
+<dt id="arg-calc-error-metrics">calc_error_metrics<a class="anchor" aria-label="anchor" href="#arg-calc-error-metrics"></a></dt>
+<dd><p>A <code>logical(1)</code> vector indicating whether to
+calculate error metrics related to mapping spots to well-defined array
+coordinates. If <code>TRUE</code>, adds <code>euclidean_error</code> and
+<code>shared_neighbors</code> spot-level metrics to the <code>colData()</code>. The former
+indicates distance in number of inter-spot distances to "move" a spot to the
+new array position; the latter indicates the fraction of neighbors for the
+associated capture area that are retained after mapping, which can be quite
+time-consuming to compute.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -150,7 +162,7 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="st">"sample_info.rds"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>    <span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">'sample_info.rds'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>    <span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"sample_info.rds"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">sample_info</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>        group <span class="op">=</span> <span class="st">"Br2719"</span>,</span></span>
@@ -184,10 +196,10 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span><span class="co">## Preparing Fiji coordinates and images for build_spe()</span></span></span>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_coords.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpES5XuH/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpFkLbMi/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji_image.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpES5XuH/Br2719/tissue_lowres_image.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpES5XuH/Br2719/scalefactors_json.json" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpFkLbMi/Br2719/tissue_lowres_image.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpFkLbMi/Br2719/scalefactors_json.json" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Build the SpatialExperiment</span></span></span>
@@ -213,15 +225,16 @@ transformed pixel and array coordinates (including  in the
 <span class="r-in"><span>    coords_dir <span class="op">=</span> <span class="va">spe_input_dir</span>, reference_gtf <span class="op">=</span> <span class="va">gtf_cache</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Building SpatialExperiment using capture area as sample ID</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:10:32.836307 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:10:39.839034 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:10:40.182335 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:10:40.506407 rtracklayer::import: reading the reference GTF file</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:11:09.047294 adding gene information to the SPE object</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:10.844978 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:16.959689 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:17.390187 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:17.723562 rtracklayer::import: reading the reference GTF file</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:45.975315 adding gene information to the SPE object</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-23 21:11:09.285377 adding information used by spatialLIBD</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-05 21:33:46.209599 adding information used by spatialLIBD</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Overwriting imgData(spe) with merged images (one per group)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Adding array coordinates and overlap info</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Let's explore the stitched SpatialExperiment object</span></span></span>
 <span class="r-in"><span><span class="va">spe</span></span></span>

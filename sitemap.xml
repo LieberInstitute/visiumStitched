@@ -12,8 +12,11 @@
 <url><loc>/reference/add_array_coords.html</loc></url>
 <url><loc>/reference/add_overlap_info.html</loc></url>
 <url><loc>/reference/build_spe.html</loc></url>
+<url><loc>/reference/dot-add_error_metrics.html</loc></url>
 <url><loc>/reference/dot-clean_round.html</loc></url>
 <url><loc>/reference/dot-fit_to_array.html</loc></url>
+<url><loc>/reference/dot-get_neighbors.html</loc></url>
+<url><loc>/reference/dot-get_shared_neighbors.html</loc></url>
 <url><loc>/reference/dot-refine_fit.html</loc></url>
 <url><loc>/reference/dot-validate_array.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
