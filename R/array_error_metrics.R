@@ -38,7 +38,7 @@
                 (pxl_col_in_fullres - pxl_col_in_fullres_rounded) ** 2 +
                 (pxl_row_in_fullres - pxl_row_in_fullres_rounded) ** 2
             ) ** 0.5 / inter_spot_dist_px,
-            capture_area = stringr::string_split_i(key, '^[ACTG]+-1_', 2),
+            capture_area = stringr::str_split_i(key, '^[ACTG]+-1_', 2),
         ) |>
         .get_shared_neighbors(coords) |>
         select(-capture_area)

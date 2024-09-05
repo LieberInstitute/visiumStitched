@@ -172,9 +172,11 @@ add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = 
         coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
 
         if (calc_error_metrics) {
-            coords_list[[i]] = .add_error_metrics(
-                coords, coords_list[[i]], inter_spot_dist_px
-            )
+            coords_list[[i]] = coords |>
+                mutate(
+                    capture_area = stringr::str_split_i(key, '^[ACTG]+-1_', 2)
+                ) |>
+                .add_error_metrics(coords_list[[i]], inter_spot_dist_px)
         }
     }
 
