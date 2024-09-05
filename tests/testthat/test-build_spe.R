@@ -15,7 +15,7 @@ test_that(
         ########################################################################
 
         if (file.exists("sample_info.rds")) {
-            sample_info <- readRDS('sample_info.rds')
+            sample_info <- readRDS("sample_info.rds")
         } else {
             sample_info <- dplyr::tibble(
                 group = "Br2719",

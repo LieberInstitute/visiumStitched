@@ -65,7 +65,7 @@
 #' ########################################################################
 #'
 #' if (file.exists("sample_info.rds")) {
-#'     sample_info <- readRDS('sample_info.rds')
+#'     sample_info <- readRDS("sample_info.rds")
 #' } else {
 #'     sample_info <- dplyr::tibble(
 #'         group = "Br2719",
@@ -80,7 +80,7 @@
 #'     sample_info$spaceranger_dir <- file.path(
 #'         sr_dir, sample_info$capture_area, "outs", "spatial"
 #'     )
-#' 
+#'
 #'     #   Add Fiji-output-related columns
 #'     fiji_dir <- tempdir()
 #'     temp <- unzip(
@@ -89,10 +89,10 @@
 #'     )
 #'     sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #'     sample_info$fiji_image_path <- temp[grep("png$", temp)]
-#' 
+#'
 #'     ## Re-size images and add more information to the sample_info
 #'     sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
-#' 
+#'
 #'     saveRDS(sample_info, "sample_info.rds")
 #' }
 #'
@@ -100,7 +100,7 @@
 #' spe_input_dir <- tempdir()
 #' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #' prep_fiji_image(sample_info, out_dir = spe_input_dir)
-#' 
+#'
 #' ########################################################################
 #' #   Add array coordinates
 #' ########################################################################
@@ -172,9 +172,9 @@ add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = 
         coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
 
         if (calc_error_metrics) {
-            coords_list[[i]] = coords |>
+            coords_list[[i]] <- coords |>
                 mutate(
-                    capture_area = stringr::str_split_i(key, '^[ACTG]+-1_', 2)
+                    capture_area = stringr::str_split_i(key, "^[ACTG]+-1_", 2)
                 ) |>
                 .add_error_metrics(coords_list[[i]], inter_spot_dist_px)
         }
