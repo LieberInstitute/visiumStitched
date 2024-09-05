@@ -4,7 +4,7 @@
 \alias{add_array_coords}
 \title{Add transformed array and pixel coordinates to a \code{SpatialExperiment}}
 \usage{
-add_array_coords(spe, sample_info, coords_dir)
+add_array_coords(spe, sample_info, coords_dir, calc_error_metrics = FALSE)
 }
 \arguments{
 \item{spe}{A
@@ -20,6 +20,15 @@ containing sample directories each with \code{tissue_positions.csv},
 \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 produced from refinement with \link[=prep_fiji_coords]{prep_fiji_coords()}
 and related functions.}
+
+\item{calc_error_metrics}{A \code{logical(1)} vector indicating whether to
+calculate error metrics related to mapping spots to well-defined array
+coordinates. If \code{TRUE}, adds \code{euclidean_error} and
+\code{shared_neighbors} spot-level metrics to the \code{colData()}. The former
+indicates distance in number of inter-spot distances to "move" a spot to the
+new array position; the latter indicates the fraction of neighbors for the
+associated capture area that are retained after mapping, which can be quite
+time-consuming to compute.}
 }
 \value{
 A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
