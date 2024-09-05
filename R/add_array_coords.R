@@ -31,6 +31,14 @@
 #' \code{scalefactors_json.json}, and \code{tissue_lowres_image.png} files
 #' produced from refinement with [prep_fiji_coords()][visiumStitched::prep_fiji_coords]
 #' and related functions.
+#' @param calc_error_metrics A \code{logical(1)} vector indicating whether to
+#' calculate error metrics related to mapping spots to well-defined array
+#' coordinates. If \code{TRUE}, adds \code{euclidean_error} and
+#' \code{shared_neighbors} spot-level metrics to the \code{colData()}. The former
+#' indicates distance in number of inter-spot distances to "move" a spot to the
+#' new array position; the latter indicates the fraction of neighbors for the
+#' associated capture area that are retained after mapping, which can be quite
+#' time-consuming to compute.
 #'
 #' @return A [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
 #' object with additional \code{colData}
@@ -110,7 +118,7 @@
 #' head(spe$array_row)
 #' head(spe$array_col)
 #' head(SpatialExperiment::spatialCoords(spe_new))
-add_array_coords <- function(spe, sample_info, coords_dir) {
+add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = FALSE) {
     ## For R CMD check
     key <- in_tissue <- NULL
 
@@ -162,6 +170,12 @@ add_array_coords <- function(spe, sample_info, coords_dir) {
         #   Adjust 'array_row' and 'array_col' with values appropriate for the new
         #   coordinate system (a larger Visium grid with equal inter-spot distances)
         coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
+
+        if (calc_error_metrics) {
+            coords_list[[i]] = .add_error_metrics(
+                coords, coords_list[[i]], inter_spot_dist_px
+            )
+        }
     }
 
     coords <- do.call(rbind, coords_list) |>
