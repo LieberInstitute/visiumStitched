@@ -53,13 +53,14 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .get_shared_neighbors = function(coords_new, coords) {
-    coords_new$shared_neighbors = sapply(
+    coords_new$shared_neighbors = vapply(
         seq_len(nrow(coords)),
         function(i) {
             n_before = .get_neighbors(i, coords)
             n_after = .get_neighbors(i, coords_new)
             return(mean(n_before %in% n_after))
-        }
+        },
+        numeric(1)
     )
 
     return(coords_new)
