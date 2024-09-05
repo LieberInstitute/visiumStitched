@@ -9,7 +9,8 @@ build_spe(
   coords_dir,
   count_type = "sparse",
   reference_gtf = NULL,
-  gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")
+  gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"),
+  calc_error_metrics = FALSE
 )
 }
 \arguments{
@@ -34,6 +35,15 @@ pointing to a GTF file of gene annotation to populate \code{rowData()} with.}
 
 \item{gtf_cols}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}. Columns
 in the reference GTF to extract and populate \code{rowData()}.}
+
+\item{calc_error_metrics}{A \code{logical(1)} vector indicating whether to
+calculate error metrics related to mapping spots to well-defined array
+coordinates. If \code{TRUE}, adds \code{euclidean_error} and
+\code{shared_neighbors} spot-level metrics to the \code{colData()}. The former
+indicates distance in number of inter-spot distances to "move" a spot to the
+new array position; the latter indicates the fraction of neighbors for the
+associated capture area that are retained after mapping, which can be quite
+time-consuming to compute.}
 }
 \value{
 A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
@@ -60,7 +70,7 @@ for visualization or downstream analysis.
 ########################################################################
 
 if (file.exists("sample_info.rds")) {
-    sample_info <- readRDS('sample_info.rds')
+    sample_info <- readRDS("sample_info.rds")
 } else {
     sample_info <- dplyr::tibble(
         group = "Br2719",
