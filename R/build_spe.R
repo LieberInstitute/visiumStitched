@@ -102,7 +102,7 @@
 #'
 #' ## Let's explore the stitched SpatialExperiment object
 #' spe
-build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type")) {
+build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
     ## For R CMD check
     sample_id <- capture_area <- group <- barcode <- NULL
 
@@ -179,7 +179,15 @@ build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_
         imgData = img_data
     )
 
-    spe <- add_array_coords(spe, sample_info, coords_dir)
+    if (calc_error_metrics) {
+        message("Adding array coordinates with error metrics and adding overlap info")
+    } else {
+        message("Adding array coordinates and overlap info")
+    }
+
+    spe <- add_array_coords(
+        spe, sample_info, coords_dir, calc_error_metrics = calc_error_metrics
+    )
     spe <- add_overlap_info(spe, "sum_umi")
 
     colnames(spe) <- spe$key
