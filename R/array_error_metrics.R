@@ -13,6 +13,9 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .get_neighbors <- function(i, coords) {
+    ## For R CMD check
+    array_row <- array_col <- capture_area <- key <- NULL
+
     this_array_row <- coords[[i, "array_row"]]
     this_array_col <- coords[[i, "array_col"]]
     this_capture_area <- coords[[i, "capture_area"]]
@@ -95,6 +98,9 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .add_error_metrics <- function(coords, coords_new, inter_spot_dist_px) {
+    ## For R CMD CHECK
+    pxl_col_in_fullres <- pxl_col_in_fullres_rounded <- pxl_row_in_fullres <- pxl_row_in_fullres_rounded <- key <- capture_area <- NULL
+    
     coords_new <- coords_new |>
         mutate(
             euclidean_error = (
