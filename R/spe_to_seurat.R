@@ -118,11 +118,14 @@ spe_to_seurat <- function(
             dim = c(dim(imgRaster(spe_small)), 3)
         ) / 256
 
-        seur@images[[sample_id]] <- Seurat:::VisiumV1(
+        seur@images[[sample_id]] <- new(
+            Class = "VisiumV1",
             image = this_img,
             scale.factors = scalefactors(
                 spot = NA, fiducial = NA, hires = NA,
-                lowres = imgData(spe)[imgData(spe_small)$image_id == "lowres", "scaleFactor"]
+                lowres = imgData(spe)[
+                    imgData(spe_small)$image_id == "lowres", "scaleFactor"
+                ]
             ),
             coordinates = coords,
             spot.radius = SPOT_DIAMETER / scaleFactors(spe_small),
