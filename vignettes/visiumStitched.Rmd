@@ -256,10 +256,13 @@ gtf_cache <- bfcrpath(
 ```
 
 ```{r "build_spe"}
-## Now we can build the SpatialExperiment object
+## Now we can build the SpatialExperiment object. We'll later explore error
+## metrics related to computing new array coordinates, and thus specify
+## 'calc_error_metrics = TRUE'.
 spe <- build_spe(
     sample_info,
-    coords_dir = spe_input_dir, reference_gtf = gtf_cache
+    coords_dir = spe_input_dir, reference_gtf = gtf_cache,
+    calc_error_metrics = TRUE
 )
 
 ## The images in this example data have to be mirrored across the horizontal axis.
@@ -363,6 +366,44 @@ sample. We can see here how [`BayesSpace:::.find_neighbors()`](https://github.co
 <iframe frameborder="0" scrolling="no" style="width:100%; height:226px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fedward130603%2FBayesSpace%2Fblob%2F8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd%2FR%2FspatialCluster.R%23L214-L220&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
 
 Yet, it doesn't matter if there are actually two or more spots on each of those six neighbor positions. `visiumStitched` takes advantage of this property to enable `BayesSpace` and other spatially-aware clustering methods to use data from overlapping spots when performing spatial clustering. You can then use `colData(spe)$overlap_key` to inspect whether overlapping spots were assigned to the same spatial cluster.
+
+### Error metrics
+
+No algorithm can fit a set of capture areas' spots onto a single hexagonal grid
+without some error. Here, we define a spot's error in being assigned new array
+coordinates with two independent metrics, which are stored in `spe$euclidean_error`
+and `spe$shared_neighbors` if the user opts to compute them with
+`build_spe(calc_error_metrics = TRUE)`. The latter metric can take a couple minutes to
+compute, and thus by default the metrics are not computed.
+
+The first metric is the Euclidean distance, in multiples of 100 microns (the
+distance between spots on a Visium capture area), between a spot's original
+position and the position of its assigned array coordinates.
+
+```{r "euclidean_error"}
+#   Explore the distribution of Euclidean error
+colData(spe) |>
+    as_tibble() |>
+    ggplot(mapping = aes(x = 0, y = euclidean_error)) +
+        geom_boxplot()
+```
+
+The other metric, `spe$shared_neighbors`, measures the fraction of original neighbors
+(from a same capture area) that are retained after mapping to the new array
+coordinates. Thus, a value of 1 is ideal.
+
+```{r "shared_neighbors"}
+#   Explore the distribution of Euclidean error
+colData(spe) |>
+    as_tibble() |>
+    ggplot(mapping = aes(x = 0, y = shared_neighbors)) +
+        geom_boxplot()
+```
+
+In theory, error as measured through these metrics could have a very slight impact
+on the quality of clustering results downstream. We envision interested users in
+checking these metrics when interpreting specific spots' cluster assignments
+downstream.
 
 # Downstream applications
 
