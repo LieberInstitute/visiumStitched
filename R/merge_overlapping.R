@@ -12,28 +12,29 @@
 #' with `colData(spe)` columns
 #' \code{array_row}, \code{array_col}, \code{key}, \code{group}, and
 #' \code{capture_area}.
-#' @param metric_name \code{character(1)} in \code{colnames(colData(spe))}, where
-#' spots belonging to the capture area with highest average value for the metric
-#' take precedence over other spots.
 #'
 #' @return A [SpatialExperiment][SpatialExperiment::SpatialExperiment-class]
 #' with at most one spot per array location
 #'
 #' @importFrom tidyr pivot_longer pivot_wider
 #' @importFrom tibble rownames_to_column
-#' @importFrom Matrix dgCMatrix
+#' @importFrom Matrix Matrix
 #' @export
 #' @author Nicholas J. Eagles
 #'
 #' @examples
-merge_overlapping <- function(spe, metric_name) {
+merge_overlapping <- function(spe) {
+    #   Find keys corresponding to spots that must be merged
     overlapping_keys = colData(spe) |>
         as_tibble() |>
         group_by(group, array_row, array_col) |>
         filter(n() > 1) |>
         pull(key)
     
-    a = assays(spe)$counts[,match(overlapping_keys, spe$key)] |>
+    merged_data =
+        #   For the spots to merge, form a tibble with spots as rows and genes
+        #   and colData() columns as columns
+        assays(spe)$counts[,match(overlapping_keys, spe$key)] |>
         as.matrix() |>
         t() |>
         cbind(
@@ -41,6 +42,7 @@ merge_overlapping <- function(spe, metric_name) {
                 as_tibble()
         ) |>
         as_tibble() |>
+        #   Now pivot longer to have one gene per row
         tidyr::pivot_longer(
             cols = !colnames(colData(spe)), values_to = "expression",
             names_to = "gene_id"
@@ -53,19 +55,23 @@ merge_overlapping <- function(spe, metric_name) {
         filter(exclude_overlapping) |>
         tidyr::pivot_wider(names_from = 'gene_id', values_from = 'expression')
     
+    #   Construct the SPE for just the merged spots
     spe_overlap = SpatialExperiment(
         assays = list(
-            counts = a |>
+            counts = merged_data |>
                 select(!colnames(colData(spe))) |>
                 t() |>
                 Matrix::Matrix()
         ),
-        colData = a |>
+        colData = merged_data |>
             select(colnames(colData(spe))),
         rowData = rowData(spe),
-        spatialCoords = spatialCoords(spe)[match(a$key, spe$key),]
+        spatialCoords = spatialCoords(spe)[match(merged_data$key, spe$key),]
     )
     colnames(spe_overlap) = spe_overlap$key
+
+    #   Combined the merged spots and non-overlapping spots
+    spe = cbind(spe_overlap, spe[, !(spe$key %in% overlapping_keys)])
     
-    return(spe_overlap)
+    return(spe)
 }
