@@ -127,3 +127,23 @@ vis_gene(
 ```
 
 The actual normalization code for this example data is available [here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
+
+# Merging overlapping spots
+
+In general, we recommend retaining all spots for downstream analysis, even if
+that means including multiple spots per array coordinate. [We show](http://research.libd.org/visiumStitched/articles/visiumStitched.html#downstream-applications)
+that many software tools, such as BayesSpace and PRECAST, can smoothly handle
+data in this format. However, given that having multiple spots at the same array
+coordinates is atypical in Visium experiments, we caution that it's possible
+some software may break or not perform as intended with stitched data. We
+provide the `merge_overlapping()` function to address this case.
+
+In particular, `merge_overlapping()` sums raw counts across spots that overlap,
+ultimately producing a `SpatialExperiment` with one spot per array coordinate.
+`colData()` information, both discrete and continuous, is taken from spots
+where `exclude_overlapping` is `FALSE`. Note that the function can be quite
+memory-intensive and time-consuming.
+
+```{r "merge_overlapping", eval = FALSE}
+spe_merged = merge_overlapping(spe)
+```
