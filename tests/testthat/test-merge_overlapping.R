@@ -59,7 +59,7 @@ test_that(
         #   Expression should be added across overlapping spots for all
         #   genes
         expect_equal(
-            rowSums(assays(small_spe)$counts[, overlapping_keys]),
+            Matrix::rowSums(assays(small_spe)$counts[, overlapping_keys]),
             assays(small_spe_merged)$counts[, dominant_key]
         )
     }
