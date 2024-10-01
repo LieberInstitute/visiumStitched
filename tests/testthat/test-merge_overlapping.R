@@ -25,6 +25,8 @@ test_that(
 
         #   Built a small SPE containing some overlaps and some non-overlapping spots
         small_spe = spe[, c(overlapping_keys, nonoverlapping_keys)]
+        assays(small_spe) = list(counts = assays(small_spe)$counts)
+        reducedDims(small_spe) = list()
 
         #   Merge overlapping spots
         small_spe_merged = merge_overlapping(small_spe)
