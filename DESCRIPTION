@@ -49,6 +49,7 @@ Imports:
     grDevices,
     imager,
     Matrix,
+    methods,
     pkgcond,
     readr,
     rjson,
