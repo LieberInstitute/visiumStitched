@@ -30,21 +30,21 @@
 #' 
 #' #   Group colData by group and array coordinates
 #' grouped_coldata = colData(spe) |>
-#'     as_tibble() |>
-#'     group_by(group, array_row, array_col)
+#'     dplyr::as_tibble() |>
+#'     dplyr::group_by(group, array_row, array_col)
 #' 
 #' #   Find the first 100 keys that overlap other spots and don't, respectively
 #' overlapping_keys = grouped_coldata |>
-#'     filter(n() > 1) |>
-#'     slice_head(n = 2) |>
-#'     ungroup() |>
-#'     slice_head(n = 100) |>
-#'     pull(key)
+#'     dplyr::filter(n() > 1) |>
+#'     dplyr::slice_head(n = 2) |>
+#'     dplyr::ungroup() |>
+#'     dplyr::slice_head(n = 100) |>
+#'     dplyr::pull(key)
 #' nonoverlapping_keys = grouped_coldata |>
-#'     filter(n() == 1) |>
-#'     ungroup() |>
-#'     slice_head(n = 100) |>
-#'     pull(key)
+#'     dplyr::filter(n() == 1) |>
+#'     dplyr::ungroup() |>
+#'     dplyr::slice_head(n = 100) |>
+#'     dplyr::pull(key)
 #' 
 #' #   Built a small SPE containing some overlaps and some non-overlapping spots
 #' small_spe = spe[, c(overlapping_keys, nonoverlapping_keys)]
@@ -54,10 +54,10 @@
 #' 
 #' #   All array coordinates have just one unique spot after merging
 #' colData(small_spe_merged) |>
-#'     as_tibble() |>
-#'     group_by(group, array_row, array_col) |>
-#'     summarize(n = n()) |>
-#'     pull(n) |>
+#'     dplyr::as_tibble() |>
+#'     dplyr::group_by(group, array_row, array_col) |>
+#'     dplyr::summarize(n = n()) |>
+#'     dplyr::pull(n) |>
 #'     table()
 #' 
 merge_overlapping <- function(spe) {
