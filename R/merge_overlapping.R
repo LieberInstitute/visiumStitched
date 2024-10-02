@@ -61,6 +61,9 @@
 #'     table()
 #' 
 merge_overlapping <- function(spe) {
+    ## For R CMD CHECK
+    array_row = array_col = exclude_overlapping = gene_id = group = key = NULL
+
     #   Find keys corresponding to spots that must be merged
     overlapping_keys = colData(spe) |>
         as_tibble() |>
