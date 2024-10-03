@@ -35,13 +35,13 @@
 #' 
 #' #   Find the first 100 keys that overlap other spots and don't, respectively
 #' overlapping_keys = grouped_coldata |>
-#'     dplyr::filter(n() > 1) |>
+#'     dplyr::filter(dplyr::n() > 1) |>
 #'     dplyr::slice_head(n = 2) |>
 #'     dplyr::ungroup() |>
 #'     dplyr::slice_head(n = 100) |>
 #'     dplyr::pull(key)
 #' nonoverlapping_keys = grouped_coldata |>
-#'     dplyr::filter(n() == 1) |>
+#'     dplyr::filter(dplyr::n() == 1) |>
 #'     dplyr::ungroup() |>
 #'     dplyr::slice_head(n = 100) |>
 #'     dplyr::pull(key)
@@ -56,7 +56,7 @@
 #' colData(small_spe_merged) |>
 #'     dplyr::as_tibble() |>
 #'     dplyr::group_by(group, array_row, array_col) |>
-#'     dplyr::summarize(n = n()) |>
+#'     dplyr::summarize(n = dplyr::n()) |>
 #'     dplyr::pull(n) |>
 #'     table()
 #' 
