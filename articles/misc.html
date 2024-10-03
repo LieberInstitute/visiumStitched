@@ -103,7 +103,7 @@ Hopkins Bloomberg School of Public
 Health<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">10 September 2024</h4>
+            <h4 data-toc-skip class="date">3 October 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/vignettes/misc.Rmd" class="external-link"><code>vignettes/misc.Rmd</code></a></small>
       <div class="hidden name"><code>misc.Rmd</code></div>
@@ -127,7 +127,7 @@ same example white matter marker genes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab SpatialExperiment with normalized counts</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-09-10 19:33:36.176131 loading file /github/home/.cache/R/BiocFileCache/30c5a9a2d6a_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-10-03 14:59:30.374557 loading file /github/home/.cache/R/BiocFileCache/1bd64fd865f7_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Check that spe does contain the "logcounts" assay</span></span>
 <span><span class="fu">assayNames</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
@@ -211,6 +211,27 @@ clean:</p>
 <p>The actual normalization code for this example data is available <a href="https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76" class="external-link">here</a>.</p>
 </div>
 </div>
+<div class="section level2">
+<h2 id="merging-overlapping-spots">Merging overlapping spots<a class="anchor" aria-label="anchor" href="#merging-overlapping-spots"></a>
+</h2>
+<p>In general, we recommend retaining all spots for downstream analysis,
+even if that means including multiple spots per array coordinate. <a href="http://research.libd.org/visiumStitched/articles/visiumStitched.html#downstream-applications" class="external-link">We
+show</a> that many software tools, such as BayesSpace and PRECAST, can
+smoothly handle data in this format. However, given that having multiple
+spots at the same array coordinates is atypical in Visium experiments,
+we caution that it’s possible some software may break or not perform as
+intended with stitched data. We provide the
+<code><a href="../reference/merge_overlapping.html">merge_overlapping()</a></code> function to address this case.</p>
+<p>In particular, <code><a href="../reference/merge_overlapping.html">merge_overlapping()</a></code> sums raw counts
+across spots that overlap, ultimately producing a
+<code>SpatialExperiment</code> with one spot per array coordinate.
+<code>colData()</code> information, both discrete and continuous, is
+taken from spots where <code>exclude_overlapping</code> is
+<code>FALSE</code>. Note that the function can be quite memory-intensive
+and time-consuming.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">spe_merged</span> <span class="op">=</span> <span class="fu"><a href="../reference/merge_overlapping.html">merge_overlapping</a></span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -228,7 +249,7 @@ clean:</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
       </footer>
