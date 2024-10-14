@@ -126,14 +126,14 @@ as.Seurat <- function(
         seur@images[[sample_id]] <- new(
             Class = "VisiumV1",
             image = this_img,
-            scale.factors = scalefactors(
+            scale.factors = Seurat::scalefactors(
                 spot = NA, fiducial = NA, hires = NA,
                 lowres = imgData(spe)[
                     imgData(spe_small)$image_id == "lowres", "scaleFactor"
                 ]
             ),
             coordinates = coords,
-            spot.radius = SPOT_DIAMETER / scaleFactors(spe_small),
+            spot.radius = SPOT_DIAMETER / Seurat::scaleFactors(spe_small),
             assay = "originalexp",
             key = paste0(sample_id, "_")
         )
