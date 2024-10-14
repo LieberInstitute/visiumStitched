@@ -13,8 +13,7 @@ prep_fiji_coords(sample_info, out_dir)
 \code{group_hires_scalef}. The last two are made by \code{rescale_fiji_inputs()}.}
 
 \item{out_dir}{A \code{character(1)} vector giving a path to a directory to
-place the output pixel coordinates CSVs. Provided the parent directory
-exists, \code{out_dir} will be created if necessary.}
+place the output pixel coordinates CSVs. It must exist in advance.}
 }
 \value{
 This function returns a \code{character()} with the file paths to the

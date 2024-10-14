@@ -21,8 +21,7 @@
 #' every capture area from the group.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to
-#' place the output images. Provided the parent directory exists, \code{out_dir}
-#' will be created if necessary.
+#' place the output images, which must exist in advance.
 #' @inheritParams add_array_coords
 #'
 #' @return A [tibble][dplyr::reexports]: a copy of \code{sample_info} with
@@ -84,8 +83,10 @@ rescale_fiji_inputs <- function(sample_info, out_dir) {
             )
         )
     }
-
-    dir.create(out_dir, showWarnings = FALSE)
+    
+    if (!dir.exists(out_dir)) {
+        stop("'out_dir' does not exist; please create it.")
+    }
 
     #   Read in high-res scalefactors and spot diameters for all samples
     sample_info$tissue_hires_scalef <- vapply(

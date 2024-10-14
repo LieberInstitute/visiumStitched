@@ -9,8 +9,7 @@
 #' with \code{build_spe()}.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to place
-#' the output image(s) and scale factors. Provided the parent directory exists,
-#' \code{out_dir} will be created if necessary.
+#' the output image(s) and scale factors. It must exist in advance.
 #' @param lowres_max_size An \code{integer(1)} vector: the resolution (number of
 #' pixels) of the larger dimension of the output image(s), considered to be "low
 #' resolution". The default value of `1200` assumes that you are stitching
@@ -101,7 +100,9 @@ prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
         stop("All files in 'sample_info$fiji_image_path' must exist.")
     }
 
-    dir.create(out_dir, showWarnings = FALSE)
+    if (!dir.exists(out_dir)) {
+        stop("'out_dir' does not exist; please create it.")
+    }
 
     out_paths <- list()
     for (this_group in unique(sample_info$group)) {

@@ -9,8 +9,7 @@
 #' Write one new \code{tissue_positions.csv} file per group.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to
-#' place the output pixel coordinates CSVs. Provided the parent directory
-#' exists, \code{out_dir} will be created if necessary.
+#' place the output pixel coordinates CSVs. It must exist in advance.
 #' @inheritParams add_array_coords
 #'
 #' @return This function returns a `character()` with the file paths to the
@@ -93,7 +92,9 @@ prep_fiji_coords <- function(sample_info, out_dir) {
         stop("All files in 'sample_info$fiji_xml_path' must exist.")
     }
 
-    dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
+    if (!dir.exists(out_dir)) {
+        stop("'out_dir' does not exist; please create it.")
+    }
 
     out_paths <- list()
     for (this_group in unique(sample_info$group)) {

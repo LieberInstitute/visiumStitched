@@ -13,8 +13,7 @@ prep_fiji_image(sample_info, out_dir, lowres_max_size = 1200)
 \code{group_hires_scalef}. The last two are made by \code{rescale_fiji_inputs()}.}
 
 \item{out_dir}{A \code{character(1)} vector giving a path to a directory to place
-the output image(s) and scale factors. Provided the parent directory exists,
-\code{out_dir} will be created if necessary.}
+the output image(s) and scale factors. It must exist in advance.}
 
 \item{lowres_max_size}{An \code{integer(1)} vector: the resolution (number of
 pixels) of the larger dimension of the output image(s), considered to be "low
