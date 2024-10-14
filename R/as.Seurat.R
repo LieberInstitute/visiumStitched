@@ -27,6 +27,7 @@
 #' @importFrom SummarizedExperiment colData
 #' @importFrom grDevices col2rgb
 #' @importFrom methods new
+#' @importFrom BiocBaseUtils checkInstalled
 #'
 #' @examples
 #' ## Download some example data
@@ -59,6 +60,9 @@ as.Seurat <- function(
             "imagecol" = "pxl_col_in_fullres"
         ),
         verbose = TRUE) {
+    #   Seurat is only suggested
+    BiocBaseUtils::checkInstalled('Seurat')
+
     SPOT_DIAMETER <- 55e-6
 
     #   Ensure all necessary columns are present in colData
