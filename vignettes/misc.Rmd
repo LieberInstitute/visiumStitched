@@ -34,7 +34,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette has some extra companion notes to the _Introduction to `visiumStiched`_ main vignette.
+This vignette has some extra companion notes to the
+_Introduction to `visiumStiched`_ main vignette.
 
 # Load data
 
@@ -44,7 +45,8 @@ Let's load the `spatialLIBD` package we'll use in this vignette.
 library("spatialLIBD")
 ```
 
-Now we can download the example `visiumStitched_brain` data that includes normalized `logcounts`. We'll define the same example white matter marker genes.
+Now we can download the example `visiumStitched_brain` data that includes
+normalized `logcounts`. We'll define the same example white matter marker genes.
 
 ```{r "normalized_data_download"}
 ## Grab SpatialExperiment with normalized counts
@@ -62,9 +64,12 @@ wm_genes <- rownames(spe)[
 
 # Geometric transformations notes
 
-As a `SpatialExperiment`, the stitched data you constructed with `visiumStitched::build_spe()` may need to be rotated or mirrored by group. This can be done using
-the `SpatialExperiment::rotateObject()` or `SpatialExperiment::mirrorObject()` functions. These
-functions are useful in case the image needs to be transformed to reach the preferred tissue orientation.
+As a `SpatialExperiment`, the stitched data you constructed with
+`visiumStitched::build_spe()` may need to be rotated or mirrored by group. This
+can be done using the `SpatialExperiment::rotateObject()` or
+`SpatialExperiment::mirrorObject()` functions. These functions are useful in
+case the image needs to be transformed to reach the preferred tissue
+orientation.
 
 ```{r "rotate", fig.height=4}
 ## Rotate image and gene-expression data by 180 degrees, plotting a combination
@@ -90,15 +95,20 @@ vis_gene(
 )
 ```
 
-You might want to re-make these plots with `spatial = TRUE` so you can see how the histology image gets rotated and/or mirrored. For file size purposes of this vignette, here we had to use `spatial = FALSE`.
+You might want to re-make these plots with `spatial = TRUE` so you can see how
+the histology image gets rotated and/or mirrored. For file size purposes of this
+vignette, here we had to use `spatial = FALSE`.
 
 ## A note on normalization
 
-As noted [in the main vignette](https://research.libd.org/visiumStitched/articles/visiumStitched.html#stitched-plotting), library-size variation across spots can bias the apparent spatial
-distribution of genes when raw counts are used. The effect is often dramatic
-enough that spatial trends cannot be easily seen across the stitched data until
-data is log-normalized. Instead of performing normalization here, we'll fetch the
-object with [normalized](https://bioconductor.org/books/3.19/OSCA.basic/normalization.html#normalization-by-deconvolution)
+As noted
+[in the main vignette](https://research.libd.org/visiumStitched/articles/visiumStitched.html#stitched-plotting),
+library-size variation across spots can bias the apparent spatial distribution
+of genes when raw counts are used. The effect is often dramatic enough that
+spatial trends cannot be easily seen across the stitched data until data is
+log-normalized. Instead of performing normalization here, we'll fetch the object
+with
+[normalized](https://bioconductor.org/books/3.19/OSCA.basic/normalization.html#normalization-by-deconvolution)
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ```{r "fetch_norm", fig.height = 4}
@@ -126,12 +136,14 @@ vis_gene(
 )
 ```
 
-The actual normalization code for this example data is available [here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
+The actual normalization code for this example data is available
+[here](https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_spe.R#L43-L76).
 
 # Merging overlapping spots
 
 In general, we recommend retaining all spots for downstream analysis, even if
-that means including multiple spots per array coordinate. [We show](http://research.libd.org/visiumStitched/articles/visiumStitched.html#downstream-applications)
+that means including multiple spots per array coordinate.
+[We show](http://research.libd.org/visiumStitched/articles/visiumStitched.html#downstream-applications)
 that many software tools, such as BayesSpace and PRECAST, can smoothly handle
 data in this format. However, given that having multiple spots at the same array
 coordinates is atypical in Visium experiments, we caution that it's possible

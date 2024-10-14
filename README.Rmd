@@ -31,13 +31,32 @@ knitr::opts_chunk$set(
 [![Bioc dependencies](https://bioconductor.org/shields/dependencies/release/visiumStitched.svg)](https://bioconductor.org/packages/release/bioc/html/visiumStitched.html#since)
 <!-- badges: end -->
 
-`visiumStitched` provides helper functions for working with	multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from https://github.com/LieberInstitute/visiumStitched_brain. `visiumStitched` prepares `SpaceRanger` (10x Genomics) output files so you can stitch the images from groups of capture areas together with `Fiji`. Then `visiumStitched` builds a `SpatialExperiment` object with the stitched data and makes an artificial hexogonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as `PRECAST` and `BayesSpace`. The `SpatialExperiment` objects created by `visiumStitched` are compatible with `spatialLIBD`, which can be used to build interactive websites for stitched `SpatialExperiment` objects (check the [example human brain data](https://libd.shinyapps.io/visiumStitched_brain)). `visiumStitched` also enables casting `SpatialExperiment` objects as `Seurat` objects.
+`visiumStitched` provides helper functions for working with	multiple Visium
+capture areas that overlap each other. This package was developed along with
+the companion example use case data available from
+https://github.com/LieberInstitute/visiumStitched_brain. `visiumStitched`
+prepares `SpaceRanger` (10x Genomics) output files so you can stitch the images
+from groups of capture areas together with `Fiji`. Then `visiumStitched` builds
+a `SpatialExperiment` object with the stitched data and makes an artificial
+hexagonal grid enabling the seamless use of spatial clustering methods that rely
+on such grid to identify neighboring spots, such as `PRECAST` and `BayesSpace`.
+The `SpatialExperiment` objects created by `visiumStitched` are compatible with
+`spatialLIBD`, which can be used to build interactive websites for stitched
+`SpatialExperiment` objects (check the
+[example human brain data](https://libd.shinyapps.io/visiumStitched_brain)).
+`visiumStitched` also enables casting `SpatialExperiment` objects as `Seurat`
+objects.
 
-For details, check the [documentation site](http://research.libd.org/visiumStitched/).
+For details, check the
+[documentation site](http://research.libd.org/visiumStitched/).
 
 ## Example data processed with visiumStitched
 
-Here is example human brain data from [LieberInstitute/visiumStitched_brain](https://github.com/LieberInstitute/visiumStitched_brain) that was stitched together using `visiumStitched`. The resulting data can be accessed and visualized with [`spatialLIBD`](https://research.libd.org/spatialLIBD/) version 1.17.8 or newer.
+Here is example human brain data from
+[LieberInstitute/visiumStitched_brain](https://github.com/LieberInstitute/visiumStitched_brain)
+that was stitched together using `visiumStitched`. The resulting data can be
+accessed and visualized with
+[`spatialLIBD`](https://research.libd.org/spatialLIBD/) version 1.17.8 or newer.
 
 ```{r "example_visiumStitched_brain"}
 ## Check that you have a recent version of spatialLIBD installed
@@ -52,7 +71,7 @@ spe
 ## Show clustering results from PRECAST at k = 8
 spatialLIBD::vis_clus(
     spe,
-    clustervar = "precast_k8_stitched",
+    clustervar = "precast_k8",
     is_stitched = TRUE
 )
 ```
@@ -60,30 +79,36 @@ spatialLIBD::vis_clus(
 
 ## Installation instructions
 
-Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then install `visiumStitched` from [GitHub](https://github.com/LieberInstitute/visiumStitched) using the following code:
+Get the latest stable `R` release from [CRAN](http://cran.r-project.org/). Then
+install `visiumStitched` from Bioconductor using the following code:
 
 ```{r 'install', eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
-BiocManager::install("LieberInstitute/visiumStitched")
+BiocManager::install("visiumStitched")
 ```
 
 ## Citation
 
-Below is the citation output from using `citation('visiumStitched')` in R. Please
-run this yourself to check for any updates on how to cite __visiumStitched__.
+Below is the citation output from using `citation('visiumStitched')` in R.
+Please run this yourself to check for any updates on how to cite
+__visiumStitched__.
 
 ```{r 'citation', eval = requireNamespace('visiumStitched')}
 print(citation("visiumStitched"), bibtex = TRUE)
 ```
 
-Please note that the `visiumStitched` was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.
+Please note that the `visiumStitched` was only made possible thanks to many
+other R and bioinformatics software authors, which are cited either in the
+vignettes and/or the paper(s) describing this package.
 
 ## Code of Conduct
 
-Please note that the `visiumStitched` project is released with a [Contributor Code of Conduct](http://bioconductor.org/about/code-of-conduct/). By contributing to this project, you agree to abide by its terms.
+Please note that the `visiumStitched` project is released with a
+[Contributor Code of Conduct](http://bioconductor.org/about/code-of-conduct/).
+By contributing to this project, you agree to abide by its terms.
 
 ## Development tools
 

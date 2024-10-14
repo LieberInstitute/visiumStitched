@@ -38,7 +38,7 @@ along with the companion example use case data available from
 `visiumStitched` prepares `SpaceRanger` (10x Genomics) output files so
 you can stitch the images from groups of capture areas together with
 `Fiji`. Then `visiumStitched` builds a `SpatialExperiment` object with
-the stitched data and makes an artificial hexogonal grid enabling the
+the stitched data and makes an artificial hexagonal grid enabling the
 seamless use of spatial clustering methods that rely on such grid to
 identify neighboring spots, such as `PRECAST` and `BayesSpace`. The
 `SpatialExperiment` objects created by `visiumStitched` are compatible
@@ -65,7 +65,8 @@ stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
 ## Download the spot-level data, which is a SpatialExperiment object
 spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
-#> 2024-08-07 14:26:16.510237 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1769558ae4ac_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> snapshotDate(): 2024-04-29
+#> 2024-10-14 11:39:40.997043 loading file /users/neagles/.cache/R/BiocFileCache/feb652e603a7a_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Explore the stitched data
 spe
@@ -79,8 +80,7 @@ spe
 #> colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1
 #>   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1
 #>   TTGTTTGTGTAAATTC-1_V13B23-283_D1
-#> colData names(43): sample_id in_tissue ... precast_k16_unstitched
-#>   precast_k24_unstitched
+#> colData names(40): sample_id in_tissue ... precast_k4 precast_k8
 #> reducedDimNames(1): PCA
 #> mainExpName: NULL
 #> altExpNames(0):
@@ -90,7 +90,7 @@ spe
 ## Show clustering results from PRECAST at k = 8
 spatialLIBD::vis_clus(
     spe,
-    clustervar = "precast_k8_stitched",
+    clustervar = "precast_k8",
     is_stitched = TRUE
 )
 ```
@@ -101,15 +101,14 @@ spatialLIBD::vis_clus(
 
 Get the latest stable `R` release from
 [CRAN](http://cran.r-project.org/). Then install `visiumStitched` from
-[GitHub](https://github.com/LieberInstitute/visiumStitched) using the
-following code:
+Bioconductor using the following code:
 
 ``` r
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
-BiocManager::install("LieberInstitute/visiumStitched")
+BiocManager::install("visiumStitched")
 ```
 
 ## Citation
@@ -120,15 +119,14 @@ R. Please run this yourself to check for any updates on how to cite
 
 ``` r
 print(citation("visiumStitched"), bibtex = TRUE)
-#> To cite package 'visiumStitched' in publications use:
-#> 
-#>   Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of
-#>   Visium capture areas stitched together with Fiji_.
-#>   doi:10.18129/B9.bioc.visiumStitched
-#>   <https://doi.org/10.18129/B9.bioc.visiumStitched>,
-#>   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R
-#>   package version 0.99.0,
-#>   <http://www.bioconductor.org/packages/visiumStitched>.
+#> Warning in packageDescription(pkg = package, lib.loc = dirname(dir)): no
+#> package 'visiumStitched' was found
+#> Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of
+#> Visium capture areas stitched together with Fiji_.
+#> doi:10.18129/B9.bioc.visiumStitched
+#> <https://doi.org/10.18129/B9.bioc.visiumStitched>,
+#> https://github.com/LieberInstitute/visiumStitched/visiumStitched - R
+#> package version, <http://www.bioconductor.org/packages/visiumStitched>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
@@ -137,15 +135,14 @@ print(citation("visiumStitched"), bibtex = TRUE)
 #>     author = {Nicholas J. Eagles and Leonardo Collado-Torres},
 #>     year = {2024},
 #>     url = {http://www.bioconductor.org/packages/visiumStitched},
-#>     note = {https://github.com/LieberInstitute/visiumStitched/visiumStitched - R package version 0.99.0},
+#>     note = {https://github.com/LieberInstitute/visiumStitched/visiumStitched - R package version},
 #>     doi = {10.18129/B9.bioc.visiumStitched},
 #>   }
 #> 
-#>   Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde
-#>   TM, Page SC, Martinowich K, Collado-Torres L (2024).
-#>   "visiumStitched." _bioRxiv_. doi:10.1101/TODO
-#>   <https://doi.org/10.1101/TODO>,
-#>   <https://www.biorxiv.org/content/10.1101/TODO>.
+#> Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde TM,
+#> Page SC, Martinowich K, Collado-Torres L (2024). "visiumStitched."
+#> _bioRxiv_. doi:10.1101/TODO <https://doi.org/10.1101/TODO>,
+#> <https://www.biorxiv.org/content/10.1101/TODO>.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 

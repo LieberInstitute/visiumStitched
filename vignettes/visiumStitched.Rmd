@@ -74,20 +74,22 @@ bib <- c(
 
 ## Install `visiumStitched`
 
-`r Biocpkg("visiumStitched")` is a `R` package available from [GitHub](https://github.com/LieberInstitute/visiumStitched).
-It can be installed with the following commands in your `R` session:
+`r Biocpkg("visiumStitched")` is a Bioconductor `R` package that can be
+installed with the following commands in your `R` session:
 
 ```{r "install", eval = FALSE}
-if (!requireNamespace("remotes", quietly = TRUE)) {
-    install.packages("remotes")
+if (!requireNamespace("BiocManager", quietly = TRUE)) {
+    install.packages("BiocManager")
 }
 
-remotes::install("LieberInstitute/visiumStitched")
+BiocManager::install("LieberInstitute/visiumStitched")
 ```
 
 ## Citing `visiumStitched`
 
-We hope that `r Biocpkg("visiumStitched")` will be useful for your research. Please use the following information to cite the package and the overall approach. Thank you!
+We hope that `r Biocpkg("visiumStitched")` will be useful for your research.
+Please use the following information to cite the package and the overall
+approach. Thank you!
 
 ```{r "citation"}
 ## Citation info
@@ -109,13 +111,13 @@ library("ggplot2")
 
 # Preparing Experiment Information
 
-Much of the `visiumStitched` package uses a `tibble` (or `data.frame`) defining information
-about the experiment. Most fundamentally, the `group` column allows you to line up which
-capture areas, in the `capture_area` column, are to be stitched together later. In our
-case, we have just one unique group, consisting of all three capture areas. Note multiple
-groups are supported. By the end of this demo, the `SpatialExperiment` will consist of
-just one sample composed of the three capture areas; in general, there will be one sample
-per group.
+Much of the `visiumStitched` package uses a `tibble` (or `data.frame`) defining
+information about the experiment. Most fundamentally, the `group` column allows
+you to line up which capture areas, in the `capture_area` column, are to be
+stitched together later. In our case, we have just one unique group, consisting
+of all three capture areas. Note multiple groups are supported. By the end of
+this demo, the `SpatialExperiment` will consist of just one sample composed of
+the three capture areas; in general, there will be one sample per group.
 
 ```{r "sample_info"}
 ## Create initial sample_info
@@ -128,8 +130,8 @@ sample_info <- data.frame(
 sample_info
 ```
 
-Next, we'll need the Spaceranger outputs for each capture area, which can be retrieved
-with `spatialLIBD::fetch_data()`.
+Next, we'll need the Spaceranger outputs for each capture area, which can be
+retrieved with `spatialLIBD::fetch_data()`.
 
 ```{r "spaceranger_dir"}
 ## Download example SpaceRanger output files
@@ -147,19 +149,23 @@ sample_info
 
 # Preparing Inputs to Fiji
 
-The `visiumStitched` workflow makes use of [Fiji](https://imagej.net/software/fiji/), a
-distribution of the `ImageJ` image-processing software, which includes an interface for
-aligning images on a shared coordinate system. Before aligning anything in Fiji, we need to
-ensure that images to align from all capture areas 
-are on the same scale-- that is, a pixel in each image represents the same distance. This is
-typically approximately true, but is not guaranteed to be exactly true, especially when the
-capture areas to align come from different Visium slides. `rescale_fiji_inputs()` reads in the
+The `visiumStitched` workflow makes use of
+[Fiji](https://imagej.net/software/fiji/), a distribution of the `ImageJ`
+image-processing software, which includes an interface for aligning images on a
+shared coordinate system. Before aligning anything in Fiji, we need to ensure
+that images to align from all capture areas are on the same scale-- that is, a
+pixel in each image represents the same distance. This is typically
+approximately true, but is not guaranteed to be exactly true, especially when
+the capture areas to align come from different Visium slides.
+`rescale_fiji_inputs()` reads in the
 [high-resolution tissue images](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-png)
-for each capture area, and uses info about their spot diameters in pixels and scale factors to
-rescale the images appropriately (even if they are from different Visium slides).
+for each capture area, and uses info about their spot diameters in pixels and
+scale factors to rescale the images appropriately (even if they are from
+different Visium slides).
 
-For demonstration purposes, we'll set `out_dir` to a temporary location. Typically, it would
-really be any suitable directory to place the rescaled images for later input to Fiji.
+For demonstration purposes, we'll set `out_dir` to a temporary location.
+Typically, it would really be any suitable directory to place the rescaled
+images for later input to Fiji.
 
 ```{r "rescale_inputs"}
 #   Generate rescaled approximately high-resolution images
@@ -173,21 +179,21 @@ sample_info
 
 ## Stitching Images with Fiji
 
-Before building a `SpatialExperiment` for a stitched dataset, we must align the images for each
-group in Fiji. Check out [this video](https://www.youtube.com/watch?v=kFLtpK3qbSY) for a
-guide through this process with the example data.
+Before building a `SpatialExperiment` for a stitched dataset, we must align the
+images for each group in Fiji. Check out
+[this video](https://www.youtube.com/watch?v=kFLtpK3qbSY) for a guide through
+this process with the example data.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kFLtpK3qbSY?si=CF-rv7Nd5yc7W6nC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ## Creating Group-Level Samples
 
-From the Fiji alignment, two output files will be produced: an `XML` file specifying rigid
-affine transformations for each
-capture area, and the stitched approximately high-resolution image. These files for this
-dataset are
-available through `spatialLIBD::fetch_data()`. We'll need to add the paths to the XML
-and PNG files to the `fiji_xml_path` and `fiji_image_path` columns of `sample_info`,
-respectively.
+From the Fiji alignment, two output files will be produced: an `XML` file
+specifying rigid affine transformations for each capture area, and the stitched
+approximately high-resolution image. These files for this dataset are
+available through `spatialLIBD::fetch_data()`. We'll need to add the paths to
+the XML and PNG files to the `fiji_xml_path` and `fiji_image_path` columns of
+`sample_info`, respectively.
 
 ```{r "fiji_out"}
 fiji_dir <- tempdir()
@@ -204,17 +210,20 @@ We now have every column present in `sample_info` that will be necessary for any
 sample_info
 ```
 
-Before building the `SpatialExperiment`, the idea is to create a directory structure very similar to
+Before building the `SpatialExperiment`, the idea is to create a directory
+structure very similar to
 [Spaceranger's spatial outputs](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs)
-for each *group*, as opposed to the *capture-area*-level directories we already have. We'll
-place this directory in a temporary location that will later be read in to produce the
-final `SpatialExperiment`.
+for each *group*, as opposed to the *capture-area*-level directories we already
+have. We'll place this directory in a temporary location that will later be read
+in to produce the final `SpatialExperiment`.
 
-First, `prep_fiji_coords()` will apply the rigid affine transformations specified by Fiji's
-output XML file to the spatial coordinates, ultimately producing a group-level `tissue_positions.csv` file.
-Next, `prep_fiji_image()` will rescale the stitched image to have a default of 1,200 pixels in the longest dimension. The idea is that in an experiment with multiple groups, the images
-stored in the `SpatialExperiment` for any group will be similarly scaled and occupy similar
-memory footprints.
+First, `prep_fiji_coords()` will apply the rigid affine transformations
+specified by Fiji's output XML file to the spatial coordinates, ultimately
+producing a group-level `tissue_positions.csv` file. Next, `prep_fiji_image()`
+will rescale the stitched image to have a default of 1,200 pixels in the
+longest dimension. The idea is that in an experiment with multiple groups, the
+images stored in the `SpatialExperiment` for any group will be similarly scaled
+and occupy similar memory footprints.
 
 ```{r "prep_fiji"}
 ## Prepare the Fiji coordinates and images.
@@ -227,15 +236,17 @@ prep_fiji_image(sample_info, out_dir = spe_input_dir)
 
 ## Constructing the Object
 
-We now have all the pieces to create the `SpatialExperiment` object. After constructing the
-base object, information related to how spots may overlap between capture
-areas in each `group` is added. The `sum_umi` metric will by default determine which
-spots in overlapping regions to exclude in
-plots. In particular, at regions of overlap, spots from capture areas with higher
-average UMI (unique molecular identifier) counts will be plotted, while any other
-spots will not be shown using `spatialLIBD::vis_clus()`, `spatialLIBD::vis_gene()`, and related visualization functions. We'll also mirror the image and gene-expression data to
-match the orientation specified at the wet bench. More info about performing geometric
-transformations is [here](#geometric-transformations).
+We now have all the pieces to create the `SpatialExperiment` object. After
+constructing the base object, information related to how spots may overlap
+between capture areas in each `group` is added. The `sum_umi` metric will by
+default determine which spots in overlapping regions to exclude in plots. In
+particular, at regions of overlap, spots from capture areas with higher average
+UMI (unique molecular identifier) counts will be plotted, while any other spots
+will not be shown using `spatialLIBD::vis_clus()`, `spatialLIBD::vis_gene()`,
+and related visualization functions. We'll also mirror the image and
+gene-expression data to match the orientation specified at the wet bench. More
+info about performing geometric transformations is
+[here](#geometric-transformations).
 
 ```{r "gtf"}
 ## Download the Gencode v32 GTF file which is the closest one to the one
@@ -274,10 +285,10 @@ spe
 
 The `colData(spe)$exclude_overlapping` column controls
 which spots to drop for visualization purposes. Note also that the `overlap_key`
-column was added, which gives a comma-separated string of spot keys overlapping each
-given spot, or the empty string otherwise. After spatial clustering, the `overlap_key`
-information can be useful to check how frequently overlapping spots are assigned
-the same cluster.
+column was added, which gives a comma-separated string of spot keys overlapping
+each given spot, or the empty string otherwise. After spatial clustering, the
+`overlap_key` information can be useful to check how frequently overlapping
+spots are assigned the same cluster.
 
 ```{r "exclude_overlapping"}
 ## Examine spots to exclude for plotting
@@ -288,9 +299,11 @@ table(spe$exclude_overlapping)
 
 ## Stitched plotting
 
-To demonstrate that we've stitched both the gene expression and image data successfully,
-we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` (version 1.17.8 or newer) to plot the distribution of white matter
-spatially. For more context on human brain white matter spatial marker genes, check [our previous work on this subject](https://doi.org/10.1038/s41593-020-00787-0).
+To demonstrate that we've stitched both the gene expression and image data
+successfully, we'll use `spatialLIBD::vis_gene(is_stitched = TRUE)` (version
+1.17.8 or newer) to plot the distribution of white matter spatially. For more
+context on human brain white matter spatial marker genes, check
+[our previous work on this subject](https://doi.org/10.1038/s41593-020-00787-0).
 
 ```{r "explore_coords", fig.height = 4}
 ## Show combined raw expression of white-matter marker genes
@@ -301,23 +314,27 @@ vis_gene(spe, geneid = wm_genes, assayname = "counts", is_stitched = TRUE)
 ```
 
 Note that we're plotting raw counts; prior to normalization, library-size
-variation across spots can bias the apparent distribution. Later, we'll show that
-normalization is critical to producing a visually seamless transition between overlapping
-capture areas.
+variation across spots can bias the apparent distribution. Later, we'll show 
+that normalization is critical to producing a visually seamless transition
+between overlapping capture areas.
 
 ## Defining Array Coordinates
 
-Given that the stitched data is larger than a default Visium capture area, `add_array_coords()` (which is used internally by `build_spe()`) recomputed the array coordinates (i.e. `spe$array_row` and `spe$array_col`) to more sensibly index the stitched data. 
+Given that the stitched data is larger than a default Visium capture area,
+`add_array_coords()` (which is used internally by `build_spe()`) recomputed the
+array coordinates (i.e. `spe$array_row` and `spe$array_col`) to more sensibly
+index the stitched data. 
 
-Let's explain this in more detail. By definition, these array coordinates
-(see [documentation from 10X](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-positions))
-are integer indices of each spot on a Visium capture area, numbering the typically 78 and 128
-rows and columns, respectively, for a 6.5mm capture area. The `build_spe()` function retains
-each capture area's original array coordinates, `spe$array_row_original` and `spe$array_col_original`,
-but these are typically not useful to represent our group-level, stitched data. In fact, each 
-stitched capture area has the same exact array coordinates, despite having different spatial
-positions after stitching. We'll take in-tissue spots only and use transparency to emphasize
-the overlap among capture areas:
+Let's explain this in more detail. By definition, these array coordinates (see 
+[documentation from 10X](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-positions))
+are integer indices of each spot on a Visium capture area, numbering the
+typically 78 and 128 rows and columns, respectively, for a 6.5mm capture area.
+The `build_spe()` function retains each capture area's original array
+coordinates, `spe$array_row_original` and `spe$array_col_original`, but these
+are typically not useful to represent our group-level, stitched data. In fact,
+each stitched capture area has the same exact array coordinates, despite having
+different spatial positions after stitching. We'll take in-tissue spots only and
+use transparency to emphasize the overlap among capture areas:
 
 ```{r "array_plot_orig"}
 ## Plot positions of default array coordinates, before overwriting with more
@@ -338,11 +355,12 @@ colData(spe) |>
 ```
 
 Let's contrast this with the array coordinates recomputed by `visiumStitched`.
-Briefly, `visiumStitched` forms a new hexagonal, Visium-like grid spanning the space occupied
-by all capture areas after stitching. Then, the true spot positions are fit to the nearest new
-spot positions, in terms of Euclidean distance. Finally, array coordinates are re-indexed
-according to the new spot assignments, resulting in spatially meaningful values that apply at
-the group level for stitched data. 
+Briefly, `visiumStitched` forms a new hexagonal, Visium-like grid spanning the
+space occupied by all capture areas after stitching. Then, the true spot
+positions are fit to the nearest new spot positions, in terms of Euclidean
+distance. Finally, array coordinates are re-indexed according to the new spot
+assignments, resulting in spatially meaningful values that apply at the group
+level for stitched data. 
 
 ```{r "array_plot_after"}
 ## Plot positions of redefined array coordinates
@@ -358,23 +376,35 @@ colData(spe) |>
     scale_color_manual(values = ca_colors)
 ```
 
-An important downstream application of these array coordinates, is that it enables
-methods that rely on the hexagonal grid structure of Visium to find more than the original
-six neighboring spots. This enables clustering with [`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) or [`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w), to treat each group as a spatially continuous
-sample. We can see here how [`BayesSpace:::.find_neighbors()`](https://github.com/edward130603/BayesSpace/blob/8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd/R/spatialCluster.R#L214-L220) version 1.11.0 uses the hexagonal Visium grid properties to find the spot neighbors. See also [`BayesSpace` Figure 1b](https://www.nature.com/articles/s41587-021-00935-2/figures/1) for an illustration of this process.
+An important downstream application of these array coordinates, is that it
+enables methods that rely on the hexagonal grid structure of Visium to find more
+than the original six neighboring spots. This enables clustering with
+[`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) or
+[`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w), to treat each group as
+a spatially continuous sample. We can see here how
+[`BayesSpace:::.find_neighbors()`](https://github.com/edward130603/BayesSpace/blob/8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd/R/spatialCluster.R#L214-L220)
+version 1.11.0 uses the hexagonal Visium grid properties to find the spot
+neighbors. See also
+[`BayesSpace` Figure 1b](https://www.nature.com/articles/s41587-021-00935-2/figures/1)
+for an illustration of this process.
 
 <iframe frameborder="0" scrolling="no" style="width:100%; height:226px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fedward130603%2FBayesSpace%2Fblob%2F8e9af8f2fa8e93518cf9ecee1ded9ab93e88fffd%2FR%2FspatialCluster.R%23L214-L220&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
 
-Yet, it doesn't matter if there are actually two or more spots on each of those six neighbor positions. `visiumStitched` takes advantage of this property to enable `BayesSpace` and other spatially-aware clustering methods to use data from overlapping spots when performing spatial clustering. You can then use `colData(spe)$overlap_key` to inspect whether overlapping spots were assigned to the same spatial cluster.
+Yet, it doesn't matter if there are actually two or more spots on each of those
+six neighbor positions. `visiumStitched` takes advantage of this property to
+enable `BayesSpace` and other spatially-aware clustering methods to use data
+from overlapping spots when performing spatial clustering. You can then use
+`colData(spe)$overlap_key` to inspect whether overlapping spots were assigned to
+the same spatial cluster.
 
 ### Error metrics
 
 No algorithm can fit a set of capture areas' spots onto a single hexagonal grid
 without some error. Here, we define a spot's error in being assigned new array
-coordinates with two independent metrics, which are stored in `spe$euclidean_error`
-and `spe$shared_neighbors` if the user opts to compute them with
-`build_spe(calc_error_metrics = TRUE)`. The latter metric can take a couple minutes to
-compute, and thus by default the metrics are not computed.
+coordinates with two independent metrics, which are stored in
+`spe$euclidean_error` and `spe$shared_neighbors` if the user opts to compute
+them with `build_spe(calc_error_metrics = TRUE)`. The latter metric can take a
+couple minutes to compute, and thus by default the metrics are not computed.
 
 The first metric is the Euclidean distance, in multiples of 100 microns (the
 distance between spots on a Visium capture area), between a spot's original
@@ -388,9 +418,9 @@ colData(spe) |>
         geom_boxplot()
 ```
 
-The other metric, `spe$shared_neighbors`, measures the fraction of original neighbors
-(from a same capture area) that are retained after mapping to the new array
-coordinates. Thus, a value of 1 is ideal.
+The other metric, `spe$shared_neighbors`, measures the fraction of original
+neighbors (from a same capture area) that are retained after mapping to the new
+array coordinates. Thus, a value of 1 is ideal.
 
 ```{r "shared_neighbors"}
 #   Explore the distribution of Euclidean error
@@ -400,25 +430,27 @@ colData(spe) |>
         geom_boxplot()
 ```
 
-In theory, error as measured through these metrics could have a very slight impact
-on the quality of clustering results downstream. We envision interested users in
-checking these metrics when interpreting specific spots' cluster assignments
-downstream.
+In theory, error as measured through these metrics could have a very slight
+impact on the quality of clustering results downstream. We envision interested
+users in checking these metrics when interpreting specific spots' cluster
+assignments downstream.
 
 # Downstream applications
 
 One common area of analysis in spatial transcriptomics involves clustering--
 in particular, spatially-aware clustering. Many spatially-aware clustering
-algorithms check the array coordinates to determine
-neighboring spots and ultimately produce spatially smooth clusters. As we have previously explained, 
-`visiumStitched` [re-computes array coordinates](#array-coordinates) in a meaningful way,
-such that software like [`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) and
+algorithms check the array coordinates to determine neighboring spots and
+ultimately produce spatially smooth clusters. As we have previously explained, 
+`visiumStitched` [re-computes array coordinates](#array-coordinates) in a
+meaningful way, such that software like
+[`BayesSpace`](https://doi.org/10.1038/s41587-021-00935-2) and
 [`PRECAST`](https://doi.org/10.1038/s41467-023-35947-w) work out-of-the-box with
 stitched data, treating each group as a single continuous sample.
 
 [We've already run PRECAST](https://github.com/LieberInstitute/visiumStitched_brain/blob/devel/code/03_stitching/06_precast.R),
 and can visualize the results here, where we see a fairly seamless transition of
-cluster assignments across capture-area boundaries. First, let's examine `k = 2`:
+cluster assignments across capture-area boundaries. First, let's examine
+`k = 2`:
 
 ```{r "precast_k2_stitched", fig.height = 4}
 ## Grab SpatialExperiment with normalized counts
@@ -439,9 +471,12 @@ vis_clus(
 )
 ```
 
-We can see that these two spatial clusters are differentiating the white vs the gray matter based on the white matter marker genes we [previously visualized](https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization).
+We can see that these two spatial clusters are differentiating the white vs the
+gray matter based on the white matter marker genes we
+[previously visualized](https://research.libd.org/visiumStitched/articles/visiumStitched.html#a-note-on-normalization).
 
-In the example data, `k = 4` and `k = 8` have also been computed. Let's visualize the `k = 4` results.
+In the example data, `k = 4` and `k = 8` have also been computed. Let's
+visualize the `k = 4` results.
 
 ```{r "precast_k4_stitched", fig.height = 4}
 ## PRECAST results already available in this example data
@@ -457,7 +492,8 @@ vis_clus(
 )
 ```
 
-The biological interpretation of these spatial clusters would need further work, using methods such as:
+The biological interpretation of these spatial clusters would need further work,
+using methods such as:
 
 * [spatial registration](https://research.libd.org/spatialLIBD/articles/guide_to_spatial_registration.html) of reference sc/snRNA-seq or spatial data,
 * visualization of known marker genes for the tissue of interest,
@@ -465,14 +501,15 @@ The biological interpretation of these spatial clusters would need further work,
 
 # Conclusion
 
-`visiumStitched` provides a set of helper functions, in conjunction with `ImageJ`/`Fiji`,
-intended to simplify the stitching of Visium data into a spatially integrated
-`SpatialExperiment` object ready for analysis. We hope you find it useful for your
-research!
+`visiumStitched` provides a set of helper functions, in conjunction with
+`ImageJ`/`Fiji`, intended to simplify the stitching of Visium data into a
+spatially integrated `SpatialExperiment` object ready for analysis. We hope you
+find it useful for your research!
 
 # Reproducibility
 
-The `r Biocpkg("visiumStitched")` package `r Citep(bib[["visiumStitched"]])` was made possible thanks to:
+The `r Biocpkg("visiumStitched")` package `r Citep(bib[["visiumStitched"]])` was
+made possible thanks to:
 
 * R `r Citep(bib[["R"]])`
 * `r Biocpkg("BiocFileCache")` `r Citep(bib[["BiocFileCache"]])`
@@ -536,8 +573,10 @@ session_info()
 
 # Bibliography
 
-This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
-with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+This vignette was generated using `r Biocpkg("BiocStyle")`
+`r Citep(bib[["BiocStyle"]])` with `r CRANpkg("knitr")`
+`r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")`
+`r Citep(bib[["rmarkdown"]])` running behind the scenes.
 
 Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
 
