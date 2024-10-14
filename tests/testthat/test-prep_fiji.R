@@ -1,5 +1,5 @@
 test_that(
-    "prep_fiji_image",
+    "prep_fiji",
     {
         ########################################################################
         #   Prepare sample_info
@@ -38,10 +38,33 @@ test_that(
         }
 
         ########################################################################
-        #   Tests
+        #   Test "prep_fiji_coords()"
         ########################################################################
 
         spe_input_dir <- tempdir()
+        out_file_actual <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
+
+        #   The expected output file should be produced
+        out_file_expected <- file.path(
+            spe_input_dir, "Br2719", "tissue_positions.csv"
+        )
+        expect_equal(out_file_actual, out_file_expected)
+        expect_equal(file.exists(out_file_actual), TRUE)
+
+        #   The tissue positions should have the expected columns
+        coords <- readr::read_csv(out_file_expected, show_col_types = FALSE)
+        expect_equal(
+            colnames(coords),
+            c(
+                "key", "in_tissue", "array_row", "array_col",
+                "pxl_row_in_fullres", "pxl_col_in_fullres"
+            )
+        )
+
+        ########################################################################
+        #   Test "prep_fiji_image()"
+        ########################################################################
+
         out_paths_actual <- prep_fiji_image(
             sample_info,
             out_dir = spe_input_dir, lowres_max_size = 900
