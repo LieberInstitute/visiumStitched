@@ -36,9 +36,6 @@ knitr::opts_chunk$set(
 
 
 ```{r vignetteSetup, echo=FALSE, message=FALSE, warning = FALSE}
-## Track time spent on making the vignette
-startTime <- Sys.time()
-
 ## Bib setup
 library("RefManageR")
 
@@ -545,21 +542,6 @@ system.time(render("visiumStitched.Rmd", "BiocStyle::html_document"))
 ## Extract the R code
 library("knitr")
 knit("visiumStitched.Rmd", tangle = TRUE)
-```
-
-Date the vignette was generated.
-
-```{r reproduce1, echo=FALSE}
-## Date the vignette was generated
-Sys.time()
-```
-
-Wallclock time spent generating the vignette.
-
-```{r reproduce2, echo=FALSE}
-## Processing time in seconds
-totalTime <- diff(c(startTime, Sys.time()))
-round(totalTime, digits = 3)
 ```
 
 `R` session information.
