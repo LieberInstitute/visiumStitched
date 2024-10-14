@@ -1,29 +1,41 @@
-#' Apply transform info from Fiji XML output
+#' Prepare Fiji outputs for building a SpatialExperiment
 #'
+#' Together, `prep_fiji_image()` and `prep_fiji_coords()` process Fiji outputs
+#' and generate one directory per group resembling Spaceranger's
+#' [spatial outputs](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs);
+#' in particular, `tissue_positions.csv`, `tissue_lowres_image.png`, and
+#' `scalefactors_json.json` files are created. These functions are necessary to
+#' run in preparation for \code{build_SpatialExperiment()}.
+#' 
 #' Given a `data.frame()` of sample information (\code{sample_info}) with
 #' columns \code{capture_area}, \code{group}, and \code{fiji_xml_path},
-#' expected to have one unique path to Fiji XML output per group, read in
-#' the pixel coordinates from each capture area's \code{tissue_positions.csv}
+#' expected to have one unique path to Fiji XML output per group, `prep_fiji_coords`
+#' reads in the pixel coordinates from each capture area's \code{tissue_positions.csv}
 #' file from SpaceRanger, and transform using the rotation matrix specified
-#' by Fiji <https://imagej.net/software/fiji/>.
-#' Write one new \code{tissue_positions.csv} file per group.
+#' by Fiji <https://imagej.net/software/fiji/>. It writes one new \code{tissue_positions.csv}
+#' file per group.
+#' 
+#' After stitching all groups in \code{sample_info} with Fiji, images of
+#' various resolutions (pixel dimensions) are left. `prep_fiji_image()` creates copies
+#' of each image whose largest dimension is \code{lowres_max_size} pixels. It
+#' also creates a corresponding \code{scalefactors_json.json} file much like
+#' SpaceRanger's.
 #'
+#' @name prep_fiji
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to
 #' place the output pixel coordinates CSVs. It must exist in advance.
+#' @param lowres_max_size An \code{integer(1)} vector: the resolution (number of
+#' pixels) of the larger dimension of the output image(s), considered to be "low
+#' resolution". The default value of `1200` assumes that you are stitching
+#' together at most a 2 by 2 grid of Visium capture areas, where each has at
+#' most 600 pixels on the longest dimension (as is the default in SpaceRanger).
 #' @inheritParams add_array_coords
 #'
 #' @return This function returns a `character()` with the file paths to the
-#' `tissue_positions.csv` files it created.
+#' files it created. For `prep_fiji_coords()`, these are the `tissue_positions.csv`
+#' files; for `prep_fiji_image()`, these are the `tissue_lowres_image.png` and
+#' `scalefactors_json.json` files.
 #'
-#' @import xml2
-#' @importFrom stringr str_replace_all str_detect
-#' @importFrom readr read_csv write_csv
-#' @importFrom rjson fromJSON
-#' @importFrom pkgcond suppress_warnings
-#'
-#' @family functions for parsing Fiji outputs
-#'
-#' @export
 #' @author Nicholas J. Eagles
 #'
 #' @examples
@@ -60,11 +72,125 @@
 #' }
 #'
 #' spe_input_dir <- tempdir()
-#' out_file <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
-#' out_file
+#' out_paths_image <- prep_fiji_image(
+#'     sample_info,
+#'     out_dir = spe_input_dir, lowres_max_size = 1000
+#' )
+#' out_path_coords <- prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #'
-#' #    A file of spatial coordinates for the stitched Br2719 was produced
-#' readr::read_csv(out_file)
+#' #    A "low resolution" stitched image was produced, which has 1000
+#' #    pixels in its largest dimension
+#' this_image <- imager::load.image(
+#'     file.path(spe_input_dir, "Br2719", "tissue_lowres_image.png")
+#' )
+#' dim(this_image)
+#' library("imager")
+#' plot(this_image)
+#'
+#' #    'prep_fiji_image' produced an image and scalefactors
+#' out_paths_image
+#' 
+#' #    'prep_fiji_coords' produced a file of spatial coordinates for the
+#' #    stitched Br2719
+#' readr::read_csv(out_path_coords)
+NULL
+
+#' @describeIn prep_fiji Create low-res images and scale factors from high-res
+#' Fiji output images
+#' @importFrom imager load.image resize save.image
+#' @importFrom rjson fromJSON toJSON
+#'
+#' @export
+prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
+    ## For R CMD check
+    group <- NULL
+
+    #   State assumptions about columns expected to be in sample_info
+    expected_cols <- c(
+        "capture_area", "group", "fiji_image_path", "intra_group_scalar",
+        "group_hires_scalef", "spaceranger_dir"
+    )
+    if (!all(expected_cols %in% colnames(sample_info))) {
+        stop(
+            sprintf(
+                'Missing at least one of the following columns in "sample_info": "%s"',
+                paste(expected_cols, collapse = '", "')
+            )
+        )
+    }
+
+    if (!all(file.exists(sample_info$fiji_image_path))) {
+        stop("All files in 'sample_info$fiji_image_path' must exist.")
+    }
+
+    if (!dir.exists(out_dir)) {
+        stop("'out_dir' does not exist; please create it.")
+    }
+
+    out_paths <- list()
+    for (this_group in unique(sample_info$group)) {
+        this_sample_info <- sample_info |>
+            dplyr::filter(group == this_group)
+
+        if (length(unique(this_sample_info$fiji_image_path)) > 1) {
+            stop("Expected one unique path for 'fiji_image_path' per group in 'sample_info'.")
+        }
+
+        this_image <- imager::load.image(this_sample_info$fiji_image_path[1])
+
+        #   Combine info about the original scalefactors of the first capture
+        #   area with group-related scalars to form a new scalefactors JSON
+        #   for the whole stitched group
+        sr_json <- rjson::fromJSON(
+            file = file.path(
+                this_sample_info$spaceranger_dir[1], "scalefactors_json.json"
+            )
+        )
+
+        low_over_hi <- lowres_max_size / max(dim(this_image)[seq(2)])
+        sr_json <- list(
+            tissue_hires_scalef = this_sample_info$group_hires_scalef[[1]],
+            tissue_lowres_scalef = this_sample_info$group_hires_scalef[[1]] *
+                low_over_hi,
+            spot_diameter_fullres = sr_json$spot_diameter_fullres *
+                this_sample_info$intra_group_scalar[[1]]
+        )
+
+        this_image <- imager::resize(
+            this_image,
+            as.integer(low_over_hi * dim(this_image)[1]),
+            as.integer(low_over_hi * dim(this_image)[2])
+        )
+
+        #   Save the lowres image and scalefactors JSON in a subdirectory of
+        #   'out_dir' named with the current group
+        this_out_dir <- file.path(out_dir, this_group)
+        dir.create(this_out_dir, showWarnings = FALSE)
+        imager::save.image(
+            this_image, file.path(this_out_dir, "tissue_lowres_image.png")
+        )
+        write(
+            rjson::toJSON(sr_json),
+            file.path(this_out_dir, "scalefactors_json.json")
+        )
+        out_paths[[this_group]] <- c(
+            file.path(this_out_dir, "tissue_lowres_image.png"),
+            file.path(this_out_dir, "scalefactors_json.json")
+        )
+    }
+
+    return(unname(unlist(out_paths)))
+}
+
+#' @describeIn prep_fiji Apply transform info from Fiji XML output
+#' 
+#' @import xml2
+#' @importFrom stringr str_replace_all str_detect
+#' @importFrom readr read_csv write_csv
+#' @importFrom rjson fromJSON
+#' @importFrom pkgcond suppress_warnings
+#'
+#' @export
 prep_fiji_coords <- function(sample_info, out_dir) {
     ## For R CMD check
     group <- barcode <- key <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
