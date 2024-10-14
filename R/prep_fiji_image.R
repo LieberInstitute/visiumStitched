@@ -6,7 +6,7 @@
 #' also creates a corresponding \code{scalefactors_json.json} file much like
 #' SpaceRanger's. In conjunction with `prep_fiji_coords()`, this function
 #' prepares for building the [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
-#' with \code{build_spe()}.
+#' with \code{build_SpatialExperiment()}.
 #'
 #' @param out_dir A \code{character(1)} vector giving a path to a directory to place
 #' the output image(s) and scale factors. It must exist in advance.

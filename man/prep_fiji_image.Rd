@@ -32,7 +32,7 @@ of each image whose largest dimension is \code{lowres_max_size} pixels. It
 also creates a corresponding \code{scalefactors_json.json} file much like
 SpaceRanger's. In conjunction with \code{prep_fiji_coords()}, this function
 prepares for building the \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
-with \code{build_spe()}.
+with \code{build_SpatialExperiment()}.
 }
 \examples{
 if (file.exists("sample_info.rds")) {

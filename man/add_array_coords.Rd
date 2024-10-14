@@ -102,7 +102,7 @@ if (file.exists("sample_info.rds")) {
     saveRDS(sample_info, "sample_info.rds")
 }
 
-## Preparing Fiji coordinates and images for build_spe()
+## Preparing Fiji coordinates and images for build_SpatialExperiment()
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 prep_fiji_image(sample_info, out_dir = spe_input_dir)

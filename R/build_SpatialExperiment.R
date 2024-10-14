@@ -71,7 +71,7 @@
 #'     saveRDS(sample_info, "sample_info.rds")
 #' }
 #'
-#' ## Preparing Fiji coordinates and images for build_spe()
+#' ## Preparing Fiji coordinates and images for build_SpatialExperiment()
 #' spe_input_dir <- tempdir()
 #' prep_fiji_coords(sample_info, out_dir = spe_input_dir)
 #' prep_fiji_image(sample_info, out_dir = spe_input_dir)
@@ -81,7 +81,7 @@
 #' ########################################################################
 #'
 #' #    Since we don't have access to the original GTF used to run SpaceRanger,
-#' #    we must explicitly supply our own GTF to build_spe(). We use
+#' #    we must explicitly supply our own GTF to build_SpatialExperiment(). We use
 #' #    GENCODE release 32, intended to be quite close to the actual GTF used,
 #' #    which is available from:
 #' #    https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz
@@ -95,14 +95,14 @@
 #' )
 #'
 #' ## Now we can build the stitched SpatialExperiment object
-#' spe <- build_spe(
+#' spe <- build_SpatialExperiment(
 #'     sample_info,
 #'     coords_dir = spe_input_dir, reference_gtf = gtf_cache
 #' )
 #'
 #' ## Let's explore the stitched SpatialExperiment object
 #' spe
-build_spe <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
+build_SpatialExperiment <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
     ## For R CMD check
     sample_id <- capture_area <- group <- barcode <- NULL
 

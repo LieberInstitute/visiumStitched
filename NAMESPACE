@@ -3,7 +3,7 @@
 export(add_array_coords)
 export(add_overlap_info)
 export(as.Seurat)
-export(build_spe)
+export(build_SpatialExperiment)
 export(merge_overlapping)
 export(prep_fiji_coords)
 export(prep_fiji_image)

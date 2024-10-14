@@ -263,11 +263,11 @@ gtf_cache <- bfcrpath(
 )
 ```
 
-```{r "build_spe"}
+```{r "build_SpatialExperiment"}
 ## Now we can build the SpatialExperiment object. We'll later explore error
 ## metrics related to computing new array coordinates, and thus specify
 ## 'calc_error_metrics = TRUE'.
-spe <- build_spe(
+spe <- build_SpatialExperiment(
     sample_info,
     coords_dir = spe_input_dir, reference_gtf = gtf_cache,
     calc_error_metrics = TRUE
@@ -318,7 +318,7 @@ between overlapping capture areas.
 ## Defining Array Coordinates
 
 Given that the stitched data is larger than a default Visium capture area,
-`add_array_coords()` (which is used internally by `build_spe()`) recomputed the
+`add_array_coords()` (which is used internally by `build_SpatialExperiment()`) recomputed the
 array coordinates (i.e. `spe$array_row` and `spe$array_col`) to more sensibly
 index the stitched data. 
 
@@ -326,7 +326,7 @@ Let's explain this in more detail. By definition, these array coordinates (see
 [documentation from 10X](https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs#tissue-positions))
 are integer indices of each spot on a Visium capture area, numbering the
 typically 78 and 128 rows and columns, respectively, for a 6.5mm capture area.
-The `build_spe()` function retains each capture area's original array
+The `build_SpatialExperiment()` function retains each capture area's original array
 coordinates, `spe$array_row_original` and `spe$array_col_original`, but these
 are typically not useful to represent our group-level, stitched data. In fact,
 each stitched capture area has the same exact array coordinates, despite having
@@ -400,7 +400,7 @@ No algorithm can fit a set of capture areas' spots onto a single hexagonal grid
 without some error. Here, we define a spot's error in being assigned new array
 coordinates with two independent metrics, which are stored in
 `spe$euclidean_error` and `spe$shared_neighbors` if the user opts to compute
-them with `build_spe(calc_error_metrics = TRUE)`. The latter metric can take a
+them with `build_SpatialExperiment(calc_error_metrics = TRUE)`. The latter metric can take a
 couple minutes to compute, and thus by default the metrics are not computed.
 
 The first metric is the Euclidean distance, in multiples of 100 microns (the
