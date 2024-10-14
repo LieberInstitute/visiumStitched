@@ -65,4 +65,3 @@ biocViews: Software, Spatial, Transcriptomics, Transcription, GeneExpression,
     Visualization, DataImport
 URL: https://github.com/LieberInstitute/visiumStitched
 BugReports: https://support.bioconductor.org/tag/visiumStitched
-LazyData: true

@@ -38,18 +38,18 @@
 #' colnames(spe_unstitched) <- spatialLIBD::add_key(spe_unstitched)$key
 #'
 #' ## Convert from a SpatialExperiment to a Seurat object
-#' seur <- spe_to_seurat(spe_unstitched)
+#' seur <- as.Seurat(spe_unstitched)
 #' seur
 #'
 #' ## Example with an stitched SPE object
 #' if (!exists("spe")) {
 #'     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 #' }
-#' seur_stitched <- spe_to_seurat(spe[seq(100), seq(100)])
+#' seur_stitched <- as.Seurat(spe[seq(100), seq(100)])
 #'
 #' ## Let's look at our resulting Seurat object
 #' seur_stitched
-spe_to_seurat <- function(
+as.Seurat <- function(
         spe,
         spatial_cols = c(
             "tissue" = "in_tissue",

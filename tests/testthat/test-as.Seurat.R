@@ -1,5 +1,5 @@
 test_that(
-    "spe_to_seurat",
+    "as.Seurat",
     {
         spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")[seq(100), seq(100)]
 
@@ -8,7 +8,7 @@ test_that(
 
         #   Should be missing several "transformed" colData columns
         expect_error(
-            spe_to_seurat(
+            as.Seurat(
                 spe,
                 spatial_cols = c(
                     "tissue" = "in_tissue",
@@ -27,14 +27,14 @@ test_that(
         temp <- imgData(spe)
         imgData(spe)$image_id <- "hires"
         expect_error(
-            spe_to_seurat(spe, verbose = FALSE),
+            as.Seurat(spe, verbose = FALSE),
             "Each sample ID must have a low-resolution image for conversion"
         )
         imgData(spe) <- temp
 
         #   Remove most reducedDims, since too many names fail Seurat
         #   conventions and produce warnings that don't signify problems with
-        #   'spe_to_seurat'
+        #   'as.Seurat'
         colnames(SingleCellExperiment::reducedDims(spe)[[4]]) <- paste0(
             colnames(SingleCellExperiment::reducedDims(spe)[[4]]), "_"
         )
@@ -43,7 +43,7 @@ test_that(
         )
 
         #   Now mostly just check that nothing fails during conversion
-        seur <- spe_to_seurat(spe, verbose = FALSE)
+        seur <- as.Seurat(spe, verbose = FALSE)
         expect_equal(as.character(class(seur)), "Seurat")
         expect_equal(imgData(spe)$sample_id, names(seur@images))
     }
