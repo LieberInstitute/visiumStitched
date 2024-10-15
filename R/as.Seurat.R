@@ -133,7 +133,7 @@ as.Seurat <- function(
                 ]
             ),
             coordinates = coords,
-            spot.radius = SPOT_DIAMETER / Seurat::scaleFactors(spe_small),
+            spot.radius = SPOT_DIAMETER / scaleFactors(spe_small),
             assay = "originalexp",
             key = paste0(sample_id, "_")
         )
