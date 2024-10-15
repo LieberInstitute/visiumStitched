@@ -17,7 +17,14 @@ test_that(
                 pxl_row_in_fullres_rounded, capture_area,
                 array_row_original, array_col_original
             ) |>
+            #   Fix the fact that SpatialExperiment::mirrorObject was applied,
+            #   but it doesn't properly adjust the rounded pixel coordinates
+            mutate(
+                pxl_row_in_fullres_rounded = -1 * pxl_row_in_fullres_rounded +
+                    dim(imgRaster(spe))[1] / scaleFactors(spe)
+            ) |>
             group_by(capture_area) |>
+            arrange(array_row) |>
             slice_head(n = 10) |>
             ungroup()
         coords = coords_new |>
@@ -42,10 +49,8 @@ test_that(
         )
 
         #   Shared neighbors must similarly be between 0 and 1 (it's a
-        #   proportion)
-        expect_equal(
-            all((coords_err$shared_neighbors >= 0) & (coords_err$shared_neighbors <= 1)),
-            TRUE
-        )
+        #   proportion). NAs are allowed when there are no neighbors originally
+        temp = coords_err$shared_neighbors[!is.na(coords_err$shared_neighbors)]
+        expect_equal(all((temp >= 0) & (temp <= 1)), TRUE)
     }
 )
