@@ -14,12 +14,15 @@ test_that(
         #   Prepare sample_info
         ########################################################################
 
-        if (file.exists("sample_info.rds")) {
-            sample_info <- readRDS("sample_info.rds")
+        sample_info_path = file.path(tempdir(), "sample_info.rds")
+        if (file.exists(sample_info_path)) {
+            sample_info <- readRDS(sample_info_path)
         } else {
             sample_info <- dplyr::tibble(
                 group = "Br2719",
-                capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
+                capture_area = c(
+                    "V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1"
+                )
             )
             #   Add 'spaceranger_dir' column
             sr_dir <- tempdir()
@@ -43,7 +46,7 @@ test_that(
             ## Re-size images and add more information to the sample_info
             sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
-            saveRDS(sample_info, "sample_info.rds")
+            saveRDS(sample_info, sample_info_path)
         }
 
         spe_input_dir <- tempdir()
