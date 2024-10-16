@@ -129,7 +129,7 @@ for more details.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/exists.html" class="external-link">exists</a></span><span class="op">(</span><span class="st">"spe"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span>    <span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 19:25:15.79986 loading file /github/home/.cache/R/BiocFileCache/1c756c878402_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 20:50:02.617509 loading file /github/home/.cache/R/BiocFileCache/1e77b7b9337_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Prepare sample_info</span></span></span>
@@ -167,16 +167,16 @@ for more details.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">sample_info</span>, <span class="va">sample_info_path</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 19:25:20.421355 loading file /github/home/.cache/R/BiocFileCache/1c7541209b46_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 19:25:22.710194 loading file /github/home/.cache/R/BiocFileCache/1c754f81ded8_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 20:50:07.365021 loading file /github/home/.cache/R/BiocFileCache/1e73775f498_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-16 20:50:09.745492 loading file /github/home/.cache/R/BiocFileCache/1e7da5f471_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Preparing Fiji coordinates and images for build_SpatialExperiment()</span></span></span>
 <span class="r-in"><span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpU466ow/Br2719/tissue_positions.csv"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp9hmDjo/Br2719/tissue_positions.csv"</span>
 <span class="r-in"><span><span class="fu"><a href="prep_fiji.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/RtmpU466ow/Br2719/tissue_lowres_image.png"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/RtmpU466ow/Br2719/scalefactors_json.json" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "/tmp/Rtmp9hmDjo/Br2719/tissue_lowres_image.png"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2] "/tmp/Rtmp9hmDjo/Br2719/scalefactors_json.json" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">########################################################################</span></span></span>
 <span class="r-in"><span><span class="co">#   Add array coordinates</span></span></span>
