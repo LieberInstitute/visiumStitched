@@ -64,12 +64,10 @@
 #' #   Prepare sample_info
 #' ########################################################################
 #' 
-#' #    Cache sample_info across examples
-#' bfc <- BiocFileCache::BiocFileCache()
-#' cached_file <- BiocFileCache::bfcquery(bfc, 'visiumStitched_sample_info')
-#' 
-#' if (nrow(cached_file) == 0) {
-#'     #    Then we need to construct the table of sample information
+#' sample_info_path = file.path(tempdir(), "sample_info.rds")
+#' if (file.exists(sample_info_path)) {
+#'     sample_info <- readRDS(sample_info_path)
+#' } else {
 #'     sample_info <- dplyr::tibble(
 #'         group = "Br2719",
 #'         capture_area = c("V13B23-283_A1", "V13B23-283_C1", "V13B23-283_D1")
@@ -95,18 +93,8 @@
 #'
 #'     ## Re-size images and add more information to the sample_info
 #'     sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
-#'     
-#'     #    Cache sample info for later
-#'     sample_info_path <- BiocFileCache::bfcnew(
-#'         bfc, "visiumStitched_sample_info", ext = "csv"
-#'     )
-#'     readr::write_csv(sample_info, sample_info_path)
-#' } else {
-#'     #    Pull sample info from the cache
-#'     sample_info_path <- BiocFileCache::bfcquery(
-#'         bfc, 'visiumStitched_sample_info'
-#'     )$rpath
-#'     sample_info = readr::read_csv(sample_info_path)
+#'
+#'     saveRDS(sample_info, sample_info_path)
 #' }
 #'
 #' ## Preparing Fiji coordinates and images for build_SpatialExperiment()
