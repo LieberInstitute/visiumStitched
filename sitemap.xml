@@ -11,7 +11,8 @@
 <url><loc>/news/index.html</loc></url>
 <url><loc>/reference/add_array_coords.html</loc></url>
 <url><loc>/reference/add_overlap_info.html</loc></url>
-<url><loc>/reference/build_spe.html</loc></url>
+<url><loc>/reference/as.Seurat.html</loc></url>
+<url><loc>/reference/build_SpatialExperiment.html</loc></url>
 <url><loc>/reference/dot-add_error_metrics.html</loc></url>
 <url><loc>/reference/dot-clean_round.html</loc></url>
 <url><loc>/reference/dot-fit_to_array.html</loc></url>
@@ -21,9 +22,7 @@
 <url><loc>/reference/dot-validate_array.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
 <url><loc>/reference/merge_overlapping.html</loc></url>
-<url><loc>/reference/prep_fiji_coords.html</loc></url>
-<url><loc>/reference/prep_fiji_image.html</loc></url>
+<url><loc>/reference/prep_fiji.html</loc></url>
 <url><loc>/reference/rescale_fiji_inputs.html</loc></url>
-<url><loc>/reference/spe_to_seurat.html</loc></url>
 </urlset>
 

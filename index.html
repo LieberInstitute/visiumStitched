@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Enable downstream analysis of Visium capture areas stitched together with Fiji • visiumStitched</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -12,88 +12,63 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
-<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Enable downstream analysis of Visium capture areas stitched together with Fiji">
+<meta name="description" content="This package provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from https://github.com/LieberInstitute/visiumStitched_brain. visiumStitched prepares SpaceRanger (10x Genomics) output files so you can stitch the images from groups of capture areas together with Fiji. Then visiumStitched builds a SpatialExperiment object with the stitched data and makes an artificial hexogonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as PRECAST and BayesSpace. The SpatialExperiment objects created by visiumStitched are compatible with spatialLIBD, which can be used to build interactive websites for stitched SpatialExperiment objects. visiumStitched also enables casting SpatialExperiment objects as Seurat objects.">
 <meta property="og:description" content="This package provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from https://github.com/LieberInstitute/visiumStitched_brain. visiumStitched prepares SpaceRanger (10x Genomics) output files so you can stitch the images from groups of capture areas together with Fiji. Then visiumStitched builds a SpatialExperiment object with the stitched data and makes an artificial hexogonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as PRECAST and BayesSpace. The SpatialExperiment objects created by visiumStitched are compatible with spatialLIBD, which can be used to build interactive websites for stitched SpatialExperiment objects. visiumStitched also enables casting SpatialExperiment objects as Seurat objects.">
 <meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <div class="container template-home">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">visiumStitched</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.8</span>
-      </span>
-    </div>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="articles/visiumStitched.html">Get started</a>
-</li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
+    <a class="navbar-brand me-2" href="index.html">visiumStitched</a>
 
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="articles/misc.html">Miscellaneous notes</a>
-    </li>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.8</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="articles/visiumStitched.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/misc.html">Miscellaneous notes</a></li>
   </ul>
 </li>
-<li>
-  <a href="news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/LieberInstitute/visiumStitched/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/LieberInstitute/visiumStitched/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
+</nav><div class="container template-home">
+<div class="row">
+  <main id="main" class="col-md-9"><div class="section level1">
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="visiumstitched-">visiumStitched <a class="anchor" aria-label="anchor" href="#visiumstitched-"></a>
+</h1>
 </div>
-<!--/.navbar -->
-
-
-
-      </header><div class="row">
-  <div class="contents col-md-9">
-<div class="section level1">
-<div class="page-header"><h1 id="visiumstitched-">visiumStitched <img src="reference/figures/logo.png" align="right"><a class="anchor" aria-label="anchor" href="#visiumstitched-"></a>
-</h1></div>
 <!-- badges: start -->
 
-<p><code>visiumStitched</code> provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from <a href="https://github.com/LieberInstitute/visiumStitched_brain" class="external-link uri">https://github.com/LieberInstitute/visiumStitched_brain</a>. <code>visiumStitched</code> prepares <code>SpaceRanger</code> (10x Genomics) output files so you can stitch the images from groups of capture areas together with <code>Fiji</code>. Then <code>visiumStitched</code> builds a <code>SpatialExperiment</code> object with the stitched data and makes an artificial hexogonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as <code>PRECAST</code> and <code>BayesSpace</code>. The <code>SpatialExperiment</code> objects created by <code>visiumStitched</code> are compatible with <code>spatialLIBD</code>, which can be used to build interactive websites for stitched <code>SpatialExperiment</code> objects (check the <a href="https://libd.shinyapps.io/visiumStitched_brain" class="external-link">example human brain data</a>). <code>visiumStitched</code> also enables casting <code>SpatialExperiment</code> objects as <code>Seurat</code> objects.</p>
+<p><code>visiumStitched</code> provides helper functions for working with multiple Visium capture areas that overlap each other. This package was developed along with the companion example use case data available from <a href="https://github.com/LieberInstitute/visiumStitched_brain" class="external-link uri">https://github.com/LieberInstitute/visiumStitched_brain</a>. <code>visiumStitched</code> prepares <code>SpaceRanger</code> (10x Genomics) output files so you can stitch the images from groups of capture areas together with <code>Fiji</code>. Then <code>visiumStitched</code> builds a <code>SpatialExperiment</code> object with the stitched data and makes an artificial hexagonal grid enabling the seamless use of spatial clustering methods that rely on such grid to identify neighboring spots, such as <code>PRECAST</code> and <code>BayesSpace</code>. The <code>SpatialExperiment</code> objects created by <code>visiumStitched</code> are compatible with <code>spatialLIBD</code>, which can be used to build interactive websites for stitched <code>SpatialExperiment</code> objects (check the <a href="https://libd.shinyapps.io/visiumStitched_brain" class="external-link">example human brain data</a>). <code>visiumStitched</code> also enables casting <code>SpatialExperiment</code> objects as <code>Seurat</code> objects.</p>
 <p>For details, check the <a href="http://research.libd.org/visiumStitched/" class="external-link">documentation site</a>.</p>
 <div class="section level2">
 <h2 id="example-data-processed-with-visiumstitched">Example data processed with visiumStitched<a class="anchor" aria-label="anchor" href="#example-data-processed-with-visiumstitched"></a>
@@ -105,7 +80,8 @@
 <span></span>
 <span><span class="co">## Download the spot-level data, which is a SpatialExperiment object</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2024-08-07 14:26:16.510237 loading file /Users/leocollado/Library/Caches/org.R-project.R/R/BiocFileCache/1769558ae4ac_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; snapshotDate(): 2024-04-29</span></span>
+<span><span class="co">#&gt; 2024-10-14 11:39:40.997043 loading file /users/neagles/.cache/R/BiocFileCache/feb652e603a7a_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Explore the stitched data</span></span>
 <span><span class="va">spe</span></span>
@@ -119,8 +95,7 @@
 <span><span class="co">#&gt; colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1</span></span>
 <span><span class="co">#&gt;   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1</span></span>
 <span><span class="co">#&gt;   TTGTTTGTGTAAATTC-1_V13B23-283_D1</span></span>
-<span><span class="co">#&gt; colData names(43): sample_id in_tissue ... precast_k16_unstitched</span></span>
-<span><span class="co">#&gt;   precast_k24_unstitched</span></span>
+<span><span class="co">#&gt; colData names(40): sample_id in_tissue ... precast_k4 precast_k8</span></span>
 <span><span class="co">#&gt; reducedDimNames(1): PCA</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span>
@@ -130,7 +105,7 @@
 <span><span class="co">## Show clustering results from PRECAST at k = 8</span></span>
 <span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span></span>
 <span>    <span class="va">spe</span>,</span>
-<span>    clustervar <span class="op">=</span> <span class="st">"precast_k8_stitched"</span>,</span>
+<span>    clustervar <span class="op">=</span> <span class="st">"precast_k8"</span>,</span>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example_visiumStitched_brain-1.png" width="100%"></p>
@@ -138,13 +113,13 @@
 <div class="section level2">
 <h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
 </h2>
-<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>visiumStitched</code> from <a href="https://github.com/LieberInstitute/visiumStitched" class="external-link">GitHub</a> using the following code:</p>
+<p>Get the latest stable <code>R</code> release from <a href="http://cran.r-project.org/" class="external-link">CRAN</a>. Then install <code>visiumStitched</code> from Bioconductor using the following code:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"LieberInstitute/visiumStitched"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"visiumStitched"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
@@ -152,15 +127,14 @@
 <p>Below is the citation output from using <code>citation('visiumStitched')</code> in R. Please run this yourself to check for any updates on how to cite <strong>visiumStitched</strong>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"visiumStitched"</span><span class="op">)</span>, bibtex <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; To cite package 'visiumStitched' in publications use:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of</span></span>
-<span><span class="co">#&gt;   Visium capture areas stitched together with Fiji_.</span></span>
-<span><span class="co">#&gt;   doi:10.18129/B9.bioc.visiumStitched</span></span>
-<span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.visiumStitched&gt;,</span></span>
-<span><span class="co">#&gt;   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R</span></span>
-<span><span class="co">#&gt;   package version 0.99.0,</span></span>
-<span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/visiumStitched&gt;.</span></span>
+<span><span class="co">#&gt; Warning in packageDescription(pkg = package, lib.loc = dirname(dir)): no</span></span>
+<span><span class="co">#&gt; package 'visiumStitched' was found</span></span>
+<span><span class="co">#&gt; Eagles NJ, Collado-Torres L (2024). _Enable downstream analysis of</span></span>
+<span><span class="co">#&gt; Visium capture areas stitched together with Fiji_.</span></span>
+<span><span class="co">#&gt; doi:10.18129/B9.bioc.visiumStitched</span></span>
+<span><span class="co">#&gt; &lt;https://doi.org/10.18129/B9.bioc.visiumStitched&gt;,</span></span>
+<span><span class="co">#&gt; https://github.com/LieberInstitute/visiumStitched/visiumStitched - R</span></span>
+<span><span class="co">#&gt; package version, &lt;http://www.bioconductor.org/packages/visiumStitched&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -169,15 +143,14 @@
 <span><span class="co">#&gt;     author = {Nicholas J. Eagles and Leonardo Collado-Torres},</span></span>
 <span><span class="co">#&gt;     year = {2024},</span></span>
 <span><span class="co">#&gt;     url = {http://www.bioconductor.org/packages/visiumStitched},</span></span>
-<span><span class="co">#&gt;     note = {https://github.com/LieberInstitute/visiumStitched/visiumStitched - R package version 0.99.0},</span></span>
+<span><span class="co">#&gt;     note = {https://github.com/LieberInstitute/visiumStitched/visiumStitched - R package version},</span></span>
 <span><span class="co">#&gt;     doi = {10.18129/B9.bioc.visiumStitched},</span></span>
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde</span></span>
-<span><span class="co">#&gt;   TM, Page SC, Martinowich K, Collado-Torres L (2024).</span></span>
-<span><span class="co">#&gt;   "visiumStitched." _bioRxiv_. doi:10.1101/TODO</span></span>
-<span><span class="co">#&gt;   &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
-<span><span class="co">#&gt;   &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
+<span><span class="co">#&gt; Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde TM,</span></span>
+<span><span class="co">#&gt; Page SC, Martinowich K, Collado-Torres L (2024). "visiumStitched."</span></span>
+<span><span class="co">#&gt; _bioRxiv_. doi:10.1101/TODO &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
+<span><span class="co">#&gt; &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -210,10 +183,7 @@
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.19/biocthis" class="external-link">biocthis</a></em>.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="links">
+  </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/LieberInstitute/visiumStitched/" class="external-link">Browse source code</a></li>
@@ -271,23 +241,20 @@
 </ul>
 </div>
 
-  </div>
+  </aside>
 </div>
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Nicholas J. Eagles.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Nicholas J. Eagles.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
-
 
 
 
