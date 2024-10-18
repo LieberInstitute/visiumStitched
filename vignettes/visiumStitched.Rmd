@@ -79,7 +79,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
 
-BiocManager::install("LieberInstitute/visiumStitched")
+BiocManager::install("visiumStitched")
 ```
 
 ## Citing `visiumStitched`
