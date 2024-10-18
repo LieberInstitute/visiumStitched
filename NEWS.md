@@ -1,27 +1,3 @@
-# visiumStitched 0.99.12
-
-# visiumStitched 0.99.11
-
-# visiumStitched 0.99.10
-
-# visiumStitched 0.99.9
-
-# visiumStitched 0.99.8
-
-# visiumStitched 0.99.7
-
-# visiumStitched 0.99.6
-
-# visiumStitched 0.99.5
-
-# visiumStitched 0.99.4
-
-# visiumStitched 0.99.3
-
-# visiumStitched 0.99.2
-
-# visiumStitched 0.99.1
-
 # visiumStitched 0.99.0
 
 NEW FEATURES

@@ -2,7 +2,7 @@ Package: visiumStitched
 Title: Enable downstream analysis of Visium capture areas stitched together with
     Fiji
 Version: 0.99.12
-Date: 2024-10-17
+Date: 2024-10-18
 Authors@R: 
     c(
     person("Nicholas J.", "Eagles", email = "nickeagles77@gmail.com",
