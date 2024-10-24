@@ -8,7 +8,7 @@ test_that(
         #   Use the existing object's colData to define coords before and after
         #   aligning to the nearest new array coordinates (as well as define the
         #   distance between spot centroids in pixels)
-        coords_new = colData(spe) |>
+        coords_new <- colData(spe) |>
             cbind(spatialCoords(spe)) |>
             as_tibble() |>
             select(
@@ -27,14 +27,14 @@ test_that(
             arrange(array_row) |>
             slice_head(n = 10) |>
             ungroup()
-        coords = coords_new |>
+        coords <- coords_new |>
             select(-c(array_row, array_col)) |>
             rename(
                 array_row = array_row_original, array_col = array_col_original
             )
-        inter_spot_dist_px = 277.1524
+        inter_spot_dist_px <- 277.1524
 
-        coords_err = .add_error_metrics(coords, coords_new, inter_spot_dist_px)
+        coords_err <- .add_error_metrics(coords, coords_new, inter_spot_dist_px)
 
         #   Two error-metric columns should be added
         expect_equal(
@@ -50,7 +50,7 @@ test_that(
 
         #   Shared neighbors must similarly be between 0 and 1 (it's a
         #   proportion). NAs are allowed when there are no neighbors originally
-        temp = coords_err$shared_neighbors[!is.na(coords_err$shared_neighbors)]
+        temp <- coords_err$shared_neighbors[!is.na(coords_err$shared_neighbors)]
         expect_equal(all((temp >= 0) & (temp <= 1)), TRUE)
     }
 )

@@ -157,5 +157,5 @@ where `exclude_overlapping` is `FALSE`. Note that the function can be quite
 memory-intensive and time-consuming.
 
 ```{r "merge_overlapping", eval = FALSE}
-spe_merged = merge_overlapping(spe)
+spe_merged <- merge_overlapping(spe)
 ```

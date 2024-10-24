@@ -412,7 +412,7 @@ position and the position of its assigned array coordinates.
 colData(spe) |>
     as_tibble() |>
     ggplot(mapping = aes(x = 0, y = euclidean_error)) +
-        geom_boxplot()
+    geom_boxplot()
 ```
 
 The other metric, `spe$shared_neighbors`, measures the fraction of original
@@ -424,7 +424,7 @@ array coordinates. Thus, a value of 1 is ideal.
 colData(spe) |>
     as_tibble() |>
     ggplot(mapping = aes(x = 0, y = shared_neighbors)) +
-        geom_boxplot()
+    geom_boxplot()
 ```
 
 In theory, error as measured through these metrics could have a very slight

@@ -6,7 +6,7 @@
 #' in particular, `tissue_positions.csv`, `tissue_lowres_image.png`, and
 #' `scalefactors_json.json` files are created. These functions are necessary to
 #' run in preparation for \code{build_SpatialExperiment()}.
-#' 
+#'
 #' Given a `data.frame()` of sample information (\code{sample_info}) with
 #' columns \code{capture_area}, \code{group}, and \code{fiji_xml_path},
 #' expected to have one unique path to Fiji XML output per group, `prep_fiji_coords`
@@ -14,7 +14,7 @@
 #' file from SpaceRanger, and transform using the rotation matrix specified
 #' by Fiji <https://imagej.net/software/fiji/>. It writes one new \code{tissue_positions.csv}
 #' file per group.
-#' 
+#'
 #' After stitching all groups in \code{sample_info} with Fiji, images of
 #' various resolutions (pixel dimensions) are left. `prep_fiji_image()` creates copies
 #' of each image whose largest dimension is \code{lowres_max_size} pixels. It
@@ -52,7 +52,7 @@
 #' sample_info$spaceranger_dir <- file.path(
 #'     sr_dir, sample_info$capture_area, "outs", "spatial"
 #' )
-#' 
+#'
 #' #   Add Fiji-output-related columns
 #' fiji_dir <- tempdir()
 #' temp <- unzip(
@@ -61,7 +61,7 @@
 #' )
 #' sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 #' sample_info$fiji_image_path <- temp[grep("png$", temp)]
-#' 
+#'
 #' ## Re-size images and add more information to the sample_info
 #' sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 #'
@@ -83,7 +83,7 @@
 #'
 #' #    'prep_fiji_image' produced an image and scalefactors
 #' out_paths_image
-#' 
+#'
 #' #    'prep_fiji_coords' produced a file of spatial coordinates for the
 #' #    stitched Br2719
 #' readr::read_csv(out_path_coords)
@@ -177,7 +177,7 @@ prep_fiji_image <- function(sample_info, out_dir, lowres_max_size = 1200) {
 }
 
 #' @describeIn prep_fiji Apply transform info from Fiji XML output
-#' 
+#'
 #' @import xml2
 #' @importFrom stringr str_replace_all str_detect
 #' @importFrom readr read_csv write_csv

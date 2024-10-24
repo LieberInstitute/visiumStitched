@@ -50,18 +50,17 @@
 #'
 #' ## Let's look at our resulting Seurat object
 #' seur_stitched
-as.Seurat <- function(
-        spe,
-        spatial_cols = c(
-            "tissue" = "in_tissue",
-            "row" = "array_row",
-            "col" = "array_col",
-            "imagerow" = "pxl_row_in_fullres",
-            "imagecol" = "pxl_col_in_fullres"
-        ),
-        verbose = TRUE) {
+as.Seurat <- function(spe,
+    spatial_cols = c(
+        "tissue" = "in_tissue",
+        "row" = "array_row",
+        "col" = "array_col",
+        "imagerow" = "pxl_row_in_fullres",
+        "imagecol" = "pxl_col_in_fullres"
+    ),
+    verbose = TRUE) {
     #   Seurat is only suggested
-    BiocBaseUtils::checkInstalled('Seurat')
+    BiocBaseUtils::checkInstalled("Seurat")
 
     SPOT_DIAMETER <- 55e-6
 

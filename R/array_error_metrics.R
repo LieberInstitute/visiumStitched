@@ -100,7 +100,7 @@
 .add_error_metrics <- function(coords, coords_new, inter_spot_dist_px) {
     ## For R CMD CHECK
     pxl_col_in_fullres <- pxl_col_in_fullres_rounded <- pxl_row_in_fullres <- pxl_row_in_fullres_rounded <- key <- capture_area <- NULL
-    
+
     coords_new <- coords_new |>
         mutate(
             euclidean_error = (

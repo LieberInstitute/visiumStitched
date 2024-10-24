@@ -83,7 +83,7 @@ rescale_fiji_inputs <- function(sample_info, out_dir) {
             )
         )
     }
-    
+
     if (!dir.exists(out_dir)) {
         stop("'out_dir' does not exist; please create it.")
     }
