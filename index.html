@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">visiumStitched</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +81,7 @@
 <span><span class="co">## Download the spot-level data, which is a SpatialExperiment object</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; snapshotDate(): 2024-04-29</span></span>
-<span><span class="co">#&gt; 2024-10-14 11:39:40.997043 loading file /users/neagles/.cache/R/BiocFileCache/feb652e603a7a_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2024-11-08 13:00:48.086572 loading file /users/neagles/.cache/R/BiocFileCache/f5fa60825608_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Explore the stitched data</span></span>
 <span><span class="va">spe</span></span>
@@ -95,7 +95,8 @@
 <span><span class="co">#&gt; colnames(13965): AAACAACGAATAGTTC-1_V13B23-283_A1</span></span>
 <span><span class="co">#&gt;   AAACAAGTATCTCCCA-1_V13B23-283_A1 ... TTGTTTGTATTACACG-1_V13B23-283_D1</span></span>
 <span><span class="co">#&gt;   TTGTTTGTGTAAATTC-1_V13B23-283_D1</span></span>
-<span><span class="co">#&gt; colData names(40): sample_id in_tissue ... precast_k4 precast_k8</span></span>
+<span><span class="co">#&gt; colData names(43): sample_id in_tissue ... precast_k16_unstitched</span></span>
+<span><span class="co">#&gt;   precast_k24_unstitched</span></span>
 <span><span class="co">#&gt; reducedDimNames(1): PCA</span></span>
 <span><span class="co">#&gt; mainExpName: NULL</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span>
@@ -105,7 +106,7 @@
 <span><span class="co">## Show clustering results from PRECAST at k = 8</span></span>
 <span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/vis_clus.html" class="external-link">vis_clus</a></span><span class="op">(</span></span>
 <span>    <span class="va">spe</span>,</span>
-<span>    clustervar <span class="op">=</span> <span class="st">"precast_k8"</span>,</span>
+<span>    clustervar <span class="op">=</span> <span class="st">"precast_k8_stitched"</span>,</span>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-example_visiumStitched_brain-1.png" width="100%"></p>
@@ -148,9 +149,10 @@
 <span><span class="co">#&gt;   }</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde TM,</span></span>
-<span><span class="co">#&gt; Page SC, Martinowich K, Collado-Torres L (2024). "visiumStitched."</span></span>
-<span><span class="co">#&gt; _bioRxiv_. doi:10.1101/TODO &lt;https://doi.org/10.1101/TODO&gt;,</span></span>
-<span><span class="co">#&gt; &lt;https://www.biorxiv.org/content/10.1101/TODO&gt;.</span></span>
+<span><span class="co">#&gt; Page SC, Martinowich K, Collado-Torres L (2024). "visiumStitched." _BMC</span></span>
+<span><span class="co">#&gt; Genomics_. doi:10.1186/s12864-024-10991-y</span></span>
+<span><span class="co">#&gt; &lt;https://doi.org/10.1186/s12864-024-10991-y&gt;,</span></span>
+<span><span class="co">#&gt; &lt;doi.org/10.1186/s12864-024-10991-y&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -158,9 +160,9 @@
 <span><span class="co">#&gt;     title = {visiumStitched},</span></span>
 <span><span class="co">#&gt;     author = {Nicholas J. Eagles and Svitlana Bach and Madhavi Tippani and Prashanthi Ravichandran and Yufeng Du and Ryan A. Miller and Thomas M. Hyde and Stephanie C. Page and Keri Martinowich and Leonardo Collado-Torres},</span></span>
 <span><span class="co">#&gt;     year = {2024},</span></span>
-<span><span class="co">#&gt;     journal = {bioRxiv},</span></span>
-<span><span class="co">#&gt;     doi = {10.1101/TODO},</span></span>
-<span><span class="co">#&gt;     url = {https://www.biorxiv.org/content/10.1101/TODO},</span></span>
+<span><span class="co">#&gt;     journal = {BMC Genomics},</span></span>
+<span><span class="co">#&gt;     doi = {10.1186/s12864-024-10991-y},</span></span>
+<span><span class="co">#&gt;     url = {doi.org/10.1186/s12864-024-10991-y},</span></span>
 <span><span class="co">#&gt;   }</span></span></code></pre></div>
 <p>Please note that the <code>visiumStitched</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
 </div>
