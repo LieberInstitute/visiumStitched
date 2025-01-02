@@ -159,7 +159,14 @@ jobs:
         run: |
           ## Edit below if you have any Windows system dependencies
         shell: Rscript {0}
-
+      
+      - name: Install Linux system dependencies
+        if: runner.os == 'Linux'
+        run: |
+          # Seems to be necessary to find libtiff.so.5 when building visiumStitched
+          sudo apt-get update
+          sudo apt-get install -y libtiff5 libtiff-dev
+        
       - name: Install BiocManager
         run: |
           message(paste('****', Sys.time(), 'installing BiocManager ****'))
