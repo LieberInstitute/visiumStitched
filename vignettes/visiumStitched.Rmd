@@ -147,7 +147,7 @@ sample_info
 # Preparing Inputs to Fiji
 
 The `visiumStitched` workflow makes use of
-[Fiji](https://imagej.net/software/fiji/), a distribution of the `ImageJ`
+[Fiji](https://imagej.net/software/fiji/) 2.14.0, a distribution of the `ImageJ`
 image-processing software, which includes an interface for aligning images on a
 shared coordinate system. Before aligning anything in Fiji, we need to ensure
 that images to align from all capture areas are on the same scale-- that is, a
@@ -179,7 +179,8 @@ sample_info
 Before building a `SpatialExperiment` for a stitched dataset, we must align the
 images for each group in Fiji. Check out
 [this video](https://www.youtube.com/watch?v=kFLtpK3qbSY) for a guide through
-this process with the example data.
+this process with the example data. Note that [Fiji version 2.14.0](https://downloads.imagej.net/fiji/releases/2.14.0/)
+was used in this demo, and other versions have [behaved differently](https://github.com/LieberInstitute/visiumStitched/issues/6).
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/kFLtpK3qbSY?si=CF-rv7Nd5yc7W6nC" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
