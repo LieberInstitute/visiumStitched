@@ -7,7 +7,8 @@
 build_SpatialExperiment(
   sample_info,
   coords_dir,
-  count_type = "sparse",
+  count_type = c("sparse", "HDF5"),
+  data_type = c("raw", "filtered"),
   reference_gtf = NULL,
   gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"),
   calc_error_metrics = FALSE
@@ -26,7 +27,10 @@ produced from refinement with \link[=prep_fiji_coords]{prep_fiji_coords()}
 and related functions.}
 
 \item{count_type}{A \code{character(1)} vector passed to \code{type} from
-\code{SpatialExperiment::read10xVisium}, defaulting to "sparse".}
+\code{SpatialExperiment::read10xVisiumWrapper}, defaulting to "sparse".}
+
+\item{data_type}{A \code{character(1)} vector passed to \code{data} from
+\code{SpatialExperiment::read10xVisiumWrapper}, defaulting to "raw".}
 
 \item{reference_gtf}{Passed to \code{\link[spatialLIBD:read10xVisiumWrapper]{spatialLIBD::read10xVisiumWrapper()}}. If
 working on the same system where SpaceRanger was run, the GTF will be

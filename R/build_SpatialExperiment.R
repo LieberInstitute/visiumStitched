@@ -14,7 +14,9 @@
 #'
 #' @inheritParams add_array_coords
 #' @param count_type A \code{character(1)} vector passed to \code{type} from
-#' \code{SpatialExperiment::read10xVisium}, defaulting to "sparse".
+#' \code{SpatialExperiment::read10xVisiumWrapper}, defaulting to "sparse".
+#' @param data_type A \code{character(1)} vector passed to \code{data} from
+#' \code{SpatialExperiment::read10xVisiumWrapper}, defaulting to "raw".
 #' @param reference_gtf Passed to [spatialLIBD::read10xVisiumWrapper()]. If
 #' working on the same system where SpaceRanger was run, the GTF will be
 #' automatically found; otherwise a `character(1)` path may be supplied,
@@ -96,9 +98,12 @@
 #'
 #' ## Let's explore the stitched SpatialExperiment object
 #' spe
-build_SpatialExperiment <- function(sample_info, coords_dir, count_type = "sparse", reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
+build_SpatialExperiment <- function(sample_info, coords_dir, count_type = c("sparse", "HDF5"), data_type = c("raw", "filtered"), reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
     ## For R CMD check
     sample_id <- capture_area <- group <- barcode <- NULL
+
+    count_type <- match.arg(count_type)
+    data_type <- match.arg(data_type)
 
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group", "spaceranger_dir")
@@ -117,7 +122,7 @@ build_SpatialExperiment <- function(sample_info, coords_dir, count_type = "spars
             samples = dirname(sample_info$spaceranger_dir),
             sample_id = sample_info$capture_area,
             type = count_type,
-            data = "raw",
+            data = data_type,
             images = "lowres",
             load = FALSE,
             gtf_cols = gtf_cols
@@ -127,7 +132,7 @@ build_SpatialExperiment <- function(sample_info, coords_dir, count_type = "spars
             samples = dirname(sample_info$spaceranger_dir),
             sample_id = sample_info$capture_area,
             type = count_type,
-            data = "raw",
+            data = data_type,
             images = "lowres",
             load = FALSE,
             reference_gtf = reference_gtf,
