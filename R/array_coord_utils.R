@@ -106,6 +106,51 @@
     return(floor(x) + ((x * 10) %% 10 >= 5))
 }
 
+.construct_array = function(coords, inter_spot_dist_px) {
+    MIN_ROW <- min(coords$pxl_col_in_fullres)
+    MAX_ROW <- max(coords$pxl_col_in_fullres)
+    INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
+    NUM_ROWS = (MAX_ROW - MIN_ROW) / INTERVAL_ROW
+
+    MIN_COL <- min(coords$pxl_row_in_fullres)
+    MAX_COL <- max(coords$pxl_row_in_fullres)
+    INTERVAL_COL <- inter_spot_dist_px / 2
+    NUM_COLS = (MAX_COL - MIN_COL) / INTERVAL_COL
+
+    #   First the even rows and even cols
+    row_indices = 2 * seq(floor(NUM_ROWS / 2)) - 2
+    col_indices = 2 * seq(floor(NUM_COLS / 2)) - 2
+    row_coords = MIN_ROW + row_indices * INTERVAL_ROW
+    col_coords = MAX_COL - col_indices * INTERVAL_COL
+    new_array = tibble(
+        array_row = rep(row_indices, times = length(col_coords)),
+        pxl_col_in_fullres = rep(row_coords, times = length(col_coords)),
+        array_col = rep(col_indices, each = length(row_coords)),
+        pxl_row_in_fullres = rep(col_coords, each = length(row_coords))
+    )
+
+    #   Next the odd rows and odd cols
+    row_indices = 2 * seq(floor(NUM_ROWS / 2)) - 1
+    col_indices = 2 * seq(floor(NUM_COLS / 2)) - 1
+    row_coords = MIN_ROW + row_indices * INTERVAL_ROW
+    col_coords = MAX_COL - col_indices * INTERVAL_COL
+    new_array = rbind(
+        new_array,
+        tibble(
+            array_row = rep(row_indices, times = length(col_coords)),
+            pxl_col_in_fullres = rep(row_coords, times = length(col_coords)),
+            array_col = rep(col_indices, each = length(row_coords)),
+            pxl_row_in_fullres = rep(col_coords, each = length(row_coords))
+        )
+    )
+
+    #   Oddity of Visium array: (0, 0) does not exist
+    new_array = new_array |>
+        filter(!(array_row == 0 & array_col == 0))
+
+    return(new_array)
+}
+
 #' Fit spots to a new Visium-like array
 #'
 #' Given transformed pixel coordinates, modify the 'array_row' and
