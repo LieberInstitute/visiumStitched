@@ -136,8 +136,8 @@
     NUM_COLS = (MAX_COL - MIN_COL) / INTERVAL_COL
 
     #   First the even rows and even cols
-    row_indices = 2 * seq(floor(NUM_ROWS / 2)) - 2
-    col_indices = 2 * seq(floor(NUM_COLS / 2)) - 2
+    row_indices = 2 * seq(ceiling(NUM_ROWS / 2)) - 2
+    col_indices = 2 * seq(ceiling(NUM_COLS / 2)) - 2
     row_coords = MIN_ROW + row_indices * INTERVAL_ROW
     col_coords = MAX_COL - col_indices * INTERVAL_COL
     new_array = dplyr::tibble(
@@ -148,8 +148,8 @@
     )
 
     #   Next the odd rows and odd cols
-    row_indices = 2 * seq(floor(NUM_ROWS / 2)) - 1
-    col_indices = 2 * seq(floor(NUM_COLS / 2)) - 1
+    row_indices = 2 * seq(ceiling(NUM_ROWS / 2)) - 1
+    col_indices = 2 * seq(ceiling(NUM_COLS / 2)) - 1
     row_coords = MIN_ROW + row_indices * INTERVAL_ROW
     col_coords = MAX_COL - col_indices * INTERVAL_COL
     new_array = rbind(
