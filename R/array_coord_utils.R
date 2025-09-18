@@ -118,7 +118,7 @@
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
 #' 
-#' @return A `tibble()` with columns 'array_row', 'array_col',
+#' @return A [tibble][dplyr::reexports] with columns 'array_row', 'array_col',
 #' 'pxl_row_in_fullres', and 'pxl_col_in_fullres', representing the new
 #' Visium-like array.
 #' 
@@ -140,7 +140,7 @@
     col_indices = 2 * seq(floor(NUM_COLS / 2)) - 2
     row_coords = MIN_ROW + row_indices * INTERVAL_ROW
     col_coords = MAX_COL - col_indices * INTERVAL_COL
-    new_array = tibble(
+    new_array = dplyr::tibble(
         array_row = rep(row_indices, times = length(col_coords)),
         pxl_col_in_fullres = rep(row_coords, times = length(col_coords)),
         array_col = rep(col_indices, each = length(row_coords)),
@@ -154,7 +154,7 @@
     col_coords = MAX_COL - col_indices * INTERVAL_COL
     new_array = rbind(
         new_array,
-        tibble(
+        dplyr::tibble(
             array_row = rep(row_indices, times = length(col_coords)),
             pxl_col_in_fullres = rep(row_coords, times = length(col_coords)),
             array_col = rep(col_indices, each = length(row_coords)),
@@ -164,11 +164,47 @@
 
     #   Oddity of Visium array: (0, 0) does not exist
     new_array = new_array |>
-        filter(!(array_row == 0 & array_col == 0))
+        dplyr::filter(!(array_row == 0 & array_col == 0))
     
     .validate_array(new_array)
 
     return(new_array)
+}
+
+.fit_to_array_lsap = function(source_coords, target_coords, inter_spot_dist_px) {
+    x = as.matrix(source_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")])
+    y = as.matrix(target_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")])
+
+    #   Compute cost matrix using squared Euclidean distance
+    x2 <- rowSums(x^2)
+    y2 <- rowSums(y^2)
+    C  <- outer(x2, rep(1, nrow(y))) + outer(rep(1, nrow(x)), y2) - 2*(x %*% t(y))
+
+    #   We need a square matrix: pad with zero-cost rows
+    if (nrow(y) > nrow(x)) {
+        C_pad <- rbind(C, matrix(0, nrow = nrow(y) - nrow(x), ncol = nrow(y)))
+    } else {
+        C_pad <- C
+    }
+
+    perm <- clue::solve_LSAP(C_pad)
+    tgt_idx <- as.integer(perm[seq_len(nrow(x))])
+
+    # Build result
+    assigned_targets <- tgt_idx
+    assigned_cost <- C[cbind(seq_len(nrow(x)), assigned_targets)]
+    out <- dplyr::tibble(
+        source_index = seq_len(nrow(x)),
+        target_index = assigned_targets,
+        source_x = X[,1],
+        source_y = X[,2],
+        target_x = Y[assigned_targets, 1],
+        target_y = Y[assigned_targets, 2],
+        cost_sq = assigned_cost,
+        dist = sqrt(assigned_cost) / inter_spot_dist_px
+    )
+    
+    return(out)
 }
 
 #' Fit spots to a new Visium-like array
