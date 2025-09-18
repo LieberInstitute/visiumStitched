@@ -106,6 +106,24 @@
     return(floor(x) + ((x * 10) %% 10 >= 5))
 }
 
+#' Construct a new Visium-like array encapsulating a set of spots
+#' 
+#' Given \code{coords} containing pixel coordinates of spots from potentially
+#' multiple capture areas, return a new Visium-like array encapsulating all
+#' such spots.
+#' 
+#' @param coords A `data.frame()` with columns 'pxl_row_in_fullres' and
+#' 'pxl_col_in_fullres' whose rows contain spots from potentially multiple
+#' capture areas.
+#' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
+#' between any 2 spots in the new coordinates.
+#' 
+#' @return A `tibble()` with columns 'array_row', 'array_col',
+#' 'pxl_row_in_fullres', and 'pxl_col_in_fullres', representing the new
+#' Visium-like array.
+#' 
+#' @author Nicholas J. Eagles
+#' @keywords internal
 .construct_array = function(coords, inter_spot_dist_px) {
     MIN_ROW <- min(coords$pxl_col_in_fullres)
     MAX_ROW <- max(coords$pxl_col_in_fullres)
@@ -147,6 +165,8 @@
     #   Oddity of Visium array: (0, 0) does not exist
     new_array = new_array |>
         filter(!(array_row == 0 & array_col == 0))
+    
+    .validate_array(new_array)
 
     return(new_array)
 }
