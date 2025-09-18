@@ -172,8 +172,12 @@
 }
 
 .fit_to_array_lsap = function(source_coords, target_coords, inter_spot_dist_px) {
-    x = as.matrix(source_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")])
-    y = as.matrix(target_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")])
+    x = as.matrix(
+        source_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")]
+    )
+    y = as.matrix(
+        target_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")]
+    )
 
     #   Compute cost matrix using squared Euclidean distance
     x2 <- rowSums(x^2)
@@ -187,24 +191,20 @@
         C_pad <- C
     }
 
-    perm <- clue::solve_LSAP(C_pad)
-    tgt_idx <- as.integer(perm[seq_len(nrow(x))])
+    perm <- clue::solve_LSAP(C_pad)[seq_len(nrow(x))]
 
-    # Build result
-    assigned_targets <- tgt_idx
-    assigned_cost <- C[cbind(seq_len(nrow(x)), assigned_targets)]
-    out <- dplyr::tibble(
-        source_index = seq_len(nrow(x)),
-        target_index = assigned_targets,
-        source_x = X[,1],
-        source_y = X[,2],
-        target_x = Y[assigned_targets, 1],
-        target_y = Y[assigned_targets, 2],
-        cost_sq = assigned_cost,
-        dist = sqrt(assigned_cost) / inter_spot_dist_px
-    )
-    
-    return(out)
+    fit_coords = cbind(
+            source_coords |> dplyr::select(-c(array_row, array_col)),
+            target_coords[perm, ] |> dplyr::select(c(array_row, array_col))
+        ) |>
+        dplyr::mutate(
+            euclidean_error = (
+                sqrt(C[cbind(seq_len(nrow(x)), perm)]) / inter_spot_dist_px
+            )
+        ) |>
+        dplyr::as_tibble()
+
+    return(fit_coords)
 }
 
 #' Fit spots to a new Visium-like array
