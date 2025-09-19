@@ -197,7 +197,7 @@
 #' 
 #' @author Nicholas J. Eagles
 #' @keywords internal
-.fit_to_array_lsap = function(source_coords, target_coords) {
+.map_lsap = function(source_coords, target_coords) {
     ## For R CMD check
     array_row <- array_col <- NULL
 
@@ -234,6 +234,33 @@
         dplyr::as_tibble()
 
     return(fit_coords)
+}
+
+.fit_to_array_lsap = function(coords, inter_spot_dist_px) {
+    #   Build a new Visium-like array encompassing all capture areas
+    target_coords = .construct_array(coords, inter_spot_dist_px)
+    
+    coords = coords |>
+        dplyr::mutate(
+            capture_area = stringr::str_split_i(key, "^[ACTG]+-1_", 2)
+        )
+    
+    coords_list = list()
+    for (this_ca in unique(coords$capture_area)) {
+        this_source_coords = coords |>
+            dplyr::filter(capture_area == this_ca)
+        this_target_coords = target_coords |>
+            dplyr::filter(
+                pxl_row_in_fullres >= min(this_source_coords$pxl_row_in_fullres),
+                pxl_row_in_fullres <= max(this_source_coords$pxl_row_in_fullres),
+                pxl_col_in_fullres >= min(this_source_coords$pxl_col_in_fullres),
+                pxl_col_in_fullres <= max(this_source_coords$pxl_col_in_fullres)
+            )
+        
+        coords_list[[this_ca]] = .map_lsap(this_source_coords, this_target_coords)
+    }
+
+    return(do.call(rbind, coords_list) |> dplyr::select(-capture_area))
 }
 
 #' Fit spots to a new Visium-like array
