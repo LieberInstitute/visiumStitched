@@ -238,6 +238,33 @@
     return(fit_coords)
 }
 
+#' Fit spots to a new Visium-like array: LSAP approach
+#'
+#' Given transformed pixel coordinates, modify the 'array_row' and
+#' 'array_col' columns to represent a larger Visium capture area containing
+#' all capture areas in a common coordinate system. The number of
+#' array rows/cols generally changes from the Visium standards of 78 and 128
+#' (and even may change in ratio between num rows and num cols).
+#'
+#' Mapping to the proper array coordinates is framed as the linear sum
+#' assignment problem, and solved using the Hungarian algorithm. This
+#' approach is far slower than \code{.fit_to_array()}, running at O(n^3) with
+#' the number of spots, but guarantees a one-to-one mapping of starting to 
+#' target spots, at a small cost in the Euclidean distance moved.
+#'
+#' @param coords A `data.frame()` containing capture areas of the
+#' same group, and containing columns 'key', 'array_row', 'array_col',
+#' 'pxl_row_in_fullres', and 'pxl_col_in_fullres'.
+#' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
+#' between any 2 spots in the new coordinates.
+#'
+#' @return A [tibble][dplyr::reexports] with modified \code{array_row} + \code{array_col}
+#' columns, as well as new \code{pxl_row_in_fullres_rounded} and
+#' \code{pxl_col_in_fullres_rounded} columns representing the pixel coordinates
+#' rounded to the nearest exact array coordinates.
+#'
+#' @author Nicholas J. Eagles
+#' @keywords internal
 .fit_to_array_lsap = function(coords, inter_spot_dist_px) {
     #   Build a new Visium-like array encompassing all capture areas
     target_coords = .construct_array(coords, inter_spot_dist_px)
@@ -265,7 +292,7 @@
     return(do.call(rbind, coords_list) |> dplyr::select(-capture_area))
 }
 
-#' Fit spots to a new Visium-like array
+#' Fit spots to a new Visium-like array: fast Euclidean approach
 #'
 #' Given transformed pixel coordinates, modify the 'array_row' and
 #' 'array_col' columns to represent a larger Visium capture area containing
@@ -273,8 +300,12 @@
 #' array rows/cols generally changes from the Visium standards of 78 and 128
 #' (and even may change in ratio between num rows and num cols).
 #'
-#' Runtime is O(n) with the number of spots, making it much faster than say,
-#' a distance-matrix-based approach running at O(n^2).
+#' The mapping algorithm minimizes Euclidean distance of each source spot to
+#' each target spot. Runtime is O(n) with the number of spots, making it
+#' extremely fast. However, the Euclidean approach countintuitively may
+#' result in duplicated mappings (one source to the same target) as well as
+#' unexpected "holes" in the target array, which is often undesirable
+#' downstream.
 #'
 #' @param coords A `data.frame()` whose rows represent capture areas of the
 #' same group, and containing columns 'array_row', 'array_col',
