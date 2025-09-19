@@ -42,10 +42,6 @@
         stop("Internal bug: failed to produce an array starting at index 0 or 1!")
     }
 
-    #   Check an eccentric detail of Visium arrays: (0, 0) cannot exist
-    if (any((coords$array_row == 0) & (coords$array_col == 0))) {
-        stop("Internal bug: the invalid array coordinate (0, 0) exists after fitting")
-    }
     return(invisible(NULL))
 }
 
@@ -164,10 +160,6 @@
             pxl_row_in_fullres = rep(col_coords, each = length(row_coords))
         )
     )
-
-    #   Oddity of Visium array: (0, 0) does not exist
-    new_array = new_array |>
-        dplyr::filter(!(array_row == 0 & array_col == 0))
     
     .validate_array(new_array)
 
@@ -339,34 +331,6 @@
     #   give the coordinates for given array row/cols)
     coords$pxl_col_in_fullres_rounded <- MIN_ROW + coords$array_row * INTERVAL_ROW
     coords$pxl_row_in_fullres_rounded <- MAX_COL - coords$array_col * INTERVAL_COL
-
-    #-------------------------------------------------------------------------------
-    #   array (0, 0) does not exist on an ordinary Visium array. Move any such
-    #   values to the nearest alternatives
-    #-------------------------------------------------------------------------------
-
-    #   Nearest points to (0, 0) are (0, 2) and (1, 1):
-    array_02 <- c(MIN_ROW, MIN_COL + 2 * INTERVAL_COL)
-    array_11 <- c(MIN_ROW + INTERVAL_ROW, MIN_COL + INTERVAL_COL)
-
-    #   Determine the distances to those nearest points
-    dist_coords <- coords |>
-        dplyr::filter(array_row == 0, array_col == 0) |>
-        dplyr::mutate(
-            dist_02 = (pxl_col_in_fullres - array_02[1])**2 +
-                (pxl_row_in_fullres - array_02[2])**2,
-            dist_11 = (pxl_col_in_fullres - array_11[1])**2 +
-                (pxl_row_in_fullres - array_11[2])**2,
-        )
-
-    #   Move any instances of (0, 0) to the nearest alternative
-    indices <- (coords$array_row == 0) & (coords$array_col == 0)
-    coords[indices, "array_row"] <- ifelse(
-        dist_coords$dist_02 < dist_coords$dist_11, 0, 1
-    )
-    coords[indices, "array_col"] <- ifelse(
-        dist_coords$dist_02 < dist_coords$dist_11, 2, 1
-    )
 
     #   Verify the newly assigned array row and cols have reasonable values
     .validate_array(coords)
