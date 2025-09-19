@@ -192,8 +192,8 @@
 #' just barely encompass the capture area in \code{source_coords}.
 #' 
 #' @return A [tibble][dplyr::reexports] with the same rows as \code{source_coords},
-#' but with the \code{array_row} and \code{array_col} columns taken from the
-#' best-matching spots in \code{target_coords}.
+#' but with the \code{array_row} and \code{array_col} columns (and rounded pixel
+#' coordinates) taken from the best-matching spots in \code{target_coords}.
 #' 
 #' @author Nicholas J. Eagles
 #' @keywords internal
@@ -229,7 +229,15 @@
 
     fit_coords = cbind(
             source_coords |> dplyr::select(-c(array_row, array_col)),
-            target_coords[perm, ] |> dplyr::select(c(array_row, array_col))
+            target_coords[perm, ] |>
+                dplyr::rename(
+                    pxl_col_in_fullres_rounded = pxl_col_in_fullres,
+                    pxl_row_in_fullres_rounded = pxl_row_in_fullres
+                ) |>
+                dplyr::select(
+                    array_row, array_col, pxl_col_in_fullres_rounded,
+                    pxl_row_in_fullres_rounded
+                )
         ) |>
         dplyr::as_tibble()
 
