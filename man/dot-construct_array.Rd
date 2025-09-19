@@ -15,7 +15,7 @@ capture areas.}
 between any 2 spots in the new coordinates.}
 }
 \value{
-A \code{tibble()} with columns 'array_row', 'array_col',
+A \link[dplyr:reexports]{tibble} with columns 'array_row', 'array_col',
 'pxl_row_in_fullres', and 'pxl_col_in_fullres', representing the new
 Visium-like array.
 }
