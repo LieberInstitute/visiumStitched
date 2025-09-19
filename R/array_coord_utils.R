@@ -113,6 +113,9 @@
 #' capture areas.
 #' @param inter_spot_dist_px \code{numeric(1)} vector giving the pixel distance
 #' between any 2 spots in the new coordinates.
+#' @param buffer \code{numeric(1)} vector giving the number of spot distances
+#' to pad the new array (on all sides) beyond the min/max pixel coordinates in
+#' \code{coords}.
 #' 
 #' @return A [tibble][dplyr::reexports] with columns 'array_row', 'array_col',
 #' 'pxl_row_in_fullres', and 'pxl_col_in_fullres', representing the new
@@ -120,18 +123,18 @@
 #' 
 #' @author Nicholas J. Eagles
 #' @keywords internal
-.construct_array = function(coords, inter_spot_dist_px) {
+.construct_array = function(coords, inter_spot_dist_px, buffer = 1) {
     ## For R CMD check
     array_row <- array_col <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
 
-    MIN_ROW <- min(coords$pxl_col_in_fullres)
-    MAX_ROW <- max(coords$pxl_col_in_fullres)
     INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
+    MIN_ROW <- min(coords$pxl_col_in_fullres) - buffer * INTERVAL_ROW
+    MAX_ROW <- max(coords$pxl_col_in_fullres) + buffer * INTERVAL_ROW
     NUM_ROWS = (MAX_ROW - MIN_ROW) / INTERVAL_ROW
 
-    MIN_COL <- min(coords$pxl_row_in_fullres)
-    MAX_COL <- max(coords$pxl_row_in_fullres)
     INTERVAL_COL <- inter_spot_dist_px / 2
+    MIN_COL <- min(coords$pxl_row_in_fullres) - buffer * INTERVAL_COL
+    MAX_COL <- max(coords$pxl_row_in_fullres) + buffer * INTERVAL_COL
     NUM_COLS = (MAX_COL - MIN_COL) / INTERVAL_COL
 
     #   First the even rows and even cols
@@ -278,12 +281,27 @@
     for (this_ca in unique(coords$capture_area)) {
         this_source_coords = coords |>
             dplyr::filter(capture_area == this_ca)
+
+        #   Subset target coords to those within a bounding box around the
+        #   source coords (with a buffer of 100 microns)
         this_target_coords = target_coords |>
             dplyr::filter(
-                pxl_row_in_fullres >= min(this_source_coords$pxl_row_in_fullres),
-                pxl_row_in_fullres <= max(this_source_coords$pxl_row_in_fullres),
-                pxl_col_in_fullres >= min(this_source_coords$pxl_col_in_fullres),
-                pxl_col_in_fullres <= max(this_source_coords$pxl_col_in_fullres)
+                pxl_row_in_fullres >= (
+                    min(this_source_coords$pxl_row_in_fullres) -
+                    inter_spot_dist_px / 2
+                ),
+                pxl_row_in_fullres <= (
+                    max(this_source_coords$pxl_row_in_fullres) +
+                    inter_spot_dist_px / 2
+                ),
+                pxl_col_in_fullres >= (
+                    min(this_source_coords$pxl_col_in_fullres) -
+                    inter_spot_dist_px * cos(pi / 6)
+                ),
+                pxl_col_in_fullres <= (
+                    max(this_source_coords$pxl_col_in_fullres) +
+                    inter_spot_dist_px * cos(pi / 6)
+                )
             )
         
         coords_list[[this_ca]] = .map_lsap(this_source_coords, this_target_coords)
