@@ -125,6 +125,9 @@
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .construct_array = function(coords, inter_spot_dist_px) {
+    ## For R CMD check
+    array_row <- array_col <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
+
     MIN_ROW <- min(coords$pxl_col_in_fullres)
     MAX_ROW <- max(coords$pxl_col_in_fullres)
     INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
@@ -171,7 +174,37 @@
     return(new_array)
 }
 
-.fit_to_array_lsap = function(source_coords, target_coords, inter_spot_dist_px) {
+#' Map source spots to best target spots by solving the LSAP
+#' 
+#' Given \code{source_coords} and \code{target_coords}, both containing pixel
+#' coordinates of spots, map each spot in \code{source_coords} to a unique
+#' spot in \code{target_coords} such that the total squared Euclidean distance
+#' between matched spots is minimized, with guaranteed one-to-one mapping. This
+#' is done by solving the Linear Sum Assignment Problem (LSAP) using the
+#' Hungarian algorithm. Return the \code{source_coords} with the newly mapped
+#' \code{array_row} and \code{array_col} columns.
+#' 
+#' @param source_coords A `data.frame()` containing the pixel coordinates (i.e.
+#' 'pxl_row_in_fullres' and 'pxl_col_in_fullres') of starting spots from one
+#' capture area.
+#' @param target_coords A `data.frame()` containing the pixel coordinates (i.e.
+#' 'pxl_row_in_fullres' and 'pxl_col_in_fullres') of target spots which should
+#' just barely encompass the capture area in \code{source_coords}.
+#' 
+#' @return A [tibble][dplyr::reexports] with the same rows as \code{source_coords},
+#' but with the \code{array_row} and \code{array_col} columns taken from the
+#' best-matching spots in \code{target_coords}.
+#' 
+#' @author Nicholas J. Eagles
+#' @keywords internal
+.fit_to_array_lsap = function(source_coords, target_coords) {
+    ## For R CMD check
+    array_row <- array_col <- NULL
+
+    if (nrow(source_coords) > nrow(target_coords)) {
+        stop("Internal bug: cannot fit to a smaller array!")
+    }
+
     x = as.matrix(
         source_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")]
     )
@@ -191,16 +224,12 @@
         C_pad <- C
     }
 
+    #   Solve and grab just the real rows
     perm <- clue::solve_LSAP(C_pad)[seq_len(nrow(x))]
 
     fit_coords = cbind(
             source_coords |> dplyr::select(-c(array_row, array_col)),
             target_coords[perm, ] |> dplyr::select(c(array_row, array_col))
-        ) |>
-        dplyr::mutate(
-            euclidean_error = (
-                sqrt(C[cbind(seq_len(nrow(x)), perm)]) / inter_spot_dist_px
-            )
         ) |>
         dplyr::as_tibble()
 
