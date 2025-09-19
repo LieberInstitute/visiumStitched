@@ -195,6 +195,8 @@
 #' but with the \code{array_row} and \code{array_col} columns (and rounded pixel
 #' coordinates) taken from the best-matching spots in \code{target_coords}.
 #' 
+#' @importFrom clue solve_LSAP
+#' 
 #' @author Nicholas J. Eagles
 #' @keywords internal
 .map_lsap = function(source_coords, target_coords) {

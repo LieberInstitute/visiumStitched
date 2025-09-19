@@ -45,6 +45,7 @@ VignetteBuilder: knitr
 Imports:
     BiocBaseUtils,
     BiocGenerics,
+    clue,
     dplyr,
     DropletUtils,
     grDevices,
