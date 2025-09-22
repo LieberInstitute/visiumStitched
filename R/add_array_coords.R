@@ -39,6 +39,12 @@
 #' new array position; the latter indicates the fraction of neighbors for the
 #' associated capture area that are retained after mapping, which can be quite
 #' time-consuming to compute.
+#' @param algorithm A \code{character(1)} vector indicating which mapping
+#' algorithm to employ when computing group-wide array coordinates. The default of
+#' "LSAP" is generally recommended, as it guarantees one-to-one mappings
+#' at the cost of computational time and some Euclidean error. The faster
+#' alternative "Euclidean" minimizes Euclidean error but may produce duplicate
+#' mappings, which is generally undesirable downstream (for clustering, etc).
 #'
 #' @return A [SpatialExperiment-class][SpatialExperiment::SpatialExperiment-class]
 #' object with additional \code{colData}
@@ -112,9 +118,11 @@
 #' head(spe$array_row)
 #' head(spe$array_col)
 #' head(SpatialExperiment::spatialCoords(spe_new))
-add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = FALSE) {
+add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = FALSE, algorithm = c("LSAP", "Euclidean")) {
     ## For R CMD check
     key <- in_tissue <- NULL
+
+    algorithm <- match.arg(algorithm)
 
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group")
@@ -161,9 +169,14 @@ add_array_coords <- function(spe, sample_info, coords_dir, calc_error_metrics = 
         px_per_m <- sr_json$spot_diameter_fullres / SPOT_DIAMETER_JSON_M
         inter_spot_dist_px <- INTER_SPOT_DIST_M * px_per_m
 
-        #   Adjust 'array_row' and 'array_col' with values appropriate for the new
-        #   coordinate system (a larger Visium grid with equal inter-spot distances)
-        coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
+        #   Adjust 'array_row' and 'array_col' with values appropriate for the
+        #   new coordinate system (a larger Visium grid with equal inter-spot
+        #   distances)
+        if (algorithm == "LSAP") {
+            coords_list[[i]] <- .fit_to_array_lsap(coords, inter_spot_dist_px)
+        } else {
+            coords_list[[i]] <- .fit_to_array(coords, inter_spot_dist_px)
+        }
 
         if (calc_error_metrics) {
             coords_list[[i]] <- coords |>

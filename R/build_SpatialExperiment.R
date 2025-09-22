@@ -98,12 +98,13 @@
 #'
 #' ## Let's explore the stitched SpatialExperiment object
 #' spe
-build_SpatialExperiment <- function(sample_info, coords_dir, count_type = c("sparse", "HDF5"), data_type = c("raw", "filtered"), reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE) {
+build_SpatialExperiment <- function(sample_info, coords_dir, count_type = c("sparse", "HDF5"), data_type = c("raw", "filtered"), reference_gtf = NULL, gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"), calc_error_metrics = FALSE, algorithm = c("LSAP", "Euclidean")) {
     ## For R CMD check
     sample_id <- capture_area <- group <- barcode <- NULL
 
     count_type <- match.arg(count_type)
     data_type <- match.arg(data_type)
+    algorithm <- match.arg(algorithm)
 
     #   State assumptions about columns expected to be in sample_info
     expected_cols <- c("capture_area", "group", "spaceranger_dir")
@@ -185,8 +186,8 @@ build_SpatialExperiment <- function(sample_info, coords_dir, count_type = c("spa
     }
 
     spe <- add_array_coords(
-        spe, sample_info, coords_dir,
-        calc_error_metrics = calc_error_metrics
+        spe, sample_info, coords_dir, calc_error_metrics = calc_error_metrics,
+        algorithm = algorithm
     )
     spe <- add_overlap_info(spe, "sum_umi")
 
