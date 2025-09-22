@@ -52,26 +52,47 @@ test_that(
             DataFrame()
         colnames(spe) <- temp
 
-        spe_new <- add_array_coords(
-            spe, sample_info, spe_input_dir, algorithm = "Euclidean"
-        )
+        #   For the "LSAP" algorithm in particular, we need a small
+        #   SpatialExperiment to get reasonable runtimes. Take just 20 spots
+        #   from each capture_area
+        small_keys = colData(spe) |>
+            as_tibble() |>
+            group_by(capture_area) |>
+            mutate(a = array_row + array_col) |>
+            arrange(a) |>
+            slice_head(n = 20) |>
+            pull(key)
+        spe_small = spe[, spe$key %in% small_keys]
 
-        #   6 columns should've been added, matching the specific naming
-        #   pattern
-        expect_equal(
-            length(grep(added_cols_regex, colnames(colData(spe_new)))), 6
-        )
+        #   Similarly, this hack subsets the spots in the tissue_positions.csv
+        #   file
+        tissue_path = file.path(spe_input_dir, unique(sample_info$group), 'tissue_positions.csv')
+        readr::read_csv(tissue_path, show_col_types = FALSE) |>
+            filter(key %in% small_keys) |>
+            readr::write_csv(tissue_path)
 
-        #   "Original" columns should actually have their original values
-        expect_identical(spe$array_row, spe_new$array_row_original)
-        expect_identical(spe$array_col, spe_new$array_col_original)
-        expect_identical(
-            spatialCoords(spe)[, "pxl_row_in_fullres"],
-            spe_new$pxl_row_in_fullres_original
-        )
-        expect_identical(
-            spatialCoords(spe)[, "pxl_col_in_fullres"],
-            spe_new$pxl_col_in_fullres_original
-        )
+        for (algorithm in c("LSAP", "Euclidean")) {
+            spe_new <- add_array_coords(
+                spe_small, sample_info, spe_input_dir, algorithm = algorithm
+            )
+
+            #   6 columns should've been added, matching the specific naming
+            #   pattern
+            expect_equal(
+                length(grep(added_cols_regex, colnames(colData(spe_new)))), 6
+            )
+
+            #   "Original" columns should actually have their original values
+            expect_identical(spe_small$array_row, spe_new$array_row_original)
+            expect_identical(spe_small$array_col, spe_new$array_col_original)
+            expect_identical(
+                spatialCoords(spe_small)[, "pxl_row_in_fullres"],
+                spe_new$pxl_row_in_fullres_original
+            )
+            expect_identical(
+                spatialCoords(spe_small)[, "pxl_col_in_fullres"],
+                spe_new$pxl_col_in_fullres_original
+            )
+        }
     }
 )
