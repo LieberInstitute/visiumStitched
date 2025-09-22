@@ -90,10 +90,12 @@
 #'     )
 #' )
 #'
-#' ## Now we can build the stitched SpatialExperiment object
+#' ## Now we can build the stitched SpatialExperiment object. Use the Euclidean
+#' ## algorithm for calculating new array coordinates because of speed in this
+#' ## example, but "LSAP" is generally recommended.
 #' spe <- build_SpatialExperiment(
-#'     sample_info,
-#'     coords_dir = spe_input_dir, reference_gtf = gtf_cache
+#'     sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache,
+#'     algorithm = "Euclidean"
 #' )
 #'
 #' ## Let's explore the stitched SpatialExperiment object

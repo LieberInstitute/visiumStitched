@@ -52,7 +52,9 @@ test_that(
             DataFrame()
         colnames(spe) <- temp
 
-        spe_new <- add_array_coords(spe, sample_info, spe_input_dir)
+        spe_new <- add_array_coords(
+            spe, sample_info, spe_input_dir, algorithm = "Euclidean"
+        )
 
         #   6 columns should've been added, matching the specific naming
         #   pattern

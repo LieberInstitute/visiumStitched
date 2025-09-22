@@ -105,7 +105,11 @@
 #' #   Add array coordinates
 #' ########################################################################
 #'
-#' spe_new <- add_array_coords(spe, sample_info, tempdir())
+#' #   Run with Euclidean algorithm for speed. On real analyses, "LSAP" is
+#' #   generally recommended.
+#' spe_new <- add_array_coords(
+#'     spe, sample_info, tempdir(), algorithm = "Euclidean"
+#' )
 #'
 #' #    Several columns related to spatial coordinates were added
 #' added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"

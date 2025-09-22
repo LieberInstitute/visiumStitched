@@ -11,7 +11,8 @@ build_SpatialExperiment(
   data_type = c("raw", "filtered"),
   reference_gtf = NULL,
   gtf_cols = c("source", "type", "gene_id", "gene_version", "gene_name", "gene_type"),
-  calc_error_metrics = FALSE
+  calc_error_metrics = FALSE,
+  algorithm = c("LSAP", "Euclidean")
 )
 }
 \arguments{
@@ -48,6 +49,13 @@ indicates distance in number of inter-spot distances to "move" a spot to the
 new array position; the latter indicates the fraction of neighbors for the
 associated capture area that are retained after mapping, which can be quite
 time-consuming to compute.}
+
+\item{algorithm}{A \code{character(1)} vector indicating which mapping
+algorithm to employ when computing group-wide array coordinates. The default of
+"LSAP" is generally recommended, as it guarantees one-to-one mappings
+at the cost of computational time and some Euclidean error. The faster
+alternative "Euclidean" minimizes Euclidean error but may produce duplicate
+mappings, which is generally undesirable downstream (for clustering, etc).}
 }
 \value{
 A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
@@ -122,10 +130,12 @@ gtf_cache <- BiocFileCache::bfcrpath(
     )
 )
 
-## Now we can build the stitched SpatialExperiment object
+## Now we can build the stitched SpatialExperiment object. Use the Euclidean
+## algorithm for calculating new array coordinates because of speed in this
+## example, but "LSAP" is generally recommended.
 spe <- build_SpatialExperiment(
-    sample_info,
-    coords_dir = spe_input_dir, reference_gtf = gtf_cache
+    sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache,
+    algorithm = "Euclidean"
 )
 
 ## Let's explore the stitched SpatialExperiment object

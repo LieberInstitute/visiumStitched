@@ -4,7 +4,13 @@
 \alias{add_array_coords}
 \title{Add transformed array and pixel coordinates to a \code{SpatialExperiment}}
 \usage{
-add_array_coords(spe, sample_info, coords_dir, calc_error_metrics = FALSE)
+add_array_coords(
+  spe,
+  sample_info,
+  coords_dir,
+  calc_error_metrics = FALSE,
+  algorithm = c("LSAP", "Euclidean")
+)
 }
 \arguments{
 \item{spe}{A
@@ -29,6 +35,13 @@ indicates distance in number of inter-spot distances to "move" a spot to the
 new array position; the latter indicates the fraction of neighbors for the
 associated capture area that are retained after mapping, which can be quite
 time-consuming to compute.}
+
+\item{algorithm}{A \code{character(1)} vector indicating which mapping
+algorithm to employ when computing group-wide array coordinates. The default of
+"LSAP" is generally recommended, as it guarantees one-to-one mappings
+at the cost of computational time and some Euclidean error. The faster
+alternative "Euclidean" minimizes Euclidean error but may produce duplicate
+mappings, which is generally undesirable downstream (for clustering, etc).}
 }
 \value{
 A \link[SpatialExperiment:SpatialExperiment]{SpatialExperiment-class}
@@ -105,7 +118,11 @@ prep_fiji_image(sample_info, out_dir = spe_input_dir)
 #   Add array coordinates
 ########################################################################
 
-spe_new <- add_array_coords(spe, sample_info, tempdir())
+#   Run with Euclidean algorithm for speed. On real analyses, "LSAP" is
+#   generally recommended.
+spe_new <- add_array_coords(
+    spe, sample_info, tempdir(), algorithm = "Euclidean"
+)
 
 #    Several columns related to spatial coordinates were added
 added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"

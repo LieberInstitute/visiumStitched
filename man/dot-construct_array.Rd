@@ -4,7 +4,7 @@
 \alias{.construct_array}
 \title{Construct a new Visium-like array encapsulating a set of spots}
 \usage{
-.construct_array(coords, inter_spot_dist_px)
+.construct_array(coords, inter_spot_dist_px, buffer = 1)
 }
 \arguments{
 \item{coords}{A \code{data.frame()} with columns 'pxl_row_in_fullres' and
@@ -13,6 +13,10 @@ capture areas.}
 
 \item{inter_spot_dist_px}{\code{numeric(1)} vector giving the pixel distance
 between any 2 spots in the new coordinates.}
+
+\item{buffer}{\code{numeric(1)} vector giving the number of spot distances
+to pad the new array (on all sides) beyond the min/max pixel coordinates in
+\code{coords}.}
 }
 \value{
 A \link[dplyr:reexports]{tibble} with columns 'array_row', 'array_col',

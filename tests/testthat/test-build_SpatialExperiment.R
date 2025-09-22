@@ -45,7 +45,10 @@ test_that(
         prep_fiji_image(sample_info, out_dir = spe_input_dir)
 
         spe <- pkgcond::suppress_warnings(
-            build_SpatialExperiment(sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache),
+            build_SpatialExperiment(
+                sample_info, coords_dir = spe_input_dir,
+                reference_gtf = gtf_cache, algorithm = "Euclidean"
+            ),
             pattern = "GTF file as the one that was used by SpaceRanger"
         )
 
