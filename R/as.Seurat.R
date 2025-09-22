@@ -23,7 +23,7 @@
 #'
 #' @export
 #' @author Nicholas J. Eagles
-#' @import SpatialExperiment spatialLIBD
+#' @import SpatialExperiment
 #' @importFrom SummarizedExperiment colData
 #' @importFrom grDevices col2rgb
 #' @importFrom methods new
