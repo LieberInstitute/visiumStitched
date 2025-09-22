@@ -44,7 +44,7 @@ test_that(
         ########################################################################
 
         #   Remove any colData columns that should be added by add_array_coords()
-        added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$"
+        added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$|^euclidean_error$|^shared_neighbors$"
         temp <- colnames(spe)
         colData(spe) <- colData(spe) |>
             as_tibble() |>
@@ -73,13 +73,14 @@ test_that(
 
         for (algorithm in c("LSAP", "Euclidean")) {
             spe_new <- add_array_coords(
-                spe_small, sample_info, spe_input_dir, algorithm = algorithm
+                spe_small, sample_info, spe_input_dir, calc_error_metrics = TRUE,
+                algorithm = algorithm
             )
 
-            #   6 columns should've been added, matching the specific naming
+            #   8 columns should've been added, matching the specific naming
             #   pattern
             expect_equal(
-                length(grep(added_cols_regex, colnames(colData(spe_new)))), 6
+                length(grep(added_cols_regex, colnames(colData(spe_new)))), 8
             )
 
             #   "Original" columns should actually have their original values
@@ -93,6 +94,24 @@ test_that(
                 spatialCoords(spe_small)[, "pxl_col_in_fullres"],
                 spe_new$pxl_col_in_fullres_original
             )
+
+            #   Euclidean error for the Euclidean algorithm must be between 0
+            #   and (less than) 1 spot; for the LSAP algorithm, it can
+            #   theoretically be higher, but shouldn't be under reasonable
+            #   circumstances
+            expect_equal(
+                all(
+                    (spe_new$euclidean_error >= 0) &
+                    (spe_new$euclidean_error < 1)
+                ),
+                TRUE
+            )
+
+            #   Shared neighbors must similarly be between 0 and 1 (it's a
+            #   proportion). NAs are allowed when there are no neighbors
+            #   originally
+            temp <- spe_new$shared_neighbors[!is.na(spe_new$shared_neighbors)]
+            expect_equal(all((temp >= 0) & (temp <= 1)), TRUE)
         }
     }
 )
