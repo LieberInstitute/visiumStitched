@@ -45,24 +45,25 @@ test_that(
 
         #   Remove any colData columns that should be added by add_array_coords()
         added_cols_regex <- "^(array|pxl)_(row|col)(_in_fullres)?_(original|rounded)$|^euclidean_error$|^shared_neighbors$"
-        temp <- colnames(spe)
-        colData(spe) <- colData(spe) |>
+        spe_copy = spe
+        temp <- colnames(spe_copy)
+        colData(spe_copy) <- colData(spe_copy) |>
             as_tibble() |>
             mutate(across(matches(added_cols_regex), ~NULL)) |>
             DataFrame()
-        colnames(spe) <- temp
+        colnames(spe_copy) <- temp
 
         #   For the "LSAP" algorithm in particular, we need a small
         #   SpatialExperiment to get reasonable runtimes. Take just 20 spots
         #   from each capture_area
-        small_keys = colData(spe) |>
+        small_keys = colData(spe_copy) |>
             as_tibble() |>
             group_by(capture_area) |>
             mutate(a = array_row + array_col) |>
             arrange(a) |>
             slice_head(n = 20) |>
             pull(key)
-        spe_small = spe[, spe$key %in% small_keys]
+        spe_small = spe_copy[, spe_copy$key %in% small_keys]
 
         #   Similarly, this hack subsets the spots in the tissue_positions.csv
         #   file
