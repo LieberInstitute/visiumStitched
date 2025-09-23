@@ -44,6 +44,7 @@ bib <- c(
     R = citation(),
     BiocFileCache = citation("BiocFileCache")[1],
     BiocStyle = citation("BiocStyle")[1],
+    clue = citation("clue")[1],
     dplyr = citation("dplyr")[1],
     DropletUtils = citation("DropletUtils")[1],
     ggplot2 = citation("ggplot2")[1],
@@ -530,6 +531,7 @@ made possible thanks to:
 * R `r Citep(bib[["R"]])`
 * `r Biocpkg("BiocFileCache")` `r Citep(bib[["BiocFileCache"]])`
 * `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
+* `r CRANpkg("clue")` `r Citep(bib[["clue"]])`
 * `r CRANpkg("dplyr")` `r Citep(bib[["dplyr"]])`
 * `r Biocpkg("DropletUtils")` `r Citep(bib[["DropletUtils"]])`
 * `r CRANpkg("ggplot2")` `r Citep(bib[["ggplot2"]])`
