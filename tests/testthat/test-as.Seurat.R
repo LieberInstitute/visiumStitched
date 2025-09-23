@@ -1,7 +1,7 @@
 test_that(
     "as.Seurat",
     {
-        spe <- fetch_data(type = "spatialDLPFC_Visium_example_subset")[seq(100), seq(100)]
+        spe <- spatialLIBD::fetch_data(type = "spatialDLPFC_Visium_example_subset")[seq(100), seq(100)]
 
         ## Make the column names unique
         colnames(spe) <- spatialLIBD::add_key(spe)$key
