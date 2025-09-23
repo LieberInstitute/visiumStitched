@@ -1,8 +1,8 @@
-# visiumStitched 0.99.15
+# visiumStitched 1.1.1
 
-# visiumStitched 0.99.14
+NEW FEATURES
 
-# visiumStitched 0.99.13
+* `build_SpatialExperiment()` (and `add_array_coords()`) takes a new parameter `algorithm` whose default is now "LSAP". The older implementation is available via the "Euclidean" algorithm. The now LSAP approach is a significant improvement in how new array coordinates are assigned, preventing all duplicate and most empty mappings within a single capture area, leading to improvements in downstream applications like clustering.
 
 # visiumStitched 0.99.0
 
