@@ -15,9 +15,12 @@
 <url><loc>/reference/build_SpatialExperiment.html</loc></url>
 <url><loc>/reference/dot-add_error_metrics.html</loc></url>
 <url><loc>/reference/dot-clean_round.html</loc></url>
+<url><loc>/reference/dot-construct_array.html</loc></url>
 <url><loc>/reference/dot-fit_to_array.html</loc></url>
+<url><loc>/reference/dot-fit_to_array_lsap.html</loc></url>
 <url><loc>/reference/dot-get_neighbors.html</loc></url>
 <url><loc>/reference/dot-get_shared_neighbors.html</loc></url>
+<url><loc>/reference/dot-map_lsap.html</loc></url>
 <url><loc>/reference/dot-refine_fit.html</loc></url>
 <url><loc>/reference/dot-validate_array.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
