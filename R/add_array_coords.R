@@ -108,7 +108,8 @@
 #' #   Run with Euclidean algorithm for speed. On real analyses, "LSAP" is
 #' #   generally recommended.
 #' spe_new <- add_array_coords(
-#'     spe, sample_info, tempdir(), algorithm = "Euclidean"
+#'     spe, sample_info, tempdir(),
+#'     algorithm = "Euclidean"
 #' )
 #'
 #' #    Several columns related to spatial coordinates were added

@@ -46,7 +46,8 @@ test_that(
 
         spe <- pkgcond::suppress_warnings(
             build_SpatialExperiment(
-                sample_info, coords_dir = spe_input_dir,
+                sample_info,
+                coords_dir = spe_input_dir,
                 reference_gtf = gtf_cache, algorithm = "Euclidean"
             ),
             pattern = "GTF file as the one that was used by SpaceRanger"

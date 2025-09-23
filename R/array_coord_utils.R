@@ -103,11 +103,11 @@
 }
 
 #' Construct a new Visium-like array encapsulating a set of spots
-#' 
+#'
 #' Given \code{coords} containing pixel coordinates of spots from potentially
 #' multiple capture areas, return a new Visium-like array encapsulating all
 #' such spots.
-#' 
+#'
 #' @param coords A `data.frame()` with columns 'pxl_row_in_fullres' and
 #' 'pxl_col_in_fullres' whose rows contain spots from potentially multiple
 #' capture areas.
@@ -116,33 +116,33 @@
 #' @param buffer \code{numeric(1)} vector giving the number of spot distances
 #' to pad the new array (on all sides) beyond the min/max pixel coordinates in
 #' \code{coords}.
-#' 
+#'
 #' @return A [tibble][dplyr::reexports] with columns 'array_row', 'array_col',
 #' 'pxl_row_in_fullres', and 'pxl_col_in_fullres', representing the new
 #' Visium-like array.
-#' 
+#'
 #' @author Nicholas J. Eagles
 #' @keywords internal
-.construct_array = function(coords, inter_spot_dist_px, buffer = 1) {
+.construct_array <- function(coords, inter_spot_dist_px, buffer = 1) {
     ## For R CMD check
     array_row <- array_col <- pxl_col_in_fullres <- pxl_row_in_fullres <- NULL
 
     INTERVAL_ROW <- inter_spot_dist_px * cos(pi / 6)
     MIN_ROW <- min(coords$pxl_col_in_fullres) - buffer * INTERVAL_ROW
     MAX_ROW <- max(coords$pxl_col_in_fullres) + buffer * INTERVAL_ROW
-    NUM_ROWS = (MAX_ROW - MIN_ROW) / INTERVAL_ROW
+    NUM_ROWS <- (MAX_ROW - MIN_ROW) / INTERVAL_ROW
 
     INTERVAL_COL <- inter_spot_dist_px / 2
     MIN_COL <- min(coords$pxl_row_in_fullres) - buffer * INTERVAL_COL
     MAX_COL <- max(coords$pxl_row_in_fullres) + buffer * INTERVAL_COL
-    NUM_COLS = (MAX_COL - MIN_COL) / INTERVAL_COL
+    NUM_COLS <- (MAX_COL - MIN_COL) / INTERVAL_COL
 
     #   First the even rows and even cols
-    row_indices = 2 * seq(ceiling(NUM_ROWS / 2)) - 2
-    col_indices = 2 * seq(ceiling(NUM_COLS / 2)) - 2
-    row_coords = MIN_ROW + row_indices * INTERVAL_ROW
-    col_coords = MAX_COL - col_indices * INTERVAL_COL
-    new_array = dplyr::tibble(
+    row_indices <- 2 * seq(ceiling(NUM_ROWS / 2)) - 2
+    col_indices <- 2 * seq(ceiling(NUM_COLS / 2)) - 2
+    row_coords <- MIN_ROW + row_indices * INTERVAL_ROW
+    col_coords <- MAX_COL - col_indices * INTERVAL_COL
+    new_array <- dplyr::tibble(
         array_row = rep(row_indices, times = length(col_coords)),
         pxl_col_in_fullres = rep(row_coords, times = length(col_coords)),
         array_col = rep(col_indices, each = length(row_coords)),
@@ -150,11 +150,11 @@
     )
 
     #   Next the odd rows and odd cols
-    row_indices = 2 * seq(ceiling(NUM_ROWS / 2)) - 1
-    col_indices = 2 * seq(ceiling(NUM_COLS / 2)) - 1
-    row_coords = MIN_ROW + row_indices * INTERVAL_ROW
-    col_coords = MAX_COL - col_indices * INTERVAL_COL
-    new_array = rbind(
+    row_indices <- 2 * seq(ceiling(NUM_ROWS / 2)) - 1
+    col_indices <- 2 * seq(ceiling(NUM_COLS / 2)) - 1
+    row_coords <- MIN_ROW + row_indices * INTERVAL_ROW
+    col_coords <- MAX_COL - col_indices * INTERVAL_COL
+    new_array <- rbind(
         new_array,
         dplyr::tibble(
             array_row = rep(row_indices, times = length(col_coords)),
@@ -163,14 +163,14 @@
             pxl_row_in_fullres = rep(col_coords, each = length(row_coords))
         )
     )
-    
+
     .validate_array(new_array)
 
     return(new_array)
 }
 
 #' Map source spots to best target spots by solving the LSAP
-#' 
+#'
 #' Given \code{source_coords} and \code{target_coords}, both containing pixel
 #' coordinates of spots, map each spot in \code{source_coords} to a unique
 #' spot in \code{target_coords} such that the total squared Euclidean distance
@@ -178,23 +178,23 @@
 #' is done by solving the Linear Sum Assignment Problem (LSAP) using the
 #' Hungarian algorithm. Return the \code{source_coords} with the newly mapped
 #' \code{array_row} and \code{array_col} columns.
-#' 
+#'
 #' @param source_coords A `data.frame()` containing the pixel coordinates (i.e.
 #' 'pxl_row_in_fullres' and 'pxl_col_in_fullres') of starting spots from one
 #' capture area.
 #' @param target_coords A `data.frame()` containing the pixel coordinates (i.e.
 #' 'pxl_row_in_fullres' and 'pxl_col_in_fullres') of target spots which should
 #' just barely encompass the capture area in \code{source_coords}.
-#' 
+#'
 #' @return A [tibble][dplyr::reexports] with the same rows as \code{source_coords},
 #' but with the \code{array_row} and \code{array_col} columns (and rounded pixel
 #' coordinates) taken from the best-matching spots in \code{target_coords}.
-#' 
+#'
 #' @importFrom clue solve_LSAP
-#' 
+#'
 #' @author Nicholas J. Eagles
 #' @keywords internal
-.map_lsap = function(source_coords, target_coords) {
+.map_lsap <- function(source_coords, target_coords) {
     ## For R CMD check
     array_row <- array_col <- NULL
 
@@ -202,17 +202,17 @@
         stop("Internal bug: cannot fit to a smaller array!")
     }
 
-    x = as.matrix(
+    x <- as.matrix(
         source_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")]
     )
-    y = as.matrix(
+    y <- as.matrix(
         target_coords[, c("pxl_col_in_fullres", "pxl_row_in_fullres")]
     )
 
     #   Compute cost matrix using squared Euclidean distance
     x2 <- rowSums(x^2)
     y2 <- rowSums(y^2)
-    C  <- outer(x2, rep(1, nrow(y))) + outer(rep(1, nrow(x)), y2) - 2*(x %*% t(y))
+    C <- outer(x2, rep(1, nrow(y))) + outer(rep(1, nrow(x)), y2) - 2 * (x %*% t(y))
 
     #   We need a square matrix: pad with zero-cost rows
     if (nrow(y) > nrow(x)) {
@@ -224,18 +224,18 @@
     #   Solve and grab just the real rows
     perm <- clue::solve_LSAP(C_pad)[seq_len(nrow(x))]
 
-    fit_coords = cbind(
-            source_coords |> dplyr::select(-c(array_row, array_col)),
-            target_coords[perm, ] |>
-                dplyr::rename(
-                    pxl_col_in_fullres_rounded = pxl_col_in_fullres,
-                    pxl_row_in_fullres_rounded = pxl_row_in_fullres
-                ) |>
-                dplyr::select(
-                    array_row, array_col, pxl_col_in_fullres_rounded,
-                    pxl_row_in_fullres_rounded
-                )
-        ) |>
+    fit_coords <- cbind(
+        source_coords |> dplyr::select(-c(array_row, array_col)),
+        target_coords[perm, ] |>
+            dplyr::rename(
+                pxl_col_in_fullres_rounded = pxl_col_in_fullres,
+                pxl_row_in_fullres_rounded = pxl_row_in_fullres
+            ) |>
+            dplyr::select(
+                array_row, array_col, pxl_col_in_fullres_rounded,
+                pxl_row_in_fullres_rounded
+            )
+    ) |>
         dplyr::as_tibble()
 
     return(fit_coords)
@@ -252,7 +252,7 @@
 #' Mapping to the proper array coordinates is framed as the linear sum
 #' assignment problem, and solved using the Hungarian algorithm. This
 #' approach is far slower than \code{.fit_to_array()}, running at O(n^3) with
-#' the number of spots, but guarantees a one-to-one mapping of starting to 
+#' the number of spots, but guarantees a one-to-one mapping of starting to
 #' target spots, at a small cost in the Euclidean distance moved.
 #'
 #' @param coords A `data.frame()` containing capture areas of the
@@ -268,43 +268,43 @@
 #'
 #' @author Nicholas J. Eagles
 #' @keywords internal
-.fit_to_array_lsap = function(coords, inter_spot_dist_px) {
+.fit_to_array_lsap <- function(coords, inter_spot_dist_px) {
     #   Build a new Visium-like array encompassing all capture areas
-    target_coords = .construct_array(coords, inter_spot_dist_px)
-    
-    coords = coords |>
+    target_coords <- .construct_array(coords, inter_spot_dist_px)
+
+    coords <- coords |>
         dplyr::mutate(
             capture_area = stringr::str_split_i(key, "^[ACTG]+-1_", 2)
         )
-    
-    coords_list = list()
+
+    coords_list <- list()
     for (this_ca in unique(coords$capture_area)) {
-        this_source_coords = coords |>
+        this_source_coords <- coords |>
             dplyr::filter(capture_area == this_ca)
 
         #   Subset target coords to those within a bounding box around the
         #   source coords (with a buffer of 100 microns)
-        this_target_coords = target_coords |>
+        this_target_coords <- target_coords |>
             dplyr::filter(
                 pxl_row_in_fullres >= (
                     min(this_source_coords$pxl_row_in_fullres) -
-                    inter_spot_dist_px / 2
+                        inter_spot_dist_px / 2
                 ),
                 pxl_row_in_fullres <= (
                     max(this_source_coords$pxl_row_in_fullres) +
-                    inter_spot_dist_px / 2
+                        inter_spot_dist_px / 2
                 ),
                 pxl_col_in_fullres >= (
                     min(this_source_coords$pxl_col_in_fullres) -
-                    inter_spot_dist_px * cos(pi / 6)
+                        inter_spot_dist_px * cos(pi / 6)
                 ),
                 pxl_col_in_fullres <= (
                     max(this_source_coords$pxl_col_in_fullres) +
-                    inter_spot_dist_px * cos(pi / 6)
+                        inter_spot_dist_px * cos(pi / 6)
                 )
             )
-        
-        coords_list[[this_ca]] = .map_lsap(this_source_coords, this_target_coords)
+
+        coords_list[[this_ca]] <- .map_lsap(this_source_coords, this_target_coords)
     }
 
     return(do.call(rbind, coords_list) |> dplyr::select(-capture_area))

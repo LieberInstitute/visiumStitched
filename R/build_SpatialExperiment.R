@@ -94,7 +94,8 @@
 #' ## algorithm for calculating new array coordinates because of speed in this
 #' ## example, but "LSAP" is generally recommended.
 #' spe <- build_SpatialExperiment(
-#'     sample_info, coords_dir = spe_input_dir, reference_gtf = gtf_cache,
+#'     sample_info,
+#'     coords_dir = spe_input_dir, reference_gtf = gtf_cache,
 #'     algorithm = "Euclidean"
 #' )
 #'
@@ -188,7 +189,8 @@ build_SpatialExperiment <- function(sample_info, coords_dir, count_type = c("spa
     }
 
     spe <- add_array_coords(
-        spe, sample_info, coords_dir, calc_error_metrics = calc_error_metrics,
+        spe, sample_info, coords_dir,
+        calc_error_metrics = calc_error_metrics,
         algorithm = algorithm
     )
     spe <- add_overlap_info(spe, "sum_umi")
