@@ -264,6 +264,11 @@ gtf_cache <- bfcrpath(
 )
 ```
 
+We'll specify `algorithm = "Euclidean"` here for speed in this vignette, though
+generally we recommend `algorithm = "LSAP"`. For a deeper explanation on the
+implication of this choice, see the [Defining Array Coordinates](#defining-array-coordinates)
+section.
+
 ```{r "build_SpatialExperiment"}
 ## Now we can build the SpatialExperiment object. We'll later explore error
 ## metrics related to computing new array coordinates, and thus specify
@@ -271,7 +276,7 @@ gtf_cache <- bfcrpath(
 spe <- build_SpatialExperiment(
     sample_info,
     coords_dir = spe_input_dir, reference_gtf = gtf_cache,
-    calc_error_metrics = TRUE
+    calc_error_metrics = TRUE, algorithm = "Euclidean"
 )
 
 ## The images in this example data have to be mirrored across the horizontal axis.
@@ -353,12 +358,25 @@ colData(spe) |>
 ```
 
 Let's contrast this with the array coordinates recomputed by `visiumStitched`.
-Briefly, `visiumStitched` forms a new hexagonal, Visium-like grid spanning the
-space occupied by all capture areas after stitching. Then, the true spot
-positions are fit to the nearest new spot positions, in terms of Euclidean
-distance. Finally, array coordinates are re-indexed according to the new spot
-assignments, resulting in spatially meaningful values that apply at the group
-level for stitched data. 
+Briefly, `visiumStitched` forms a new target hexagonal, Visium-like grid
+spanning the space occupied by all capture areas after stitching. Then, the
+true spot positions are fit to nearby target spot positions and reindexed
+accordingly, resulting in spatially meaningful values that apply at the group
+level for stitched data.
+
+Two algorithms are available to perform this fitting and can be provided to
+`build_SpatialExperiment()` (and internally `add_array_coords()`) through the
+`algorithm` parameter. The default and recommended choice is "LSAP" (standing for
+linear sum assignment problem), a framing of the mapping problem whose solution
+produces a one-to-one mapping of original spots to target array coordinates (for
+a given capture area), and minimizes Euclidean distance between original and
+target positions under that constraint. This approach is slow (~1 minute per
+capture area), but generally produces the most sensible results. The other
+option is "Euclidean", which simply assigns each original spot to the nearest
+target spot. This approach is very fast, but counterintuitively can result in
+both duplicate mappings and "holes" (target spots where one would expect a
+mapping, but none exists), which are generally undesirable downstream (e.g. for
+clustering).
 
 ```{r "array_plot_after"}
 ## Plot positions of redefined array coordinates
