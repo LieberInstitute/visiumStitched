@@ -1,8 +1,8 @@
 Package: visiumStitched
 Title: Enable downstream analysis of Visium capture areas stitched together with
     Fiji
-Version: 1.1.1
-Date: 2025-09-23
+Version: 1.1.2
+Date: 2025-10-13
 Authors@R: 
     c(
     person("Nicholas J.", "Eagles", email = "nickeagles77@gmail.com",
@@ -17,7 +17,7 @@ Description: This package provides helper functions for working with
 	prepares SpaceRanger (10x Genomics) output files so you can stitch the
 	images from groups of capture areas together with Fiji. Then visiumStitched
 	builds a SpatialExperiment object with the stitched data and makes an
-	artificial hexogonal grid enabling the seamless use of spatial clustering
+	artificial hexagonal grid enabling the seamless use of spatial clustering
 	methods that rely on such grid to identify neighboring spots, such as
 	PRECAST and BayesSpace. The SpatialExperiment objects created by
 	visiumStitched are compatible with spatialLIBD, which can be used to build
@@ -48,6 +48,7 @@ Imports:
     clue,
     dplyr,
     DropletUtils,
+    GenomeInfoDb,
     grDevices,
     imager,
     Matrix,
