@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visiumStitched</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ Hopkins Bloomberg School of Public
 Health<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">26 September 2025</h4>
+            <h4 data-toc-skip class="date">13 October 2025</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/vignettes/visiumStitched.Rmd" class="external-link"><code>vignettes/visiumStitched.Rmd</code></a></small>
       <div class="d-none name"><code>visiumStitched.Rmd</code></div>
@@ -118,7 +118,7 @@ to cite the package and the overall approach. Thank you!</p>
 <span><span class="co">#&gt;   doi:10.18129/B9.bioc.visiumStitched</span></span>
 <span><span class="co">#&gt;   &lt;https://doi.org/10.18129/B9.bioc.visiumStitched&gt;,</span></span>
 <span><span class="co">#&gt;   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R</span></span>
-<span><span class="co">#&gt;   package version 1.1.1,</span></span>
+<span><span class="co">#&gt;   package version 1.1.2,</span></span>
 <span><span class="co">#&gt;   &lt;http://www.bioconductor.org/packages/visiumStitched&gt;.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde</span></span>
@@ -178,7 +178,7 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu">spatialLIBD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_spaceranger"</span><span class="op">)</span>,</span>
 <span>    exdir <span class="op">=</span> <span class="va">sr_dir</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:10.298744 loading file /github/home/.cache/R/BiocFileCache/89ded033af_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:02.367268 loading file /github/home/.cache/R/BiocFileCache/201ee55b2c_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">spaceranger_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span></span>
 <span>    <span class="va">sr_dir</span>, <span class="va">sample_info</span><span class="op">$</span><span class="va">capture_area</span>, <span class="st">"outs"</span>, <span class="st">"spatial"</span></span>
 <span><span class="op">)</span></span>
@@ -186,9 +186,9 @@ can be retrieved with <code><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_d
 <span><span class="co">## Sample_info with paths to SpaceRanger output directories</span></span>
 <span><span class="va">sample_info</span></span>
 <span><span class="co">#&gt;    group  capture_area                            spaceranger_dir</span></span>
-<span><span class="co">#&gt; 1 Br2719 V13B23-283_A1 /tmp/RtmpRRiyZ8/V13B23-283_A1/outs/spatial</span></span>
-<span><span class="co">#&gt; 2 Br2719 V13B23-283_C1 /tmp/RtmpRRiyZ8/V13B23-283_C1/outs/spatial</span></span>
-<span><span class="co">#&gt; 3 Br2719 V13B23-283_D1 /tmp/RtmpRRiyZ8/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 Br2719 V13B23-283_A1 /tmp/Rtmp1fLsYt/V13B23-283_A1/outs/spatial</span></span>
+<span><span class="co">#&gt; 2 Br2719 V13B23-283_C1 /tmp/Rtmp1fLsYt/V13B23-283_C1/outs/spatial</span></span>
+<span><span class="co">#&gt; 3 Br2719 V13B23-283_D1 /tmp/Rtmp1fLsYt/V13B23-283_D1/outs/spatial</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="preparing-inputs-to-fiji">Preparing Inputs to Fiji<a class="anchor" aria-label="anchor" href="#preparing-inputs-to-fiji"></a>
@@ -217,9 +217,9 @@ to place the rescaled images for later input to Fiji.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpRRiyZ8/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpRRiyZ8/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpRRiyZ8/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/Rtmp1fLsYt/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/Rtmp1fLsYt/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/Rtmp1fLsYt/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="building-a-spatialexperiment">Building a <code>SpatialExperiment</code><a class="anchor" aria-label="anchor" href="#building-a-spatialexperiment"></a>
@@ -249,7 +249,7 @@ respectively.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fiji_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/unzip.html" class="external-link">unzip</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span><span class="st">"visiumStitched_brain_Fiji_out"</span><span class="op">)</span>, exdir <span class="op">=</span> <span class="va">fiji_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:25.11479 loading file /github/home/.cache/R/BiocFileCache/89d4b795b73_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:17.383449 loading file /github/home/.cache/R/BiocFileCache/201e7712fb23_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_xml_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"xml$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sample_info</span><span class="op">$</span><span class="va">fiji_image_path</span> <span class="op">&lt;-</span> <span class="va">temp</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"png$"</span>, <span class="va">temp</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <p>We now have every column present in <code>sample_info</code> that
@@ -260,9 +260,9 @@ will be necessary for any <code>visiumStitched</code> function.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 7</span></span></span>
 <span><span class="co">#&gt;   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/RtmpRRiyZ8/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/RtmpRRiyZ8/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/RtmpRRiyZ8/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Br2719 V13B23-283_A1 /tmp/Rtmp1fLsYt/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Br2719 V13B23-283_C1 /tmp/Rtmp1fLsYt/V1…               1.00             0.082<span style="text-decoration: underline;">5</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> Br2719 V13B23-283_D1 /tmp/Rtmp1fLsYt/V1…               1                0.082<span style="text-decoration: underline;">5</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 2 more variables: fiji_xml_path &lt;chr&gt;, fiji_image_path &lt;chr&gt;</span></span></span></code></pre></div>
 <p>Before building the <code>SpatialExperiment</code>, the idea is to
 create a directory structure very similar to <a href="https://www.10xgenomics.com/support/software/space-ranger/latest/analysis/outputs/spatial-outputs" class="external-link">Spaceranger’s
@@ -285,10 +285,10 @@ and occupy similar memory footprints.</p>
 <span><span class="co">## the standard directory structure from SpaceRanger (10x Genomics)</span></span>
 <span><span class="va">spe_input_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji.html">prep_fiji_coords</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpRRiyZ8/Br2719/tissue_positions.csv"</span></span>
+<span><span class="co">#&gt; [1] "/tmp/Rtmp1fLsYt/Br2719/tissue_positions.csv"</span></span>
 <span><span class="fu"><a href="../reference/prep_fiji.html">prep_fiji_image</a></span><span class="op">(</span><span class="va">sample_info</span>, out_dir <span class="op">=</span> <span class="va">spe_input_dir</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "/tmp/RtmpRRiyZ8/Br2719/tissue_lowres_image.png"</span></span>
-<span><span class="co">#&gt; [2] "/tmp/RtmpRRiyZ8/Br2719/scalefactors_json.json"</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "/tmp/Rtmp1fLsYt/Br2719/tissue_lowres_image.png"</span></span>
+<span><span class="co">#&gt; [2] "/tmp/Rtmp1fLsYt/Br2719/scalefactors_json.json"</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="constructing-the-object">Constructing the Object<a class="anchor" aria-label="anchor" href="#constructing-the-object"></a>
@@ -337,11 +337,11 @@ section.</p>
 <span>    calc_error_metrics <span class="op">=</span> <span class="cn">TRUE</span>, algorithm <span class="op">=</span> <span class="st">"Euclidean"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Building SpatialExperiment using capture area as sample ID</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:28.30209 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:34.430811 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:34.822499 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:54:35.094371 rtracklayer::import: reading the reference GTF file</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:55:05.047746 adding gene information to the SPE object</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:20.620592 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:26.780039 read10xVisiumAnalysis: reading analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:27.173774 add10xVisiumAnalysis: adding analysis output from SpaceRanger</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:27.445651 rtracklayer::import: reading the reference GTF file</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:57.570269 adding gene information to the SPE object</span></span>
 <span><span class="co">#&gt; Warning: Gene IDs did not match. This typically happens when you are not using</span></span>
 <span><span class="co">#&gt; the same GTF file as the one that was used by SpaceRanger. For example, one</span></span>
 <span><span class="co">#&gt; file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()</span></span>
@@ -349,7 +349,7 @@ section.</p>
 <span><span class="co">#&gt; Warning: Dropping 2226 out of 38606 genes for which we don't have information</span></span>
 <span><span class="co">#&gt; on the reference GTF file. This typically happens when you are not using the</span></span>
 <span><span class="co">#&gt; same GTF file as the one that was used by SpaceRanger.</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:55:05.225233 adding information used by spatialLIBD</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:54:57.753029 adding information used by spatialLIBD</span></span>
 <span><span class="co">#&gt; Overwriting imgData(spe) with merged images (one per group)</span></span>
 <span><span class="co">#&gt; Adding array coordinates with error metrics and adding overlap info</span></span>
 <span></span>
@@ -566,7 +566,7 @@ capture-area boundaries. First, let’s examine <code>k = 2</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab SpatialExperiment with normalized counts</span></span>
 <span><span class="va">spe_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2025-09-26 14:56:23.380088 loading file /github/home/.cache/R/BiocFileCache/89d16881582_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2025-10-13 17:56:16.537768 loading file /github/home/.cache/R/BiocFileCache/201e1dbfb001_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span><span class="fu">assayNames</span><span class="op">(</span><span class="va">spe_norm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "counts"    "logcounts"</span></span>
 <span></span>
@@ -674,7 +674,7 @@ and R Documentation Task Force, 2021)</li>
 <li>
 <em><a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a></em>
 (Allaire, Xie, Dervieux, McPherson, Luraschi, Ushey, Atkins, Wickham,
-Cheng, Chang, and Iannone, 2024)</li>
+Cheng, Chang, and Iannone, 2025)</li>
 <li>
 <em><a href="https://bioconductor.org/packages/3.20/S4Vectors" class="external-link">S4Vectors</a></em>
 (Pagès, Lawrence, and Aboyoun, 2024)</li>
@@ -727,7 +727,7 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2025-09-26</span></span>
+<span><span class="co">#&gt;  date     2025-10-13</span></span>
 <span><span class="co">#&gt;  pandoc   3.6 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt;  quarto   1.5.57 @ /usr/local/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -750,7 +750,7 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  BiocIO                 1.16.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  BiocManager            1.30.26   <span style="color: #555555;">2025-06-05</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  BiocNeighbors          2.0.1     <span style="color: #555555;">2024-11-28</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
-<span><span class="co">#&gt;  BiocParallel           1.40.2    <span style="color: #555555;">2025-09-12</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  BiocParallel           1.40.2    <span style="color: #555555;">2025-10-13</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  BiocSingular           1.22.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  BiocStyle            * 2.34.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  BiocVersion            3.20.0    <span style="color: #555555;">2024-10-21</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
@@ -760,7 +760,7 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  bitops                 1.0-9     <span style="color: #555555;">2024-10-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  blob                   1.2.4     <span style="color: #555555;">2023-03-17</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  bmp                    0.3.1     <span style="color: #555555;">2025-09-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  bookdown               0.44      <span style="color: #555555;">2025-08-21</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  bookdown               0.45      <span style="color: #555555;">2025-10-03</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  bslib                  0.9.0     <span style="color: #555555;">2025-01-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  cachem                 1.1.0     <span style="color: #555555;">2024-05-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  circlize               0.4.16    <span style="color: #555555;">2024-02-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -868,7 +868,7 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  Rhdf5lib               1.28.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  rjson                  0.2.23    <span style="color: #555555;">2024-09-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.6     <span style="color: #555555;">2025-04-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  rmarkdown              2.29      <span style="color: #555555;">2024-11-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  rmarkdown              2.30      <span style="color: #555555;">2025-09-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  Rsamtools              2.22.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  RSQLite                2.4.3     <span style="color: #555555;">2025-08-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rsvd                   1.0.5     <span style="color: #555555;">2021-04-16</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -889,13 +889,13 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  SparseArray            1.6.2     <span style="color: #555555;">2025-02-20</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  sparseMatrixStats      1.18.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
 <span><span class="co">#&gt;  SpatialExperiment    * 1.16.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
-<span><span class="co">#&gt;  spatialLIBD          * 1.21.6    <span style="color: #555555;">2025-09-26</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Github (LieberInstitute/spatialLIBD@b7bae6f)</span></span></span>
-<span><span class="co">#&gt;  statmod                1.5.0     <span style="color: #555555;">2023-01-06</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  spatialLIBD          * 1.21.6    <span style="color: #555555;">2025-10-13</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">Github (LieberInstitute/spatialLIBD@b7bae6f)</span></span></span>
+<span><span class="co">#&gt;  statmod                1.5.1     <span style="color: #555555;">2025-10-09</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  stringi                1.8.7     <span style="color: #555555;">2025-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  stringr                1.5.2     <span style="color: #555555;">2025-09-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  SummarizedExperiment * 1.36.0    <span style="color: #555555;">2024-10-29</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.20 (R 4.4.2)</span></span></span>
-<span><span class="co">#&gt;  systemfonts            1.2.3     <span style="color: #555555;">2025-04-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  textshaping            1.0.3     <span style="color: #555555;">2025-09-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  systemfonts            1.3.1     <span style="color: #555555;">2025-10-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  textshaping            1.0.4     <span style="color: #555555;">2025-10-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  tibble                 3.3.0     <span style="color: #555555;">2025-06-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  tidyr                  1.3.1     <span style="color: #555555;">2024-01-24</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  tidyselect             1.2.1     <span style="color: #555555;">2024-03-11</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -908,7 +908,7 @@ Collado-Torres, 2022)</li>
 <span><span class="co">#&gt;  vipor                  0.4.7     <span style="color: #555555;">2023-12-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  viridis                0.6.5     <span style="color: #555555;">2024-01-29</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  viridisLite            0.4.2     <span style="color: #555555;">2023-05-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  visiumStitched       * 1.1.1     <span style="color: #555555;">2025-09-26</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  visiumStitched       * 1.1.2     <span style="color: #555555;">2025-10-13</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  vroom                  1.6.6     <span style="color: #555555;">2025-09-19</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  withr                  3.0.2     <span style="color: #555555;">2024-10-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  xfun                   0.53      <span style="color: #555555;">2025-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -932,13 +932,13 @@ Collado-Torres, 2022)</li>
 <p>This vignette was generated using <em><a href="https://bioconductor.org/packages/3.20/BiocStyle" class="external-link">BiocStyle</a></em>
 (Oleś, 2024) with <em><a href="https://CRAN.R-project.org/package=knitr" class="external-link">knitr</a></em> (Xie,
 2025) and <em><a href="https://CRAN.R-project.org/package=rmarkdown" class="external-link">rmarkdown</a></em>
-(Allaire, Xie, Dervieux et al., 2024) running behind the scenes.</p>
+(Allaire, Xie, Dervieux et al., 2025) running behind the scenes.</p>
 <p>Citations made with <em><a href="https://CRAN.R-project.org/package=RefManageR" class="external-link">RefManageR</a></em>
 (McLean, 2017).</p>
 <p>
-<a id="bib-allaire2024rmarkdown"></a><a href="#cite-allaire2024rmarkdown">[1]</a><cite>
+<a id="bib-allaire2025rmarkdown"></a><a href="#cite-allaire2025rmarkdown">[1]</a><cite>
 J. Allaire, Y. Xie, C. Dervieux, et al. <em>rmarkdown: Dynamic Documents
-for R</em>. R package version 2.29. 2024. URL:
+for R</em>. R package version 2.30. 2025. URL:
 <a href="https://github.com/rstudio/rmarkdown" class="external-link">https://github.com/rstudio/rmarkdown</a>.</cite>
 </p>
 <p>
@@ -957,7 +957,7 @@ A. Couture-Beil. <em>rjson: JSON for R</em>. R package version 0.2.23.
 <a id="bib-eagles2025enable"></a><a href="#cite-eagles2025enable">[4]</a><cite>
 N. J. Eagles and L. Collado-Torres. <em>Enable downstream analysis of
 Visium capture areas stitched together with Fiji</em>. <a href="https://github.com/LieberInstitute/visiumStitched/visiumStitched" class="external-link uri">https://github.com/LieberInstitute/visiumStitched/visiumStitched</a>
-- R package version 1.1.1. 2025. DOI:
+- R package version 1.1.2. 2025. DOI:
 <a href="https://doi.org/10.18129/B9.bioc.visiumStitched" class="external-link">10.18129/B9.bioc.visiumStitched</a>.
 URL:
 <a href="http://www.bioconductor.org/packages/visiumStitched" class="external-link">http://www.bioconductor.org/packages/visiumStitched</a>.</cite>
