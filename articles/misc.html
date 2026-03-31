@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visiumStitched</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,7 +78,7 @@ Hopkins Bloomberg School of Public
 Health<br><a class="author_email" href="mailto:#"></a><a href="mailto:lcolladotor@gmail.com" class="email">lcolladotor@gmail.com</a>
       </address>
                   
-            <h4 data-toc-skip class="date">13 October 2025</h4>
+            <h4 data-toc-skip class="date">31 March 2026</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/LieberInstitute/visiumStitched/blob/devel/vignettes/misc.Rmd" class="external-link"><code>vignettes/misc.Rmd</code></a></small>
       <div class="d-none name"><code>misc.Rmd</code></div>
@@ -101,7 +101,7 @@ same example white matter marker genes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Grab SpatialExperiment with normalized counts</span></span>
 <span><span class="va">spe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html" class="external-link">fetch_data</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"visiumStitched_brain_spe"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 2025-10-13 17:53:36.603589 loading file /github/home/.cache/R/BiocFileCache/201e1dbfb001_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
+<span><span class="co">#&gt; 2026-03-31 17:19:57.281891 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1</span></span>
 <span></span>
 <span><span class="co">## Check that spe does contain the "logcounts" assay</span></span>
 <span><span class="fu">assayNames</span><span class="op">(</span><span class="va">spe</span><span class="op">)</span></span>
@@ -132,7 +132,7 @@ the preferred tissue orientation.</p>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="misc_files/figure-html/rotate-1.png" width="700"></p>
+<p><img src="misc_files/figure-html/rotate-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Mirror image and gene-expression data across a vertical axis, plotting a</span></span>
 <span><span class="co">## combination of white-matter genes</span></span>
@@ -143,7 +143,7 @@ the preferred tissue orientation.</p>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="misc_files/figure-html/mirror-1.png" width="700"></p>
+<p><img src="misc_files/figure-html/mirror-1.png" class="r-plt" alt="" width="700"></p>
 <p>You might want to re-make these plots with
 <code>spatial = TRUE</code> so you can see how the histology image gets
 rotated and/or mirrored. For file size purposes of this vignette, here
@@ -168,7 +168,7 @@ as before:</p>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="misc_files/figure-html/fetch_norm-1.png" width="700"></p>
+<p><img src="misc_files/figure-html/fetch_norm-1.png" class="r-plt" alt="" width="700"></p>
 <p>Recall the unnormalized version of this plot, which is not nearly as
 clean:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -181,7 +181,7 @@ clean:</p>
 <span>    is_stitched <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    spatial <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="misc_files/figure-html/unnorm_plot-1.png" width="700"></p>
+<p><img src="misc_files/figure-html/unnorm_plot-1.png" class="r-plt" alt="" width="700"></p>
 <p>The actual normalization code for this example data is available <a href="https://github.com/LieberInstitute/visiumStitched_brain/blob/01eae0b12848b4ecbb6fe2dc9c07ad4257df3e47/code/03_stitching/02_build_SpatialExperiment.R#L43-L76" class="external-link">here</a>.</p>
 </div>
 </div>
@@ -217,7 +217,7 @@ and time-consuming.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
