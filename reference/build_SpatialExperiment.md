@@ -118,7 +118,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
     exdir = sr_dir
 )
-#> 2026-03-31 17:18:23.532852 loading file /github/home/.cache/R/BiocFileCache/213a155fa1a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
+#> 2026-04-01 15:03:51.881521 loading file /github/home/.cache/R/BiocFileCache/5244364f1fde_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -129,7 +129,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
     exdir = fiji_dir
 )
-#> 2026-03-31 17:18:25.74887 loading file /github/home/.cache/R/BiocFileCache/213a75934498_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
+#> 2026-04-01 15:03:54.167904 loading file /github/home/.cache/R/BiocFileCache/52444fc76ff3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
@@ -139,10 +139,10 @@ sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 ## Preparing Fiji coordinates and images for build_SpatialExperiment()
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/RtmptfAlhu/Br2719/tissue_positions.csv"
+#> [1] "/tmp/Rtmp1ekYg3/Br2719/tissue_positions.csv"
 prep_fiji_image(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/RtmptfAlhu/Br2719/tissue_lowres_image.png"
-#> [2] "/tmp/RtmptfAlhu/Br2719/scalefactors_json.json" 
+#> [1] "/tmp/Rtmp1ekYg3/Br2719/tissue_lowres_image.png"
+#> [2] "/tmp/Rtmp1ekYg3/Br2719/scalefactors_json.json" 
 
 ########################################################################
 #   Build the SpatialExperiment
@@ -170,14 +170,17 @@ spe <- build_SpatialExperiment(
     algorithm = "Euclidean"
 )
 #> Building SpatialExperiment using capture area as sample ID
-#> 2026-03-31 17:18:34.736512 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
-#> 2026-03-31 17:18:40.133559 read10xVisiumAnalysis: reading analysis output from SpaceRanger
-#> 2026-03-31 17:18:40.459329 add10xVisiumAnalysis: adding analysis output from SpaceRanger
-#> 2026-03-31 17:18:40.719021 rtracklayer::import: reading the reference GTF file
-#> 2026-03-31 17:19:07.234716 adding gene information to the SPE object
+#> 2026-04-01 15:04:03.363108 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
+#> Warning: 'SpatialExperiment::read10xVisium' is deprecated.
+#> Use 'VisiumIO::TENxVisium(List)' instead.
+#> See help("Deprecated")
+#> 2026-04-01 15:04:06.279749 read10xVisiumAnalysis: reading analysis output from SpaceRanger
+#> 2026-04-01 15:04:06.60157 add10xVisiumAnalysis: adding analysis output from SpaceRanger
+#> 2026-04-01 15:04:06.841388 rtracklayer::import: reading the reference GTF file
+#> 2026-04-01 15:04:31.7866 adding gene information to the SPE object
 #> Warning: Gene IDs did not match. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger. For example, one file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper() will try to convert them to ENSEMBL IDs.
 #> Warning: Dropping 2226 out of 38606 genes for which we don't have information on the reference GTF file. This typically happens when you are not using the same GTF file as the one that was used by SpaceRanger.
-#> 2026-03-31 17:19:07.419944 adding information used by spatialLIBD
+#> 2026-04-01 15:04:33.262936 adding information used by spatialLIBD
 #> Overwriting imgData(spe) with merged images (one per group)
 #> Adding array coordinates and overlap info
 

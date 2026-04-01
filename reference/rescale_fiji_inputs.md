@@ -63,7 +63,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
     exdir = sr_dir
 )
-#> 2026-03-31 17:19:37.432454 loading file /github/home/.cache/R/BiocFileCache/213a155fa1a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
+#> 2026-04-01 15:05:00.732668 loading file /github/home/.cache/R/BiocFileCache/5244364f1fde_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -74,7 +74,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
     exdir = fiji_dir
 )
-#> 2026-03-31 17:19:39.639556 loading file /github/home/.cache/R/BiocFileCache/213a75934498_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
+#> 2026-04-01 15:05:02.920718 loading file /github/home/.cache/R/BiocFileCache/52444fc76ff3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
@@ -107,12 +107,12 @@ list.files(out_dir)
 #> [11] "V13B23-283_C1.png"                        
 #> [12] "V13B23-283_D1"                            
 #> [13] "V13B23-283_D1.png"                        
-#> [14] "bslib-da4fb32e7df0e8c7da89f992ffd077e3"   
+#> [14] "bslib-33c615652fac282942ee0d98dcfba021"   
 #> [15] "downlit"                                  
-#> [16] "file503620bd8f02"                         
-#> [17] "file5036339dfddd"                         
-#> [18] "file503650f4f71e"                         
-#> [19] "file5036580af0e1"                         
-#> [20] "file50366d5400b2"                         
-#> [21] "file50367115951d"                         
+#> [16] "file89a412ef3c98"                         
+#> [17] "file89a448cc94bc"                         
+#> [18] "file89a454861104"                         
+#> [19] "file89a4676af23f"                         
+#> [20] "file89a46ed651cc"                         
+#> [21] "file89a4e1da180"                          
 ```

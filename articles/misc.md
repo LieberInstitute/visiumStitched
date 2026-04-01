@@ -8,6 +8,7 @@ This vignette has some extra companion notes to the *Introduction to
 Let’s load the `spatialLIBD` package we’ll use in this vignette.
 
 ``` r
+
 library("spatialLIBD")
 ```
 
@@ -16,9 +17,10 @@ includes normalized `logcounts`. We’ll define the same example white
 matter marker genes.
 
 ``` r
+
 ## Grab SpatialExperiment with normalized counts
 spe <- fetch_data(type = "visiumStitched_brain_spe")
-#> 2026-03-31 17:19:57.281891 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:05:21.052786 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ## Check that spe does contain the "logcounts" assay
 assayNames(spe)
@@ -42,6 +44,7 @@ functions. These functions are useful in case the image needs to be
 transformed to reach the preferred tissue orientation.
 
 ``` r
+
 ## Rotate image and gene-expression data by 180 degrees, plotting a combination
 ## of white-matter genes
 vis_gene(
@@ -56,6 +59,7 @@ vis_gene(
 ![](misc_files/figure-html/rotate-1.png)
 
 ``` r
+
 ## Mirror image and gene-expression data across a vertical axis, plotting a
 ## combination of white-matter genes
 vis_gene(
@@ -86,6 +90,7 @@ normalization here, we’ll fetch the object with
 counts from `spatialLIBD`, then plot a few white matter genes as before:
 
 ``` r
+
 ## Plot combination of normalized counts for some white-matter genes
 vis_gene(
     spe,
@@ -102,6 +107,7 @@ Recall the unnormalized version of this plot, which is not nearly as
 clean:
 
 ``` r
+
 ## Plot raw counts, which are noisier
 ## Same plot we made before, but this time with no histology images
 vis_gene(
@@ -140,5 +146,6 @@ information, both discrete and continuous, is taken from spots where
 memory-intensive and time-consuming.
 
 ``` r
+
 spe_merged <- merge_overlapping(spe)
 ```

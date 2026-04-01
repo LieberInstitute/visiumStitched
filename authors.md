@@ -15,7 +15,7 @@ Source:
 
 Eagles NJ, Collado-Torres L (2026). *Enable downstream analysis of
 Visium capture areas stitched together with Fiji*.
-[doi:10.18129/B9.bioc.visiumStitched](https://doi.org/10.18129/B9.bioc.visiumStitched),
+[doi:10.18129/B9.bioc.visiumStitched](https://doi.org/10.18129/B9.bioc.visiumStitched).
 https://github.com/LieberInstitute/visiumStitched/visiumStitched - R
 package version 1.3.0,
 <http://www.bioconductor.org/packages/visiumStitched>.
@@ -32,7 +32,7 @@ package version 1.3.0,
 Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde TM,
 Page SC, Martinowich K, Collado-Torres L (2024). “visiumStitched.” *BMC
 Genomics*.
-[doi:10.1186/s12864-024-10991-y](https://doi.org/10.1186/s12864-024-10991-y),
+[doi:10.1186/s12864-024-10991-y](https://doi.org/10.1186/s12864-024-10991-y).
 [doi.org/10.1186/s12864-024-10991-y](doi.org/10.1186/s12864-024-10991-y).
 
     @Article{,

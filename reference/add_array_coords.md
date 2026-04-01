@@ -100,7 +100,7 @@ Nicholas J. Eagles
 if (!exists("spe")) {
     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 }
-#> 2026-03-31 17:17:51.146445 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:03:22.281204 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 ########################################################################
 #   Prepare sample_info
@@ -116,7 +116,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
     exdir = sr_dir
 )
-#> 2026-03-31 17:17:55.725179 loading file /github/home/.cache/R/BiocFileCache/213a155fa1a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
+#> 2026-04-01 15:03:25.749724 loading file /github/home/.cache/R/BiocFileCache/5244364f1fde_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -127,7 +127,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
     exdir = fiji_dir
 )
-#> 2026-03-31 17:17:57.718797 loading file /github/home/.cache/R/BiocFileCache/213a75934498_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
+#> 2026-04-01 15:03:27.642723 loading file /github/home/.cache/R/BiocFileCache/52444fc76ff3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
@@ -137,10 +137,10 @@ sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 ## Preparing Fiji coordinates and images for build_SpatialExperiment()
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/RtmptfAlhu/Br2719/tissue_positions.csv"
+#> [1] "/tmp/Rtmp1ekYg3/Br2719/tissue_positions.csv"
 prep_fiji_image(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/RtmptfAlhu/Br2719/tissue_lowres_image.png"
-#> [2] "/tmp/RtmptfAlhu/Br2719/scalefactors_json.json" 
+#> [1] "/tmp/Rtmp1ekYg3/Br2719/tissue_lowres_image.png"
+#> [2] "/tmp/Rtmp1ekYg3/Br2719/scalefactors_json.json" 
 
 ########################################################################
 #   Add array coordinates

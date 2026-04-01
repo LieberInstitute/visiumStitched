@@ -42,7 +42,7 @@ Nicholas J. Eagles
 if (!exists("spe")) {
     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 }
-#> 2026-03-31 17:19:11.748868 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:04:37.644472 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 #   Group colData by group and array coordinates
 grouped_coldata <- colData(spe) |>

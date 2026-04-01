@@ -58,7 +58,7 @@ Nicholas J. Eagles
 spe_unstitched <- spatialLIBD::fetch_data(
     type = "spatialDLPFC_Visium_example_subset"
 )[seq(100), seq(100)]
-#> 2026-03-31 17:18:14.89844 loading file /github/home/.cache/R/BiocFileCache/2c0561485fdc_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1
+#> 2026-04-01 15:03:43.816041 loading file /github/home/.cache/R/BiocFileCache/656e2438ffe5_spatialDLPFC_spe_subset_example.rds%3Fdl%3D1
 
 ## Make the column names unique
 colnames(spe_unstitched) <- spatialLIBD::add_key(spe_unstitched)$key
@@ -92,7 +92,7 @@ seur
 if (!exists("spe")) {
     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 }
-#> 2026-03-31 17:18:20.644506 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:03:49.312173 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 seur_stitched <- as.Seurat(spe[seq(100), seq(100)])
 #> Running 'as.Seurat(spe)'...
 #> Warning: Keys should be one or more alphanumeric characters followed by an underscore, setting key from PC to PC_

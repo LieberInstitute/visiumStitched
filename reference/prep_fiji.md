@@ -90,7 +90,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
     exdir = sr_dir
 )
-#> 2026-03-31 17:19:25.237781 loading file /github/home/.cache/R/BiocFileCache/213a155fa1a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
+#> 2026-04-01 15:04:50.111077 loading file /github/home/.cache/R/BiocFileCache/5244364f1fde_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -101,7 +101,7 @@ temp <- unzip(
     spatialLIBD::fetch_data("visiumStitched_brain_Fiji_out"),
     exdir = fiji_dir
 )
-#> 2026-03-31 17:19:27.395032 loading file /github/home/.cache/R/BiocFileCache/213a75934498_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
+#> 2026-04-01 15:04:52.178739 loading file /github/home/.cache/R/BiocFileCache/52444fc76ff3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 
@@ -166,8 +166,8 @@ plot(this_image)
 
 #    'prep_fiji_image' produced an image and scalefactors
 out_paths_image
-#> [1] "/tmp/RtmptfAlhu/Br2719/tissue_lowres_image.png"
-#> [2] "/tmp/RtmptfAlhu/Br2719/scalefactors_json.json" 
+#> [1] "/tmp/Rtmp1ekYg3/Br2719/tissue_lowres_image.png"
+#> [2] "/tmp/Rtmp1ekYg3/Br2719/scalefactors_json.json" 
 
 #    'prep_fiji_coords' produced a file of spatial coordinates for the
 #    stitched Br2719

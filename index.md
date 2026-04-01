@@ -29,6 +29,7 @@ can be accessed and visualized with
 or newer.
 
 ``` r
+
 ## Check that you have a recent version of spatialLIBD installed
 stopifnot(packageVersion("spatialLIBD") >= "1.17.8")
 
@@ -74,6 +75,7 @@ Get the latest stable `R` release from
 Bioconductor using the following code:
 
 ``` r
+
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
@@ -88,6 +90,7 @@ R. Please run this yourself to check for any updates on how to cite
 **visiumStitched**.
 
 ``` r
+
 print(citation("visiumStitched"), bibtex = TRUE)
 #> Warning in packageDescription(pkg = package, lib.loc = dirname(dir)): no
 #> package 'visiumStitched' was found

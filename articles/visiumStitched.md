@@ -4,11 +4,12 @@
 
 ### Install `visiumStitched`
 
-*[visiumStitched](https://bioconductor.org/packages/3.20/visiumStitched)*
+*[visiumStitched](https://bioconductor.org/packages/3.23/visiumStitched)*
 is a Bioconductor `R` package that can be installed with the following
 commands in your `R` session:
 
 ``` r
+
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
@@ -19,11 +20,12 @@ BiocManager::install("visiumStitched")
 ### Citing `visiumStitched`
 
 We hope that
-*[visiumStitched](https://bioconductor.org/packages/3.20/visiumStitched)*
+*[visiumStitched](https://bioconductor.org/packages/3.23/visiumStitched)*
 will be useful for your research. Please use the following information
 to cite the package and the overall approach. Thank you!
 
 ``` r
+
 ## Citation info
 citation("visiumStitched")
 #> To cite package 'visiumStitched' in publications use:
@@ -31,7 +33,7 @@ citation("visiumStitched")
 #>   Eagles NJ, Collado-Torres L (2026). _Enable downstream analysis of
 #>   Visium capture areas stitched together with Fiji_.
 #>   doi:10.18129/B9.bioc.visiumStitched
-#>   <https://doi.org/10.18129/B9.bioc.visiumStitched>,
+#>   <https://doi.org/10.18129/B9.bioc.visiumStitched>.
 #>   https://github.com/LieberInstitute/visiumStitched/visiumStitched - R
 #>   package version 1.3.0,
 #>   <http://www.bioconductor.org/packages/visiumStitched>.
@@ -39,7 +41,7 @@ citation("visiumStitched")
 #>   Eagles NJ, Bach S, Tippani M, Ravichandran P, Du Y, Miller RA, Hyde
 #>   TM, Page SC, Martinowich K, Collado-Torres L (2024).
 #>   "visiumStitched." _BMC Genomics_. doi:10.1186/s12864-024-10991-y
-#>   <https://doi.org/10.1186/s12864-024-10991-y>,
+#>   <https://doi.org/10.1186/s12864-024-10991-y>.
 #>   <doi.org/10.1186/s12864-024-10991-y>.
 #> 
 #> To see these entries in BibTeX format, use 'print(<citation>,
@@ -52,6 +54,7 @@ citation("visiumStitched")
 Let’s load the packages we’ll use in this vignette.
 
 ``` r
+
 library("SpatialExperiment")
 library("visiumStitched")
 library("dplyr")
@@ -72,6 +75,7 @@ Note multiple groups are supported. By the end of this demo, the
 three capture areas; in general, there will be one sample per group.
 
 ``` r
+
 ## Create initial sample_info
 sample_info <- data.frame(
     group = "Br2719",
@@ -91,12 +95,13 @@ can be retrieved with
 [`spatialLIBD::fetch_data()`](https://rdrr.io/pkg/spatialLIBD/man/fetch_data.html).
 
 ``` r
+
 ## Download example SpaceRanger output files
 sr_dir <- tempdir()
 temp <- unzip(spatialLIBD::fetch_data("visiumStitched_brain_spaceranger"),
     exdir = sr_dir
 )
-#> 2026-03-31 17:20:22.000862 loading file /github/home/.cache/R/BiocFileCache/213a155fa1a6_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
+#> 2026-04-01 15:05:48.115935 loading file /github/home/.cache/R/BiocFileCache/5244364f1fde_visiumStitched_brain_spaceranger.zip%3Frlkey%3Dbdgjc6mgy1ierdad6h6v5g29c%26dl%3D1
 sample_info$spaceranger_dir <- file.path(
     sr_dir, sample_info$capture_area, "outs", "spatial"
 )
@@ -104,9 +109,9 @@ sample_info$spaceranger_dir <- file.path(
 ## Sample_info with paths to SpaceRanger output directories
 sample_info
 #>    group  capture_area                            spaceranger_dir
-#> 1 Br2719 V13B23-283_A1 /tmp/Rtmp3x8KeP/V13B23-283_A1/outs/spatial
-#> 2 Br2719 V13B23-283_C1 /tmp/Rtmp3x8KeP/V13B23-283_C1/outs/spatial
-#> 3 Br2719 V13B23-283_D1 /tmp/Rtmp3x8KeP/V13B23-283_D1/outs/spatial
+#> 1 Br2719 V13B23-283_A1 /tmp/RtmpdwbM4P/V13B23-283_A1/outs/spatial
+#> 2 Br2719 V13B23-283_C1 /tmp/RtmpdwbM4P/V13B23-283_C1/outs/spatial
+#> 3 Br2719 V13B23-283_D1 /tmp/RtmpdwbM4P/V13B23-283_D1/outs/spatial
 ```
 
 ## Preparing Inputs to Fiji
@@ -132,6 +137,7 @@ Typically, it would really be any suitable directory to place the
 rescaled images for later input to Fiji.
 
 ``` r
+
 #   Generate rescaled approximately high-resolution images
 sample_info <- rescale_fiji_inputs(sample_info, out_dir = tempdir())
 
@@ -140,9 +146,9 @@ sample_info
 #> # A tibble: 3 × 5
 #>   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef
 #>   <chr>  <chr>         <chr>                            <dbl>              <dbl>
-#> 1 Br2719 V13B23-283_A1 /tmp/Rtmp3x8KeP/V1…               1.00             0.0825
-#> 2 Br2719 V13B23-283_C1 /tmp/Rtmp3x8KeP/V1…               1.00             0.0825
-#> 3 Br2719 V13B23-283_D1 /tmp/Rtmp3x8KeP/V1…               1                0.0825
+#> 1 Br2719 V13B23-283_A1 /tmp/RtmpdwbM4P/V1…               1.00             0.0825
+#> 2 Br2719 V13B23-283_C1 /tmp/RtmpdwbM4P/V1…               1.00             0.0825
+#> 3 Br2719 V13B23-283_D1 /tmp/RtmpdwbM4P/V1…               1                0.0825
 ```
 
 ## Building a `SpatialExperiment`
@@ -157,6 +163,10 @@ this process with the example data. Note that [Fiji version
 this demo, and other versions have [behaved
 differently](https://github.com/LieberInstitute/visiumStitched/issues/6).
 
+# An error occurred.
+
+Unable to execute JavaScript.
+
 ### Creating Group-Level Samples
 
 From the Fiji alignment, two output files will be produced: an `XML`
@@ -169,9 +179,10 @@ We’ll need to add the paths to the XML and PNG files to the
 respectively.
 
 ``` r
+
 fiji_dir <- tempdir()
 temp <- unzip(fetch_data("visiumStitched_brain_Fiji_out"), exdir = fiji_dir)
-#> 2026-03-31 17:20:35.333574 loading file /github/home/.cache/R/BiocFileCache/213a75934498_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
+#> 2026-04-01 15:06:01.702563 loading file /github/home/.cache/R/BiocFileCache/52444fc76ff3_visiumStitched_brain_fiji_out.zip%3Frlkey%3Dptwal8f5zxakzejwd0oqw0lhj%26dl%3D1
 sample_info$fiji_xml_path <- temp[grep("xml$", temp)]
 sample_info$fiji_image_path <- temp[grep("png$", temp)]
 ```
@@ -180,14 +191,15 @@ We now have every column present in `sample_info` that will be necessary
 for any `visiumStitched` function.
 
 ``` r
+
 ## Complete sample_info
 sample_info
 #> # A tibble: 3 × 7
 #>   group  capture_area  spaceranger_dir     intra_group_scalar group_hires_scalef
 #>   <chr>  <chr>         <chr>                            <dbl>              <dbl>
-#> 1 Br2719 V13B23-283_A1 /tmp/Rtmp3x8KeP/V1…               1.00             0.0825
-#> 2 Br2719 V13B23-283_C1 /tmp/Rtmp3x8KeP/V1…               1.00             0.0825
-#> 3 Br2719 V13B23-283_D1 /tmp/Rtmp3x8KeP/V1…               1                0.0825
+#> 1 Br2719 V13B23-283_A1 /tmp/RtmpdwbM4P/V1…               1.00             0.0825
+#> 2 Br2719 V13B23-283_C1 /tmp/RtmpdwbM4P/V1…               1.00             0.0825
+#> 3 Br2719 V13B23-283_D1 /tmp/RtmpdwbM4P/V1…               1                0.0825
 #> # ℹ 2 more variables: fiji_xml_path <chr>, fiji_image_path <chr>
 ```
 
@@ -209,15 +221,16 @@ images stored in the `SpatialExperiment` for any group will be similarly
 scaled and occupy similar memory footprints.
 
 ``` r
+
 ## Prepare the Fiji coordinates and images.
 ## These functions return the file paths to the newly-created files that follow
 ## the standard directory structure from SpaceRanger (10x Genomics)
 spe_input_dir <- tempdir()
 prep_fiji_coords(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/Rtmp3x8KeP/Br2719/tissue_positions.csv"
+#> [1] "/tmp/RtmpdwbM4P/Br2719/tissue_positions.csv"
 prep_fiji_image(sample_info, out_dir = spe_input_dir)
-#> [1] "/tmp/Rtmp3x8KeP/Br2719/tissue_lowres_image.png"
-#> [2] "/tmp/Rtmp3x8KeP/Br2719/scalefactors_json.json"
+#> [1] "/tmp/RtmpdwbM4P/Br2719/tissue_lowres_image.png"
+#> [2] "/tmp/RtmpdwbM4P/Br2719/scalefactors_json.json"
 ```
 
 ### Constructing the Object
@@ -237,6 +250,7 @@ bench. More info about performing geometric transformations is
 [here](#geometric-transformations).
 
 ``` r
+
 ## Download the Gencode v32 GTF file which is the closest one to the one
 ## that was used with SpaceRanger. Note that SpaceRanger GTFs are available at
 ## https://cf.10xgenomics.com/supp/cell-exp/refdata-gex-GRCh38-2024-A.tar.gz
@@ -260,6 +274,7 @@ explanation on the implication of this choice, see the [Defining Array
 Coordinates](#defining-array-coordinates) section.
 
 ``` r
+
 ## Now we can build the SpatialExperiment object. We'll later explore error
 ## metrics related to computing new array coordinates, and thus specify
 ## 'calc_error_metrics = TRUE'.
@@ -269,11 +284,14 @@ spe <- build_SpatialExperiment(
     calc_error_metrics = TRUE, algorithm = "Euclidean"
 )
 #> Building SpatialExperiment using capture area as sample ID
-#> 2026-03-31 17:20:38.584096 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
-#> 2026-03-31 17:20:44.929116 read10xVisiumAnalysis: reading analysis output from SpaceRanger
-#> 2026-03-31 17:20:45.322681 add10xVisiumAnalysis: adding analysis output from SpaceRanger
-#> 2026-03-31 17:20:45.626711 rtracklayer::import: reading the reference GTF file
-#> 2026-03-31 17:21:13.931135 adding gene information to the SPE object
+#> 2026-04-01 15:06:04.777435 SpatialExperiment::read10xVisium: reading basic data from SpaceRanger
+#> Warning in SpatialExperiment::read10xVisium(samples = samples, sample_id = sample_id, : 'SpatialExperiment::read10xVisium' is deprecated.
+#> Use 'VisiumIO::TENxVisium(List)' instead.
+#> See help("Deprecated")
+#> 2026-04-01 15:06:08.613789 read10xVisiumAnalysis: reading analysis output from SpaceRanger
+#> 2026-04-01 15:06:09.017669 add10xVisiumAnalysis: adding analysis output from SpaceRanger
+#> 2026-04-01 15:06:09.301807 rtracklayer::import: reading the reference GTF file
+#> 2026-04-01 15:06:37.312228 adding gene information to the SPE object
 #> Warning: Gene IDs did not match. This typically happens when you are not using
 #> the same GTF file as the one that was used by SpaceRanger. For example, one
 #> file uses GENCODE IDs and the other one ENSEMBL IDs. read10xVisiumWrapper()
@@ -281,7 +299,7 @@ spe <- build_SpatialExperiment(
 #> Warning: Dropping 2226 out of 38606 genes for which we don't have information
 #> on the reference GTF file. This typically happens when you are not using the
 #> same GTF file as the one that was used by SpaceRanger.
-#> 2026-03-31 17:21:14.124666 adding information used by spatialLIBD
+#> 2026-04-01 15:06:37.494694 adding information used by spatialLIBD
 #> Overwriting imgData(spe) with merged images (one per group)
 #> Adding array coordinates with error metrics and adding overlap info
 
@@ -317,6 +335,7 @@ clustering, the `overlap_key` information can be useful to check how
 frequently overlapping spots are assigned the same cluster.
 
 ``` r
+
 ## Examine spots to exclude for plotting
 table(spe$exclude_overlapping)
 #> 
@@ -336,6 +355,7 @@ genes, check [our previous work on this
 subject](https://doi.org/10.1038/s41593-020-00787-0).
 
 ``` r
+
 ## Show combined raw expression of white-matter marker genes
 wm_genes <- rownames(spe)[
     match(c("MBP", "GFAP", "PLP1", "AQP4"), rowData(spe)$gene_name)
@@ -375,6 +395,7 @@ in-tissue spots only and use transparency to emphasize the overlap among
 capture areas:
 
 ``` r
+
 ## Plot positions of default array coordinates, before overwriting with more
 ## meaningful values. Use custom colors for each capture area
 ca_colors <- c("#A33B20", "#e7bb41", "#3d3b8e")
@@ -420,6 +441,7 @@ would expect a mapping, but none exists), which are generally
 undesirable downstream (e.g. for clustering).
 
 ``` r
+
 ## Plot positions of redefined array coordinates
 colData(spe) |>
     as_tibble() |>
@@ -472,6 +494,7 @@ The first metric is the Euclidean distance, in multiples of 100 microns
 original position and the position of its assigned array coordinates.
 
 ``` r
+
 #   Explore the distribution of Euclidean error
 colData(spe) |>
     as_tibble() |>
@@ -486,6 +509,7 @@ original neighbors (from a same capture area) that are retained after
 mapping to the new array coordinates. Thus, a value of 1 is ideal.
 
 ``` r
+
 #   Explore the distribution of Euclidean error
 colData(spe) |>
     as_tibble() |>
@@ -520,9 +544,10 @@ transition of cluster assignments across capture-area boundaries. First,
 let’s examine `k = 2`:
 
 ``` r
+
 ## Grab SpatialExperiment with normalized counts
 spe_norm <- fetch_data(type = "visiumStitched_brain_spe")
-#> 2026-03-31 17:22:31.321546 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:07:52.041009 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 assayNames(spe_norm)
 #> [1] "counts"    "logcounts"
 
@@ -550,6 +575,7 @@ In the example data, `k = 4` and `k = 8` have also been computed. Let’s
 visualize the `k = 4` results.
 
 ``` r
+
 ## PRECAST results already available in this example data
 vars <- colnames(colData(spe_norm))
 vars[grep("precast", vars)]
@@ -594,18 +620,18 @@ hope you find it useful for your research!
 ## Reproducibility
 
 The
-*[visiumStitched](https://bioconductor.org/packages/3.20/visiumStitched)*
+*[visiumStitched](https://bioconductor.org/packages/3.23/visiumStitched)*
 package (Eagles and Collado-Torres, 2026) was made possible thanks to:
 
-- R (R Core Team, 2024)
-- *[BiocFileCache](https://bioconductor.org/packages/3.20/BiocFileCache)*
-  (Shepherd and Morgan, 2024)
-- *[BiocStyle](https://bioconductor.org/packages/3.20/BiocStyle)* (Oleś,
-  2024)
+- R (R Core Team, 2026)
+- *[BiocFileCache](https://bioconductor.org/packages/3.23/BiocFileCache)*
+  (Shepherd and Morgan, 2025)
+- *[BiocStyle](https://bioconductor.org/packages/3.23/BiocStyle)* (Oleś,
+  2025)
 - *[clue](https://CRAN.R-project.org/package=clue)* (Hornik, 2026)
 - *[dplyr](https://CRAN.R-project.org/package=dplyr)* (Wickham,
   François, Henry, Müller, and Vaughan, 2026)
-- *[DropletUtils](https://bioconductor.org/packages/3.20/DropletUtils)*
+- *[DropletUtils](https://bioconductor.org/packages/3.23/DropletUtils)*
   (Lun, Riesenfeld, Andrews, Dao, Gomes, participants in the 1st Human
   Cell Atlas Jamboree, and Marioni, 2019)
 - *[ggplot2](https://CRAN.R-project.org/package=ggplot2)* (Wickham,
@@ -622,34 +648,35 @@ package (Eagles and Collado-Torres, 2026) was made possible thanks to:
 - *[rmarkdown](https://CRAN.R-project.org/package=rmarkdown)* (Allaire,
   Xie, Dervieux, McPherson, Luraschi, Ushey, Atkins, Wickham, Cheng,
   Chang, and Iannone, 2026)
-- *[S4Vectors](https://bioconductor.org/packages/3.20/S4Vectors)*
-  (Pagès, Lawrence, and Aboyoun, 2024)
+- *[S4Vectors](https://bioconductor.org/packages/3.23/S4Vectors)*
+  (Pagès, Lawrence, and Aboyoun, 2025)
 - *[sessioninfo](https://CRAN.R-project.org/package=sessioninfo)*
   (Wickham, Chang, Flight, Müller, and Hester, 2025)
 - *[Seurat](https://CRAN.R-project.org/package=Seurat)* (Hao, Stuart,
   Kowalski, Choudhary, Hoffman, Hartman, Srivastava, Molla, Madad,
   Fernandez-Granda, and Satija, 2023)
-- *[SpatialExperiment](https://bioconductor.org/packages/3.20/SpatialExperiment)*
+- *[SpatialExperiment](https://bioconductor.org/packages/3.23/SpatialExperiment)*
   (Righelli, Weber, Crowell, Pardo, Collado-Torres, Ghazanfar, Lun,
   Hicks, and Risso, 2022)
-- *[spatialLIBD](https://bioconductor.org/packages/3.20/spatialLIBD)*
+- *[spatialLIBD](https://bioconductor.org/packages/3.23/spatialLIBD)*
   (Pardo, Spangler, Weber, Hicks, Jaffe, Martinowich, Maynard, and
   Collado-Torres, 2022)
 - *[stringr](https://CRAN.R-project.org/package=stringr)* (Wickham,
   2025)
-- *[SummarizedExperiment](https://bioconductor.org/packages/3.20/SummarizedExperiment)*
-  (Morgan, Obenchain, Hester, and Pagès, 2024)
+- *[SummarizedExperiment](https://bioconductor.org/packages/3.23/SummarizedExperiment)*
+  (Morgan, Obenchain, Hester, and Pagès, 2026)
 - *[testthat](https://CRAN.R-project.org/package=testthat)* (Wickham,
   2011)
 - *[xml2](https://CRAN.R-project.org/package=xml2)* (Wickham, Hester,
   and Ooms, 2026)
 
 This package was developed using
-*[biocthis](https://bioconductor.org/packages/3.20/biocthis)*.
+*[biocthis](https://bioconductor.org/packages/3.23/biocthis)*.
 
 Code for creating the vignette
 
 ``` r
+
 ## Create the vignette
 library("rmarkdown")
 system.time(render("visiumStitched.Rmd", "BiocStyle::html_document"))
@@ -663,206 +690,206 @@ knit("visiumStitched.Rmd", tangle = TRUE)
 
     #> ─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────
     #>  setting  value
-    #>  version  R version 4.4.2 (2024-10-31)
-    #>  os       Ubuntu 24.04.1 LTS
+    #>  version  R Under development (unstable) (2026-03-28 r89738)
+    #>  os       Ubuntu 24.04.4 LTS
     #>  system   x86_64, linux-gnu
     #>  ui       X11
     #>  language en
     #>  collate  en_US.UTF-8
     #>  ctype    en_US.UTF-8
     #>  tz       UTC
-    #>  date     2026-03-31
-    #>  pandoc   3.6 @ /usr/bin/ (via rmarkdown)
-    #>  quarto   1.5.57 @ /usr/local/bin/quarto
+    #>  date     2026-04-01
+    #>  pandoc   3.9.0.2 @ /usr/bin/ (via rmarkdown)
+    #>  quarto   1.8.25 @ /usr/local/bin/quarto
     #> 
     #> ─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────
-    #>  package              * version   date (UTC) lib source
-    #>  abind                  1.4-8     2024-09-12 [1] RSPM (R 4.4.0)
-    #>  AnnotationDbi          1.68.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  AnnotationHub          3.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  attempt                0.3.1     2020-05-03 [1] RSPM (R 4.4.0)
-    #>  backports              1.5.0     2024-05-23 [1] RSPM (R 4.4.0)
-    #>  beachmat               2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  beeswarm               0.4.0     2021-06-01 [1] RSPM (R 4.4.0)
-    #>  benchmarkme            1.0.8     2022-06-12 [1] RSPM (R 4.4.0)
-    #>  benchmarkmeData        2.0.0     2026-01-19 [1] RSPM (R 4.4.0)
-    #>  bibtex                 0.5.2     2026-02-03 [1] RSPM (R 4.4.0)
-    #>  Biobase              * 2.66.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocBaseUtils          1.8.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocFileCache        * 2.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocGenerics         * 0.52.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocIO                 1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocManager            1.30.27   2025-11-14 [1] RSPM (R 4.4.0)
-    #>  BiocNeighbors          2.0.1     2024-11-28 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocParallel           1.40.2    2026-03-31 [1] Bioconductor
-    #>  BiocSingular           1.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocStyle            * 2.34.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  BiocVersion            3.20.0    2024-10-21 [2] Bioconductor 3.20 (R 4.4.2)
-    #>  Biostrings             2.74.1    2024-12-16 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  bit                    4.6.0     2025-03-06 [1] RSPM (R 4.4.0)
-    #>  bit64                  4.6.0-1   2025-01-16 [1] RSPM (R 4.4.0)
-    #>  bitops                 1.0-9     2024-10-03 [1] RSPM (R 4.4.0)
-    #>  blob                   1.3.0     2026-01-14 [1] RSPM (R 4.4.0)
-    #>  bmp                    0.3.1     2025-09-22 [1] RSPM (R 4.4.0)
-    #>  bookdown               0.46      2025-12-05 [1] RSPM (R 4.4.0)
-    #>  bslib                  0.10.0    2026-01-26 [2] RSPM (R 4.4.0)
-    #>  cachem                 1.1.0     2024-05-16 [2] RSPM (R 4.4.0)
-    #>  circlize               0.4.17    2025-12-08 [1] RSPM (R 4.4.0)
-    #>  cli                    3.6.5     2025-04-23 [2] RSPM (R 4.4.0)
-    #>  clue                   0.3-68    2026-03-26 [1] RSPM (R 4.4.0)
-    #>  cluster                2.1.8.2   2026-02-05 [3] RSPM (R 4.4.0)
-    #>  codetools              0.2-20    2024-03-31 [3] CRAN (R 4.4.2)
-    #>  colorspace             2.1-2     2025-09-22 [1] RSPM (R 4.4.0)
-    #>  ComplexHeatmap         2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  config                 0.3.2     2023-08-30 [1] RSPM (R 4.4.0)
-    #>  cowplot                1.2.0     2025-07-07 [1] RSPM (R 4.4.0)
-    #>  crayon                 1.5.3     2024-06-20 [2] RSPM (R 4.4.0)
-    #>  curl                   7.0.0     2025-08-19 [2] RSPM (R 4.4.0)
-    #>  data.table             1.18.2.1  2026-01-27 [1] RSPM (R 4.4.0)
-    #>  DBI                    1.3.0     2026-02-25 [1] RSPM (R 4.4.0)
-    #>  dbplyr               * 2.5.2     2026-02-13 [1] RSPM (R 4.4.0)
-    #>  DelayedArray           0.32.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  DelayedMatrixStats     1.28.1    2025-01-09 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  desc                   1.4.3     2023-12-10 [2] RSPM (R 4.4.0)
-    #>  digest                 0.6.39    2025-11-19 [2] RSPM (R 4.4.0)
-    #>  doParallel             1.0.17    2022-02-07 [1] RSPM (R 4.4.0)
-    #>  dplyr                * 1.2.0     2026-02-03 [1] RSPM (R 4.4.0)
-    #>  dqrng                  0.4.1     2024-05-28 [1] RSPM (R 4.4.0)
-    #>  DropletUtils           1.26.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  DT                     0.34.0    2025-09-02 [1] RSPM (R 4.4.0)
-    #>  edgeR                  4.4.2     2025-01-27 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  evaluate               1.0.5     2025-08-27 [2] RSPM (R 4.4.0)
-    #>  ExperimentHub          2.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  farver                 2.1.2     2024-05-13 [1] RSPM (R 4.4.0)
-    #>  fastmap                1.2.0     2024-05-15 [2] RSPM (R 4.4.0)
-    #>  filelock               1.0.3     2023-12-11 [1] RSPM (R 4.4.0)
-    #>  foreach                1.5.2     2022-02-02 [1] RSPM (R 4.4.0)
-    #>  fs                     2.0.1     2026-03-24 [2] RSPM (R 4.4.0)
-    #>  generics               0.1.4     2025-05-09 [1] RSPM (R 4.4.0)
-    #>  GenomeInfoDb         * 1.42.3    2025-01-27 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  GenomeInfoDbData       1.2.13    2025-03-08 [1] Bioconductor
-    #>  GenomicAlignments      1.42.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  GenomicRanges        * 1.58.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  GetoptLong             1.1.0     2025-11-28 [1] RSPM (R 4.4.0)
-    #>  ggbeeswarm             0.7.3     2025-11-29 [1] RSPM (R 4.4.0)
-    #>  ggplot2              * 4.0.2     2026-02-03 [1] RSPM (R 4.4.0)
-    #>  ggrepel                0.9.8     2026-03-17 [1] RSPM (R 4.4.0)
-    #>  GlobalOptions          0.1.3     2025-11-28 [1] RSPM (R 4.4.0)
-    #>  glue                   1.8.0     2024-09-30 [2] RSPM (R 4.4.0)
-    #>  golem                  0.5.1     2024-08-27 [1] RSPM (R 4.4.0)
-    #>  gridExtra              2.3       2017-09-09 [1] RSPM (R 4.4.0)
-    #>  gtable                 0.3.6     2024-10-25 [1] RSPM (R 4.4.0)
-    #>  HDF5Array              1.34.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  hms                    1.1.4     2025-10-17 [1] RSPM (R 4.4.0)
-    #>  htmltools              0.5.9     2025-12-04 [2] RSPM (R 4.4.0)
-    #>  htmlwidgets            1.6.4     2023-12-06 [2] RSPM (R 4.4.0)
-    #>  httpuv                 1.6.17    2026-03-18 [2] RSPM (R 4.4.0)
-    #>  httr                   1.4.8     2026-02-13 [1] RSPM (R 4.4.0)
-    #>  igraph                 2.2.2     2026-02-12 [1] RSPM (R 4.4.0)
-    #>  imager                 1.0.8     2025-12-23 [1] RSPM (R 4.4.0)
-    #>  IRanges              * 2.40.1    2024-12-05 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  irlba                  2.3.7     2026-01-30 [1] RSPM (R 4.4.0)
-    #>  iterators              1.0.14    2022-02-05 [1] RSPM (R 4.4.0)
-    #>  jpeg                   0.1-11    2025-03-21 [1] RSPM (R 4.4.0)
-    #>  jquerylib              0.1.4     2021-04-26 [2] RSPM (R 4.4.0)
-    #>  jsonlite               2.0.0     2025-03-27 [2] RSPM (R 4.4.0)
-    #>  KEGGREST               1.46.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  knitr                  1.51      2025-12-20 [2] RSPM (R 4.4.0)
-    #>  labeling               0.4.3     2023-08-29 [1] RSPM (R 4.4.0)
-    #>  later                  1.4.8     2026-03-05 [2] RSPM (R 4.4.0)
-    #>  lattice                0.22-9    2026-02-09 [3] RSPM (R 4.4.0)
-    #>  lazyeval               0.2.2     2019-03-15 [1] RSPM (R 4.4.0)
-    #>  lifecycle              1.0.5     2026-01-08 [2] RSPM (R 4.4.0)
-    #>  limma                  3.62.2    2025-01-09 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  locfit                 1.5-9.12  2025-03-05 [1] RSPM (R 4.4.0)
-    #>  lubridate              1.9.5     2026-02-04 [1] RSPM (R 4.4.0)
-    #>  magick                 2.9.1     2026-02-28 [1] RSPM (R 4.4.0)
-    #>  magrittr               2.0.4     2025-09-12 [2] RSPM (R 4.4.0)
-    #>  Matrix                 1.7-5     2026-03-21 [3] RSPM (R 4.4.0)
-    #>  MatrixGenerics       * 1.18.1    2025-01-09 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  matrixStats          * 1.5.0     2025-01-07 [1] RSPM (R 4.4.0)
-    #>  memoise                2.0.1     2021-11-26 [2] RSPM (R 4.4.0)
-    #>  mime                   0.13      2025-03-17 [2] RSPM (R 4.4.0)
-    #>  otel                   0.2.0     2025-08-29 [2] RSPM (R 4.4.0)
-    #>  paletteer              1.7.0     2026-01-08 [1] RSPM (R 4.4.0)
-    #>  pillar                 1.11.1    2025-09-17 [2] RSPM (R 4.4.0)
-    #>  pkgcond                0.1.1     2021-04-28 [1] RSPM (R 4.4.0)
-    #>  pkgconfig              2.0.3     2019-09-22 [2] RSPM (R 4.4.0)
-    #>  pkgdown                2.2.0     2025-11-06 [2] RSPM (R 4.4.0)
-    #>  plotly                 4.12.0    2026-01-24 [1] RSPM (R 4.4.0)
-    #>  plyr                   1.8.9     2023-10-02 [1] RSPM (R 4.4.0)
-    #>  png                    0.1-9     2026-03-15 [1] RSPM (R 4.4.0)
-    #>  promises               1.5.0     2025-11-01 [2] RSPM (R 4.4.0)
-    #>  purrr                  1.2.1     2026-01-09 [2] RSPM (R 4.4.0)
-    #>  R.methodsS3            1.8.2     2022-06-13 [1] RSPM (R 4.4.0)
-    #>  R.oo                   1.27.1    2025-05-02 [1] RSPM (R 4.4.0)
-    #>  R.utils                2.13.0    2025-02-24 [1] RSPM (R 4.4.0)
-    #>  R6                     2.6.1     2025-02-15 [2] RSPM (R 4.4.0)
-    #>  ragg                   1.5.2     2026-03-23 [2] RSPM (R 4.4.0)
-    #>  rappdirs               0.3.4     2026-01-17 [2] RSPM (R 4.4.0)
-    #>  RColorBrewer           1.1-3     2022-04-03 [1] RSPM (R 4.4.0)
-    #>  Rcpp                   1.1.1     2026-01-10 [2] RSPM (R 4.4.0)
-    #>  RCurl                  1.98-1.18 2026-03-21 [1] RSPM (R 4.4.0)
-    #>  readbitmap             0.1.5     2018-06-27 [1] RSPM (R 4.4.0)
-    #>  readr                  2.2.0     2026-02-19 [1] RSPM (R 4.4.0)
-    #>  RefManageR           * 1.4.0     2022-09-30 [1] RSPM (R 4.4.0)
-    #>  rematch2               2.1.2     2020-05-01 [1] RSPM (R 4.4.0)
-    #>  restfulr               0.0.16    2025-06-27 [1] RSPM (R 4.4.2)
-    #>  rhdf5                  2.50.2    2025-01-09 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  rhdf5filters           1.18.1    2025-03-06 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  Rhdf5lib               1.28.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  rjson                  0.2.23    2024-09-16 [1] RSPM (R 4.4.0)
-    #>  rlang                  1.1.7     2026-01-09 [2] RSPM (R 4.4.0)
-    #>  rmarkdown              2.31      2026-03-26 [2] RSPM (R 4.4.0)
-    #>  Rsamtools              2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  RSQLite                2.4.6     2026-02-06 [1] RSPM (R 4.4.0)
-    #>  rsvd                   1.0.5     2021-04-16 [1] RSPM (R 4.4.0)
-    #>  rtracklayer            1.66.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  S4Arrays               1.6.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  S4Vectors            * 0.44.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  S7                     0.2.1     2025-11-14 [1] RSPM (R 4.4.0)
-    #>  sass                   0.4.10    2025-04-11 [2] RSPM (R 4.4.0)
-    #>  ScaledMatrix           1.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  scales                 1.4.0     2025-04-24 [1] RSPM (R 4.4.0)
-    #>  scater                 1.34.1    2025-03-03 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  scuttle                1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  sessioninfo          * 1.2.3     2025-02-05 [2] RSPM (R 4.4.0)
-    #>  shape                  1.4.6.1   2024-02-23 [1] RSPM (R 4.4.0)
-    #>  shiny                  1.13.0    2026-02-20 [2] RSPM (R 4.4.0)
-    #>  shinyWidgets           0.9.1     2026-03-09 [1] RSPM (R 4.4.0)
-    #>  SingleCellExperiment * 1.28.1    2024-11-10 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  SparseArray            1.6.2     2025-02-20 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  sparseMatrixStats      1.18.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  SpatialExperiment    * 1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  spatialLIBD          * 1.23.2    2026-03-31 [1] Github (LieberInstitute/spatialLIBD@e4921b4)
-    #>  statmod                1.5.1     2025-10-09 [1] RSPM (R 4.4.0)
-    #>  stringi                1.8.7     2025-03-27 [2] RSPM (R 4.4.0)
-    #>  stringr                1.6.0     2025-11-04 [2] RSPM (R 4.4.0)
-    #>  SummarizedExperiment * 1.36.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  systemfonts            1.3.2     2026-03-05 [2] RSPM (R 4.4.0)
-    #>  textshaping            1.0.5     2026-03-06 [2] RSPM (R 4.4.0)
-    #>  tibble                 3.3.1     2026-01-11 [2] RSPM (R 4.4.0)
-    #>  tidyr                  1.3.2     2025-12-19 [1] RSPM (R 4.4.0)
-    #>  tidyselect             1.2.1     2024-03-11 [1] RSPM (R 4.4.0)
-    #>  tiff                   0.1-12    2023-11-28 [1] RSPM (R 4.4.0)
-    #>  timechange             0.4.0     2026-01-29 [1] RSPM (R 4.4.0)
-    #>  tzdb                   0.5.0     2025-03-15 [1] RSPM (R 4.4.0)
-    #>  UCSC.utils             1.2.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  utf8                   1.2.6     2025-06-08 [2] RSPM (R 4.4.0)
-    #>  vctrs                  0.7.2     2026-03-21 [2] RSPM (R 4.4.0)
-    #>  vipor                  0.4.7     2023-12-18 [1] RSPM (R 4.4.0)
-    #>  viridis                0.6.5     2024-01-29 [1] RSPM (R 4.4.0)
-    #>  viridisLite            0.4.3     2026-02-04 [1] RSPM (R 4.4.0)
-    #>  visiumStitched       * 1.3.0     2026-03-31 [1] Bioconductor
-    #>  vroom                  1.7.0     2026-01-27 [1] RSPM (R 4.4.0)
-    #>  withr                  3.0.2     2024-10-28 [2] RSPM (R 4.4.0)
-    #>  xfun                   0.57      2026-03-20 [2] RSPM (R 4.4.0)
-    #>  XML                    3.99-0.23 2026-03-20 [1] RSPM (R 4.4.0)
-    #>  xml2                   1.5.2     2026-01-17 [2] RSPM (R 4.4.0)
-    #>  xtable                 1.8-8     2026-02-22 [2] RSPM (R 4.4.0)
-    #>  XVector                0.46.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
-    #>  yaml                   2.3.12    2025-12-10 [2] RSPM (R 4.4.0)
-    #>  zlibbioc               1.52.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+    #>  package              * version    date (UTC) lib source
+    #>  abind                  1.4-8      2024-09-12 [1] CRAN (R 4.6.0)
+    #>  AnnotationDbi          1.73.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  AnnotationHub          4.1.0      2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  attempt                0.3.1      2020-05-03 [1] CRAN (R 4.6.0)
+    #>  backports              1.5.0      2024-05-23 [1] CRAN (R 4.6.0)
+    #>  beachmat               2.27.3     2026-02-27 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  beeswarm               0.4.0      2021-06-01 [1] CRAN (R 4.6.0)
+    #>  benchmarkme            1.0.8      2022-06-12 [1] CRAN (R 4.6.0)
+    #>  benchmarkmeData        2.0.0      2026-01-19 [1] CRAN (R 4.6.0)
+    #>  bibtex                 0.5.2      2026-02-03 [1] CRAN (R 4.6.0)
+    #>  Biobase              * 2.71.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocBaseUtils          1.13.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocFileCache        * 3.1.0      2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocGenerics         * 0.57.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocIO                 1.21.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocManager            1.30.27    2025-11-14 [2] CRAN (R 4.7.0)
+    #>  BiocNeighbors          2.5.4      2026-02-12 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  BiocParallel           1.45.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocSingular           1.27.1     2025-11-17 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocStyle            * 2.39.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  BiocVersion            3.23.1     2025-10-30 [2] Bioconductor 3.23 (R 4.7.0)
+    #>  Biostrings             2.79.5     2026-03-06 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  bit                    4.6.0      2025-03-06 [1] CRAN (R 4.6.0)
+    #>  bit64                  4.6.0-1    2025-01-16 [1] CRAN (R 4.6.0)
+    #>  bitops                 1.0-9      2024-10-03 [1] CRAN (R 4.6.0)
+    #>  blob                   1.3.0      2026-01-14 [1] CRAN (R 4.6.0)
+    #>  bmp                    0.3.1      2025-09-22 [1] CRAN (R 4.6.0)
+    #>  bookdown               0.46       2025-12-05 [1] CRAN (R 4.6.0)
+    #>  bslib                  0.10.0     2026-01-26 [2] CRAN (R 4.7.0)
+    #>  cachem                 1.1.0      2024-05-16 [2] CRAN (R 4.7.0)
+    #>  cigarillo              1.1.0      2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  circlize               0.4.17     2025-12-08 [1] CRAN (R 4.6.0)
+    #>  cli                    3.6.5      2025-04-23 [2] CRAN (R 4.7.0)
+    #>  clue                   0.3-68     2026-03-26 [1] CRAN (R 4.7.0)
+    #>  cluster                2.1.8.2    2026-02-05 [3] CRAN (R 4.7.0)
+    #>  codetools              0.2-20     2024-03-31 [3] CRAN (R 4.7.0)
+    #>  colorspace             2.1-2      2025-09-22 [1] CRAN (R 4.6.0)
+    #>  ComplexHeatmap         2.27.1     2026-01-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  config                 0.3.2      2023-08-30 [1] CRAN (R 4.6.0)
+    #>  cowplot                1.2.0      2025-07-07 [1] CRAN (R 4.6.0)
+    #>  crayon                 1.5.3      2024-06-20 [2] CRAN (R 4.7.0)
+    #>  curl                   7.0.0      2025-08-19 [2] CRAN (R 4.7.0)
+    #>  data.table             1.18.2.1   2026-01-27 [1] CRAN (R 4.6.0)
+    #>  DBI                    1.3.0      2026-02-25 [1] CRAN (R 4.7.0)
+    #>  dbplyr               * 2.5.2      2026-02-13 [1] CRAN (R 4.7.0)
+    #>  DelayedArray           0.37.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  DelayedMatrixStats     1.33.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  desc                   1.4.3      2023-12-10 [2] CRAN (R 4.7.0)
+    #>  digest                 0.6.39     2025-11-19 [2] CRAN (R 4.7.0)
+    #>  doParallel             1.0.17     2022-02-07 [1] CRAN (R 4.6.0)
+    #>  dplyr                * 1.2.0      2026-02-03 [1] CRAN (R 4.6.0)
+    #>  dqrng                  0.4.1      2024-05-28 [1] CRAN (R 4.6.0)
+    #>  DropletUtils           1.31.0     2025-11-03 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  DT                     0.34.0     2025-09-02 [1] CRAN (R 4.6.0)
+    #>  edgeR                  4.9.4      2026-03-02 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  evaluate               1.0.5      2025-08-27 [2] CRAN (R 4.7.0)
+    #>  ExperimentHub          3.1.0      2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  farver                 2.1.2      2024-05-13 [1] CRAN (R 4.6.0)
+    #>  fastmap                1.2.0      2024-05-15 [2] CRAN (R 4.7.0)
+    #>  filelock               1.0.3      2023-12-11 [1] CRAN (R 4.6.0)
+    #>  foreach                1.5.2      2022-02-02 [1] CRAN (R 4.6.0)
+    #>  fs                     2.0.1      2026-03-24 [2] CRAN (R 4.7.0)
+    #>  generics             * 0.1.4      2025-05-09 [1] CRAN (R 4.6.0)
+    #>  GenomicAlignments      1.47.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  GenomicRanges        * 1.63.1     2025-12-08 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  GetoptLong             1.1.0      2025-11-28 [1] CRAN (R 4.6.0)
+    #>  ggbeeswarm             0.7.3      2025-11-29 [1] CRAN (R 4.6.0)
+    #>  ggplot2              * 4.0.2      2026-02-03 [1] CRAN (R 4.6.0)
+    #>  ggrepel                0.9.8      2026-03-17 [1] CRAN (R 4.7.0)
+    #>  GlobalOptions          0.1.3      2025-11-28 [1] CRAN (R 4.6.0)
+    #>  glue                   1.8.0      2024-09-30 [2] CRAN (R 4.7.0)
+    #>  golem                  0.5.1      2024-08-27 [1] CRAN (R 4.6.0)
+    #>  gridExtra              2.3        2017-09-09 [1] CRAN (R 4.6.0)
+    #>  gtable                 0.3.6      2024-10-25 [1] CRAN (R 4.6.0)
+    #>  h5mread                1.3.2      2026-03-08 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  HDF5Array              1.39.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  hms                    1.1.4      2025-10-17 [1] CRAN (R 4.6.0)
+    #>  htmltools              0.5.9      2025-12-04 [2] CRAN (R 4.7.0)
+    #>  htmlwidgets            1.6.4      2023-12-06 [2] CRAN (R 4.7.0)
+    #>  httpuv                 1.6.17     2026-03-18 [2] CRAN (R 4.7.0)
+    #>  httr                   1.4.8      2026-02-13 [1] CRAN (R 4.7.0)
+    #>  httr2                  1.2.2      2025-12-08 [2] CRAN (R 4.7.0)
+    #>  igraph                 2.2.2      2026-02-12 [1] CRAN (R 4.7.0)
+    #>  imager                 1.0.8      2025-12-23 [1] CRAN (R 4.6.0)
+    #>  IRanges              * 2.45.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  irlba                  2.3.7      2026-01-30 [1] CRAN (R 4.6.0)
+    #>  iterators              1.0.14     2022-02-05 [1] CRAN (R 4.6.0)
+    #>  jpeg                   0.1-11     2025-03-21 [1] CRAN (R 4.6.0)
+    #>  jquerylib              0.1.4      2021-04-26 [2] CRAN (R 4.7.0)
+    #>  jsonlite               2.0.0      2025-03-27 [2] CRAN (R 4.7.0)
+    #>  KEGGREST               1.51.1     2025-11-17 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  knitr                  1.51       2025-12-20 [2] CRAN (R 4.7.0)
+    #>  labeling               0.4.3      2023-08-29 [1] CRAN (R 4.6.0)
+    #>  later                  1.4.8      2026-03-05 [2] CRAN (R 4.7.0)
+    #>  lattice                0.22-9     2026-02-09 [3] CRAN (R 4.7.0)
+    #>  lazyeval               0.2.2      2019-03-15 [1] CRAN (R 4.6.0)
+    #>  lifecycle              1.0.5      2026-01-08 [2] CRAN (R 4.7.0)
+    #>  limma                  3.67.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  locfit                 1.5-9.12   2025-03-05 [1] CRAN (R 4.6.0)
+    #>  lubridate              1.9.5      2026-02-04 [1] CRAN (R 4.6.0)
+    #>  magick                 2.9.1      2026-02-28 [1] CRAN (R 4.7.0)
+    #>  magrittr               2.0.4      2025-09-12 [2] CRAN (R 4.7.0)
+    #>  Matrix                 1.7-5      2026-03-21 [3] CRAN (R 4.7.0)
+    #>  MatrixGenerics       * 1.23.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  matrixStats          * 1.5.0      2025-01-07 [1] CRAN (R 4.6.0)
+    #>  memoise                2.0.1      2021-11-26 [2] CRAN (R 4.7.0)
+    #>  mime                   0.13       2025-03-17 [2] CRAN (R 4.7.0)
+    #>  otel                   0.2.0      2025-08-29 [2] CRAN (R 4.7.0)
+    #>  paletteer              1.7.0      2026-01-08 [1] CRAN (R 4.6.0)
+    #>  pillar                 1.11.1     2025-09-17 [2] CRAN (R 4.7.0)
+    #>  pkgcond                0.1.1      2021-04-28 [1] CRAN (R 4.6.0)
+    #>  pkgconfig              2.0.3      2019-09-22 [2] CRAN (R 4.7.0)
+    #>  pkgdown                2.2.0.9000 2026-04-01 [1] Github (r-lib/pkgdown@a6abe43)
+    #>  plotly                 4.12.0     2026-01-24 [1] CRAN (R 4.6.0)
+    #>  plyr                   1.8.9      2023-10-02 [1] CRAN (R 4.6.0)
+    #>  png                    0.1-9      2026-03-15 [1] CRAN (R 4.7.0)
+    #>  promises               1.5.0      2025-11-01 [2] CRAN (R 4.7.0)
+    #>  purrr                  1.2.1      2026-01-09 [2] CRAN (R 4.7.0)
+    #>  R.methodsS3            1.8.2      2022-06-13 [1] CRAN (R 4.6.0)
+    #>  R.oo                   1.27.1     2025-05-02 [1] CRAN (R 4.6.0)
+    #>  R.utils                2.13.0     2025-02-24 [1] CRAN (R 4.6.0)
+    #>  R6                     2.6.1      2025-02-15 [2] CRAN (R 4.7.0)
+    #>  ragg                   1.5.2      2026-03-23 [2] CRAN (R 4.7.0)
+    #>  rappdirs               0.3.4      2026-01-17 [2] CRAN (R 4.7.0)
+    #>  RColorBrewer           1.1-3      2022-04-03 [1] CRAN (R 4.6.0)
+    #>  Rcpp                   1.1.1      2026-01-10 [2] CRAN (R 4.7.0)
+    #>  RCurl                  1.98-1.18  2026-03-21 [1] CRAN (R 4.7.0)
+    #>  readbitmap             0.1.5      2018-06-27 [1] CRAN (R 4.6.0)
+    #>  readr                  2.2.0      2026-02-19 [1] CRAN (R 4.7.0)
+    #>  RefManageR           * 1.4.0      2022-09-30 [1] CRAN (R 4.6.0)
+    #>  rematch2               2.1.2      2020-05-01 [1] CRAN (R 4.6.0)
+    #>  restfulr               0.0.16     2025-06-27 [1] CRAN (R 4.6.0)
+    #>  rhdf5                  2.55.16    2026-03-12 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  rhdf5filters           1.23.3     2025-12-07 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  Rhdf5lib               1.33.6     2026-03-16 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  rjson                  0.2.23     2024-09-16 [1] CRAN (R 4.6.0)
+    #>  rlang                  1.1.7      2026-01-09 [2] CRAN (R 4.7.0)
+    #>  rmarkdown              2.31       2026-03-26 [2] CRAN (R 4.7.0)
+    #>  Rsamtools              2.27.1     2026-03-08 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  RSQLite                2.4.6      2026-02-06 [1] CRAN (R 4.6.0)
+    #>  rsvd                   1.0.5      2021-04-16 [1] CRAN (R 4.6.0)
+    #>  rtracklayer            1.71.3     2025-12-14 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  S4Arrays               1.11.1     2025-11-25 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  S4Vectors            * 0.49.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  S7                     0.2.1      2025-11-14 [1] CRAN (R 4.6.0)
+    #>  sass                   0.4.10     2025-04-11 [2] CRAN (R 4.7.0)
+    #>  ScaledMatrix           1.19.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  scales                 1.4.0      2025-04-24 [1] CRAN (R 4.6.0)
+    #>  scater                 1.39.3     2026-03-20 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  scuttle                1.21.0     2025-11-03 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  Seqinfo              * 1.1.0      2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  sessioninfo          * 1.2.3      2025-02-05 [2] CRAN (R 4.7.0)
+    #>  shape                  1.4.6.1    2024-02-23 [1] CRAN (R 4.6.0)
+    #>  shiny                  1.13.0     2026-02-20 [2] CRAN (R 4.7.0)
+    #>  shinyWidgets           0.9.1      2026-03-09 [1] CRAN (R 4.7.0)
+    #>  SingleCellExperiment * 1.33.2     2026-03-24 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  SparseArray            1.11.12    2026-03-30 [1] Bioconductor 3.23 (R 4.7.0)
+    #>  sparseMatrixStats      1.23.0     2025-10-30 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  SpatialExperiment    * 1.21.0     2025-11-03 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  spatialLIBD          * 1.23.2     2026-04-01 [1] Github (LieberInstitute/spatialLIBD@e4921b4)
+    #>  statmod                1.5.1      2025-10-09 [1] CRAN (R 4.6.0)
+    #>  stringi                1.8.7      2025-03-27 [2] CRAN (R 4.7.0)
+    #>  stringr                1.6.0      2025-11-04 [2] CRAN (R 4.7.0)
+    #>  SummarizedExperiment * 1.41.1     2026-02-06 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  systemfonts            1.3.2      2026-03-05 [2] CRAN (R 4.7.0)
+    #>  textshaping            1.0.5      2026-03-06 [2] CRAN (R 4.7.0)
+    #>  tibble                 3.3.1      2026-01-11 [2] CRAN (R 4.7.0)
+    #>  tidyr                  1.3.2      2025-12-19 [1] CRAN (R 4.6.0)
+    #>  tidyselect             1.2.1      2024-03-11 [1] CRAN (R 4.6.0)
+    #>  tiff                   0.1-12     2023-11-28 [1] CRAN (R 4.6.0)
+    #>  timechange             0.4.0      2026-01-29 [1] CRAN (R 4.6.0)
+    #>  tzdb                   0.5.0      2025-03-15 [1] CRAN (R 4.6.0)
+    #>  utf8                   1.2.6      2025-06-08 [2] CRAN (R 4.7.0)
+    #>  vctrs                  0.7.2      2026-03-21 [2] CRAN (R 4.7.0)
+    #>  vipor                  0.4.7      2023-12-18 [1] CRAN (R 4.6.0)
+    #>  viridis                0.6.5      2024-01-29 [1] CRAN (R 4.6.0)
+    #>  viridisLite            0.4.3      2026-02-04 [1] CRAN (R 4.6.0)
+    #>  visiumStitched       * 1.3.0      2026-04-01 [1] Bioconductor
+    #>  vroom                  1.7.1      2026-03-31 [1] CRAN (R 4.7.0)
+    #>  withr                  3.0.2      2024-10-28 [2] CRAN (R 4.7.0)
+    #>  xfun                   0.57       2026-03-20 [2] CRAN (R 4.7.0)
+    #>  XML                    3.99-0.23  2026-03-20 [1] CRAN (R 4.7.0)
+    #>  xml2                   1.5.2      2026-01-17 [2] CRAN (R 4.7.0)
+    #>  xtable                 1.8-8      2026-02-22 [2] CRAN (R 4.7.0)
+    #>  XVector                0.51.0     2025-10-31 [1] Bioconductor 3.23 (R 4.6.0)
+    #>  yaml                   2.3.12     2025-12-10 [2] CRAN (R 4.7.0)
     #> 
     #>  [1] /__w/_temp/Library
     #>  [2] /usr/local/lib/R/site-library
@@ -874,8 +901,8 @@ knit("visiumStitched.Rmd", tangle = TRUE)
 ## Bibliography
 
 This vignette was generated using
-*[BiocStyle](https://bioconductor.org/packages/3.20/BiocStyle)* (Oleś,
-2024) with *[knitr](https://CRAN.R-project.org/package=knitr)* (Xie,
+*[BiocStyle](https://bioconductor.org/packages/3.23/BiocStyle)* (Oleś,
+2025) with *[knitr](https://CRAN.R-project.org/package=knitr)* (Xie,
 2025) and *[rmarkdown](https://CRAN.R-project.org/package=rmarkdown)*
 (Allaire, Xie, Dervieux et al., 2026) running behind the scenes.
 
@@ -888,13 +915,14 @@ al. *rmarkdown: Dynamic Documents for R*. R package version 2.31. 2026.
 URL: <https://github.com/rstudio/rmarkdown>.
 
 [\[2\]](#cite-barthelme2025imager) S. Barthelme. *imager: Image
-Processing Library Based on ‘CImg’*. R package version 1.0.8,
-<https://github.com/asgr/imager/>. 2025. URL:
-<https://asgr.github.io/imager/>.
+Processing Library Based on ‘CImg’*. R package version 1.0.8. 2025. DOI:
+[10.32614/CRAN.package.imager](https://doi.org/10.32614/CRAN.package.imager).
+URL: <https://CRAN.R-project.org/package=imager>.
 
 [\[3\]](#cite-couturebeil2024rjson) A. Couture-Beil. *rjson: JSON for
-R*. R package version 0.2.23. 2024. URL:
-<https://github.com/alexcb/rjson>.
+R*. R package version 0.2.23. 2024. DOI:
+[10.32614/CRAN.package.rjson](https://doi.org/10.32614/CRAN.package.rjson).
+URL: <https://CRAN.R-project.org/package=rjson>.
 
 [\[4\]](#cite-eagles2026enable) N. J. Eagles and L. Collado-Torres.
 *Enable downstream analysis of Visium capture areas stitched together
@@ -911,7 +939,9 @@ single-cell analysis”. In: *Nature Biotechnology* (2023). DOI:
 URL: <https://doi.org/10.1038/s41587-023-01767-y>.
 
 [\[6\]](#cite-hornik2026clue) K. Hornik. *clue: Cluster Ensembles*. R
-package version 0.3-68. 2026.
+package version 0.3-68. 2026. DOI:
+[10.32614/CRAN.package.clue](https://doi.org/10.32614/CRAN.package.clue).
+URL: <https://CRAN.R-project.org/package=clue>.
 
 [\[7\]](#cite-lun2019emptydrops) A. T. L. Lun, S. Riesenfeld, T.
 Andrews, et al. “EmptyDrops: distinguishing cells from empty droplets in
@@ -924,21 +954,21 @@ and Manage BibTeX and BibLaTeX References in R”. In: *The Journal of
 Open Source Software* (2017). DOI:
 [10.21105/joss.00338](https://doi.org/10.21105/joss.00338).
 
-[\[9\]](#cite-morgan2024summarizedexperiment) M. Morgan, V. Obenchain,
+[\[9\]](#cite-morgan2026summarizedexperiment) M. Morgan, V. Obenchain,
 J. Hester, et al. *SummarizedExperiment: A container (S4 class) for
-matrix-like assays*. R package version 1.36.0. 2024. DOI:
+matrix-like assays*. R package version 1.41.1. 2026. DOI:
 [10.18129/B9.bioc.SummarizedExperiment](https://doi.org/10.18129/B9.bioc.SummarizedExperiment).
 URL: <https://bioconductor.org/packages/SummarizedExperiment>.
 
-[\[10\]](#cite-ole2024biocstyle) A. Oleś. *BiocStyle: Standard styles
+[\[10\]](#cite-ole2025biocstyle) A. Oleś. *BiocStyle: Standard styles
 for vignettes and other Bioconductor documents*. R package version
-2.34.0. 2024. DOI:
+2.39.0. 2025. DOI:
 [10.18129/B9.bioc.BiocStyle](https://doi.org/10.18129/B9.bioc.BiocStyle).
 URL: <https://bioconductor.org/packages/BiocStyle>.
 
-[\[11\]](#cite-pags2024s4vectors) H. Pagès, M. Lawrence, and P. Aboyoun.
+[\[11\]](#cite-pags2025s4vectors) H. Pagès, M. Lawrence, and P. Aboyoun.
 *S4Vectors: Foundation of vector-like and list-like containers in
-Bioconductor*. R package version 0.44.0. 2024. DOI:
+Bioconductor*. R package version 0.49.0. 2025. DOI:
 [10.18129/B9.bioc.S4Vectors](https://doi.org/10.18129/B9.bioc.S4Vectors).
 URL: <https://bioconductor.org/packages/S4Vectors>.
 
@@ -949,13 +979,17 @@ DOI:
 [10.1186/s12864-022-08601-w](https://doi.org/10.1186/s12864-022-08601-w).
 URL: <https://doi.org/10.1186/s12864-022-08601-w>.
 
-[\[13\]](#cite-2024language) R Core Team. *R: A Language and Environment
-for Statistical Computing*. R Foundation for Statistical Computing.
-Vienna, Austria, 2024. URL: <https://www.R-project.org/>.
+[\[13\]](#cite-2026language) R Core Team. *R: A Language and Environment
+for Statistical Computing*. R Foundation for Statistical Computing (ROR:
+\<<https://ror.org/05qewa988%3E>;). Vienna, Austria, 2026. DOI:
+[10.32614/R.manuals](https://doi.org/10.32614/R.manuals). URL:
+<https://www.R-project.org/>.
 
 [\[14\]](#cite-redd2021pkgcond) A. Redd and R Documentation Task Force.
 *pkgcond: Classed Error and Warning Conditions*. R package version
-0.1.1. 2021. URL: <https://github.com/RDocTaskForce/pkgcond>.
+0.1.1. 2021. DOI:
+[10.32614/CRAN.package.pkgcond](https://doi.org/10.32614/CRAN.package.pkgcond).
+URL: <https://CRAN.R-project.org/package=pkgcond>.
 
 [\[15\]](#cite-righelli2022spatialexperiment) D. Righelli, L. M. Weber,
 H. L. Crowell, et al. “SpatialExperiment: infrastructure for
@@ -963,9 +997,9 @@ spatially-resolved transcriptomics data in R using Bioconductor”. In:
 *Bioinformatics* 38.11 (2022), pp. -3. DOI:
 [https://doi.org/10.1093/bioinformatics/btac299](https://doi.org/https://doi.org/10.1093/bioinformatics/btac299).
 
-[\[16\]](#cite-shepherd2024biocfilecache) L. Shepherd and M. Morgan.
-*BiocFileCache: Manage Files Across Sessions*. R package version 2.14.0.
-2024. DOI:
+[\[16\]](#cite-shepherd2025biocfilecache) L. Shepherd and M. Morgan.
+*BiocFileCache: Manage Files Across Sessions*. R package version 3.1.0.
+2025. DOI:
 [10.18129/B9.bioc.BiocFileCache](https://doi.org/10.18129/B9.bioc.BiocFileCache).
 URL: <https://bioconductor.org/packages/BiocFileCache>.
 
@@ -975,27 +1009,30 @@ Graphics for Data Analysis*. Springer-Verlag New York, 2016. ISBN:
 
 [\[18\]](#cite-wickham2025stringr) H. Wickham. *stringr: Simple,
 Consistent Wrappers for Common String Operations*. R package version
-1.6.0, <https://github.com/tidyverse/stringr>. 2025. URL:
-<https://stringr.tidyverse.org>.
+1.6.0. 2025. DOI:
+[10.32614/CRAN.package.stringr](https://doi.org/10.32614/CRAN.package.stringr).
+URL: <https://CRAN.R-project.org/package=stringr>.
 
 [\[19\]](#cite-wickham2011testthat) H. Wickham. “testthat: Get Started
 with Testing”. In: *The R Journal* 3 (2011), pp. 5–10. URL:
 <https://journal.r-project.org/articles/RJ-2011-002/>.
 
 [\[20\]](#cite-wickham2025sessioninfo) H. Wickham, W. Chang, R. Flight,
-et al. *sessioninfo: R Session Information*. R package version 1.2.3,
-<https://sessioninfo.r-lib.org>. 2025. URL:
-<https://github.com/r-lib/sessioninfo#readme>.
+et al. *sessioninfo: R Session Information*. R package version 1.2.3.
+2025. DOI:
+[10.32614/CRAN.package.sessioninfo](https://doi.org/10.32614/CRAN.package.sessioninfo).
+URL: <https://CRAN.R-project.org/package=sessioninfo>.
 
 [\[21\]](#cite-wickham2026dplyr) H. Wickham, R. François, L. Henry, et
-al. *dplyr: A Grammar of Data Manipulation*. R package version 1.2.0,
-<https://github.com/tidyverse/dplyr>. 2026. URL:
-<https://dplyr.tidyverse.org>.
+al. *dplyr: A Grammar of Data Manipulation*. R package version 1.2.0.
+2026. DOI:
+[10.32614/CRAN.package.dplyr](https://doi.org/10.32614/CRAN.package.dplyr).
+URL: <https://CRAN.R-project.org/package=dplyr>.
 
 [\[22\]](#cite-wickham2026xml2) H. Wickham, J. Hester, and J. Ooms.
-*xml2: Parse XML*. R package version 1.5.2,
-<https://r-lib.r-universe.dev/xml2>. 2026. URL:
-<https://xml2.r-lib.org>.
+*xml2: Parse XML*. R package version 1.5.2. 2026. DOI:
+[10.32614/CRAN.package.xml2](https://doi.org/10.32614/CRAN.package.xml2).
+URL: <https://CRAN.R-project.org/package=xml2>.
 
 [\[23\]](#cite-xie2025knitr) Y. Xie. *knitr: A General-Purpose Package
 for Dynamic Report Generation in R*. R package version 1.51. 2025. URL:

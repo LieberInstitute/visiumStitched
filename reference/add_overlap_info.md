@@ -53,7 +53,7 @@ Nicholas J. Eagles
 if (!exists("spe")) {
     spe <- spatialLIBD::fetch_data(type = "visiumStitched_brain_spe")
 }
-#> 2026-03-31 17:18:10.766142 loading file /github/home/.cache/R/BiocFileCache/213a4862b87b_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
+#> 2026-04-01 15:03:39.801849 loading file /github/home/.cache/R/BiocFileCache/524411ae5eee_visiumStitched_brain_spe.rds%3Frlkey%3Dnq6a82u23xuu9hohr86oodwdi%26dl%3D1
 
 #    Find the mean of the 'sum_umi' metric by capture area to understand
 #    which capture areas will be excluded in regions of overlap
