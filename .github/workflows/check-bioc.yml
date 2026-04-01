@@ -190,8 +190,8 @@ jobs:
         run: |
           # Seems to be necessary to find libtiff.so.5 when building visiumStitched
           sudo apt-get update
-          sudo apt-get remove -y libtiff5-dev libtiff-dev
-          sudo apt-get install -y libtiff5-dev libtiff-dev
+          sudo apt-get remove -y libgdk-pixbuf-2.0-dev libtiff5-dev libtiff-dev
+          sudo apt-get install -y libgdk-pixbuf-2.0-dev libtiff5-dev libtiff-dev
         
       - name: Install BiocManager
         run: |
